@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestIQ Architecture v3.5</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #f5f5f5;
+        }
+        .page {
+            background: white;
+            padding: 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #1a365d;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            border-bottom: 4px solid #38bdf8;
+            padding-bottom: 20px;
+        }
+        h2 {
+            color: #2c5282;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 4px solid #38bdf8;
+        }
+        h3 {
+            color: #2d3748;
+            font-size: 1.3em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .subtitle {
+            color: #718096;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .meta {
+            background: #edf2f7;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+        .meta-item {
+            display: inline-block;
+            margin-right: 30px;
+            color: #4a5568;
+        }
+        .meta-label {
+            font-weight: bold;
+            color: #2d3748;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .component-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .data-flow {
+            background: #f0fff4;
+            border: 2px solid #48bb78;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .metric {
+            display: inline-block;
+            background: #ebf8ff;
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin: 10px 10px 10px 0;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #2b6cb0;
+        }
+        .metric-label {
+            color: #4a5568;
+            font-size: 0.9em;
+        }
+        .highlight {
+            background: #fef5e7;
+            border-left: 4px solid #f6ad55;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+        .mermaid {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        @media print {
+            body { background: white; }
+            .page { box-shadow: none; margin: 0; padding: 40px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <h1>📊 InvestIQ Architecture</h1>
+        <div class="subtitle">Breakout Hunter v3.5 — Implementation Guide</div>
+        
+        <div class="meta">
+            <div class="meta-item">
+                <span class="meta-label">Version:</span> 3.5
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Codename:</span> Breakout Hunter
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Last Updated:</span> February 4, 2026
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Author:</span> Dagnachew Birru (Dan) + Danswiz AI
+            </div>
+        </div>
+
+        <h2>🎯 Executive Summary</h2>
+        <p>InvestIQ is a Flask-based stock scanning web application implementing the "Breakout Hunter" investment strategy. The system rates stocks using 10 criteria across momentum, quality, and growth factors, with automated daily scans and real-time data from Yahoo Finance.</p>
+
+        <div class="metric">
+            <div class="metric-value">1,014</div>
+            <div class="metric-label">Tickers Scanned</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">10</div>
+            <div class="metric-label">Rating Criteria</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">3</div>
+            <div class="metric-label">Daily Reports</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">100%</div>
+            <div class="metric-label">Portfolio Mapped</div>
+        </div>
+    </div>
+
+    <div class="page">
+        <h2>🏗️ System Architecture</h2>
+        
+        <div class="mermaid">
+flowchart TB
+    subgraph User["👤 User Interface"]
+        Dashboard["📋 Dashboard"]
+        Detail["📈 Stock Detail"]
+        Chart["📊 TradingView Chart"]
+    end
+    
+    subgraph Backend["⚙️ Flask Backend"]
+        Routes["🌐 Routes (app.py)"]
+        Rater["🧮 Rater Engine"]
+        Fetcher["📡 Data Fetcher"]
+        DB[("💾 SQLite Cache")]
+    end
+    
+    subgraph External["🌐 External Services"]
+        Yahoo["Yahoo Finance"]
+        TV["TradingView"]
+    end
+    
+    subgraph Deploy["🚀 Deployment"]
+        GitHub["GitHub"]
+        Vercel["Vercel"]
+        Domain["www.qortexai.com"]
+    end
+    
+    Dashboard --> Routes
+    Detail --> Routes
+    Chart --> TV
+    Routes --> Rater
+    Rater --> Fetcher
+    Fetcher --> Yahoo
+    Rater --> DB
+    Fetcher --> DB
+    Routes --> GitHub
+    GitHub --> Vercel
+    Vercel --> Domain
+        </div>
+
+        <h3>Component Overview</h3>
+        <table>
+            <tr>
+                <th>Layer</th>
+                <th>Technology</th>
+                <th>Purpose</th>
+            </tr>
+            <tr>
+                <td><strong>Frontend</strong></td>
+                <td>HTML + TailwindCSS + Vanilla JS</td>
+                <td>Responsive UI, mobile-friendly design</td>
+            </tr>
+            <tr>
+                <td><strong>Charts</strong></td>
+                <td>TradingView Widget</td>
+                <td>Professional charting (free tier)</td>
+            </tr>
+            <tr>
+                <td><strong>Backend</strong></td>
+                <td>Flask (Python)</td>
+                <td>Web server, API endpoints</td>
+            </tr>
+            <tr>
+                <td><strong>Data</strong></td>
+                <td>yfinance</td>
+                <td>Real-time Yahoo Finance data</td>
+            </tr>
+            <tr>
+                <td><strong>Cache</strong></td>
+                <td>SQLite</td>
+                <td>Local price/fundamentals storage</td>
+            </tr>
+            <tr>
+                <td><strong>Hosting</strong></td>
+                <td>Vercel</td>
+                <td>Serverless deployment</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="page">
+        <h2>📁 Project Structure</h2>
+        
+        <div class="code-block">
+workspace/
+├── 📄 app.py                    # Flask main application
+├── 🧮 rater.py                  # Core rating engine
+├── 💾 market_data.py            # SQLite database interface
+├── 📊 top_stocks.json           # Daily scan results
+├── 🗄️  market_data.db            # Cached price data
+│
+├── 📁 templates/
+│   └── 🎨 index.html            # Single-page app UI
+│
+├── 📁 Scripts/
+│   ├── 🔄 update_web_scan.py    # Daily scan + Git push
+│   ├── 💫 refresh_cache.py      # Nightly cache refresh
+│   ├── ⚡ fetch_realtime.py     # Real-time data fetcher
+│   └── 📥 get_russell1000.py    # Ticker list downloader
+│
+└── 📁 skills/
+    └── 📈 market-pulse/         # Automated reports
+        </div>
+
+        <h2>🔄 Data Flow</h2>
+        
+        <div class="mermaid">
+sequenceDiagram
+    participant User
+    participant Flask
+    participant Cache
+    participant Yahoo
+    participant GitHub
+    participant Vercel
+    
+    Note over User,Vercel: Daily Scan Process
+    
+    rect rgb(240, 255, 240)
+        Note over Flask,Yahoo: 2:00 AM Cache Refresh
+        Flask->>Yahoo: Request 1,014 tickers
+        Yahoo-->>Flask: Price data
+        Flask->>Cache: Store in SQLite
+    end
+    
+    rect rgb(255, 248, 240)
+        Note over User,Vercel: 6:00 AM Morning Scan
+        Flask->>Cache: Read cached data
+        Flask->>Flask: Run BreakoutRater
+        Flask->>GitHub: Commit top_stocks.json
+        GitHub->>Vercel: Auto-deploy
+        Vercel-->>User: Updated website
+    end
+    
+    rect rgb(240, 248, 255)
+        Note over User,Cache: On-Demand Rating
+        User->>Flask: Enter ticker
+        Flask->>Cache: Check local data
+        alt Cache Miss
+            Flask->>Yahoo: Fetch from API
+            Flask->>Cache: Store locally
+        end
+        Flask-->>User: Grade + Criteria
+    end
+        </div>
+    </div>
+
+    <div class="page">
+        <h2>🔧 Core Components</h2>
+
+        <h3>10-Factor Scoring System</h3>
+        
+        <table>
+            <tr>
+                <th>Category</th>
+                <th>Criteria</th>
+                <th>Weight</th>
+                <th>Threshold</th>
+            </tr>
+            <tr>
+                <td rowspan="4"><strong>Momentum</strong></td>
+                <td>Trend Alignment</td>
+                <td>5 pts</td>
+                <td>Price > SMA50 > SMA200</td>
+            </tr>
+            <tr>
+                <td>Breakout Pattern</td>
+                <td>20 pts</td>
+                <td>Flat base + near highs</td>
+            </tr>
+            <tr>
+                <td>Consolidation</td>
+                <td>10 pts</td>
+                <td>Base depth &lt; 40%</td>
+            </tr>
+            <tr>
+                <td>Volume Dry-up</td>
+                <td>5 pts</td>
+                <td>Vol &lt; 1.2x average</td>
+            </tr>
+            <tr>
+                <td rowspan="3"><strong>Quality</strong></td>
+                <td>Operating Margin</td>
+                <td>10 pts</td>
+                <td>&gt; 10%</td>
+            </tr>
+            <tr>
+                <td>FCF Quality</td>
+                <td>5 pts</td>
+                <td>Positive free cash flow</td>
+            </tr>
+            <tr>
+                <td>Debt Safety</td>
+                <td>5 pts</td>
+                <td>Safe debt ratios</td>
+            </tr>
+            <tr>
+                <td rowspan="2"><strong>Growth</strong></td>
+                <td>Sales Growth</td>
+                <td>5 pts</td>
+                <td>&gt; 10% YoY</td>
+            </tr>
+            <tr>
+                <td>Earnings Growth</td>
+                <td>5 pts</td>
+                <td>&gt; 15% YoY</td>
+            </tr>
+            <tr>
+                <td><strong>Industry</strong></td>
+                <td>Industry Strength</td>
+                <td>10 pts</td>
+                <td>Sector beats SPY</td>
+            </tr>
+        </table>
+
+        <div class="highlight">
+            <strong>Scoring:</strong> A (50+), B (35-49), C (20-34), D (10-19), F (&lt;10)
+        </div>
+    </div>
+
+    <div class="page">
+        <h2>⏰ Automation Schedule</h2>
+        
+        <div class="mermaid">
+gantt
+    title Daily Automation Schedule (PST)
+    dateFormat HH:mm
+    axisFormat %H:%M
+    
+    section Morning
+    Cache Refresh      :02:00, 30m
+    Morning Scan       :06:00, 15m
+    Pre-Market Report  :08:00, 10m
+    
+    section Trading Hours
+    AM Report          :09:45, 10m
+    Midday Report      :12:30, 10m
+    
+    section Evening
+    PM Report          :15:00, 10m
+    Daily Briefing     :15:15, 10m
+    Closing Scan       :15:30, 10m
+    
+    section Always On
+    Liveness Check     :crit, 00:00, 1h
+        </div>
+
+        <h3>Cron Jobs Summary</h3>
+        <table>
+            <tr>
+                <th>Job</th>
+                <th>Schedule</th>
+                <th>Purpose</th>
+            </tr>
+            <tr><td>Nightly Cache Refresh</td><td>2:00 AM</td><td>Download Russell 1000 data</td></tr>
+            <tr><td>Morning Scan</td><td>6:00 AM</td><td>Rate stocks, update website</td></tr>
+            <tr><td>Market Pulse AM</td><td>8:00 AM</td><td>Pre-market report (email)</td></tr>
+            <tr><td>Market Pulse Midday</td><td>12:30 PM</td><td>Midday market update</td></tr>
+            <tr><td>Market Pulse PM</td><td>3:00 PM</td><td>Closing bell summary</td></tr>
+            <tr><td>Daily Briefing</td><td>3:15 PM</td><td>Portfolio performance check</td></tr>
+            <tr><td>Closing Scan</td><td>3:30 PM</td><td>InvestIQ data update</td></tr>
+            <tr><td>Liveness Pulse</td><td>Every hour</td><td>Health check heartbeat</td></tr>
+        </table>
+    </div>
+
+    <div class="page">
+        <h2>🚀 Deployment Architecture</h2>
+        
+        <div class="mermaid">
+flowchart LR
+    subgraph Local["💻 Local Development"]
+        Mac["Mac Mini"]
+        Flask["Flask Port 18791"]
+        SQLite[("SQLite DB")]
+    end
+    
+    subgraph Cloud["☁️ Cloud Infrastructure"]
+        Git["GitHub Repo"]
+        Vercel["Vercel Edge"]
+        Web["www.qortexai.com"]
+    end
+    
+    subgraph User["🌍 Users"]
+        You["You (Dan)"]
+        Others["Other Visitors"]
+    end
+    
+    Mac -->|git push| Git
+    Flask --> SQLite
+    Git -->|auto-deploy| Vercel
+    Vercel --> Web
+    Web --> You
+    Web --> Others
+        </div>
+
+        <h3>CI/CD Flow</h3>
+        <ol>
+            <li><strong>Local Development:</strong> Edit code on Mac Mini, test locally</li>
+            <li><strong>Git Push:</strong> Commit to GitHub main branch</li>
+            <li><strong>Auto Deploy:</strong> Vercel detects change, builds in ~30 seconds</li>
+            <li><strong>Live:</strong> Website updated globally</li>
+        </ol>
+
+        <h2>📊 Key Features</h2>
+        
+        <h3>1. Breakout Hunter Strategy</h3>
+        <ul>
+            <li>Identifies stocks with 6-month consolidation</li>
+            <li>Requires flat ceiling (&lt;10% drift)</li>
+            <li>Volume dry-up before breakout</li>
+            <li>Industry strength relative to SPY</li>
+        </ul>
+
+        <h3>2. Russell 1000 Universe</h3>
+        <ul>
+            <li>1,014 tickers (expanded from 159)</li>
+            <li>Combines: Russell 1000 + VUG + Personal holdings</li>
+            <li>Daily cache refresh with rate limiting</li>
+        </ul>
+
+        <h3>3. Model Fallback Chain</h3>
+        <div class="mermaid">
+flowchart LR
+    Flash["Flash (Primary)"] --> Kimi["Kimi (Fallback 1)"]
+    Kimi --> Opus["Opus (Fallback 2)"]
+        </div>
+        </ul>
+    </div>
+
+    <div class="page">
+        <h2>🔐 Security & Performance</h2>
+        
+        <div class="highlight">
+            <strong>Security Measures:</strong>
+            <ul>
+                <li>No API keys stored in code</li>
+                <li>SQLite local only (no remote database)</li>
+                <li>No user authentication (personal use)</li>
+                <li>Email credentials stored in .ini file with 600 permissions</li>
+            </ul>
+        </div>
+
+        <div class="highlight">
+            <strong>Performance Optimizations:</strong>
+            <ul>
+                <li>SQLite caching reduces API calls by ~90%</li>
+                <li>Rate limiting prevents Yahoo Finance bans</li>
+                <li>Lazy loading of chart data</li>
+                <li>30-second Vercel deploys</li>
+            </ul>
+        </div>
+
+        <h2>🎯 Future Enhancements</h2>
+        <ol>
+            <li><strong>Custom Charting</strong> — Replace TradingView with persistent indicators</li>
+            <li><strong>Alert System</strong> — Breakout notifications via Telegram</li>
+            <li><strong>Backtesting</strong> — Historical performance of rating system</li>
+            <li><strong>Options Flow</strong> — Integrate unusual options activity</li>
+            <li><strong>Mobile App</strong> — React Native wrapper</li>
+        </ol>
+
+        <h2>📞 Contact & Support</h2>
+        <table>
+            <tr>
+                <td><strong>Developer:</strong></td>
+                <td>Dagnachew Birru (Dan)</td>
+            </tr>
+            <tr>
+                <td><strong>AI Assistant:</strong></td>
+                <td>Danswiz</td>
+            </tr>
+            <tr>
+                <td><strong>Website:</strong></td>
+                <td>www.qortexai.com</td>
+            </tr>
+            <tr>
+                <td><strong>Repository:</strong></td>
+                <td>github.com/danswiz/InvestIQ</td>
+            </tr>
+            <tr>
+                <td><strong>Local Dev:</strong></td>
+                <td>http://10.0.0.90:18791</td>
+            </tr>
+        </table>
+
+        <div style="margin-top: 60px; text-align: center; color: #718096; font-size: 0.9em;">
+            <p>Generated by Danswiz on February 4, 2026</p>
+            <p>InvestIQ v3.5 "Breakout Hunter"</p>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: { curve: 'basis' }
+        });
+    </script>
+</body>
+</html>

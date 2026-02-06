@@ -1,0 +1,355 @@
+{
+  "last_scan": "2026-02-06 06:08 PST",
+  "stocks": [
+    {
+      "ticker": "CINF",
+      "name": "Cincinnati Financial Corporatio",
+      "sector": "Financial Services",
+      "total": 75,
+      "grade": "A"
+    },
+    {
+      "ticker": "MPWR",
+      "name": "Monolithic Power Systems, Inc.",
+      "sector": "Technology",
+      "total": 75,
+      "grade": "A"
+    },
+    {
+      "ticker": "FNF",
+      "name": "Fidelity National Financial, In",
+      "sector": "Financial Services",
+      "total": 75,
+      "grade": "A"
+    },
+    {
+      "ticker": "NVT",
+      "name": "nVent Electric plc",
+      "sector": "Industrials",
+      "total": 75,
+      "grade": "A"
+    },
+    {
+      "ticker": "ROL",
+      "name": "Rollins, Inc.",
+      "sector": "Consumer Cyclical",
+      "total": 75,
+      "grade": "A"
+    },
+    {
+      "ticker": "VTR",
+      "name": "Ventas, Inc.",
+      "sector": "Real Estate",
+      "total": 75,
+      "grade": "A"
+    },
+    {
+      "ticker": "DTM",
+      "name": "DT Midstream, Inc.",
+      "sector": "Energy",
+      "total": 75,
+      "grade": "A"
+    },
+    {
+      "ticker": "HALO",
+      "name": "Halozyme Therapeutics, Inc.",
+      "sector": "Healthcare",
+      "total": 75,
+      "grade": "A"
+    },
+    {
+      "ticker": "O",
+      "name": "Realty Income Corporation",
+      "sector": "Real Estate",
+      "total": 75,
+      "grade": "A"
+    },
+    {
+      "ticker": "SON",
+      "name": "Sonoco Products Company",
+      "sector": "Consumer Cyclical",
+      "total": 75,
+      "grade": "A"
+    },
+    {
+      "ticker": "VMC",
+      "name": "Vulcan Materials Company (Holdi",
+      "sector": "Basic Materials",
+      "total": 75,
+      "grade": "A"
+    },
+    {
+      "ticker": "JHG",
+      "name": "Janus Henderson Group plc",
+      "sector": "Financial Services",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "OKE",
+      "name": "ONEOK, Inc.",
+      "sector": "Energy",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "KMI",
+      "name": "Kinder Morgan, Inc.",
+      "sector": "Energy",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "FNB",
+      "name": "F.N.B. Corporation",
+      "sector": "Financial Services",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "SSB",
+      "name": "SouthState Bank Corporation",
+      "sector": "Financial Services",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "FHN",
+      "name": "First Horizon Corporation",
+      "sector": "Financial Services",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "CF",
+      "name": "CF Industries Holdings, Inc.",
+      "sector": "Basic Materials",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "HUBB",
+      "name": "Hubbell Inc",
+      "sector": "Industrials",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "NEE",
+      "name": "NextEra Energy, Inc.",
+      "sector": "Utilities",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "BAC",
+      "name": "Bank of America Corporation",
+      "sector": "Financial Services",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "MLM",
+      "name": "Martin Marietta Materials, Inc.",
+      "sector": "Basic Materials",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "OHI",
+      "name": "Omega Healthcare Investors, Inc",
+      "sector": "Real Estate",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "EWBC",
+      "name": "East West Bancorp, Inc.",
+      "sector": "Financial Services",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "WAL",
+      "name": "Western Alliance Bancorporation",
+      "sector": "Financial Services",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "ZION",
+      "name": "Zions Bancorporation N.A.",
+      "sector": "Financial Services",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "EIX",
+      "name": "Edison International",
+      "sector": "Utilities",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "RBA",
+      "name": "RB Global, Inc.",
+      "sector": "Industrials",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "AEE",
+      "name": "Ameren Corporation",
+      "sector": "Utilities",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "SCHW",
+      "name": "Charles Schwab Corporation (The",
+      "sector": "Financial Services",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "AAPL",
+      "name": "Apple Inc.",
+      "sector": "Technology",
+      "total": 70,
+      "grade": "A"
+    },
+    {
+      "ticker": "KO",
+      "name": "Coca-Cola Company (The)",
+      "sector": "Consumer Defensive",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "ADC",
+      "name": "Agree Realty Corporation",
+      "sector": "Real Estate",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "WPC",
+      "name": "W. P. Carey Inc. REIT",
+      "sector": "Real Estate",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "CRS",
+      "name": "Carpenter Technology Corporatio",
+      "sector": "Industrials",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "SPG",
+      "name": "Simon Property Group, Inc.",
+      "sector": "Real Estate",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "AOS",
+      "name": "A.O. Smith Corporation",
+      "sector": "Industrials",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "CBOE",
+      "name": "Cboe Global Markets, Inc.",
+      "sector": "Financial Services",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "CNA",
+      "name": "CNA Financial Corporation",
+      "sector": "Financial Services",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "VMI",
+      "name": "Valmont Industries, Inc.",
+      "sector": "Industrials",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "L",
+      "name": "Loews Corporation",
+      "sector": "Financial Services",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "ALLE",
+      "name": "Allegion plc",
+      "sector": "Industrials",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "DGX",
+      "name": "Quest Diagnostics Incorporated",
+      "sector": "Healthcare",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "CBRE",
+      "name": "CBRE Group Inc",
+      "sector": "Real Estate",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "HLT",
+      "name": "Hilton Worldwide Holdings Inc.",
+      "sector": "Consumer Cyclical",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "ITT",
+      "name": "ITT Inc.",
+      "sector": "Industrials",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "YUM",
+      "name": "Yum! Brands, Inc.",
+      "sector": "Consumer Cyclical",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "SSD",
+      "name": "Simpson Manufacturing Company, ",
+      "sector": "Basic Materials",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "FAF",
+      "name": "First American Corporation (New",
+      "sector": "Financial Services",
+      "total": 65,
+      "grade": "A"
+    },
+    {
+      "ticker": "CAH",
+      "name": "Cardinal Health, Inc.",
+      "sector": "Healthcare",
+      "total": 65,
+      "grade": "A"
+    }
+  ]
+}

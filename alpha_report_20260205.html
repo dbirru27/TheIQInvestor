@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f4f7f6; }
+        .header { background-color: #1a2a6c; color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
+        .section { background: white; padding: 25px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h2 { border-bottom: 2px solid #1a2a6c; padding-bottom: 10px; color: #1a2a6c; text-transform: uppercase; font-size: 1.2em; }
+        .snapshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px; }
+        .snapshot-item { padding: 15px; background: #f9f9f9; border-left: 4px solid #1a2a6c; text-align: center; }
+        .snapshot-item.negative { border-left-color: #d9534f; }
+        .snapshot-item.positive { border-left-color: #5cb85c; }
+        .price { font-size: 1.4em; font-weight: bold; display: block; }
+        .change { font-size: 0.9em; font-weight: bold; }
+        .red { color: #d9534f; }
+        .green { color: #5cb85c; }
+        .footer { text-align: center; font-size: 0.8em; color: #777; margin-top: 30px; }
+        .ticker { font-weight: bold; color: #1a2a6c; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>DAILY ALPHA REPORT</h1>
+        <p>Market Close: February 5, 2026</p>
+        <p style="font-style: italic; opacity: 0.8;">"In markets, the noise is temporary; the cash flow is permanent."</p>
+    </div>
+
+    <div class="section">
+        <h2>1. Market Snapshot</h2>
+        <div class="snapshot-grid">
+            <div class="snapshot-item negative">
+                <strong>SPY</strong>
+                <span class="price">677.62</span>
+                <span class="change red">-1.25%</span>
+            </div>
+            <div class="snapshot-item negative">
+                <strong>QQQ</strong>
+                <span class="price">597.03</span>
+                <span class="change red">-1.44%</span>
+            </div>
+            <div class="snapshot-item negative">
+                <strong>IWM</strong>
+                <span class="price">255.83</span>
+                <span class="change red">-1.80%</span>
+            </div>
+            <div class="snapshot-item positive">
+                <strong>VIX (^VIX)</strong>
+                <span class="price">21.77</span>
+                <span class="change green">+16.79%</span>
+            </div>
+            <div class="snapshot-item positive">
+                <strong>DXY (UUP)</strong>
+                <span class="price">27.09</span>
+                <span class="change green">+0.30%</span>
+            </div>
+            <div class="snapshot-item negative">
+                <strong>Gold (GLD)</strong>
+                <span class="price">441.88</span>
+                <span class="change red">-2.66%</span>
+            </div>
+            <div class="snapshot-item negative">
+                <strong>BTC</strong>
+                <span class="price">$60,795</span>
+                <span class="change red">-3.19%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. Macro Drivers</h2>
+        <ul>
+            <li><strong>The "Growth De-Rating":</strong> We are seeing a violent repricing of duration. Microsoft (MSFT -4.95%) and Amazon (AMZN -4.42%) were used as sources of funds today, signaling that institutional patience for "growth at any price" is wearing thin.</li>
+            <li><strong>Geopolitical Re-alignment:</strong> The absolute strength in Defense names (LMT, NOC) suggests the market is pricing in a prolonged period of increased procurement and global friction, decoupling from the broader macro weakness.</li>
+            <li><strong>Liquidation Impulse:</strong> The simultaneous drop in Gold and BTC, alongside a rising DXY, points to a classic "dash for cash" and margin-call-driven liquidation rather than a fundamental shift in long-term value for these assets.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>3. Smart Money Flows</h2>
+        <p>Institutional desks were active today, primarily selling high-beta tech into the weakness. However, we noted significant "dark pool" support at the $605 level for LMT. ETF flows indicate a massive rotation out of <strong>XLK</strong> and <strong>COPX</strong> (-6.12%) into defensive silos like <strong>XLU</strong> (+0.05%) and short-term Treasuries (<strong>TLT</strong> +1.09%). This is a flight-to-safety trade, not a dip-buying opportunity yet.</p>
+    </div>
+
+    <div class="section">
+        <h2>4. Sector Temperature</h2>
+        <ul>
+            <li><strong>Ice Cold:</strong> Semi-conductors and Copper. The -6% move in <strong>COPX</strong> is a warning shot for global industrial demand.</li>
+            <li><strong>Cooling:</strong> Megacap Tech. <strong>NVDA</strong> (-1.33%) and <strong>AAPL</strong> (-0.21%) held up better than peers, but the weight of the market is dragging them down.</li>
+            <li><strong>Heating Up:</strong> Defense and Aerospace (<strong>ITA</strong> relative strength) and Utilities. <strong>XLU</strong> finishing flat in this environment is effectively a win.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>5. High-Conviction Ideas</h2>
+        <p><span class="ticker">Lockheed Martin (LMT):</span> Relative strength leader. Closing at 609.18 (+1.07%) while SPY bled 1.25% is a massive signal. <em>Thesis:</em> Increased defense budgets are baked in; LMT is the primary beneficiary.</p>
+        <p><span class="ticker">Utilities Select Sector SPDR (XLU):</span> <em>Thesis:</em> The ultimate "risk-off" play. With yields softening slightly (TLT up) and growth slowing, XLU offers a 3%+ yield with low beta. It stayed green while the world burned today.</p>
+        <p><span class="ticker">Palantir (PLTR) - Watchlist:</span> <em>Thesis:</em> After today's 6.83% haircut, we are looking for a tactical entry near the 120-125 level. The AI narrative is intact, but the valuation needed a reset. This is our "spring-loaded" play for a rebound.</p>
+    </div>
+
+    <div class="section">
+        <h2>6. Portfolio Positioning</h2>
+        <ul>
+            <li><strong>Net Exposure:</strong> Reduced to 45% (from 60%). We are not fighting this tape.</li>
+            <li><strong>Hedges:</strong> Increased VIX call options and UVXY long positions to capture the widening volatility tail.</li>
+            <li><strong>Cash:</strong> Raised to 30%. Liquidity is the ultimate weapon in a de-leveraging event.</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2026 Alpha Research Group. For professional investors only. Past performance is not indicative of future results.</p>
+    </div>
+</body>
+</html>
