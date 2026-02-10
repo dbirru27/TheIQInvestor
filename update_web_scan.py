@@ -128,14 +128,12 @@ def rate_stock_consistent(symbol, rater, conn):
         # Calculate total
         total = sum(r.points for r in results)
         
-        # Grade (matching rater.py)
-        if total >= 75: grade = 'A'
-        elif total >= 70: grade = 'A-'
-        elif total >= 65: grade = 'B+'
-        elif total >= 60: grade = 'B'
-        elif total >= 50: grade = 'B-'
-        elif total >= 40: grade = 'C+'
-        else: grade = 'C'
+        # Grade (matching rater.py exactly)
+        if total >= 50: grade = 'A'
+        elif total >= 35: grade = 'B'
+        elif total >= 20: grade = 'C'
+        elif total >= 10: grade = 'D'
+        else: grade = 'F'
         
         return {
             'ticker': symbol,
