@@ -1,5 +1,5 @@
 {
-  "last_scan": "2026-02-09 14:45 PST",
+  "last_scan": "2026-02-10 02:30 PST",
   "stocks": [
     {
       "ticker": "AAPL",
@@ -314,14 +314,6 @@
       "total": 65
     },
     {
-      "ticker": "L",
-      "name": "Loews Corporation",
-      "sector": "Financial Services",
-      "score": 65,
-      "grade": "B+",
-      "total": 65
-    },
-    {
       "ticker": "MDT",
       "name": "Medtronic plc.",
       "sector": "Healthcare",
@@ -397,6 +389,14 @@
       "ticker": "SSD",
       "name": "Simpson Manufacturing Company, ",
       "sector": "Basic Materials",
+      "score": 65,
+      "grade": "B+",
+      "total": 65
+    },
+    {
+      "ticker": "TRV",
+      "name": "The Travelers Companies, Inc.",
+      "sector": "Financial Services",
       "score": 65,
       "grade": "B+",
       "total": 65
