@@ -87,10 +87,13 @@ def rate_stock_v42(symbol, conn):
         passed_atr = bool(atr_current < 0.8 * atr_20d)
         results.append(CriterionResult("Volatility Compression", "Timing", passed_atr, "", "", 5 if passed_atr else 0))
         
-        # 7. Sales Growth (12 pts)
+        # 7. Sales Growth (0-30 pts) - PROPORTIONAL: min(max(0, growth/0.3*12), 30)
         rev_g = info.get('revenueGrowth')
-        passed_rev = bool(rev_g is not None and rev_g > 0.10)
-        results.append(CriterionResult("Sales Growth", "Growth", passed_rev, "", "", 12 if passed_rev else 0))
+        if rev_g is not None and rev_g > 0:
+            sales_points = min(max(0, (rev_g / 0.30) * 12), 30)
+        else:
+            sales_points = 0
+        results.append(CriterionResult("Sales Growth", "Growth", sales_points > 0, "", "", int(sales_points)))
         
         # 8. Earnings Growth (3 pts)
         earn_g = info.get('earningsGrowth')

@@ -121,10 +121,13 @@ class BreakoutRater:
             results.append(CriterionResult("Volatility Compression", "Timing", passed_atr, "ATR Squeezing", "ATR < 80% of 20D ATR", 5))
 
             # --- 3. GROWTH & QUALITY ---
-            # Sales Growth (12 pts)
+            # Sales Growth (0-30 pts) - PROPORTIONAL: min(max(0, growth/0.3*12), 30)
             rev_g = info.get('revenueGrowth')
-            passed_rev = bool(rev_g is not None and rev_g > 0.10)
-            results.append(CriterionResult("Sales Growth", "Growth", passed_rev, f"{float(rev_g)*100:.1f}%" if rev_g else "N/A", "> 10%", 12))
+            if rev_g is not None and rev_g > 0:
+                sales_points = min(max(0, (rev_g / 0.30) * 12), 30)
+            else:
+                sales_points = 0
+            results.append(CriterionResult("Sales Growth", "Growth", sales_points > 0, f"{float(rev_g)*100:.1f}%" if rev_g else "N/A", "Proportional 0-30", int(sales_points)))
 
             # Earnings Growth (3 pts)
             eps_g = info.get('earningsGrowth')
