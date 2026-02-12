@@ -257,8 +257,9 @@ def run_scan():
     
     conn.close()
     
-    # FILTER: Only include stocks with sales growth >= 5 points
-    filtered_results = [r for r in results if r.get('growth_score', 0) >= 5]
+    # FILTER: Only include stocks that passed BOTH years >= 10% revenue growth
+    # This means growth_score must be >= 15 (base 12 + bonus 3 for consistency)
+    filtered_results = [r for r in results if r.get('growth_score', 0) >= 15]
     
     results.sort(key=lambda x: x['score'], reverse=True)
     filtered_results.sort(key=lambda x: x['score'], reverse=True)
@@ -275,8 +276,8 @@ def run_scan():
     with open('top_stocks.json', 'w') as f:
         json.dump(full_output, f, indent=2)
     
-    print(f"\n✅ Saved {len(filtered_results)} stocks (growth >= 5) to top_stocks.json")
-    print(f"   Filtered out: {len(results) - len(filtered_results)} stocks with growth < 5")
+    print(f"\n✅ Saved {len(filtered_results)} stocks (both years >= 10% growth) to top_stocks.json")
+    print(f"   Filtered out: {len(results) - len(filtered_results)} stocks failed revenue gate")
     print(f"   Top 5: {', '.join([s['ticker'] + ' ' + str(s['score']) for s in filtered_results[:5]])}")
 
 if __name__ == '__main__':
