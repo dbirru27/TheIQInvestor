@@ -142,24 +142,24 @@ class BreakoutRater:
             except:
                 pass
             
-            # Calculate sales growth score with consistency
-            if rev_g is not None and rev_g > 0:
-                if rev_g_prior is not None and rev_g_prior > 0:
-                    # Two years of data: average them with consistency bonus
-                    avg_growth = (rev_g + rev_g_prior) / 2
-                    consistent = rev_g > 0.10 and rev_g_prior > 0.10
-                    consistency_bonus = 3 if consistent else 0
-                    sales_points = min(max(0, (avg_growth / 0.30) * 12), 27) + consistency_bonus
-                    growth_display = f"{float(rev_g)*100:.1f}% (avg 2yr: {float(avg_growth)*100:.1f}%)"
-                else:
-                    # Only current year available
-                    sales_points = min(max(0, (rev_g / 0.30) * 12), 30)
-                    growth_display = f"{float(rev_g)*100:.1f}%"
-            else:
+            # STRICT GATE: Both years must be >= 10%
+            if rev_g is None or rev_g < 0.10:
+                # Current year < 10% → DISQUALIFIED
                 sales_points = 0
-                growth_display = "N/A"
+                growth_display = f"{float(rev_g)*100:.1f}% (current < 10%)" if rev_g else "N/A"
+            elif rev_g_prior is None or rev_g_prior < 0.10:
+                # Prior year < 10% → DISQUALIFIED
+                sales_points = 0
+                growth_display = f"{float(rev_g)*100:.1f}% (prior < 10%)" if rev_g else "N/A"
+            else:
+                # Both years >= 10%: calculate score with bonus
+                avg_growth = (rev_g + rev_g_prior) / 2
+                consistency_bonus = 3  # Guaranteed since both >= 10%
+                base_score = min(max(0, (avg_growth / 0.30) * 12), 27)
+                sales_points = base_score + consistency_bonus
+                growth_display = f"{float(rev_g)*100:.1f}% (avg 2yr: {float(avg_growth)*100:.1f}%)"
             
-            results.append(CriterionResult("Sales Growth (2yr)", "Growth", sales_points > 0, growth_display, "Proportional 0-30 + consistency", int(sales_points)))
+            results.append(CriterionResult("Sales Growth (2yr)", "Growth", sales_points > 0, growth_display, "Both years >= 10% required", int(sales_points)))
 
             # Earnings Growth (3 pts)
             eps_g = info.get('earningsGrowth')

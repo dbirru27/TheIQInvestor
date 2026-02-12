@@ -105,17 +105,19 @@ def rate_stock_v42(symbol, conn):
         except:
             pass
         
-        # Calculate sales growth score
-        if rev_g is not None and rev_g > 0:
-            if rev_g_prior is not None and rev_g_prior > 0:
-                avg_growth = (rev_g + rev_g_prior) / 2
-                consistent = rev_g > 0.10 and rev_g_prior > 0.10
-                consistency_bonus = 3 if consistent else 0
-                sales_points = min(max(0, (avg_growth / 0.30) * 12), 27) + consistency_bonus
-            else:
-                sales_points = min(max(0, (rev_g / 0.30) * 12), 30)
-        else:
+        # STRICT GATE: Both years must be >= 10%
+        if rev_g is None or rev_g < 0.10:
+            # Current year < 10% → DISQUALIFIED
             sales_points = 0
+        elif rev_g_prior is None or rev_g_prior < 0.10:
+            # Prior year < 10% → DISQUALIFIED
+            sales_points = 0
+        else:
+            # Both years >= 10%: calculate score with bonus
+            avg_growth = (rev_g + rev_g_prior) / 2
+            consistency_bonus = 3  # Guaranteed since both >= 10%
+            base_score = min(max(0, (avg_growth / 0.30) * 12), 27)
+            sales_points = base_score + consistency_bonus
         
         results.append(CriterionResult("Sales Growth (2yr)", "Growth", sales_points > 0, "", "", int(sales_points)))
         
