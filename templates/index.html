@@ -429,6 +429,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             init();
             
+            // Preload all stocks data in background
+            loadAllStocks().catch(err => console.log('Background preload failed:', err));
+            
             document.getElementById('quick-ticker').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') viewStock(this.value);
             });
@@ -436,6 +439,31 @@
                 if (e.key === 'Enter') viewStock(this.value);
             });
         });
+
+        // Global cache for all stocks data
+        let allStocksCache = null;
+        let allStocksLoading = null;
+        
+        async function loadAllStocks() {
+            if (allStocksCache) return allStocksCache;
+            if (allStocksLoading) return allStocksLoading;
+            
+            allStocksLoading = fetch('all_stocks.json')
+                .then(res => {
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    return res.json();
+                })
+                .then(data => {
+                    allStocksCache = data;
+                    console.log(`Loaded ${data.total_stocks} stocks`);
+                    return data;
+                })
+                .catch(err => {
+                    console.error('Failed to load stock data:', err);
+                    throw err;
+                });
+            return allStocksLoading;
+        }
 
         async function viewStock(ticker) {
             document.getElementById('dashboard-view').style.display = 'none';
@@ -445,9 +473,8 @@
             document.getElementById('news-list').innerHTML = '';
 
             try {
-                // Load from local all_stocks.json cache
-                const res = await fetch('all_stocks.json');
-                const allData = await res.json();
+                // Load from cached all_stocks.json (loads once, caches forever)
+                const allData = await loadAllStocks();
                 const data = allData.stocks[ticker.toUpperCase()];
                 
                 if (!data) throw new Error(`${ticker} not found in cache`);
