@@ -1,7 +1,7 @@
 {
   "version": "4.3",
   "max_score": 100,
-  "last_scan": "2026-02-11 16:57 PST",
+  "last_scan": "2026-02-11 17:20 PST",
   "stocks": [
     {
       "ticker": "WTM",
@@ -480,6 +480,20 @@
       "context_score": 10
     },
     {
+      "ticker": "MU",
+      "name": "Micron Technology, Inc.",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "score": 73,
+      "max_score": 100,
+      "grade": "A",
+      "market_cap": 420096311296,
+      "technical_score": 21,
+      "growth_score": 29,
+      "quality_score": 13,
+      "context_score": 10
+    },
+    {
       "ticker": "AGCO",
       "name": "AGCO Corporation",
       "sector": "Industrials",
@@ -684,20 +698,6 @@
       "max_score": 100,
       "grade": "A",
       "market_cap": 90918625280,
-      "technical_score": 53,
-      "growth_score": 0,
-      "quality_score": 8,
-      "context_score": 10
-    },
-    {
-      "ticker": "FBIN",
-      "name": "Fortune Brands Innovations, Inc",
-      "sector": "Industrials",
-      "industry": "Building Products & Equipment",
-      "score": 71,
-      "max_score": 100,
-      "grade": "A",
-      "market_cap": 7741715968,
       "technical_score": 53,
       "growth_score": 0,
       "quality_score": 8,
