@@ -1,29 +1,29 @@
-# Market Pulse: Market Close
-*Thursday, February 05, 2026 at 03:00 PM PST*
+# Market Pulse: Midday Check
+*Thursday, February 12, 2026 at 12:30 PM PST*
 
 ## 📊 Market Snapshot
 
 ```
 INDEX    PRICE        CHANGE    
 ──────────────────────────────
-SPY      $    677.62 🔴 +-1.25%
-QQQ      $    597.03 🔴 +-1.44%
-IWM      $    255.83 🔴 +-1.80%
-^VIX     $     21.77 🟢 +16.79%
+SPY      $    684.29 🔴 +-1.11%
+QQQ      $    603.38 🔴 +-1.59%
+IWM      $    259.56 🔴 +-2.03%
+^VIX     $     20.29 🟢 +14.96%
 ```
 
 ## 🔥 Sector Rotation
 
-- Tech (XLK): **-1.80%** 🔴
-- Fin (XLF): **-1.24%** 🔴
-- Enr (XLE): **-1.17%** 🔴
-- Ind (XLI): **-0.60%** 🔴
-- Hlp (XLV): **-0.76%** 🔴
-- Mat (XLB): **-2.68%** 🔴
+- Tech (XLK): **-2.21%** 🔴
+- Fin (XLF): **-2.18%** 🔴
+- Enr (XLE): **-1.64%** 🔴
+- Ind (XLI): **-1.05%** 🔴
+- Hlp (XLV): **+0.20%** 🟢
+- Mat (XLB): **-1.49%** 🔴
 
 ## 💼 Portfolio Performance
 
-- **Defense:** +0.58% 🟢
-- **Grid-to-Chip:** -0.32% 🔴
-- **TopVOO:** -2.67% 🔴
-- **Core ETFs:** -2.56% 🔴
+- **Defense:** +1.19% 🟢
+- **Grid-to-Chip:** -1.29% 🔴
+- **TopVOO:** -1.00% 🔴
+- **Core ETFs:** -1.77% 🔴
