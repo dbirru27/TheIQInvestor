@@ -1,34 +1,8 @@
 {
   "version": "4.2",
   "max_score": 100,
-  "last_scan": "2026-02-11 15:46 PST",
+  "last_scan": "2026-02-11 16:07 PST",
   "stocks": [
-    {
-      "ticker": "OKE",
-      "name": "ONEOK, Inc.",
-      "sector": "Energy",
-      "industry": "Oil & Gas Midstream",
-      "score": 97,
-      "max_score": 100,
-      "grade": "A",
-      "market_cap": 52559433728,
-      "technical_score": 48,
-      "growth_score": 31,
-      "quality_score": 13
-    },
-    {
-      "ticker": "WTM",
-      "name": "White Mountains Insurance Group",
-      "sector": "Financial Services",
-      "industry": "Insurance - Property & Casualt",
-      "score": 93,
-      "max_score": 100,
-      "grade": "A",
-      "market_cap": 5242285568,
-      "technical_score": 53,
-      "growth_score": 30,
-      "quality_score": 10
-    },
     {
       "ticker": "SON",
       "name": "Sonoco Products Company",
@@ -41,6 +15,32 @@
       "technical_score": 53,
       "growth_score": 25,
       "quality_score": 8
+    },
+    {
+      "ticker": "VRT",
+      "name": "Vertiv Holdings, LLC",
+      "sector": "Industrials",
+      "industry": "Electrical Equipment & Parts",
+      "score": 91,
+      "max_score": 100,
+      "grade": "A",
+      "market_cap": 76322373632,
+      "technical_score": 53,
+      "growth_score": 15,
+      "quality_score": 13
+    },
+    {
+      "ticker": "HALO",
+      "name": "Halozyme Therapeutics, Inc.",
+      "sector": "Healthcare",
+      "industry": "Biotechnology",
+      "score": 90,
+      "max_score": 100,
+      "grade": "A",
+      "market_cap": 9433631744,
+      "technical_score": 53,
+      "growth_score": 14,
+      "quality_score": 13
     },
     {
       "ticker": "JHG",
@@ -56,16 +56,16 @@
       "quality_score": 10
     },
     {
-      "ticker": "VRT",
-      "name": "Vertiv Holdings, LLC",
-      "sector": "Industrials",
-      "industry": "Electrical Equipment & Parts",
+      "ticker": "OKE",
+      "name": "ONEOK, Inc.",
+      "sector": "Energy",
+      "industry": "Oil & Gas Midstream",
       "score": 90,
       "max_score": 100,
       "grade": "A",
-      "market_cap": 76322373632,
-      "technical_score": 53,
-      "growth_score": 14,
+      "market_cap": 52559433728,
+      "technical_score": 48,
+      "growth_score": 24,
       "quality_score": 13
     },
     {
@@ -95,19 +95,6 @@
       "quality_score": 5
     },
     {
-      "ticker": "HALO",
-      "name": "Halozyme Therapeutics, Inc.",
-      "sector": "Healthcare",
-      "industry": "Biotechnology",
-      "score": 87,
-      "max_score": 100,
-      "grade": "A",
-      "market_cap": 9433631744,
-      "technical_score": 53,
-      "growth_score": 11,
-      "quality_score": 13
-    },
-    {
       "ticker": "SSB",
       "name": "SouthState Bank Corporation",
       "sector": "Financial Services",
@@ -119,6 +106,19 @@
       "technical_score": 53,
       "growth_score": 24,
       "quality_score": 5
+    },
+    {
+      "ticker": "WTM",
+      "name": "White Mountains Insurance Group",
+      "sector": "Financial Services",
+      "industry": "Insurance - Property & Casualt",
+      "score": 86,
+      "max_score": 100,
+      "grade": "A",
+      "market_cap": 5242285568,
+      "technical_score": 53,
+      "growth_score": 23,
+      "quality_score": 10
     },
     {
       "ticker": "HUBB",

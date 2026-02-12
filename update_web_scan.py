@@ -87,13 +87,37 @@ def rate_stock_v42(symbol, conn):
         passed_atr = bool(atr_current < 0.8 * atr_20d)
         results.append(CriterionResult("Volatility Compression", "Timing", passed_atr, "", "", 5 if passed_atr else 0))
         
-        # 7. Sales Growth (0-30 pts) - PROPORTIONAL: min(max(0, growth/0.3*12), 30)
+        # 7. Sales Growth with 2-Year Consistency (0-30 pts)
         rev_g = info.get('revenueGrowth')
+        
+        # Fetch prior year growth from revenue_history
+        rev_g_prior = None
+        try:
+            c = conn.cursor()
+            c.execute('''
+                SELECT revenue_growth_yoy FROM revenue_history 
+                WHERE symbol = ? AND revenue_growth_yoy IS NOT NULL
+                ORDER BY fiscal_year DESC LIMIT 1
+            ''', (symbol,))
+            row = c.fetchone()
+            if row:
+                rev_g_prior = row[0]
+        except:
+            pass
+        
+        # Calculate sales growth score
         if rev_g is not None and rev_g > 0:
-            sales_points = min(max(0, (rev_g / 0.30) * 12), 30)
+            if rev_g_prior is not None and rev_g_prior > 0:
+                avg_growth = (rev_g + rev_g_prior) / 2
+                consistent = rev_g > 0.10 and rev_g_prior > 0.10
+                consistency_bonus = 3 if consistent else 0
+                sales_points = min(max(0, (avg_growth / 0.30) * 12), 27) + consistency_bonus
+            else:
+                sales_points = min(max(0, (rev_g / 0.30) * 12), 30)
         else:
             sales_points = 0
-        results.append(CriterionResult("Sales Growth", "Growth", sales_points > 0, "", "", int(sales_points)))
+        
+        results.append(CriterionResult("Sales Growth (2yr)", "Growth", sales_points > 0, "", "", int(sales_points)))
         
         # 8. Earnings Growth (3 pts)
         earn_g = info.get('earningsGrowth')

@@ -121,13 +121,45 @@ class BreakoutRater:
             results.append(CriterionResult("Volatility Compression", "Timing", passed_atr, "ATR Squeezing", "ATR < 80% of 20D ATR", 5))
 
             # --- 3. GROWTH & QUALITY ---
-            # Sales Growth (0-30 pts) - PROPORTIONAL: min(max(0, growth/0.3*12), 30)
-            rev_g = info.get('revenueGrowth')
+            # Sales Growth with 2-Year Consistency (0-30 pts)
+            # Formula: min(max(0, avg_growth/0.3*12), 27) + consistency_bonus(3)
+            rev_g = info.get('revenueGrowth')  # Current/TTM growth
+            
+            # Fetch prior year growth from DB if available
+            rev_g_prior = None
+            try:
+                if db:
+                    # Get most recent fiscal year growth from revenue_history
+                    c = db.conn.cursor()
+                    c.execute('''
+                        SELECT revenue_growth_yoy FROM revenue_history 
+                        WHERE symbol = ? AND revenue_growth_yoy IS NOT NULL
+                        ORDER BY fiscal_year DESC LIMIT 1
+                    ''', (ticker,))
+                    row = c.fetchone()
+                    if row:
+                        rev_g_prior = row[0]
+            except:
+                pass
+            
+            # Calculate sales growth score with consistency
             if rev_g is not None and rev_g > 0:
-                sales_points = min(max(0, (rev_g / 0.30) * 12), 30)
+                if rev_g_prior is not None and rev_g_prior > 0:
+                    # Two years of data: average them with consistency bonus
+                    avg_growth = (rev_g + rev_g_prior) / 2
+                    consistent = rev_g > 0.10 and rev_g_prior > 0.10
+                    consistency_bonus = 3 if consistent else 0
+                    sales_points = min(max(0, (avg_growth / 0.30) * 12), 27) + consistency_bonus
+                    growth_display = f"{float(rev_g)*100:.1f}% (avg 2yr: {float(avg_growth)*100:.1f}%)"
+                else:
+                    # Only current year available
+                    sales_points = min(max(0, (rev_g / 0.30) * 12), 30)
+                    growth_display = f"{float(rev_g)*100:.1f}%"
             else:
                 sales_points = 0
-            results.append(CriterionResult("Sales Growth", "Growth", sales_points > 0, f"{float(rev_g)*100:.1f}%" if rev_g else "N/A", "Proportional 0-30", int(sales_points)))
+                growth_display = "N/A"
+            
+            results.append(CriterionResult("Sales Growth (2yr)", "Growth", sales_points > 0, growth_display, "Proportional 0-30 + consistency", int(sales_points)))
 
             # Earnings Growth (3 pts)
             eps_g = info.get('earningsGrowth')
