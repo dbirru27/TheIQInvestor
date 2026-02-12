@@ -157,22 +157,38 @@ class BreakoutRater:
             except:
                 pass
             
-            # STRICT GATE: Both TTM periods must be >= 10%
+            # For prior year, fallback to fiscal year data if TTM not available
+            if rev_g_prior is None:
+                try:
+                    if db:
+                        c = db.conn.cursor()
+                        c.execute('''
+                            SELECT revenue_growth_yoy FROM revenue_history 
+                            WHERE symbol = ? AND revenue_growth_yoy IS NOT NULL
+                            ORDER BY fiscal_year DESC LIMIT 1 OFFSET 1
+                        ''', (ticker,))
+                        row = c.fetchone()
+                        if row:
+                            rev_g_prior = row[0]
+                except:
+                    pass
+            
+            # STRICT GATE: Both periods must be >= 10%
             if rev_g is None or rev_g < 0.10:
                 sales_points = 0
-                growth_display = f"{float(rev_g)*100:.1f}% (TTM < 10%)" if rev_g else "N/A"
+                growth_display = f"{float(rev_g)*100:.1f}% (current < 10%)" if rev_g else "N/A"
             elif rev_g_prior is None or rev_g_prior < 0.10:
                 sales_points = 0
-                growth_display = f"{float(rev_g)*100:.1f}% (prior TTM < 10%)" if rev_g else "N/A"
+                growth_display = f"{float(rev_g)*100:.1f}% (prior < 10%)" if rev_g else "N/A"
             else:
-                # Both TTM periods >= 10%
+                # Both periods >= 10%
                 avg_growth = (rev_g + rev_g_prior) / 2
                 consistency_bonus = 3
                 base_score = min(max(0, (avg_growth / 0.30) * 12), 27)
                 sales_points = base_score + consistency_bonus
-                growth_display = f"{float(rev_g)*100:.1f}% TTM (avg: {float(avg_growth)*100:.1f}%)"
+                growth_display = f"{float(rev_g)*100:.1f}% (avg: {float(avg_growth)*100:.1f}%)"
             
-            results.append(CriterionResult("Sales Growth (TTM)", "Growth", sales_points > 0, growth_display, "Both TTM >= 10% required", int(sales_points)))
+            results.append(CriterionResult("Sales Growth (2yr)", "Growth", sales_points > 0, growth_display, "Both years >= 10% required", int(sales_points)))
 
             # Earnings Growth (3 pts)
             eps_g = info.get('earningsGrowth')
