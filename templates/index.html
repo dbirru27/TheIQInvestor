@@ -445,10 +445,12 @@
             document.getElementById('news-list').innerHTML = '';
 
             try {
-                const res = await fetch(`/api/rate/${ticker}`);
-                const data = await res.json();
-
-                if (data.error) throw new Error(data.error);
+                // Load from local all_stocks.json cache
+                const res = await fetch('all_stocks.json');
+                const allData = await res.json();
+                const data = allData.stocks[ticker.toUpperCase()];
+                
+                if (!data) throw new Error(`${ticker} not found in cache`);
 
                 document.getElementById('detail-name').innerText = data.name;
                 document.getElementById('detail-ticker-sector').innerText = `${data.ticker} • ${data.sector}${data.industry ? ' • ' + data.industry : ''}`;
@@ -460,13 +462,15 @@
                 document.getElementById('quality-score').innerText = data.quality_score || 0;
                 document.getElementById('context-score').innerText = data.context_score || 0;
 
-                document.getElementById('rec-key').innerText = data.opinions.recommendation;
-                document.getElementById('target-price').innerText = data.opinions.target_mean ? `$${data.opinions.target_mean.toFixed(2)}` : 'N/A';
-                document.getElementById('analyst-count').innerText = data.opinions.analysts || '0';
+                // Analyst data not in cache
+                document.getElementById('rec-key').innerText = 'N/A';
+                document.getElementById('target-price').innerText = 'N/A';
+                document.getElementById('analyst-count').innerText = '0';
 
-                document.getElementById('forward-pe').innerText = data.valuation.forward_pe ? data.valuation.forward_pe.toFixed(2) : 'N/A';
-                document.getElementById('trailing-pe').innerText = data.valuation.trailing_pe ? data.valuation.trailing_pe.toFixed(2) : 'N/A';
-                document.getElementById('peg-ratio').innerText = data.valuation.peg_ratio ? data.valuation.peg_ratio.toFixed(2) : 'N/A';
+                // Valuation data not in cache
+                document.getElementById('forward-pe').innerText = 'N/A';
+                document.getElementById('trailing-pe').innerText = 'N/A';
+                document.getElementById('peg-ratio').innerText = 'N/A';
 
                 document.getElementById('criteria-list').innerHTML = data.results.map(r => `
                     <div class="card flex justify-between items-center py-4">

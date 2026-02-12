@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 InvestIQ Website Scan - v4.3 TTM-Based (100 Point Scale)
-Updates top_stocks.json for website display
+Updates top_stocks.json and all_stocks.json for website display
 """
 import json
 import os
@@ -10,51 +10,15 @@ import sys
 from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from rater import CriterionResult
+from rater import CriterionResult, get_ttm_growth
 
 DB_PATH = os.path.join(os.getcwd(), 'market_data.db')
 
 def get_db_connection():
     return sqlite3.connect(DB_PATH)
 
-def get_ttm_growth(symbol, conn):
-    """Calculate TTM growth from quarterly data"""
-    try:
-        c = conn.cursor()
-        c.execute('''
-            SELECT year, quarter, revenue FROM quarterly_revenue
-            WHERE symbol = ? AND revenue IS NOT NULL
-            ORDER BY year DESC, quarter DESC
-            LIMIT 12
-        ''', (symbol,))
-        rows = c.fetchall()
-        
-        if len(rows) < 8:
-            return None, None
-        
-        # TTM Current = sum of most recent 4 quarters
-        ttm_current = sum(r[2] for r in rows[0:4])
-        # TTM Prior Year = sum of quarters 5-8
-        ttm_prior = sum(r[2] for r in rows[4:8])
-        
-        rev_g = None
-        rev_g_prior = None
-        
-        if ttm_prior > 0:
-            rev_g = (ttm_current - ttm_prior) / ttm_prior
-        
-        # TTM 2 Years Ago = sum of quarters 9-12
-        if len(rows) >= 12:
-            ttm_2yr = sum(r[2] for r in rows[8:12])
-            if ttm_2yr > 0:
-                rev_g_prior = (ttm_prior - ttm_2yr) / ttm_2yr
-        
-        return rev_g, rev_g_prior
-    except:
-        return None, None
-
-def rate_stock_v43(symbol, conn):
-    """Rate stock using v4.3 TTM-based 100-point scale with DB data"""
+def rate_stock_v43_full(symbol, conn):
+    """Rate stock with full details including criteria breakdown"""
     try:
         import pandas as pd
         
@@ -127,11 +91,9 @@ def rate_stock_v43(symbol, conn):
         rev_g_fallback = info.get('revenueGrowth')
         rev_g, rev_g_prior = get_ttm_growth(symbol, conn)
         
-        # Use TTM if available, else fallback to yfinance for current
         if rev_g is None:
             rev_g = rev_g_fallback
         
-        # For prior year, fallback to fiscal year data if TTM not available
         if rev_g_prior is None:
             try:
                 c = conn.cursor()
@@ -146,18 +108,20 @@ def rate_stock_v43(symbol, conn):
             except:
                 pass
         
-        # STRICT GATE: Both periods must be >= 10%
         if rev_g is None or rev_g < 0.10:
             sales_points = 0
+            growth_display = f"{float(rev_g)*100:.1f}% (current < 10%)" if rev_g else "N/A"
         elif rev_g_prior is None or rev_g_prior < 0.10:
             sales_points = 0
+            growth_display = f"{float(rev_g)*100:.1f}% (prior < 10%)" if rev_g else "N/A"
         else:
             avg_growth = (rev_g + rev_g_prior) / 2
             consistency_bonus = 3
             base_score = min(max(0, (avg_growth / 0.30) * 12), 27)
             sales_points = base_score + consistency_bonus
+            growth_display = f"{float(rev_g)*100:.1f}% (avg: {float(avg_growth)*100:.1f}%)"
         
-        results.append(CriterionResult("Sales Growth (TTM)", "Growth", sales_points > 0, "", "", int(sales_points)))
+        results.append(CriterionResult("Sales Growth (2yr)", "Growth", sales_points > 0, growth_display, "Both years >= 10% required", int(sales_points)))
         
         # 8. Earnings Growth (3 pts)
         earn_g = info.get('earningsGrowth')
@@ -174,7 +138,7 @@ def rate_stock_v43(symbol, conn):
         passed_margin = bool(margin is not None and margin > 0.10)
         results.append(CriterionResult("Operating Margin", "Quality", passed_margin, "", "", 5 if passed_margin else 0))
         
-        # 11. Valuation Sanity (5 pts) - PEG < 2.0
+        # 11. Valuation Sanity (5 pts)
         peg = info.get('pegRatio')
         passed_peg = bool(peg is not None and peg < 2.0 and peg > 0)
         results.append(CriterionResult("Valuation Sanity", "Quality", passed_peg, "", "", 5 if passed_peg else 0))
@@ -207,15 +171,27 @@ def rate_stock_v43(symbol, conn):
         if size_penalty < 0:
             results.append(CriterionResult("Size Factor", "Context", False, "", "", size_penalty))
         
-        # Calculate total (0-100)
+        # Calculate total
         total = sum(r.points for r in results)
         
-        # Tighter grading: A=70+, B=55-69, C=40-54, D=25-39, F=<25
+        # Grading
         if total >= 70: grade = 'A'
         elif total >= 55: grade = 'B'
         elif total >= 40: grade = 'C'
         elif total >= 25: grade = 'D'
         else: grade = 'F'
+        
+        # Build criteria list for detail view
+        criteria_list = []
+        for r in results:
+            criteria_list.append({
+                'name': r.name,
+                'category': r.category,
+                'passed': r.passed,
+                'points': r.points,
+                'value': r.value,
+                'threshold': r.threshold
+            })
         
         return {
             'ticker': symbol,
@@ -230,13 +206,14 @@ def rate_stock_v43(symbol, conn):
             'growth_score': sum(r.points for r in results if r.category == "Growth"),
             'quality_score': sum(r.points for r in results if r.category == "Quality"),
             'context_score': sum(r.points for r in results if r.category == "Context"),
+            'criteria': criteria_list  # Full breakdown for detail view
         }
         
     except Exception as e:
         return None
 
 def run_scan():
-    print("🚀 Starting InvestIQ v4.3 TTM Scan (100 Point Scale)...")
+    print("🚀 Starting InvestIQ v4.3 Full Scan (All Stocks + Details)...")
     
     conn = get_db_connection()
     c = conn.cursor()
@@ -244,11 +221,11 @@ def run_scan():
     c.execute('SELECT DISTINCT symbol FROM prices')
     tickers = [row[0] for row in c.fetchall()]
     
-    print(f"Found {len(tickers)} tickers in database")
+    print(f"Found {len(tickers)} tickers")
     
     results = []
     for i, ticker in enumerate(tickers, 1):
-        data = rate_stock_v43(ticker, conn)
+        data = rate_stock_v43_full(ticker, conn)
         if data:
             results.append(data)
         
@@ -258,25 +235,36 @@ def run_scan():
     conn.close()
     
     # FILTER: Only include stocks that passed BOTH years >= 10% revenue growth
-    # This means growth_score must be >= 15 (base 12 + bonus 3 for consistency)
     filtered_results = [r for r in results if r.get('growth_score', 0) >= 15]
     
     results.sort(key=lambda x: x['score'], reverse=True)
     filtered_results.sort(key=lambda x: x['score'], reverse=True)
     
-    # Save ALL stocks to comprehensive cache
-    full_output = {
+    # Save filtered top stocks for main display
+    top_output = {
         'version': '4.3',
         'max_score': 100,
         'last_scan': datetime.now().strftime('%Y-%m-%d %H:%M PST'),
         'total_stocks': len(filtered_results),
-        'stocks': filtered_results  # Filtered: growth_score >= 5
+        'stocks': filtered_results[:100]
     }
     
     with open('top_stocks.json', 'w') as f:
-        json.dump(full_output, f, indent=2)
+        json.dump(top_output, f, indent=2)
     
-    print(f"\n✅ Saved {len(filtered_results)} stocks (both years >= 10% growth) to top_stocks.json")
+    # Save ALL stocks with full details for website detail view
+    all_output = {
+        'version': '4.3',
+        'last_scan': datetime.now().strftime('%Y-%m-%d %H:%M PST'),
+        'total_stocks': len(results),
+        'stocks': {s['ticker']: s for s in results}  # Dict for O(1) lookup
+    }
+    
+    with open('all_stocks.json', 'w') as f:
+        json.dump(all_output, f, indent=2)
+    
+    print(f"\n✅ Saved {len(filtered_results)} top stocks (both years >= 10% growth)")
+    print(f"   Saved {len(results)} total stocks with details to all_stocks.json")
     print(f"   Filtered out: {len(results) - len(filtered_results)} stocks failed revenue gate")
     print(f"   Top 5: {', '.join([s['ticker'] + ' ' + str(s['score']) for s in filtered_results[:5]])}")
 
