@@ -246,8 +246,10 @@ class BreakoutRater:
             # Tighter grading: A=70+ (70% of max), B=55-69, C=40-54, D=25-39, F=<25
             grade = 'A' if score >= 70 else 'B' if score >= 55 else 'C' if score >= 40 else 'D' if score >= 25 else 'F'
 
-            m_score = int(sum(r.points for r in results if r.category in ["Momentum", "Breakout", "Timing"]))
-            q_score = int(sum(r.points for r in results if r.category in ["Growth", "Quality"]))
+            technical_score = int(sum(r.points for r in results if r.category in ["Momentum", "Breakout", "Timing"]))
+            growth_score = int(sum(r.points for r in results if r.category == "Growth"))
+            quality_score = int(sum(r.points for r in results if r.category == "Quality"))
+            context_score = int(sum(r.points for r in results if r.category == "Context"))
 
             # News Relay
             news_items = []
@@ -289,8 +291,10 @@ class BreakoutRater:
                 "score": score,
                 "grade": grade,
                 "max_score": 100,
-                "technical_score": m_score,
-                "quality_score": q_score,
+                "technical_score": technical_score,
+                "growth_score": growth_score,
+                "quality_score": quality_score,
+                "context_score": context_score,
                 "results": [asdict(r) for r in results],
                 "news": news_items,
                 "market_cap": market_cap,
