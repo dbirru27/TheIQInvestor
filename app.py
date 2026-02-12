@@ -64,78 +64,18 @@ def index():
 
 @app.route('/api/rate/<ticker>')
 def rate_ticker(ticker):
-    """Read from cached top_stocks.json for consistency with list view"""
+    """Use live rater for detailed criteria breakdown"""
     try:
-        ticker = ticker.upper()
-        if os.path.exists('top_stocks.json'):
-            with open('top_stocks.json', 'r') as f:
-                data = json.load(f)
-                stocks = data.get('stocks', [])
-                for stock in stocks:
-                    if stock['ticker'] == ticker:
-                        # Fetch live news only
-                        try:
-                            import yfinance as yf
-                            stock_obj = yf.Ticker(ticker)
-                            news_items = []
-                            raw_news = stock_obj.news or []
-                            for n in raw_news[:5]:
-                                content = n.get('content', {})
-                                title = content.get('title')
-                                publisher = content.get('provider', {}).get('displayName')
-                                link = content.get('canonicalUrl', {}).get('url')
-                                pub_date = content.get('pubDate')
-                                if title:
-                                    time_str = "Recently"
-                                    if pub_date:
-                                        try:
-                                            from datetime import datetime
-                                            dt = datetime.fromisoformat(pub_date.replace('Z', '+00:00'))
-                                            time_str = dt.strftime('%b %d, %H:%M')
-                                        except:
-                                            time_str = pub_date[:16] if pub_date else "Recently"
-                                    news_items.append({
-                                        "title": title,
-                                        "publisher": publisher or "Yahoo Finance",
-                                        "link": link,
-                                        "time": time_str
-                                    })
-                        except:
-                            news_items = []
-                        
-                        # Return cached rating + live news
-                        return jsonify({
-                            "ticker": stock['ticker'],
-                            "name": stock['name'],
-                            "sector": stock['sector'],
-                            "industry": stock.get('industry', 'N/A'),
-                            "score": stock['score'],
-                            "grade": stock['grade'],
-                            "max_score": 100,
-                            "technical_score": stock.get('technical_score', 0),
-                            "growth_score": stock.get('growth_score', 0),
-                            "quality_score": stock.get('quality_score', 0),
-                            "context_score": stock.get('context_score', 0),
-                            "market_cap": stock.get('market_cap', 0),
-                            "results": [],
-                            "news": news_items,
-                            "valuation": {
-                                "forward_pe": None,
-                                "trailing_pe": None,
-                                "peg_ratio": None,
-                                "book_value": None,
-                                "price_to_book": None,
-                                "roe": None
-                            },
-                            "opinions": {
-                                "recommendation": "N/A",
-                                "target_mean": None,
-                                "analysts": 0
-                            }
-                        })
-        return jsonify({"error": f"{ticker} not found in cache"}), 404
+        from rater import BreakoutRater
+        rater = BreakoutRater()
+        data = rater.rate_stock(ticker)
+        if not data:
+            return jsonify({"error": "Data unavailable"}), 404
+        if "error" in data:
+            return jsonify(data), 500
+        return jsonify(data)
     except Exception as e:
-        return jsonify({"error": f"Error reading cache: {str(e)}"}), 500
+        return jsonify({"error": f"Engine Crash: {str(e)}", "trace": traceback.format_exc()}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=18791, debug=True)
