@@ -77,5 +77,18 @@ def rate_ticker(ticker):
     except Exception as e:
         return jsonify({"error": f"Engine Crash: {str(e)}", "trace": traceback.format_exc()}), 500
 
+@app.route('/api/all_stocks')
+def all_stocks():
+    """Serve all_stocks.json for detail view"""
+    try:
+        file_path = os.path.join(os.getcwd(), 'all_stocks.json')
+        with open(file_path, 'r') as f:
+            data = json.load(f)
+        return jsonify(data)
+    except FileNotFoundError:
+        return jsonify({"error": "Stock data not found"}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=18791, debug=True)

@@ -448,7 +448,7 @@
             if (allStocksCache) return allStocksCache;
             if (allStocksLoading) return allStocksLoading;
             
-            allStocksLoading = fetch('all_stocks.json')
+            allStocksLoading = fetch('/api/all_stocks')
                 .then(res => {
                     if (!res.ok) throw new Error(`HTTP ${res.status}`);
                     return res.json();
