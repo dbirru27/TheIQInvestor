@@ -49,10 +49,12 @@ def rate_stock_v43_full(symbol, conn):
         price_above_50 = bool(current_price > sma50)
         if pd.notna(sma200):
             passed_trend = bool(price_above_50 and (sma50 > sma200))
+            trend_val = f"${current_price:.2f} > 50d(${sma50:.2f}) > 200d(${sma200:.2f})"
         else:
             sma50_prev = close.rolling(50).mean().iloc[-5]
             passed_trend = bool(price_above_50 and sma50 > sma50_prev)
-        results.append(CriterionResult("Trend Alignment", "Momentum", passed_trend, "", "", 8 if passed_trend else 0))
+            trend_val = f"${current_price:.2f} > 50d(${sma50:.2f})"
+        results.append(CriterionResult("Trend Alignment", "Momentum", passed_trend, trend_val, "Price > 50d > 200d", 8 if passed_trend else 0))
         
         # 2. Breakout Pattern (22 pts)
         window = hist.iloc[-130:-5]
@@ -62,30 +64,40 @@ def rate_stock_v43_full(symbol, conn):
         base_ceiling = max(high_1, high_2)
         dist = (base_ceiling - current_price) / base_ceiling
         passed_bo = bool((drift < 0.10) and (dist < 0.05))
-        results.append(CriterionResult("Breakout Pattern", "Breakout", passed_bo, "", "", 22 if passed_bo else 0))
+        bo_val = f"{(dist*100):.1f}% from base, drift: {(drift*100):.1f}%"
+        results.append(CriterionResult("Breakout Pattern", "Breakout", passed_bo, bo_val, "< 5% from ceiling, < 10% drift", 22 if passed_bo else 0))
         
         # 3. Consolidation (10 pts)
-        depth = (window['high'].max() - window['low'].min()) / window['high'].max()
+        base_high = window['high'].max()
+        base_low = window['low'].min()
+        depth = (base_high - base_low) / base_high
         passed_con = bool(depth < 0.45)
-        results.append(CriterionResult("Consolidation", "Breakout", passed_con, "", "", 10 if passed_con else 0))
+        con_val = f"{(depth*100):.1f}% depth (${base_low:.2f} - ${base_high:.2f})"
+        results.append(CriterionResult("Consolidation", "Breakout", passed_con, con_val, "Base depth < 45%", 10 if passed_con else 0))
         
         # 4. Volume Dry-up (8 pts)
         v5 = hist['volume'].tail(5).mean()
         v50 = hist['volume'].tail(50).mean()
-        passed_vol = bool(v5 < (v50 * 1.2))
-        results.append(CriterionResult("Volume Dry-up", "Breakout", passed_vol, "", "", 8 if passed_vol else 0))
+        vol_ratio = v5 / v50 if v50 > 0 else 1
+        passed_vol = bool(vol_ratio < 1.2)
+        vol_val = f"{(vol_ratio*100):.0f}% of avg ({v5/1e6:.1f}M vs {v50/1e6:.1f}M)"
+        results.append(CriterionResult("Volume Dry-up", "Breakout", passed_vol, vol_val, "5d vol < 1.2x 50d vol", 8 if passed_vol else 0))
         
         # 5. 52W Proximity (5 pts)
         high_52w = hist['high'].max()
+        low_52w = hist['low'].min()
         proximity = current_price / high_52w
         passed_52w = bool(proximity > 0.90)
-        results.append(CriterionResult("52W Proximity", "Timing", passed_52w, "", "", 5 if passed_52w else 0))
+        proximity_val = f"{(proximity*100):.1f}% of 52W high (${high_52w:.2f})"
+        results.append(CriterionResult("52W Proximity", "Timing", passed_52w, proximity_val, "> 90% of 52W high", 5 if passed_52w else 0))
         
         # 6. Volatility Compression (5 pts)
         atr_current = (hist['high'].tail(14) - hist['low'].tail(14)).mean()
         atr_20d = (hist['high'].tail(20) - hist['low'].tail(20)).mean()
-        passed_atr = bool(atr_current < 0.8 * atr_20d)
-        results.append(CriterionResult("Volatility Compression", "Timing", passed_atr, "", "", 5 if passed_atr else 0))
+        atr_ratio = atr_current / atr_20d if atr_20d > 0 else 1
+        passed_atr = bool(atr_ratio < 0.8)
+        atr_val = f"{(atr_ratio*100):.1f}% of 20d ATR (${atr_current:.2f} vs ${atr_20d:.2f})"
+        results.append(CriterionResult("Volatility Compression", "Timing", passed_atr, atr_val, "14d ATR < 80% of 20d ATR", 5 if passed_atr else 0))
         
         # 7. Sales Growth with TTM/Fiscal Consistency (0-30 pts)
         rev_g_fallback = info.get('revenueGrowth')
@@ -126,50 +138,59 @@ def rate_stock_v43_full(symbol, conn):
         # 8. Earnings Growth (3 pts)
         earn_g = info.get('earningsGrowth')
         passed_earn = bool(earn_g is not None and earn_g > 0.15)
-        results.append(CriterionResult("Earnings Growth", "Growth", passed_earn, "", "", 3 if passed_earn else 0))
+        earn_val = f"{float(earn_g)*100:.1f}%" if earn_g else "N/A"
+        results.append(CriterionResult("Earnings Growth", "Growth", passed_earn, earn_val, "> 15%", 3 if passed_earn else 0))
         
         # 9. ROE Quality (5 pts)
         roe = info.get('returnOnEquity')
         passed_roe = bool(roe is not None and roe > 0.15)
-        results.append(CriterionResult("ROE Quality", "Quality", passed_roe, "", "", 5 if passed_roe else 0))
+        roe_val = f"{float(roe)*100:.1f}%" if roe else "N/A"
+        results.append(CriterionResult("ROE Quality", "Quality", passed_roe, roe_val, "> 15%", 5 if passed_roe else 0))
         
         # 10. Operating Margin (5 pts)
         margin = info.get('operatingMargins')
         passed_margin = bool(margin is not None and margin > 0.10)
-        results.append(CriterionResult("Operating Margin", "Quality", passed_margin, "", "", 5 if passed_margin else 0))
+        margin_val = f"{float(margin)*100:.1f}%" if margin else "N/A"
+        results.append(CriterionResult("Operating Margin", "Quality", passed_margin, margin_val, "> 10%", 5 if passed_margin else 0))
         
         # 11. Valuation Sanity (5 pts)
         peg = info.get('pegRatio')
         passed_peg = bool(peg is not None and peg < 2.0 and peg > 0)
-        results.append(CriterionResult("Valuation Sanity", "Quality", passed_peg, "", "", 5 if passed_peg else 0))
+        peg_val = f"{float(peg):.2f}" if peg else "N/A"
+        results.append(CriterionResult("Valuation Sanity", "Quality", passed_peg, peg_val, "PEG < 2.0", 5 if passed_peg else 0))
         
         # 12. FCF Quality (3 pts)
         fcf = info.get('freeCashflow')
         passed_fcf = bool(fcf is not None and fcf > 0)
-        results.append(CriterionResult("FCF Quality", "Quality", passed_fcf, "", "", 3 if passed_fcf else 0))
+        fcf_val = f"${float(fcf)/1e9:.2f}B" if fcf else "N/A"
+        results.append(CriterionResult("FCF Quality", "Quality", passed_fcf, fcf_val, "FCF > 0", 3 if passed_fcf else 0))
         
         # 13. Industry Strength (5 pts)
         sector = info.get('sector', '')
         strong_sectors = ['Technology', 'Healthcare', 'Communication Services', 'Industrials']
         passed_ind = sector in strong_sectors
-        results.append(CriterionResult("Industry Strength", "Context", passed_ind, "", "", 5 if passed_ind else 0))
+        results.append(CriterionResult("Industry Strength", "Context", passed_ind, sector, "High-Conviction Sector", 5 if passed_ind else 0))
         
         # 14. Relative Strength (5 pts)
         price_1m = close.iloc[-22] if len(close) >= 22 else close.iloc[0]
         ret_1m = (current_price - price_1m) / price_1m
         passed_rs = bool(ret_1m > 0.05)
-        results.append(CriterionResult("Relative Strength", "Context", passed_rs, "", "", 5 if passed_rs else 0))
+        rs_val = f"{float(ret_1m)*100:+.1f}%"
+        results.append(CriterionResult("Relative Strength", "Context", passed_rs, rs_val, "> 5% vs Market", 5 if passed_rs else 0))
         
         # 15. Size Penalty
         market_cap = info.get('marketCap', 0)
         size_penalty = 0
+        size_val = ""
         if market_cap > 1_000_000_000_000:
             size_penalty = -10
+            size_val = f"${market_cap/1e12:.1f}T"
         elif market_cap > 500_000_000_000:
             size_penalty = -5
+            size_val = f"${market_cap/1e9:.0f}B"
         
         if size_penalty < 0:
-            results.append(CriterionResult("Size Factor", "Context", False, "", "", size_penalty))
+            results.append(CriterionResult("Size Factor", "Context", False, size_val, "Large Cap Penalty", size_penalty))
         
         # Calculate total
         total = sum(r.points for r in results)
