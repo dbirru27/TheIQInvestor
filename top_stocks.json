@@ -1,7 +1,7 @@
 {
   "version": "4.3",
   "max_score": 100,
-  "last_scan": "2026-02-13 14:15 PST",
+  "last_scan": "2026-02-13 14:24 PST",
   "total_stocks": 78,
   "stocks": [
     {
@@ -130,7 +130,14 @@
           "value": "+2.6%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 27.164507,
+      "trailing_pe": 56.733337,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 127.4,
+      "analyst_count": 10,
+      "current_price": 119.14
     },
     {
       "ticker": "IBKR",
@@ -258,7 +265,14 @@
           "value": "+9.6%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 28.037146,
+      "trailing_pe": 34.774773,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 80.66667,
+      "analyst_count": 9,
+      "current_price": 77.2
     },
     {
       "ticker": "WTM",
@@ -386,7 +400,14 @@
           "value": "+4.0%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 23.490002,
+      "trailing_pe": 4.9139977,
+      "peg_ratio": null,
+      "recommendation": "none",
+      "target_mean": null,
+      "analyst_count": 0,
+      "current_price": 2114.1
     },
     {
       "ticker": "RNR",
@@ -514,7 +535,14 @@
           "value": "+8.2%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 7.1777334,
+      "trailing_pe": 5.274139,
+      "peg_ratio": null,
+      "recommendation": "hold",
+      "target_mean": 310.66666,
+      "analyst_count": 15,
+      "current_price": 295.51
     },
     {
       "ticker": "HALO",
@@ -642,7 +670,14 @@
           "value": "+10.7%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 9.806846,
+      "trailing_pe": 16.924051,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 78.0,
+      "analyst_count": 8,
+      "current_price": 80.22
     },
     {
       "ticker": "CINF",
@@ -770,7 +805,14 @@
           "value": "+2.5%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 17.93699,
+      "trailing_pe": 10.876811,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 173.66667,
+      "analyst_count": 6,
+      "current_price": 165.11
     },
     {
       "ticker": "VRT",
@@ -898,7 +940,14 @@
           "value": "+46.2%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 37.43923,
+      "trailing_pe": 75.3283,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 200.15625,
+      "analyst_count": 24,
+      "current_price": 199.62
     },
     {
       "ticker": "RCL",
@@ -1026,7 +1075,14 @@
           "value": "+11.5%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 16.782316,
+      "trailing_pe": 22.2771,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 363.08334,
+      "analyst_count": 24,
+      "current_price": 347.3
     },
     {
       "ticker": "NEE",
@@ -1154,7 +1210,14 @@
           "value": "+13.7%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 20.733467,
+      "trailing_pe": 27.692074,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 92.64545,
+      "analyst_count": 22,
+      "current_price": 90.83
     },
     {
       "ticker": "MU",
@@ -1282,7 +1345,14 @@
           "value": "+18.6%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 8.597669,
+      "trailing_pe": 35.446346,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 379.66666,
+      "analyst_count": 39,
+      "current_price": 373.25
     },
     {
       "ticker": "NU",
@@ -1410,7 +1480,14 @@
           "value": "+0.6%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 19.27338,
+      "trailing_pe": 33.788464,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 19.98889,
+      "analyst_count": 18,
+      "current_price": 17.57
     },
     {
       "ticker": "NVDA",
@@ -1546,7 +1623,14 @@
           "value": "$4.6T",
           "threshold": "Large Cap Penalty"
         }
-      ]
+      ],
+      "forward_pe": 24.441496,
+      "trailing_pe": 46.784115,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 253.62138,
+      "analyst_count": 58,
+      "current_price": 188.54
     },
     {
       "ticker": "ALNY",
@@ -1674,7 +1758,14 @@
           "value": "-16.6%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 19.116886,
+      "trailing_pe": 131.82907,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 477.58292,
+      "analyst_count": 24,
+      "current_price": 308.48
     },
     {
       "ticker": "NVT",
@@ -1802,7 +1893,14 @@
           "value": "+6.6%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 23.3131,
+      "trailing_pe": 43.134617,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 127.00308,
+      "analyst_count": 13,
+      "current_price": 112.15
     },
     {
       "ticker": "COLB",
@@ -1930,7 +2028,14 @@
           "value": "+10.5%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 9.247915,
+      "trailing_pe": 13.586957,
+      "peg_ratio": null,
+      "recommendation": "hold",
+      "target_mean": 32.57692,
+      "analyst_count": 13,
+      "current_price": 31.25
     },
     {
       "ticker": "VIK",
@@ -2058,7 +2163,14 @@
           "value": "+8.0%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 23.46835,
+      "trailing_pe": 36.299065,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 73.55556,
+      "analyst_count": 18,
+      "current_price": 77.68
     },
     {
       "ticker": "FSLR",
@@ -2186,7 +2298,14 @@
           "value": "-5.2%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 9.727635,
+      "trailing_pe": 17.363008,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 280.4871,
+      "analyst_count": 31,
+      "current_price": 226.24
     },
     {
       "ticker": "FTAI",
@@ -2314,7 +2433,14 @@
           "value": "+9.0%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 39.774246,
+      "trailing_pe": 61.422012,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 314.6,
+      "analyst_count": 10,
+      "current_price": 267.8
     },
     {
       "ticker": "ANET",
@@ -2442,7 +2568,14 @@
           "value": "+4.0%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 32.50507,
+      "trailing_pe": 48.95652,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 167.4324,
+      "analyst_count": 25,
+      "current_price": 135.12
     },
     {
       "ticker": "FIX",
@@ -2570,7 +2703,14 @@
           "value": "+25.7%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 41.01887,
+      "trailing_pe": 53.752327,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 1247.2,
+      "analyst_count": 5,
+      "current_price": 1269.63
     },
     {
       "ticker": "APLS",
@@ -2698,7 +2838,14 @@
           "value": "+3.4%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": -16.896551,
+      "trailing_pe": 61.249996,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 33.94737,
+      "analyst_count": 19,
+      "current_price": 22.05
     },
     {
       "ticker": "QXO",
@@ -2826,7 +2973,14 @@
           "value": "-7.2%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 60.13732,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "none",
+      "target_mean": 32.13333,
+      "analyst_count": 15,
+      "current_price": 23.21
     },
     {
       "ticker": "RDDT",
@@ -2954,7 +3108,14 @@
           "value": "-38.7%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 18.608725,
+      "trailing_pe": 57.244274,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 233.75862,
+      "analyst_count": 29,
+      "current_price": 149.98
     },
     {
       "ticker": "CELH",
@@ -3082,7 +3243,14 @@
           "value": "-15.6%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 28.585228,
+      "trailing_pe": 369.91666,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 64.0,
+      "analyst_count": 20,
+      "current_price": 44.39
     },
     {
       "ticker": "HOOD",
@@ -3210,7 +3378,14 @@
           "value": "-25.7%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 30.46014,
+      "trailing_pe": 35.666664,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 146.33762,
+      "analyst_count": 21,
+      "current_price": 85.6
     },
     {
       "ticker": "VG",
@@ -3338,7 +3513,14 @@
           "value": "+40.2%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 12.468337,
+      "trailing_pe": 11.655172,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 11.76471,
+      "analyst_count": 17,
+      "current_price": 10.14
     },
     {
       "ticker": "ALAB",
@@ -3466,7 +3648,14 @@
           "value": "-29.9%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 35.91024,
+      "trailing_pe": 103.7541,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 204.47368,
+      "analyst_count": 19,
+      "current_price": 126.58
     },
     {
       "ticker": "DXCM",
@@ -3594,7 +3783,14 @@
           "value": "+1.1%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 27.570364,
+      "trailing_pe": 37.86667,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 85.19231,
+      "analyst_count": 26,
+      "current_price": 68.16
     },
     {
       "ticker": "HEI",
@@ -3722,7 +3918,14 @@
           "value": "-8.5%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 51.428204,
+      "trailing_pe": 65.72357,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 373.55557,
+      "analyst_count": 18,
+      "current_price": 323.36
     },
     {
       "ticker": "HEI-A",
@@ -3850,7 +4053,14 @@
           "value": "-9.3%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 57.51044,
+      "trailing_pe": 50.48269,
+      "peg_ratio": null,
+      "recommendation": "none",
+      "target_mean": 280.0,
+      "analyst_count": 1,
+      "current_price": 247.87
     },
     {
       "ticker": "ONON",
@@ -3978,7 +4188,14 @@
           "value": "-7.8%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 26.009016,
+      "trailing_pe": 52.068966,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 62.668034,
+      "analyst_count": 27,
+      "current_price": 45.3
     },
     {
       "ticker": "PLTR",
@@ -4106,7 +4323,14 @@
           "value": "-21.4%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 77.01267,
+      "trailing_pe": 221.44444,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 189.92043,
+      "analyst_count": 24,
+      "current_price": 139.51
     },
     {
       "ticker": "KNSL",
@@ -4234,7 +4458,14 @@
           "value": "+0.1%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 19.336006,
+      "trailing_pe": 19.567354,
+      "peg_ratio": null,
+      "recommendation": "none",
+      "target_mean": 457.8,
+      "analyst_count": 10,
+      "current_price": 398.0
     },
     {
       "ticker": "ARM",
@@ -4362,7 +4593,14 @@
           "value": "-5.0%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 46.2006,
+      "trailing_pe": 138.63158,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 157.15714,
+      "analyst_count": 35,
+      "current_price": 105.36
     },
     {
       "ticker": "DUOL",
@@ -4490,7 +4728,14 @@
           "value": "-31.7%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 15.256908,
+      "trailing_pe": 15.20151,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 250.40118,
+      "analyst_count": 17,
+      "current_price": 120.7
     },
     {
       "ticker": "RYN",
@@ -4618,7 +4863,14 @@
           "value": "-4.3%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 47.00631,
+      "trailing_pe": 8.626924,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 26.66667,
+      "analyst_count": 6,
+      "current_price": 22.43
     },
     {
       "ticker": "AS",
@@ -4746,7 +4998,14 @@
           "value": "+0.7%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 32.840275,
+      "trailing_pe": 70.03636,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 47.52174,
+      "analyst_count": 23,
+      "current_price": 38.52
     },
     {
       "ticker": "CAI",
@@ -4874,7 +5133,14 @@
           "value": "-21.8%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 81.165,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 37.88889,
+      "analyst_count": 9,
+      "current_price": 20.65
     },
     {
       "ticker": "LOAR",
@@ -5002,7 +5268,14 @@
           "value": "-10.7%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 63.90323,
+      "trailing_pe": 99.015144,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 94.13,
+      "analyst_count": 6,
+      "current_price": 65.35
     },
     {
       "ticker": "NBIX",
@@ -5130,7 +5403,14 @@
           "value": "+1.4%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 15.071091,
+      "trailing_pe": 32.852028,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 179.58926,
+      "analyst_count": 27,
+      "current_price": 137.65
     },
     {
       "ticker": "AMD",
@@ -5258,7 +5538,14 @@
           "value": "-6.8%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 19.38445,
+      "trailing_pe": 78.60306,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 288.5,
+      "analyst_count": 46,
+      "current_price": 205.94
     },
     {
       "ticker": "MELI",
@@ -5386,7 +5673,14 @@
           "value": "+6.3%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 36.065895,
+      "trailing_pe": 54.059654,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 2817.0,
+      "analyst_count": 26,
+      "current_price": 2147.79
     },
     {
       "ticker": "RYAN",
@@ -5514,7 +5808,14 @@
           "value": "-11.7%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 18.810118,
+      "trailing_pe": 84.67925,
+      "peg_ratio": null,
+      "recommendation": "none",
+      "target_mean": 64.3125,
+      "analyst_count": 16,
+      "current_price": 44.88
     },
     {
       "ticker": "SMCI",
@@ -5642,7 +5943,14 @@
           "value": "+10.5%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 11.256561,
+      "trailing_pe": 24.328468,
+      "peg_ratio": null,
+      "recommendation": "hold",
+      "target_mean": 41.3125,
+      "analyst_count": 16,
+      "current_price": 33.33
     },
     {
       "ticker": "TLN",
@@ -5770,7 +6078,14 @@
           "value": "-3.5%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 15.740106,
+      "trailing_pe": 75.19537,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 472.704,
+      "analyst_count": 15,
+      "current_price": 357.93
     },
     {
       "ticker": "APO",
@@ -5898,7 +6213,14 @@
           "value": "-12.5%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 11.482305,
+      "trailing_pe": 18.27551,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 162.3125,
+      "analyst_count": 16,
+      "current_price": 125.37
     },
     {
       "ticker": "KKR",
@@ -6026,7 +6348,14 @@
           "value": "-20.4%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 13.344386,
+      "trailing_pe": 45.816242,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 148.535,
+      "analyst_count": 18,
+      "current_price": 107.21
     },
     {
       "ticker": "KRMN",
@@ -6154,7 +6483,14 @@
           "value": "-14.1%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 139.38959,
+      "trailing_pe": 1140.625,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 111.88889,
+      "analyst_count": 9,
+      "current_price": 91.25
     },
     {
       "ticker": "AVGO",
@@ -6290,7 +6626,14 @@
           "value": "$1.6T",
           "threshold": "Large Cap Penalty"
         }
-      ]
+      ],
+      "forward_pe": 22.958092,
+      "trailing_pe": 69.42767,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 458.5886,
+      "analyst_count": 45,
+      "current_price": 331.17
     },
     {
       "ticker": "SAIL",
@@ -6418,7 +6761,14 @@
           "value": "-22.7%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 48.07966,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 26.51,
+      "analyst_count": 20,
+      "current_price": 15.21
     },
     {
       "ticker": "ASTS",
@@ -6546,7 +6896,14 @@
           "value": "-11.3%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": -80.92519,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "hold",
+      "target_mean": 81.6375,
+      "analyst_count": 8,
+      "current_price": 82.22
     },
     {
       "ticker": "CRCL",
@@ -6674,7 +7031,14 @@
           "value": "-32.1%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 49.28162,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 133.5225,
+      "analyst_count": 20,
+      "current_price": 56.63
     },
     {
       "ticker": "S",
@@ -6802,7 +7166,14 @@
           "value": "-9.2%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 45.797195,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 20.95455,
+      "analyst_count": 33,
+      "current_price": 13.73
     },
     {
       "ticker": "TEM",
@@ -6930,7 +7301,14 @@
           "value": "-15.7%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": -119.52941,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "none",
+      "target_mean": 87.91667,
+      "analyst_count": 12,
+      "current_price": 55.88
     },
     {
       "ticker": "GMED",
@@ -7058,7 +7436,14 @@
           "value": "-6.1%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 20.902147,
+      "trailing_pe": 28.711975,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 107.16667,
+      "analyst_count": 12,
+      "current_price": 88.72
     },
     {
       "ticker": "TOST",
@@ -7186,7 +7571,14 @@
           "value": "-16.9%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 23.549435,
+      "trailing_pe": 66.97727,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 46.375,
+      "analyst_count": 24,
+      "current_price": 29.47
     },
     {
       "ticker": "GTLB",
@@ -7314,7 +7706,14 @@
           "value": "-10.9%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 30.706192,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 50.69231,
+      "analyst_count": 26,
+      "current_price": 31.55
     },
     {
       "ticker": "LLY",
@@ -7450,7 +7849,14 @@
           "value": "$919B",
           "threshold": "Large Cap Penalty"
         }
-      ]
+      ],
+      "forward_pe": 24.54348,
+      "trailing_pe": 44.64286,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 1201.6296,
+      "analyst_count": 27,
+      "current_price": 1025.0
     },
     {
       "ticker": "RIVN",
@@ -7578,7 +7984,14 @@
           "value": "-22.2%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": -6.1618304,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "hold",
+      "target_mean": 16.96,
+      "analyst_count": 25,
+      "current_price": 14.96
     },
     {
       "ticker": "SNOW",
@@ -7706,7 +8119,14 @@
           "value": "-16.7%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 112.415726,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 279.99405,
+      "analyst_count": 47,
+      "current_price": 182.58
     },
     {
       "ticker": "SOFI",
@@ -7834,7 +8254,14 @@
           "value": "-22.7%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 27.674698,
+      "trailing_pe": 54.307693,
+      "peg_ratio": null,
+      "recommendation": "hold",
+      "target_mean": 26.86842,
+      "analyst_count": 19,
+      "current_price": 21.18
     },
     {
       "ticker": "AFRM",
@@ -7962,7 +8389,14 @@
           "value": "-34.5%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 13.580674,
+      "trailing_pe": 61.4321,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 86.0,
+      "analyst_count": 26,
+      "current_price": 49.76
     },
     {
       "ticker": "PCTY",
@@ -8090,7 +8524,14 @@
           "value": "-24.3%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 13.652426,
+      "trailing_pe": 26.781176,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 170.38095,
+      "analyst_count": 21,
+      "current_price": 113.82
     },
     {
       "ticker": "ELF",
@@ -8218,7 +8659,14 @@
           "value": "-15.8%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 20.026133,
+      "trailing_pe": 41.38983,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 112.78571,
+      "analyst_count": 14,
+      "current_price": 73.26
     },
     {
       "ticker": "RKLB",
@@ -8346,7 +8794,14 @@
           "value": "-15.1%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": -461.73074,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 83.9625,
+      "analyst_count": 12,
+      "current_price": 72.03
     },
     {
       "ticker": "BROS",
@@ -8474,7 +8929,14 @@
           "value": "-16.7%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 42.923748,
+      "trailing_pe": 103.71429,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 76.85,
+      "analyst_count": 20,
+      "current_price": 50.82
     },
     {
       "ticker": "DASH",
@@ -8602,7 +9064,14 @@
           "value": "-18.3%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 28.49293,
+      "trailing_pe": 88.62121,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 275.75952,
+      "analyst_count": 42,
+      "current_price": 175.47
     },
     {
       "ticker": "SYM",
@@ -8730,7 +9199,14 @@
           "value": "-11.5%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 84.76501,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "hold",
+      "target_mean": 62.86125,
+      "analyst_count": 16,
+      "current_price": 62.71
     },
     {
       "ticker": "TPG",
@@ -8858,7 +9334,14 @@
           "value": "-20.5%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 14.160482,
+      "trailing_pe": 530.8,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 71.26667,
+      "analyst_count": 15,
+      "current_price": 53.08
     },
     {
       "ticker": "IOT",
@@ -8986,7 +9469,14 @@
           "value": "-17.1%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 48.101788,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 47.53,
+      "analyst_count": 20,
+      "current_price": 27.9
     },
     {
       "ticker": "NET",
@@ -9114,7 +9604,14 @@
           "value": "-1.5%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 122.4862,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 229.59451,
+      "analyst_count": 31,
+      "current_price": 179.98
     },
     {
       "ticker": "NTRA",
@@ -9242,7 +9739,14 @@
           "value": "-9.7%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": -106.55007,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 257.2,
+      "analyst_count": 20,
+      "current_price": 211.65
     },
     {
       "ticker": "INSM",
@@ -9370,7 +9874,14 @@
           "value": "-15.6%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": -57.69089,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 215.15,
+      "analyst_count": 20,
+      "current_price": 148.55
     },
     {
       "ticker": "INSP",
@@ -9498,7 +10009,14 @@
           "value": "-30.7%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 40.7212,
+      "trailing_pe": 46.67123,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 124.4,
+      "analyst_count": 15,
+      "current_price": 68.14
     },
     {
       "ticker": "OWL",
@@ -9626,7 +10144,14 @@
           "value": "-17.5%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 11.626969,
+      "trailing_pe": 162.125,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 18.5,
+      "analyst_count": 15,
+      "current_price": 12.97
     },
     {
       "ticker": "RBLX",
@@ -9754,7 +10279,14 @@
           "value": "-1.8%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": -54.28205,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 112.78265,
+      "analyst_count": 34,
+      "current_price": 71.94
     },
     {
       "ticker": "AXON",
@@ -9882,7 +10414,14 @@
           "value": "-32.1%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 57.571968,
+      "trailing_pe": 137.04716,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 798.68,
+      "analyst_count": 18,
+      "current_price": 435.81
     },
     {
       "ticker": "HUBS",
@@ -10010,7 +10549,14 @@
           "value": "-37.6%",
           "threshold": "> 5% vs Market"
         }
-      ]
+      ],
+      "forward_pe": 20.235004,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 519.6012,
+      "analyst_count": 34,
+      "current_price": 231.95
     }
   ]
 }

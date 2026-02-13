@@ -214,6 +214,15 @@ def rate_stock_v43_full(symbol, conn):
                 'threshold': r.threshold
             })
         
+        # Get valuation and analyst data from info
+        forward_pe = info.get('forwardPE')
+        trailing_pe = info.get('trailingPE')
+        peg = info.get('pegRatio')
+        recommendation = info.get('recommendationKey', 'N/A')
+        target_mean = info.get('targetMeanPrice')
+        analyst_count = info.get('numberOfAnalystOpinions', 0)
+        current_price = info.get('currentPrice') or info.get('regularMarketPrice')
+        
         return {
             'ticker': symbol,
             'name': info.get('shortName', symbol)[:40],
@@ -227,7 +236,16 @@ def rate_stock_v43_full(symbol, conn):
             'growth_score': sum(r.points for r in results if r.category == "Growth"),
             'quality_score': sum(r.points for r in results if r.category == "Quality"),
             'context_score': sum(r.points for r in results if r.category == "Context"),
-            'criteria': criteria_list  # Full breakdown for detail view
+            'criteria': criteria_list,  # Full breakdown for detail view
+            # Valuation data
+            'forward_pe': forward_pe,
+            'trailing_pe': trailing_pe,
+            'peg_ratio': peg,
+            # Analyst data
+            'recommendation': recommendation,
+            'target_mean': target_mean,
+            'analyst_count': analyst_count,
+            'current_price': current_price
         }
         
     except Exception as e:

@@ -489,15 +489,15 @@
                 document.getElementById('quality-score').innerText = data.quality_score || 0;
                 document.getElementById('context-score').innerText = data.context_score || 0;
 
-                // Analyst data not in cache
-                document.getElementById('rec-key').innerText = 'N/A';
-                document.getElementById('target-price').innerText = 'N/A';
-                document.getElementById('analyst-count').innerText = '0';
+                // Analyst data from cache
+                document.getElementById('rec-key').innerText = data.recommendation ? data.recommendation.toUpperCase() : 'N/A';
+                document.getElementById('target-price').innerText = data.target_mean ? `$${data.target_mean.toFixed(2)}` : 'N/A';
+                document.getElementById('analyst-count').innerText = data.analyst_count || '0';
 
-                // Valuation data not in cache
-                document.getElementById('forward-pe').innerText = 'N/A';
-                document.getElementById('trailing-pe').innerText = 'N/A';
-                document.getElementById('peg-ratio').innerText = 'N/A';
+                // Valuation data from cache
+                document.getElementById('forward-pe').innerText = data.forward_pe ? data.forward_pe.toFixed(2) : 'N/A';
+                document.getElementById('trailing-pe').innerText = data.trailing_pe ? data.trailing_pe.toFixed(2) : 'N/A';
+                document.getElementById('peg-ratio').innerText = data.peg_ratio ? data.peg_ratio.toFixed(2) : 'N/A';
 
                 document.getElementById('criteria-list').innerHTML = data.criteria.map(r => `
                     <div class="card flex justify-between items-center py-4">
