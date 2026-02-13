@@ -142,6 +142,9 @@
     </aside>
 
     <main>
+        <!-- Ticker Datalist for Autocomplete -->
+        <datalist id="ticker-list"></datalist>
+
         <!-- DASHBOARD VIEW -->
         <div id="dashboard-view">
             <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; margin-left: 50px;">
@@ -149,7 +152,7 @@
                     <h2 class="text-2xl font-bold">Top Market Opportunities</h2>
                     <div class="flex-1"></div>
                     <div class="flex gap-2">
-                        <input type="text" id="quick-ticker" placeholder="Enter Ticker (e.g. TSLA)" class="bg-slate-800 border border-slate-700 rounded px-3 py-1 text-sm outline-none focus:border-sky-500">
+                        <input type="text" id="quick-ticker" list="ticker-list" placeholder="Enter Ticker (e.g. TSLA)" class="bg-slate-800 border border-slate-700 rounded px-3 py-1 text-sm outline-none focus:border-sky-500">
                         <button onclick="viewStock(document.getElementById('quick-ticker').value)" class="bg-sky-600 hover:bg-sky-500 px-4 py-1 rounded text-sm font-bold transition">Rate Now</button>
                     </div>
                 </div>
@@ -190,7 +193,7 @@
                 </button>
                 <div class="flex-1"></div>
                 <div class="flex gap-2">
-                    <input type="text" id="detail-ticker" placeholder="Enter Ticker (e.g. TSLA)" class="bg-slate-800 border border-slate-700 rounded px-3 py-1 text-sm outline-none focus:border-sky-500">
+                    <input type="text" id="detail-ticker" list="ticker-list" placeholder="Enter Ticker (e.g. TSLA)" class="bg-slate-800 border border-slate-700 rounded px-3 py-1 text-sm outline-none focus:border-sky-500">
                     <button onclick="viewStock(document.getElementById('detail-ticker').value)" class="bg-sky-600 hover:bg-sky-500 px-4 py-1 rounded text-sm font-bold transition">Rate Now</button>
                 </div>
             </div>
@@ -295,7 +298,13 @@
         function init() {
             renderTable();
             createIndustryFilters();
+            populateTickerDatalist();
             document.getElementById('stock-count').textContent = stocksData.length;
+        }
+
+        function populateTickerDatalist() {
+            const datalist = document.getElementById('ticker-list');
+            datalist.innerHTML = stocksData.map(s => `<option value="${s.ticker}">${s.name}</option>`).join('');
         }
 
         function renderTable() {
