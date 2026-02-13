@@ -169,6 +169,7 @@
                             <th onclick="sortTable('name')">Company</th>
                             <th onclick="sortTable('sector')">Industry</th>
                             <th onclick="sortTable('score')">Score</th>
+                            <th onclick="sortTable('moonshot_score')">Moonshot</th>
                             <th onclick="sortTable('grade')">Grade</th>
                             <th>Action</th>
                         </tr>
@@ -208,7 +209,7 @@
                         <div style="height: 300px; background: #0a0f1d; border-radius: 8px;" id="tv-chart" class="lg:h-[400px]"></div>
                     </div>
 
-                    <div class="grid grid-cols-4 gap-4 mb-8">
+                    <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
                         <div class="card p-4 lg:p-6">
                             <div class="text-xs text-slate-400 uppercase font-bold tracking-wider mb-2">Technical</div>
                             <div class="text-xl lg:text-2xl font-bold text-sky-400" id="tech-score">0</div>
@@ -224,6 +225,10 @@
                         <div class="card p-4 lg:p-6">
                             <div class="text-xs text-slate-400 uppercase font-bold tracking-wider mb-2">Context</div>
                             <div class="text-xl lg:text-2xl font-bold text-amber-400" id="context-score">0</div>
+                        </div>
+                        <div class="card p-4 lg:p-6 bg-gradient-to-br from-slate-800 to-amber-900/20 border border-amber-500/30">
+                            <div class="text-xs text-amber-500 uppercase font-bold tracking-wider mb-2">Moonshot</div>
+                            <div class="text-xl lg:text-2xl font-bold text-amber-400" id="moonshot-score">0%</div>
                         </div>
                     </div>
                 </div>
@@ -340,6 +345,7 @@
                                 T:${stock.technical_score || 0} G:${stock.growth_score || 0} Q:${stock.quality_score || 0} C:${stock.context_score || 0}
                             </div>
                         </td>
+                        <td class="text-center font-bold text-amber-400">${stock.moonshot_score || 0}%</td>
                         <td><span class="grade-badge grade-${stock.grade}">${stock.grade}</span></td>
                         <td><button onclick="viewStock('${stock.ticker}')" class="text-xs bg-slate-700 px-3 py-1 rounded hover:bg-slate-600 transition">Analyze</button></td>
                     </tr>
@@ -488,6 +494,7 @@
                 document.getElementById('growth-score').innerText = data.growth_score || 0;
                 document.getElementById('quality-score').innerText = data.quality_score || 0;
                 document.getElementById('context-score').innerText = data.context_score || 0;
+                document.getElementById('moonshot-score').innerText = (data.moonshot_score || 0) + '%';
 
                 // Analyst data from cache
                 document.getElementById('rec-key').innerText = data.recommendation ? data.recommendation.toUpperCase() : 'N/A';
