@@ -40,6 +40,7 @@
             padding: 1.25rem 1.5rem 1.25rem 3.5rem; border-radius: 1rem; font-size: 1.125rem; transition: all 0.2s;
         }
         .search-input:focus { outline: none; border-color: var(--accent); background: rgba(30, 41, 59, 0.8); box-shadow: 0 0 0 4px var(--accent-glow); }
+        
         .ticker-card { transition: all 0.2s; cursor: pointer; }
         .ticker-card:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.05); transform: scale(1.02); }
         
@@ -54,6 +55,9 @@
         .score-bar-fill { height: 100%; border-radius: 3px; }
         
         #detail-view { display: none; }
+        
+        /* Layout Fixes */
+        .detail-card { min-height: 100px; }
     </style>
 </head>
 <body class="min-h-screen p-4 md:p-8">
@@ -62,7 +66,7 @@
             <div class="w-10 h-10 bg-sky-500 rounded-xl flex items-center justify-center shadow-lg shadow-sky-500/20">
                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
             </div>
-            <span class="text-xl font-extrabold tracking-tight">QORTEX<span class="text-sky-500">AI</span></span>
+            <span class="text-xl font-extrabold tracking-tight uppercase">QORTEX<span class="text-sky-500">AI</span></span>
         </div>
         <div class="hidden md:flex gap-8 text-sm font-medium text-slate-400">
             <a href="#" onclick="showDashboard()" class="hover:text-white transition">Dashboard</a>
@@ -89,7 +93,7 @@
                     <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
-                    <input type="text" id="main-search" list="ticker-list" placeholder="Enter Ticker (e.g. VRT)..." class="search-input">
+                    <input type="text" id="main-search" list="ticker-list" placeholder="Search Ticker (e.g. VRT)..." class="search-input">
                 </div>
             </header>
 
@@ -154,7 +158,7 @@
                         <div class="flex justify-between items-start mb-6">
                             <div>
                                 <h1 id="detail-name" class="text-3xl font-bold mb-1">---</h1>
-                                <div id="detail-ticker-sector" class="text-slate-400 text-sm">---</div>
+                                <div id="detail-ticker-sector" class="text-slate-400 text-sm uppercase">---</div>
                             </div>
                             <div id="detail-grade" class="grade-badge text-sm px-4 py-1">---</div>
                         </div>
@@ -162,29 +166,30 @@
                     </div>
 
                     <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-                        <div class="glass p-6 rounded-2xl border-sky-500/20">
+                        <div class="glass p-6 rounded-2xl border-sky-500/20 text-center">
                             <div class="text-[10px] text-sky-500 uppercase font-bold mb-2">Technical</div>
-                            <div class="text-2xl font-bold" id="tech-score">0</div>
+                            <div class="text-3xl font-bold" id="tech-score">0</div>
                         </div>
-                        <div class="glass p-6 rounded-2xl border-emerald-500/20">
+                        <div class="glass p-6 rounded-2xl border-emerald-500/20 text-center">
                             <div class="text-[10px] text-emerald-500 uppercase font-bold mb-2">Growth</div>
-                            <div class="text-2xl font-bold" id="growth-score">0</div>
+                            <div class="text-3xl font-bold" id="growth-score">0</div>
                         </div>
-                        <div class="glass p-6 rounded-2xl border-purple-500/20">
+                        <div class="glass p-6 rounded-2xl border-purple-500/20 text-center">
                             <div class="text-[10px] text-purple-500 uppercase font-bold mb-2">Quality</div>
-                            <div class="text-2xl font-bold" id="quality-score">0</div>
+                            <div class="text-3xl font-bold" id="quality-score">0</div>
                         </div>
-                        <div class="glass p-6 rounded-2xl border-amber-500/20">
+                        <div class="glass p-6 rounded-2xl border-amber-500/20 text-center">
                             <div class="text-[10px] text-amber-500 uppercase font-bold mb-2">Context</div>
-                            <div class="text-2xl font-bold" id="context-score">0</div>
+                            <div class="text-3xl font-bold" id="context-score">0</div>
                         </div>
-                        <div class="glass p-6 rounded-2xl border-rose-500/20">
+                        <div class="glass p-6 rounded-2xl border-rose-500/20 text-center">
                             <div class="text-[10px] text-rose-500 uppercase font-bold mb-2">Moonshot</div>
-                            <div class="text-2xl font-bold" id="moonshot-score">0%</div>
+                            <div class="text-3xl font-bold" id="moonshot-score">0%</div>
                         </div>
                     </div>
 
-                    <div id="criteria-list" class="space-y-4"></div>
+                    <h3 class="text-xs font-bold uppercase text-slate-500 mb-4 tracking-widest">Factor Analysis</h3>
+                    <div id="criteria-list" class="space-y-3"></div>
                 </div>
 
                 <div class="space-y-6">
@@ -199,12 +204,13 @@
                     <div class="glass p-6 rounded-2xl">
                         <h3 class="text-xs font-bold uppercase text-slate-500 mb-6 tracking-widest">Analyst Sentiment</h3>
                         <div class="space-y-4">
-                            <div class="flex justify-between"><div class="text-xs text-slate-500">Recommendation</div><div id="rec-key" class="font-bold text-emerald-400">---</div></div>
+                            <div class="flex justify-between"><div class="text-xs text-slate-500">Recommendation</div><div id="rec-key" class="font-bold text-emerald-400 uppercase">---</div></div>
                             <div class="flex justify-between"><div class="text-xs text-slate-500">Target Price</div><div id="target-price" class="font-bold">---</div></div>
+                            <div class="flex justify-between"><div class="text-xs text-slate-500">Analyst Count</div><div id="analyst-count" class="font-bold">0</div></div>
                         </div>
                     </div>
                     <div class="glass p-6 rounded-2xl">
-                        <h3 class="text-xs font-bold uppercase text-slate-500 mb-6 tracking-widest">📡 Recent Signals</h3>
+                        <h3 class="text-xs font-bold uppercase text-slate-500 mb-6 tracking-widest">📡 Recent News</h3>
                         <div id="news-list" class="space-y-4"></div>
                     </div>
                 </div>
@@ -215,7 +221,6 @@
     <datalist id="ticker-list"></datalist>
 
     <script>
-        // Data injected by Flask
         const stocksData = {{ stocks | tojson }};
         let allStocksCache = null;
 
@@ -239,7 +244,6 @@
         }
 
         function renderDashboard() {
-            // Top Grid (Top 3)
             const sorted = [...stocksData].sort((a,b) => b.score - a.score);
             document.getElementById('top-grid').innerHTML = sorted.slice(0,3).map(s => `
                 <div class="glass p-8 rounded-3xl ticker-card border-slate-800" onclick="viewStock('${s.ticker}')">
@@ -247,12 +251,11 @@
                         <div class="text-2xl font-black tracking-tight">${s.ticker}</div>
                         <div class="grade-badge grade-${s.grade}">${s.grade}</div>
                     </div>
-                    <div class="text-4xl font-bold mb-1">${s.score}<span class="text-slate-600 text-lg">/100</span></div>
+                    <div class="text-5xl font-bold mb-1">${s.score}<span class="text-slate-600 text-xl">/100</span></div>
                     <div class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">InvestIQ Score</div>
                 </div>
             `).join('');
 
-            // Terminal Table (Rest of top 50)
             document.getElementById('terminal-tbody').innerHTML = sorted.slice(0,50).map(s => `
                 <tr class="border-b border-slate-900/50 hover:bg-white/5 transition cursor-pointer" onclick="viewStock('${s.ticker}')">
                     <td class="p-6 font-bold text-sky-400">${s.ticker}</td>
@@ -279,7 +282,9 @@
         }
 
         async function viewStock(ticker) {
-            ticker = ticker.toUpperCase();
+            ticker = ticker.toUpperCase().trim();
+            if (!ticker) return;
+            
             document.getElementById('dashboard-view').style.display = 'none';
             document.getElementById('detail-view').style.display = 'block';
             window.scrollTo(0,0);
@@ -287,7 +292,7 @@
             try {
                 const allData = await loadAllStocks();
                 const data = allData.stocks[ticker];
-                if (!data) throw new Error("Ticker not found");
+                if (!data) throw new Error(`${ticker} not found in intelligence database`);
 
                 document.getElementById('detail-name').innerText = data.name;
                 document.getElementById('detail-ticker-sector').innerText = `${data.ticker} • ${data.sector} • ${data.industry}`;
@@ -305,35 +310,43 @@
                 document.getElementById('peg-ratio').innerText = data.peg_ratio?.toFixed(2) || 'N/A';
                 document.getElementById('rec-key').innerText = data.recommendation?.toUpperCase() || 'N/A';
                 document.getElementById('target-price').innerText = data.target_mean ? '$'+data.target_mean.toFixed(2) : 'N/A';
+                document.getElementById('analyst-count').innerText = data.analyst_count || '0';
 
                 document.getElementById('criteria-list').innerHTML = data.criteria.map(c => `
-                    <div class="glass p-6 rounded-2xl flex justify-between items-center">
+                    <div class="glass p-5 rounded-2xl flex justify-between items-center">
                         <div>
-                            <div class="font-bold text-sm">${c.name}</div>
-                            <div class="text-[10px] text-slate-500 uppercase">${c.category} • ${c.threshold}</div>
+                            <div class="font-bold text-sm text-slate-200">${c.name}</div>
+                            <div class="text-[9px] text-slate-500 uppercase tracking-wider">${c.category} • ${c.threshold}</div>
                         </div>
                         <div class="text-right">
-                            <div class="font-bold ${c.passed ? 'text-emerald-400' : 'text-rose-400'}">${c.value}</div>
-                            <div class="text-[10px] font-bold ${c.passed ? 'text-emerald-600' : 'text-rose-600'}">${c.passed ? '✓ PASSED' : '✗ FAILED'} (+${c.points})</div>
+                            <div class="font-bold text-sm ${c.passed ? 'text-emerald-400' : 'text-rose-400'}">${c.value}</div>
+                            <div class="text-[9px] font-bold ${c.passed ? 'text-emerald-600' : 'text-rose-600'} uppercase">${c.passed ? '✓ PASSED' : '✗ FAILED'} (+${c.points})</div>
                         </div>
                     </div>
                 `).join('');
 
-                // Load News
+                document.getElementById('news-list').innerHTML = '<div class="text-xs text-slate-500">Loading signals...</div>';
                 fetch(`/api/news/${ticker}`).then(r => r.json()).then(news => {
+                    if (!news.news || news.news.length === 0) {
+                        document.getElementById('news-list').innerHTML = '<div class="text-xs text-slate-500">No recent signals.</div>';
+                        return;
+                    }
                     document.getElementById('news-list').innerHTML = news.news.slice(0,5).map(n => `
-                        <div>
-                            <a href="${n.link}" target="_blank" class="text-xs font-bold hover:text-sky-400 transition leading-relaxed block mb-1">${n.title}</a>
-                            <div class="text-[10px] text-slate-500">${n.publisher} • ${n.time}</div>
+                        <div class="border-l-2 border-slate-800 pl-4 py-1 hover:border-sky-500 transition group">
+                            <a href="${n.link}" target="_blank" class="text-[11px] font-bold group-hover:text-sky-400 transition leading-tight block mb-1">${n.title}</a>
+                            <div class="text-[9px] text-slate-600 uppercase font-bold">${n.publisher} • ${n.time}</div>
                         </div>
                     `).join('');
+                }).catch(() => {
+                    document.getElementById('news-list').innerHTML = '<div class="text-xs text-slate-500">Signals temporarily unavailable.</div>';
                 });
 
-                // Load Chart
+                document.getElementById('tv-chart').innerHTML = '';
                 new TradingView.widget({
                     "width": "100%", "height": "100%", "symbol": ticker, "interval": "D",
                     "timezone": "Etc/UTC", "theme": "dark", "style": "1", "locale": "en",
-                    "container_id": "tv-chart", "autosize": true, "hide_side_toolbar": false
+                    "container_id": "tv-chart", "autosize": true, "hide_side_toolbar": false,
+                    "enable_publishing": false, "hide_top_toolbar": false, "save_image": false
                 });
 
             } catch (err) { alert(err.message); showDashboard(); }
@@ -342,6 +355,7 @@
         function showDashboard() {
             document.getElementById('dashboard-view').style.display = 'block';
             document.getElementById('detail-view').style.display = 'none';
+            document.getElementById('main-search').value = '';
         }
 
         document.addEventListener('DOMContentLoaded', init);
