@@ -1,7 +1,7 @@
 {
   "version": "4.3",
   "max_score": 100,
-  "last_scan": "2026-02-16 05:30 PST",
+  "last_scan": "2026-02-17 05:30 PST",
   "total_stocks": 75,
   "stocks": [
     {
@@ -1084,7 +1084,7 @@
           "threshold": "> 5% vs Market"
         }
       ],
-      "forward_pe": 21.131233,
+      "forward_pe": 21.624357,
       "trailing_pe": 134.93562,
       "peg_ratio": null,
       "recommendation": "buy",
@@ -1900,7 +1900,7 @@
           "threshold": "> 5% vs Market"
         }
       ],
-      "forward_pe": 9.702267,
+      "forward_pe": 9.640229,
       "trailing_pe": 17.331028,
       "peg_ratio": null,
       "recommendation": "buy",
@@ -2308,11 +2308,11 @@
           "threshold": "> 5% vs Market"
         }
       ],
-      "forward_pe": 33.501564,
+      "forward_pe": 33.321095,
       "trailing_pe": 51.48727,
       "peg_ratio": null,
       "recommendation": "strong_buy",
-      "target_mean": 177.14708,
+      "target_mean": 178.06332,
       "analyst_count": 24,
       "current_price": 141.59
     },
@@ -5036,7 +5036,7 @@
           "threshold": "> 5% vs Market"
         }
       ],
-      "forward_pe": 11.454828,
+      "forward_pe": 11.452856,
       "trailing_pe": 18.258394,
       "peg_ratio": null,
       "recommendation": "buy",
@@ -5176,8 +5176,8 @@
       "trailing_pe": 10.72973,
       "peg_ratio": null,
       "recommendation": "buy",
-      "target_mean": 173.66667,
-      "analyst_count": 6,
+      "target_mean": 174.8,
+      "analyst_count": 5,
       "current_price": 162.77
     },
     {
@@ -6276,7 +6276,7 @@
           "threshold": "> 5% vs Market"
         }
       ],
-      "forward_pe": 50.07047,
+      "forward_pe": 51.9018,
       "trailing_pe": null,
       "peg_ratio": null,
       "recommendation": "buy",
@@ -9148,7 +9148,7 @@
       "score": 28,
       "max_score": 100,
       "grade": "D",
-      "market_cap": 8756168704,
+      "market_cap": 8753793024,
       "technical_score": 10,
       "growth_score": 18,
       "quality_score": 0,
@@ -9680,7 +9680,7 @@
       "trailing_pe": null,
       "peg_ratio": null,
       "recommendation": "buy",
-      "target_mean": 40.39394,
+      "target_mean": 40.15152,
       "analyst_count": 33,
       "current_price": 21.76
     },
