@@ -1,7 +1,288 @@
 {
   "version": "4.3",
   "max_score": 100,
-  "last_scan": "2026-02-18 05:30 PST",
-  "total_stocks": 0,
-  "stocks": []
+  "last_scan": "2026-02-18 09:16 PST",
+  "total_stocks": 2,
+  "stocks": [
+    {
+      "ticker": "MU",
+      "name": "Micron Technology, Inc.",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "score": 68,
+      "max_score": 100,
+      "grade": "B",
+      "market_cap": 449956085760,
+      "technical_score": 16,
+      "growth_score": 29,
+      "quality_score": 13,
+      "context_score": 10,
+      "moonshot_score": 50,
+      "criteria": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": true,
+          "points": 8,
+          "value": "$399.78 > 50d($333.49) > 200d($194.19)",
+          "threshold": "Price > 50d > 200d"
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "points": 0,
+          "value": "12.2% from base, drift: 77.3%",
+          "threshold": "< 5% from ceiling, < 10% drift"
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": false,
+          "points": 0,
+          "value": "75.1% depth ($113.34 - $455.50)",
+          "threshold": "Base depth < 45%"
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "points": 8,
+          "value": "112% of avg (38.4M vs 34.2M)",
+          "threshold": "5d vol < 1.2x 50d vol"
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": false,
+          "points": 0,
+          "value": "87.8% of 52W high ($455.50)",
+          "threshold": "> 90% of 52W high"
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "points": 0,
+          "value": "109.8% of 20d ATR ($28.71 vs $26.13)",
+          "threshold": "14d ATR < 80% of 20d ATR"
+        },
+        {
+          "name": "Sales Growth (2yr)",
+          "category": "Growth",
+          "passed": true,
+          "points": 26,
+          "value": "56.7% (avg: 59.1%)",
+          "threshold": "Both years >= 10% required"
+        },
+        {
+          "name": "Earnings Growth",
+          "category": "Growth",
+          "passed": true,
+          "points": 3,
+          "value": "175.4%",
+          "threshold": "> 15%"
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "points": 5,
+          "value": "22.6%",
+          "threshold": "> 15%"
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "points": 5,
+          "value": "45.0%",
+          "threshold": "> 10%"
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "points": 0,
+          "value": "N/A",
+          "threshold": "PEG < 2.0"
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "points": 3,
+          "value": "$0.44B",
+          "threshold": "FCF > 0"
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "points": 5,
+          "value": "Technology",
+          "threshold": "High-Conviction Sector"
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": true,
+          "points": 5,
+          "value": "+18.8%",
+          "threshold": "> 5% vs Market"
+        }
+      ],
+      "forward_pe": 8.972996,
+      "trailing_pe": 38.03806,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 390.89743,
+      "analyst_count": 39,
+      "current_price": 399.78
+    },
+    {
+      "ticker": "NVDA",
+      "name": "NVIDIA Corporation",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "score": 67,
+      "max_score": 100,
+      "grade": "B",
+      "market_cap": 4503464574976,
+      "technical_score": 26,
+      "growth_score": 33,
+      "quality_score": 13,
+      "context_score": -5,
+      "moonshot_score": 0,
+      "criteria": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": true,
+          "points": 8,
+          "value": "$184.97 > 50d($184.51) > 200d($172.04)",
+          "threshold": "Price > 50d > 200d"
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "points": 0,
+          "value": "12.8% from base, drift: -7.6%",
+          "threshold": "< 5% from ceiling, < 10% drift"
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "points": 10,
+          "value": "22.7% depth ($164.05 - $212.18)",
+          "threshold": "Base depth < 45%"
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "points": 8,
+          "value": "95% of avg (158.9M vs 167.8M)",
+          "threshold": "5d vol < 1.2x 50d vol"
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": false,
+          "points": 0,
+          "value": "87.2% of 52W high ($212.18)",
+          "threshold": "> 90% of 52W high"
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "points": 0,
+          "value": "114.1% of 20d ATR ($6.84 vs $6.00)",
+          "threshold": "14d ATR < 80% of 20d ATR"
+        },
+        {
+          "name": "Sales Growth (2yr)",
+          "category": "Growth",
+          "passed": true,
+          "points": 30,
+          "value": "62.5% (avg: 94.2%)",
+          "threshold": "Both years >= 10% required"
+        },
+        {
+          "name": "Earnings Growth",
+          "category": "Growth",
+          "passed": true,
+          "points": 3,
+          "value": "66.7%",
+          "threshold": "> 15%"
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "points": 5,
+          "value": "107.4%",
+          "threshold": "> 15%"
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "points": 5,
+          "value": "63.2%",
+          "threshold": "> 10%"
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "points": 0,
+          "value": "N/A",
+          "threshold": "PEG < 2.0"
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "points": 3,
+          "value": "$53.28B",
+          "threshold": "FCF > 0"
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "points": 5,
+          "value": "Technology",
+          "threshold": "High-Conviction Sector"
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "points": 0,
+          "value": "-1.1%",
+          "threshold": "> 5% vs Market"
+        },
+        {
+          "name": "Size Factor",
+          "category": "Context",
+          "passed": false,
+          "points": -10,
+          "value": "$4.5T",
+          "threshold": "Large Cap Penalty"
+        }
+      ],
+      "forward_pe": 23.873814,
+      "trailing_pe": 45.898262,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 253.88464,
+      "analyst_count": 56,
+      "current_price": 184.97
+    }
+  ]
 }
