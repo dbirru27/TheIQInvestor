@@ -822,7 +822,7 @@
                 document.getElementById('trailing-pe').innerText = data.trailing_pe ? data.trailing_pe.toFixed(2) : 'N/A';
                 document.getElementById('peg-ratio').innerText = data.peg_ratio ? data.peg_ratio.toFixed(2) : 'N/A';
 
-                document.getElementById('criteria-list').innerHTML = data.criteria.map(r => `
+                document.getElementById('criteria-list').innerHTML = (data.criteria || []).length > 0 ? data.criteria.map(r => `
                     <div class="card flex justify-between items-center py-4">
                         <div>
                             <div class="font-bold text-sm">${r.name}</div>
@@ -833,7 +833,7 @@
                             <div class="text-xs ${r.passed ? 'text-emerald-600' : 'text-rose-600'}">${r.passed ? '✓ PASSED' : '✗ FAILED'} (${r.points > 0 ? '+' : ''}${r.points})</div>
                         </div>
                     </div>
-                `).join('');
+                `).join('') : '<div class="card py-4 text-center text-slate-500">Criteria breakdown available for top-rated stocks only.<br>Score: ' + (data.score || 0) + '/100 | T:' + (data.technical_score||0) + ' G:' + (data.growth_score||0) + ' Q:' + (data.quality_score||0) + ' C:' + (data.context_score||0) + '</div>';
 
                 // Show loading state for news
                 document.getElementById('news-list').innerHTML = '<p class="text-slate-500 text-sm">Loading news...</p>';

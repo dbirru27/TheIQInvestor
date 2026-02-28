@@ -511,12 +511,16 @@ def run_scan():
     with open('top_stocks.json', 'w') as f:
         json.dump(top_output, f, indent=2, cls=NumpyEncoder)
     
-    # Save ALL stocks — strip criteria array to reduce file size / memory
+    # Save ALL stocks — keep criteria for top stocks, strip for rest to save memory
     import gc
+    top_tickers = set(s['ticker'] for s in filtered_results)
     all_stocks_slim = {}
     for s in results:
-        slim = {k: v for k, v in s.items() if k != 'criteria'}
-        all_stocks_slim[s['ticker']] = slim
+        if s['ticker'] in top_tickers:
+            all_stocks_slim[s['ticker']] = s  # Keep criteria for detail view
+        else:
+            slim = {k: v for k, v in s.items() if k != 'criteria'}
+            all_stocks_slim[s['ticker']] = slim
     
     all_output = {
         'version': '5.0',
