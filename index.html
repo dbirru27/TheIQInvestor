@@ -519,7 +519,7 @@
                         response = await fetch('/api/watchlist');
                         if (!response.ok) throw new Error('API not available');
                     } catch {
-                        response = await fetch('watchlist.json');
+                        response = await fetch('watchlist.json?v=' + Date.now());
                     }
                     if (!response.ok) throw new Error('Watchlist not available');
                     watchlistData = await response.json();
@@ -770,7 +770,7 @@
             if (allStocksCache) return allStocksCache;
             if (allStocksLoading) return allStocksLoading;
             
-            allStocksLoading = fetch('/api/all_stocks').catch(() => fetch('all_stocks.json'))
+            allStocksLoading = fetch('/api/all_stocks').catch(() => fetch('all_stocks.json?v=' + Date.now()))
                 .then(res => {
                     if (!res.ok) throw new Error(`HTTP ${res.status}`);
                     return res.json();
