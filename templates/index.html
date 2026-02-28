@@ -318,7 +318,6 @@
                         <tr>
                             <th onclick="sortWatchlist('ticker')">Ticker</th>
                             <th onclick="sortWatchlist('name')">Company</th>
-                            <th onclick="sortWatchlist('basket')">Basket</th>
                             <th onclick="sortWatchlist('trailing_pe')">Current PE</th>
                             <th onclick="sortWatchlist('forward_pe')">Forward PE</th>
                             <th onclick="sortWatchlist('revenue_growth')">Rev Growth</th>
@@ -330,7 +329,7 @@
                         </tr>
                     </thead>
                     <tbody id="watchlist-tbody">
-                        <tr><td colspan="11" style="text-align: center; padding: 40px; color: var(--text-dim);">Loading watchlist...</td></tr>
+                        <tr><td colspan="10" style="text-align: center; padding: 40px; color: var(--text-dim);">Loading watchlist...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -517,61 +516,95 @@
             }
         }
 
+        function renderStockRow(stock) {
+            const changeColor = stock.daily_change > 0 ? '#10b981' : stock.daily_change < 0 ? '#ef4444' : 'var(--text-dim)';
+            const changePrefix = stock.daily_change > 0 ? '+' : '';
+            const pegColor = stock.peg_ratio === null ? 'var(--text-dim)' :
+                             stock.peg_ratio < 1.5 ? '#10b981' :
+                             stock.peg_ratio < 2.5 ? '#eab308' : '#ef4444';
+            const revGrowthColor = stock.revenue_growth === null ? 'var(--text-dim)' :
+                                   stock.revenue_growth > 0 ? '#10b981' : '#ef4444';
+            const earnGrowthColor = stock.earnings_growth === null ? 'var(--text-dim)' :
+                                    stock.earnings_growth > 0 ? '#10b981' : '#ef4444';
+            const scorePercent = Math.min(stock.score, 100);
+            const scoreColor = scorePercent >= 70 ? '#059669' : 
+                               scorePercent >= 50 ? '#0284c7' : 
+                               scorePercent >= 30 ? '#d97706' : '#dc2626';
+            
+            return `
+                <tr>
+                    <td><a href="#" onclick="viewStock('${stock.ticker}'); return false;" class="text-sky-400 hover:text-sky-300 font-bold">${stock.ticker}</a></td>
+                    <td>${stock.name}</td>
+                    <td>${stock.trailing_pe !== null ? stock.trailing_pe.toFixed(2) : '<span style="color: var(--text-dim);">N/A</span>'}</td>
+                    <td>${stock.forward_pe !== null ? stock.forward_pe.toFixed(2) : '<span style="color: var(--text-dim);">N/A</span>'}</td>
+                    <td style="color: ${revGrowthColor};">${stock.revenue_growth !== null ? stock.revenue_growth.toFixed(1) + '%' : '<span style="color: var(--text-dim);">N/A</span>'}</td>
+                    <td style="color: ${earnGrowthColor};">${stock.earnings_growth !== null ? stock.earnings_growth.toFixed(1) + '%' : '<span style="color: var(--text-dim);">N/A</span>'}</td>
+                    <td style="color: ${pegColor}; font-weight: 600;">${stock.peg_ratio !== null ? stock.peg_ratio.toFixed(2) : '<span style="color: var(--text-dim); font-weight: 400;">N/A</span>'}</td>
+                    <td>
+                        <div class="score-container">
+                            <div class="score-bar-bg">
+                                <div class="score-bar-fill" style="width: ${scorePercent}%; background: ${scoreColor};"></div>
+                            </div>
+                            <span class="score-text">${stock.score}</span>
+                        </div>
+                    </td>
+                    <td><span class="grade-badge grade-${stock.grade}">${stock.grade}</span></td>
+                    <td style="color: ${changeColor}; font-weight: 600;">${stock.daily_change !== null ? changePrefix + stock.daily_change.toFixed(2) + '%' : '<span style="color: var(--text-dim); font-weight: 400;">N/A</span>'}</td>
+                </tr>
+            `;
+        }
+
+        const basketIcons = {
+            'Trading Account': '📈',
+            'IRA Core ETFs': '📦',
+            'Grid-to-Chip': '⚡',
+            'Defense & Aerospace': '🛡️',
+            'AI Semis': '🧠',
+            'Biotech': '🧬'
+        };
+
         function renderWatchlist() {
             if (!watchlistData) return;
             
             const tbody = document.getElementById('watchlist-tbody');
-            const stocks = currentBasketFilter === 'all' 
-                ? watchlistData.all 
-                : watchlistData.baskets[currentBasketFilter] || [];
             
-            if (stocks.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; padding: 40px; color: var(--text-dim);">No holdings in this basket</td></tr>';
+            // Single basket filter — flat list, no headers
+            if (currentBasketFilter !== 'all') {
+                const stocks = watchlistData.baskets[currentBasketFilter] || [];
+                if (stocks.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; padding: 40px; color: var(--text-dim);">No holdings in this basket</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = stocks.map(renderStockRow).join('');
                 return;
             }
             
-            tbody.innerHTML = stocks.map(stock => {
-                const changeColor = stock.daily_change > 0 ? '#10b981' : stock.daily_change < 0 ? '#ef4444' : 'var(--text-dim)';
-                const changePrefix = stock.daily_change > 0 ? '+' : '';
+            // "Show All" — grouped by basket with section headers
+            let html = '';
+            const basketOrder = ['Trading Account', 'IRA Core ETFs', 'Grid-to-Chip', 'Defense & Aerospace', 'AI Semis', 'Biotech'];
+            
+            for (const basket of basketOrder) {
+                const stocks = watchlistData.baskets[basket];
+                if (!stocks || stocks.length === 0) continue;
                 
-                const pegColor = stock.peg_ratio === null ? 'var(--text-dim)' :
-                                 stock.peg_ratio < 1.5 ? '#10b981' :
-                                 stock.peg_ratio < 2.5 ? '#eab308' : '#ef4444';
+                const icon = basketIcons[basket] || '📋';
+                const avgChange = stocks.reduce((s, st) => s + (st.daily_change || 0), 0) / stocks.length;
+                const avgColor = avgChange > 0 ? '#10b981' : avgChange < 0 ? '#ef4444' : 'var(--text-dim)';
+                const avgPrefix = avgChange > 0 ? '+' : '';
                 
-                const revGrowthColor = stock.revenue_growth === null ? 'var(--text-dim)' :
-                                       stock.revenue_growth > 0 ? '#10b981' : '#ef4444';
-                
-                const earnGrowthColor = stock.earnings_growth === null ? 'var(--text-dim)' :
-                                        stock.earnings_growth > 0 ? '#10b981' : '#ef4444';
-                
-                const scorePercent = Math.min(stock.score, 100);
-                const scoreColor = scorePercent >= 70 ? '#059669' : 
-                                   scorePercent >= 50 ? '#0284c7' : 
-                                   scorePercent >= 30 ? '#d97706' : '#dc2626';
-                
-                return `
+                html += `
                     <tr>
-                        <td><a href="#" onclick="viewStock('${stock.ticker}'); return false;" class="text-sky-400 hover:text-sky-300 font-bold">${stock.ticker}</a></td>
-                        <td>${stock.name}</td>
-                        <td><span style="font-size: 0.75rem; color: var(--text-dim);">${stock.basket}</span></td>
-                        <td>${stock.trailing_pe !== null ? stock.trailing_pe.toFixed(2) : '<span style="color: var(--text-dim);">N/A</span>'}</td>
-                        <td>${stock.forward_pe !== null ? stock.forward_pe.toFixed(2) : '<span style="color: var(--text-dim);">N/A</span>'}</td>
-                        <td style="color: ${revGrowthColor};">${stock.revenue_growth !== null ? stock.revenue_growth.toFixed(1) + '%' : '<span style="color: var(--text-dim);">N/A</span>'}</td>
-                        <td style="color: ${earnGrowthColor};">${stock.earnings_growth !== null ? stock.earnings_growth.toFixed(1) + '%' : '<span style="color: var(--text-dim);">N/A</span>'}</td>
-                        <td style="color: ${pegColor}; font-weight: 600;">${stock.peg_ratio !== null ? stock.peg_ratio.toFixed(2) : '<span style="color: var(--text-dim); font-weight: 400;">N/A</span>'}</td>
-                        <td>
-                            <div class="score-container">
-                                <div class="score-bar-bg">
-                                    <div class="score-bar-fill" style="width: ${scorePercent}%; background: ${scoreColor};"></div>
-                                </div>
-                                <span class="score-text">${stock.score}</span>
-                            </div>
+                        <td colspan="10" style="background: #0a0f1d; padding: 14px 16px; border-bottom: 2px solid var(--accent); font-weight: 700; font-size: 0.95rem;">
+                            ${icon} ${basket} 
+                            <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 400; margin-left: 8px;">${stocks.length} holdings</span>
+                            <span style="font-size: 0.75rem; color: ${avgColor}; font-weight: 600; margin-left: 12px;">Avg: ${avgPrefix}${avgChange.toFixed(2)}%</span>
                         </td>
-                        <td><span class="grade-badge grade-${stock.grade}">${stock.grade}</span></td>
-                        <td style="color: ${changeColor}; font-weight: 600;">${stock.daily_change !== null ? changePrefix + stock.daily_change.toFixed(2) + '%' : '<span style="color: var(--text-dim); font-weight: 400;">N/A</span>'}</td>
                     </tr>
                 `;
-            }).join('');
+                html += stocks.map(renderStockRow).join('');
+            }
+            
+            tbody.innerHTML = html;
         }
 
         function filterWatchlist(basket) {
