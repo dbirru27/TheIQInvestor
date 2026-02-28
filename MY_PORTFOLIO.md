@@ -1,82 +1,63 @@
-# Dan's Portfolio - Master Holdings File
-# Last Updated: 2026-02-08
-# This is the SOURCE OF TRUTH for all portfolio analysis
+# Dan's Portfolio — 60 Holdings, 9 Baskets
+# Last Updated: 2026-02-28
+# SOURCE OF TRUTH for all portfolio analysis
 
-## BASKET 1: Defense (3 stocks)
-LHX
-LMT
-NOC
+## TRADING ACCOUNT (~26%) — Tax-locked
+VGT    # Vanguard Info Tech ETF
+VUG    # Vanguard Growth ETF
+GOOGL  # Alphabet Class A
+GOOG   # Alphabet Class C
 
-## BASKET 2: Grid-to-Chip (3 stocks)
-PWR
-VRT
-GEV
+## IRA (~66%) — Tax-deferred
 
-## BASKET 3: TopVOO / Core Holdings (35 stocks)
-# Note: These are the actual individual stock holdings
-PANW
-ISRG
-ORCL
-CRM
-PLTR
-NOW
-AMZN
-TSLA
-GE
-CRWD
-MSFT
-TMUS
-JPM
-NFLX
-UNH
-UBER
-BRK-B
-HD
-MRVL
-ANET
-WDC
-AMD
-MU
-AVGO
-TSM
-STX
-ASML
-META
-LRCX
-AMAT
-NVDA
-CAT
-GOOGL
-LLY
-V
+### Core ETFs
+COPX   # Global X Copper Miners
+GLD    # SPDR Gold Shares
+XLI    # Industrial Select SPDR
+VOO    # Vanguard S&P 500
+DXJ    # WisdomTree Japan Hedged
+INDA   # iShares MSCI India
+SIL    # Global X Silver Miners
 
-## BASKET 4: Core ETFs (7 ETFs)
-COPX
-GLD
-GLDM
-ITA
-NLR
-VOO
-XLI
+### Grid-to-Chip
+NLR    # VanEck Uranium+Nuclear
+VRT    # Vertiv Holdings
+CEG    # Constellation Energy
+PWR    # Quanta Services
+GEV    # GE Vernova
+ETN    # Eaton Corporation
+GRID   # First Trust Smart Grid
+NVT    # nVent Electric
+FIX    # Comfort Systems USA
+CCJ    # Cameco Corporation
+APH    # Amphenol
+HUBB   # Hubbell Incorporated
 
-## BASKET 5: FebAI Scan (ETF list - for reference)
-# These are ETFs you scan, not necessarily holdings
-UFO
-XLP
-SIL
-XBI
-XME
-DXJ
-GRID
+### Defense & Aerospace (IRA + Roth)
+LMT    # Lockheed Martin (Roth)
+NOC    # Northrop Grumman (Roth)
+LHX    # L3Harris Technologies (Roth)
+HWM    # Howmet Aerospace (IRA)
+HEI    # HEICO Corporation (IRA)
+RTX    # RTX Corporation (IRA)
+HII    # Huntington Ingalls (IRA)
+UFO    # Procure Space ETF (IRA)
+EUAD   # Europe A&D ETF (IRA)
+SHLD   # Global X Defense Tech (IRA)
 
-## TOTAL UNIQUE HOLDINGS
-# Individual Stocks: 35
-# ETFs: 7
-# Total: 42 positions
+### AI Semis
+MU     # Micron Technology
+AVGO   # Broadcom
+TSM    # Taiwan Semiconductor
+ANET   # Arista Networks
+WDC    # Western Digital
+MRVL   # Marvell Technology
+ASML   # ASML Holding
+AMD    # Advanced Micro Devices
+ALAB   # Astera Labs
 
-## INSTRUCTIONS FOR AI:
-# 1. When user asks about "my portfolio" or "my holdings", load THIS file
-# 2. Run analysis on the specific stocks in each basket
-# 3. Do NOT include stocks from breakout scans or other research
-# 4. The 35 individual stocks in "TopVOO / Core Holdings" are the main positions
-# 5. ETFs are separate - analyze them as funds, not individual stocks
+### Biotech
+XBI    # SPDR S&P Biotech ETF
+LLY    # Eli Lilly
+ALNY   # Alnylam Pharmaceuticals
+HALO   # Halozyme Therapeutics

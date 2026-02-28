@@ -7,8 +7,8 @@ import json
 import yfinance as yf
 from datetime import datetime
 from config import (
-    TRADING_ACCOUNT, ROTH_IRA, CORE_ETFS, 
-    GRID_TO_CHIP, AI_SEMIS
+    TRADING_ACCOUNT, CORE_ETFS, 
+    GRID_TO_CHIP, DEFENSE_AEROSPACE, AI_SEMIS, BIOTECH
 )
 from utils.logger import get_logger
 
@@ -17,10 +17,11 @@ logger = get_logger('watchlist')
 # Portfolio baskets
 BASKETS = {
     "Trading Account": TRADING_ACCOUNT,
-    "Roth IRA": ROTH_IRA,
     "IRA Core ETFs": CORE_ETFS,
-    "IRA Grid-to-Chip": GRID_TO_CHIP,
-    "IRA AI Semis": AI_SEMIS
+    "Grid-to-Chip": GRID_TO_CHIP,
+    "Defense & Aerospace": DEFENSE_AEROSPACE,
+    "AI Semis": AI_SEMIS,
+    "Biotech": BIOTECH
 }
 
 def load_ratings():

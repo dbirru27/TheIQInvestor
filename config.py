@@ -18,16 +18,31 @@ LOG_DIR = os.path.join(WORKSPACE_DIR, 'logs')
 # Ensure log directory exists
 os.makedirs(LOG_DIR, exist_ok=True)
 
-# Core ETF Holdings
-CORE_ETFS = ['COPX', 'GLD', 'GLDM', 'NLR', 'VOO', 'XLI', 'ITA']
+# --- Portfolio (source: MY_PORTFOLIO.md, updated 2026-02-28) ---
 
-# Portfolio Tickers
-PORTFOLIO_TICKERS = [
-    'LMT', 'NOC', 'GE', 'PWR',           # Defense & Grid-to-Chip
-    'MSFT', 'AMZN', 'GOOGL', 'META',     # Mag 7
-    'NVDA', 'AMD', 'PLTR',               # AI/Semis
-    'LLY'                                 # Pharma
-]
+# Trading Account (~26%)
+TRADING_ACCOUNT = ['VGT', 'VUG', 'GOOGL', 'GOOG']
+
+# Defense & Aerospace (IRA + Roth)
+DEFENSE_AEROSPACE = ['LMT', 'NOC', 'LHX', 'HWM', 'HEI', 'RTX', 'HII', 'UFO', 'EUAD', 'SHLD']
+
+# Biotech (IRA)
+BIOTECH = ['XBI', 'LLY', 'ALNY', 'HALO']
+
+# IRA (~66%) - Core ETFs
+CORE_ETFS = ['COPX', 'GLD', 'XLI', 'VOO', 'DXJ', 'INDA', 'SIL']
+
+# IRA - Grid-to-Chip
+GRID_TO_CHIP = ['NLR', 'VRT', 'CEG', 'PWR', 'GEV', 'ETN', 'GRID', 'NVT', 'FIX', 'CCJ', 'APH', 'HUBB']
+
+# IRA - AI Semis
+AI_SEMIS = ['MU', 'AVGO', 'TSM', 'ANET', 'WDC', 'MRVL', 'ASML', 'AMD', 'ALAB']
+
+# All individual stocks (non-ETF)
+PORTFOLIO_TICKERS = DEFENSE_AEROSPACE + GRID_TO_CHIP + AI_SEMIS + BIOTECH + ['GOOGL', 'GOOG']
+
+# All holdings (everything)
+ALL_HOLDINGS = TRADING_ACCOUNT + CORE_ETFS + GRID_TO_CHIP + DEFENSE_AEROSPACE + AI_SEMIS + BIOTECH
 
 # Sector ETFs Mapping
 SECTOR_ETFS = {

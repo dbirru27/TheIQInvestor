@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-02-28 12:48 EST",
+  "last_updated": "2026-02-28 13:04 EST",
   "baskets": {
     "Trading Account": [
       {
@@ -53,47 +53,6 @@
         "grade": "N/A",
         "daily_change": 1.39,
         "basket": "Trading Account"
-      }
-    ],
-    "Roth IRA": [
-      {
-        "ticker": "LMT",
-        "name": "Lockheed Martin Corporation",
-        "trailing_pe": 30.58,
-        "forward_pe": 20.57,
-        "revenue_growth": 9.1,
-        "earnings_growth": 161.0,
-        "peg_ratio": 1.41,
-        "score": 0,
-        "grade": "N/A",
-        "daily_change": 2.56,
-        "basket": "Roth IRA"
-      },
-      {
-        "ticker": "NOC",
-        "name": "Northrop Grumman Corporation",
-        "trailing_pe": 24.94,
-        "forward_pe": 24.12,
-        "revenue_growth": 9.6,
-        "earnings_growth": 15.2,
-        "peg_ratio": 5.43,
-        "score": 0,
-        "grade": "N/A",
-        "daily_change": 1.9,
-        "basket": "Roth IRA"
-      },
-      {
-        "ticker": "LHX",
-        "name": "L3Harris Technologies, Inc.",
-        "trailing_pe": 42.74,
-        "forward_pe": 26.78,
-        "revenue_growth": 2.3,
-        "earnings_growth": -32.3,
-        "peg_ratio": 2.16,
-        "score": 0,
-        "grade": "N/A",
-        "daily_change": 2.64,
-        "basket": "Roth IRA"
       }
     ],
     "IRA Core ETFs": [
@@ -189,7 +148,7 @@
         "basket": "IRA Core ETFs"
       }
     ],
-    "IRA Grid-to-Chip": [
+    "Grid-to-Chip": [
       {
         "ticker": "NLR",
         "name": "VanEck Uranium and Nuclear ETF",
@@ -201,7 +160,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": -0.98,
-        "basket": "IRA Grid-to-Chip"
+        "basket": "Grid-to-Chip"
       },
       {
         "ticker": "VRT",
@@ -214,7 +173,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": -1.67,
-        "basket": "IRA Grid-to-Chip"
+        "basket": "Grid-to-Chip"
       },
       {
         "ticker": "CEG",
@@ -227,7 +186,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": 1.95,
-        "basket": "IRA Grid-to-Chip"
+        "basket": "Grid-to-Chip"
       },
       {
         "ticker": "PWR",
@@ -240,7 +199,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": -0.35,
-        "basket": "IRA Grid-to-Chip"
+        "basket": "Grid-to-Chip"
       },
       {
         "ticker": "GEV",
@@ -253,7 +212,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": -0.33,
-        "basket": "IRA Grid-to-Chip"
+        "basket": "Grid-to-Chip"
       },
       {
         "ticker": "ETN",
@@ -266,7 +225,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": 0.36,
-        "basket": "IRA Grid-to-Chip"
+        "basket": "Grid-to-Chip"
       },
       {
         "ticker": "GRID",
@@ -279,7 +238,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": -0.36,
-        "basket": "IRA Grid-to-Chip"
+        "basket": "Grid-to-Chip"
       },
       {
         "ticker": "NVT",
@@ -292,7 +251,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": -2.82,
-        "basket": "IRA Grid-to-Chip"
+        "basket": "Grid-to-Chip"
       },
       {
         "ticker": "FIX",
@@ -305,7 +264,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": -0.62,
-        "basket": "IRA Grid-to-Chip"
+        "basket": "Grid-to-Chip"
       },
       {
         "ticker": "CCJ",
@@ -318,7 +277,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": 0.19,
-        "basket": "IRA Grid-to-Chip"
+        "basket": "Grid-to-Chip"
       },
       {
         "ticker": "APH",
@@ -331,7 +290,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": -1.62,
-        "basket": "IRA Grid-to-Chip"
+        "basket": "Grid-to-Chip"
       },
       {
         "ticker": "HUBB",
@@ -344,10 +303,142 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": -2.13,
-        "basket": "IRA Grid-to-Chip"
+        "basket": "Grid-to-Chip"
       }
     ],
-    "IRA AI Semis": [
+    "Defense & Aerospace": [
+      {
+        "ticker": "LMT",
+        "name": "Lockheed Martin Corporation",
+        "trailing_pe": 30.58,
+        "forward_pe": 20.57,
+        "revenue_growth": 9.1,
+        "earnings_growth": 161.0,
+        "peg_ratio": 1.41,
+        "score": 0,
+        "grade": "N/A",
+        "daily_change": 2.56,
+        "basket": "Defense & Aerospace"
+      },
+      {
+        "ticker": "NOC",
+        "name": "Northrop Grumman Corporation",
+        "trailing_pe": 24.94,
+        "forward_pe": 24.12,
+        "revenue_growth": 9.6,
+        "earnings_growth": 15.2,
+        "peg_ratio": 5.43,
+        "score": 0,
+        "grade": "N/A",
+        "daily_change": 1.9,
+        "basket": "Defense & Aerospace"
+      },
+      {
+        "ticker": "LHX",
+        "name": "L3Harris Technologies, Inc.",
+        "trailing_pe": 42.74,
+        "forward_pe": 26.78,
+        "revenue_growth": 2.3,
+        "earnings_growth": -32.3,
+        "peg_ratio": 2.16,
+        "score": 0,
+        "grade": "N/A",
+        "daily_change": 2.64,
+        "basket": "Defense & Aerospace"
+      },
+      {
+        "ticker": "HWM",
+        "name": "Howmet Aerospace Inc.",
+        "trailing_pe": 70.95,
+        "forward_pe": 48.07,
+        "revenue_growth": 14.6,
+        "earnings_growth": 20.3,
+        "peg_ratio": null,
+        "score": 0,
+        "grade": "N/A",
+        "daily_change": 0.85,
+        "basket": "Defense & Aerospace"
+      },
+      {
+        "ticker": "HEI",
+        "name": "HEICO Corporation",
+        "trailing_pe": 65.33,
+        "forward_pe": 50.81,
+        "revenue_growth": 14.4,
+        "earnings_growth": 12.5,
+        "peg_ratio": 3.15,
+        "score": 0,
+        "grade": "N/A",
+        "daily_change": 2.07,
+        "basket": "Defense & Aerospace"
+      },
+      {
+        "ticker": "RTX",
+        "name": "RTX Corporation",
+        "trailing_pe": 40.85,
+        "forward_pe": 26.98,
+        "revenue_growth": 12.1,
+        "earnings_growth": 8.3,
+        "peg_ratio": 2.84,
+        "score": 0,
+        "grade": "N/A",
+        "daily_change": 2.52,
+        "basket": "Defense & Aerospace"
+      },
+      {
+        "ticker": "HII",
+        "name": "Huntington Ingalls Industries, Inc.",
+        "trailing_pe": 28.9,
+        "forward_pe": 21.88,
+        "revenue_growth": 15.7,
+        "earnings_growth": 28.1,
+        "peg_ratio": 1.53,
+        "score": 0,
+        "grade": "N/A",
+        "daily_change": 0.66,
+        "basket": "Defense & Aerospace"
+      },
+      {
+        "ticker": "UFO",
+        "name": "Procure Space ETF",
+        "trailing_pe": 29.05,
+        "forward_pe": null,
+        "revenue_growth": null,
+        "earnings_growth": null,
+        "peg_ratio": null,
+        "score": 0,
+        "grade": "N/A",
+        "daily_change": -1.09,
+        "basket": "Defense & Aerospace"
+      },
+      {
+        "ticker": "EUAD",
+        "name": "Select STOXX Europe Aerospace & Defense ETF",
+        "trailing_pe": 30.35,
+        "forward_pe": null,
+        "revenue_growth": null,
+        "earnings_growth": null,
+        "peg_ratio": null,
+        "score": 0,
+        "grade": "N/A",
+        "daily_change": -0.62,
+        "basket": "Defense & Aerospace"
+      },
+      {
+        "ticker": "SHLD",
+        "name": "Global X Defense Tech ETF",
+        "trailing_pe": 30.93,
+        "forward_pe": -7.65,
+        "revenue_growth": null,
+        "earnings_growth": null,
+        "peg_ratio": null,
+        "score": 0,
+        "grade": "N/A",
+        "daily_change": 0.7,
+        "basket": "Defense & Aerospace"
+      }
+    ],
+    "AI Semis": [
       {
         "ticker": "MU",
         "name": "Micron Technology, Inc.",
@@ -359,7 +450,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": -0.77,
-        "basket": "IRA AI Semis"
+        "basket": "AI Semis"
       },
       {
         "ticker": "AVGO",
@@ -372,7 +463,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": -0.67,
-        "basket": "IRA AI Semis"
+        "basket": "AI Semis"
       },
       {
         "ticker": "TSM",
@@ -385,7 +476,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": -0.59,
-        "basket": "IRA AI Semis"
+        "basket": "AI Semis"
       },
       {
         "ticker": "ANET",
@@ -398,7 +489,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": 2.5,
-        "basket": "IRA AI Semis"
+        "basket": "AI Semis"
       },
       {
         "ticker": "WDC",
@@ -411,7 +502,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": -0.9,
-        "basket": "IRA AI Semis"
+        "basket": "AI Semis"
       },
       {
         "ticker": "MRVL",
@@ -424,7 +515,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": 3.03,
-        "basket": "IRA AI Semis"
+        "basket": "AI Semis"
       },
       {
         "ticker": "ASML",
@@ -437,7 +528,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": -0.9,
-        "basket": "IRA AI Semis"
+        "basket": "AI Semis"
       },
       {
         "ticker": "AMD",
@@ -450,7 +541,7 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": -1.7,
-        "basket": "IRA AI Semis"
+        "basket": "AI Semis"
       },
       {
         "ticker": "ALAB",
@@ -463,7 +554,61 @@
         "score": 0,
         "grade": "N/A",
         "daily_change": -4.68,
-        "basket": "IRA AI Semis"
+        "basket": "AI Semis"
+      }
+    ],
+    "Biotech": [
+      {
+        "ticker": "XBI",
+        "name": "State Street SPDR S&P Biotech ETF",
+        "trailing_pe": null,
+        "forward_pe": null,
+        "revenue_growth": null,
+        "earnings_growth": null,
+        "peg_ratio": null,
+        "score": 0,
+        "grade": "N/A",
+        "daily_change": -0.23,
+        "basket": "Biotech"
+      },
+      {
+        "ticker": "LLY",
+        "name": "Eli Lilly and Company",
+        "trailing_pe": 45.88,
+        "forward_pe": 25.07,
+        "revenue_growth": 42.6,
+        "earnings_growth": 51.4,
+        "peg_ratio": 1.13,
+        "score": 0,
+        "grade": "N/A",
+        "daily_change": 2.93,
+        "basket": "Biotech"
+      },
+      {
+        "ticker": "ALNY",
+        "name": "Alnylam Pharmaceuticals, Inc.",
+        "trailing_pe": 142.88,
+        "forward_pe": 22.9,
+        "revenue_growth": 84.9,
+        "earnings_growth": null,
+        "peg_ratio": null,
+        "score": 0,
+        "grade": "N/A",
+        "daily_change": 0.51,
+        "basket": "Biotech"
+      },
+      {
+        "ticker": "HALO",
+        "name": "Halozyme Therapeutics, Inc.",
+        "trailing_pe": 27.16,
+        "forward_pe": 7.06,
+        "revenue_growth": 51.6,
+        "earnings_growth": null,
+        "peg_ratio": null,
+        "score": 0,
+        "grade": "N/A",
+        "daily_change": 0.45,
+        "basket": "Biotech"
       }
     ]
   },
@@ -519,45 +664,6 @@
       "grade": "N/A",
       "daily_change": 1.39,
       "basket": "Trading Account"
-    },
-    {
-      "ticker": "LMT",
-      "name": "Lockheed Martin Corporation",
-      "trailing_pe": 30.58,
-      "forward_pe": 20.57,
-      "revenue_growth": 9.1,
-      "earnings_growth": 161.0,
-      "peg_ratio": 1.41,
-      "score": 0,
-      "grade": "N/A",
-      "daily_change": 2.56,
-      "basket": "Roth IRA"
-    },
-    {
-      "ticker": "NOC",
-      "name": "Northrop Grumman Corporation",
-      "trailing_pe": 24.94,
-      "forward_pe": 24.12,
-      "revenue_growth": 9.6,
-      "earnings_growth": 15.2,
-      "peg_ratio": 5.43,
-      "score": 0,
-      "grade": "N/A",
-      "daily_change": 1.9,
-      "basket": "Roth IRA"
-    },
-    {
-      "ticker": "LHX",
-      "name": "L3Harris Technologies, Inc.",
-      "trailing_pe": 42.74,
-      "forward_pe": 26.78,
-      "revenue_growth": 2.3,
-      "earnings_growth": -32.3,
-      "peg_ratio": 2.16,
-      "score": 0,
-      "grade": "N/A",
-      "daily_change": 2.64,
-      "basket": "Roth IRA"
     },
     {
       "ticker": "COPX",
@@ -661,7 +767,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": -0.98,
-      "basket": "IRA Grid-to-Chip"
+      "basket": "Grid-to-Chip"
     },
     {
       "ticker": "VRT",
@@ -674,7 +780,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": -1.67,
-      "basket": "IRA Grid-to-Chip"
+      "basket": "Grid-to-Chip"
     },
     {
       "ticker": "CEG",
@@ -687,7 +793,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": 1.95,
-      "basket": "IRA Grid-to-Chip"
+      "basket": "Grid-to-Chip"
     },
     {
       "ticker": "PWR",
@@ -700,7 +806,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": -0.35,
-      "basket": "IRA Grid-to-Chip"
+      "basket": "Grid-to-Chip"
     },
     {
       "ticker": "GEV",
@@ -713,7 +819,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": -0.33,
-      "basket": "IRA Grid-to-Chip"
+      "basket": "Grid-to-Chip"
     },
     {
       "ticker": "ETN",
@@ -726,7 +832,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": 0.36,
-      "basket": "IRA Grid-to-Chip"
+      "basket": "Grid-to-Chip"
     },
     {
       "ticker": "GRID",
@@ -739,7 +845,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": -0.36,
-      "basket": "IRA Grid-to-Chip"
+      "basket": "Grid-to-Chip"
     },
     {
       "ticker": "NVT",
@@ -752,7 +858,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": -2.82,
-      "basket": "IRA Grid-to-Chip"
+      "basket": "Grid-to-Chip"
     },
     {
       "ticker": "FIX",
@@ -765,7 +871,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": -0.62,
-      "basket": "IRA Grid-to-Chip"
+      "basket": "Grid-to-Chip"
     },
     {
       "ticker": "CCJ",
@@ -778,7 +884,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": 0.19,
-      "basket": "IRA Grid-to-Chip"
+      "basket": "Grid-to-Chip"
     },
     {
       "ticker": "APH",
@@ -791,7 +897,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": -1.62,
-      "basket": "IRA Grid-to-Chip"
+      "basket": "Grid-to-Chip"
     },
     {
       "ticker": "HUBB",
@@ -804,7 +910,137 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": -2.13,
-      "basket": "IRA Grid-to-Chip"
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "LMT",
+      "name": "Lockheed Martin Corporation",
+      "trailing_pe": 30.58,
+      "forward_pe": 20.57,
+      "revenue_growth": 9.1,
+      "earnings_growth": 161.0,
+      "peg_ratio": 1.41,
+      "score": 0,
+      "grade": "N/A",
+      "daily_change": 2.56,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "NOC",
+      "name": "Northrop Grumman Corporation",
+      "trailing_pe": 24.94,
+      "forward_pe": 24.12,
+      "revenue_growth": 9.6,
+      "earnings_growth": 15.2,
+      "peg_ratio": 5.43,
+      "score": 0,
+      "grade": "N/A",
+      "daily_change": 1.9,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "LHX",
+      "name": "L3Harris Technologies, Inc.",
+      "trailing_pe": 42.74,
+      "forward_pe": 26.78,
+      "revenue_growth": 2.3,
+      "earnings_growth": -32.3,
+      "peg_ratio": 2.16,
+      "score": 0,
+      "grade": "N/A",
+      "daily_change": 2.64,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "HWM",
+      "name": "Howmet Aerospace Inc.",
+      "trailing_pe": 70.95,
+      "forward_pe": 48.07,
+      "revenue_growth": 14.6,
+      "earnings_growth": 20.3,
+      "peg_ratio": null,
+      "score": 0,
+      "grade": "N/A",
+      "daily_change": 0.85,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "HEI",
+      "name": "HEICO Corporation",
+      "trailing_pe": 65.33,
+      "forward_pe": 50.81,
+      "revenue_growth": 14.4,
+      "earnings_growth": 12.5,
+      "peg_ratio": 3.15,
+      "score": 0,
+      "grade": "N/A",
+      "daily_change": 2.07,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "RTX",
+      "name": "RTX Corporation",
+      "trailing_pe": 40.85,
+      "forward_pe": 26.98,
+      "revenue_growth": 12.1,
+      "earnings_growth": 8.3,
+      "peg_ratio": 2.84,
+      "score": 0,
+      "grade": "N/A",
+      "daily_change": 2.52,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "HII",
+      "name": "Huntington Ingalls Industries, Inc.",
+      "trailing_pe": 28.9,
+      "forward_pe": 21.88,
+      "revenue_growth": 15.7,
+      "earnings_growth": 28.1,
+      "peg_ratio": 1.53,
+      "score": 0,
+      "grade": "N/A",
+      "daily_change": 0.66,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "UFO",
+      "name": "Procure Space ETF",
+      "trailing_pe": 29.05,
+      "forward_pe": null,
+      "revenue_growth": null,
+      "earnings_growth": null,
+      "peg_ratio": null,
+      "score": 0,
+      "grade": "N/A",
+      "daily_change": -1.09,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "EUAD",
+      "name": "Select STOXX Europe Aerospace & Defense ETF",
+      "trailing_pe": 30.35,
+      "forward_pe": null,
+      "revenue_growth": null,
+      "earnings_growth": null,
+      "peg_ratio": null,
+      "score": 0,
+      "grade": "N/A",
+      "daily_change": -0.62,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "SHLD",
+      "name": "Global X Defense Tech ETF",
+      "trailing_pe": 30.93,
+      "forward_pe": -7.65,
+      "revenue_growth": null,
+      "earnings_growth": null,
+      "peg_ratio": null,
+      "score": 0,
+      "grade": "N/A",
+      "daily_change": 0.7,
+      "basket": "Defense & Aerospace"
     },
     {
       "ticker": "MU",
@@ -817,7 +1053,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": -0.77,
-      "basket": "IRA AI Semis"
+      "basket": "AI Semis"
     },
     {
       "ticker": "AVGO",
@@ -830,7 +1066,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": -0.67,
-      "basket": "IRA AI Semis"
+      "basket": "AI Semis"
     },
     {
       "ticker": "TSM",
@@ -843,7 +1079,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": -0.59,
-      "basket": "IRA AI Semis"
+      "basket": "AI Semis"
     },
     {
       "ticker": "ANET",
@@ -856,7 +1092,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": 2.5,
-      "basket": "IRA AI Semis"
+      "basket": "AI Semis"
     },
     {
       "ticker": "WDC",
@@ -869,7 +1105,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": -0.9,
-      "basket": "IRA AI Semis"
+      "basket": "AI Semis"
     },
     {
       "ticker": "MRVL",
@@ -882,7 +1118,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": 3.03,
-      "basket": "IRA AI Semis"
+      "basket": "AI Semis"
     },
     {
       "ticker": "ASML",
@@ -895,7 +1131,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": -0.9,
-      "basket": "IRA AI Semis"
+      "basket": "AI Semis"
     },
     {
       "ticker": "AMD",
@@ -908,7 +1144,7 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": -1.7,
-      "basket": "IRA AI Semis"
+      "basket": "AI Semis"
     },
     {
       "ticker": "ALAB",
@@ -921,7 +1157,59 @@
       "score": 0,
       "grade": "N/A",
       "daily_change": -4.68,
-      "basket": "IRA AI Semis"
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "XBI",
+      "name": "State Street SPDR S&P Biotech ETF",
+      "trailing_pe": null,
+      "forward_pe": null,
+      "revenue_growth": null,
+      "earnings_growth": null,
+      "peg_ratio": null,
+      "score": 0,
+      "grade": "N/A",
+      "daily_change": -0.23,
+      "basket": "Biotech"
+    },
+    {
+      "ticker": "LLY",
+      "name": "Eli Lilly and Company",
+      "trailing_pe": 45.88,
+      "forward_pe": 25.07,
+      "revenue_growth": 42.6,
+      "earnings_growth": 51.4,
+      "peg_ratio": 1.13,
+      "score": 0,
+      "grade": "N/A",
+      "daily_change": 2.93,
+      "basket": "Biotech"
+    },
+    {
+      "ticker": "ALNY",
+      "name": "Alnylam Pharmaceuticals, Inc.",
+      "trailing_pe": 142.88,
+      "forward_pe": 22.9,
+      "revenue_growth": 84.9,
+      "earnings_growth": null,
+      "peg_ratio": null,
+      "score": 0,
+      "grade": "N/A",
+      "daily_change": 0.51,
+      "basket": "Biotech"
+    },
+    {
+      "ticker": "HALO",
+      "name": "Halozyme Therapeutics, Inc.",
+      "trailing_pe": 27.16,
+      "forward_pe": 7.06,
+      "revenue_growth": 51.6,
+      "earnings_growth": null,
+      "peg_ratio": null,
+      "score": 0,
+      "grade": "N/A",
+      "daily_change": 0.45,
+      "basket": "Biotech"
     }
   ]
 }
