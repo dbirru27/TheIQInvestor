@@ -319,8 +319,7 @@
                         <tr>
                             <th onclick="sortWatchlist('ticker')">Ticker</th>
                             <th onclick="sortWatchlist('name')">Company</th>
-                            <th onclick="sortWatchlist('price')">Price</th>
-                            <th onclick="sortWatchlist('daily_change')">Daily Chg</th>
+                            <th onclick="sortWatchlist('daily_change')">% Change</th>
                             <th onclick="sortWatchlist('trailing_pe')">Current PE</th>
                             <th onclick="sortWatchlist('forward_pe')">Forward PE</th>
                             <th onclick="sortWatchlist('revenue_growth')">Rev Growth</th>
@@ -331,7 +330,7 @@
                         </tr>
                     </thead>
                     <tbody id="watchlist-tbody">
-                        <tr><td colspan="11" style="text-align: center; padding: 40px; color: var(--text-dim);">Loading watchlist...</td></tr>
+                        <tr><td colspan="10" style="text-align: center; padding: 40px; color: var(--text-dim);">Loading watchlist...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -514,7 +513,7 @@
                     renderWatchlist();
                 } catch (err) {
                     document.getElementById('watchlist-tbody').innerHTML = 
-                        '<tr><td colspan="11" style="text-align: center; padding: 40px; color: #dc2626;">Error loading watchlist: ' + err.message + '</td></tr>';
+                        '<tr><td colspan="10" style="text-align: center; padding: 40px; color: #dc2626;">Error loading watchlist: ' + err.message + '</td></tr>';
                     return;
                 }
             } else {
@@ -585,7 +584,6 @@
                 <tr data-ticker="${stock.ticker}">
                     <td><a href="#" onclick="viewStock('${stock.ticker}'); return false;" class="text-sky-400 hover:text-sky-300 font-bold">${stock.ticker}</a></td>
                     <td>${stock.name}</td>
-                    <td class="live-price" style="font-weight: 600;">${stock.price !== null && stock.price !== undefined ? '$' + stock.price.toFixed(2) : na}</td>
                     <td class="live-change" style="color: ${changeColor}; font-weight: 600;">${dc !== null && dc !== undefined ? changePrefix + dc.toFixed(2) + '%' : na}</td>
                     <td>${stock.trailing_pe !== null ? stock.trailing_pe.toFixed(2) : na}</td>
                     <td>${stock.forward_pe !== null ? stock.forward_pe.toFixed(2) : na}</td>
@@ -623,7 +621,7 @@
             if (currentBasketFilter !== 'all') {
                 const stocks = watchlistData.baskets[currentBasketFilter] || [];
                 if (stocks.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; padding: 40px; color: var(--text-dim);">No holdings in this basket</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; padding: 40px; color: var(--text-dim);">No holdings in this basket</td></tr>';
                     return;
                 }
                 tbody.innerHTML = stocks.map(renderStockRow).join('');
@@ -646,7 +644,7 @@
                 const totalValue = stocks.reduce((s, st) => s + (st.price || 0), 0);
                 html += `
                     <tr class="basket-header" data-basket="${basket}">
-                        <td colspan="11" style="background: #0a0f1d; padding: 14px 16px; border-bottom: 2px solid var(--accent); font-weight: 700; font-size: 0.95rem;">
+                        <td colspan="10" style="background: #0a0f1d; padding: 14px 16px; border-bottom: 2px solid var(--accent); font-weight: 700; font-size: 0.95rem;">
                             ${icon} ${basket} 
                             <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 400; margin-left: 8px;">${stocks.length} holdings</span>
                             <span class="basket-avg" style="font-size: 0.75rem; color: ${avgColor}; font-weight: 600; margin-left: 12px;">Avg: ${avgPrefix}${avgChange.toFixed(2)}%</span>
