@@ -1,10 +1,10 @@
 {
-  "last_updated": "2026-02-28 15:59 EST",
+  "last_updated": "2026-02-28 18:22 EST",
   "baskets": {
     "Trading Account": [
       {
         "ticker": "VGT",
-        "name": "VGT",
+        "name": "Vanguard Information Technology Index Fund ETF Shares",
         "sector": "",
         "industry": "",
         "price": 726.7,
@@ -32,7 +32,7 @@
       },
       {
         "ticker": "VUG",
-        "name": "VUG",
+        "name": "Vanguard Growth Index Fund ETF Shares",
         "sector": "",
         "industry": "",
         "price": 460.87,
@@ -118,7 +118,7 @@
     "IRA Core ETFs": [
       {
         "ticker": "COPX",
-        "name": "COPX",
+        "name": "Global X Copper Miners ETF",
         "sector": "",
         "industry": "",
         "price": 95.7,
@@ -146,7 +146,7 @@
       },
       {
         "ticker": "GLD",
-        "name": "GLD",
+        "name": "SPDR Gold Shares",
         "sector": "",
         "industry": "",
         "price": 483.75,
@@ -174,7 +174,7 @@
       },
       {
         "ticker": "XLI",
-        "name": "XLI",
+        "name": "State Street Industrial Select Sector SPDR ETF",
         "sector": "",
         "industry": "",
         "price": 177.14,
@@ -202,7 +202,7 @@
       },
       {
         "ticker": "VOO",
-        "name": "VOO",
+        "name": "Vanguard S&P 500 ETF",
         "sector": "",
         "industry": "",
         "price": 631.04,
@@ -230,7 +230,7 @@
       },
       {
         "ticker": "DXJ",
-        "name": "DXJ",
+        "name": "WisdomTree Japan Hedged Equity Fund",
         "sector": "",
         "industry": "",
         "price": 169.58,
@@ -286,7 +286,7 @@
       },
       {
         "ticker": "SIL",
-        "name": "SIL",
+        "name": "Global X Silver Miners ETF",
         "sector": "",
         "industry": "",
         "price": 118.03,
@@ -316,7 +316,7 @@
     "Grid-to-Chip": [
       {
         "ticker": "NLR",
-        "name": "NLR",
+        "name": "VanEck Uranium and Nuclear ETF",
         "sector": "",
         "industry": "",
         "price": 148.27,
@@ -484,7 +484,7 @@
       },
       {
         "ticker": "GRID",
-        "name": "GRID",
+        "name": "First Trust NASDAQ Clean Edge Smart Grid Infrastructure Index Fund",
         "sector": "",
         "industry": "",
         "price": 177.85,
@@ -850,7 +850,7 @@
       },
       {
         "ticker": "UFO",
-        "name": "UFO",
+        "name": "Procure Space ETF",
         "sector": "",
         "industry": "",
         "price": 44.47,
@@ -1190,7 +1190,7 @@
     "Biotech": [
       {
         "ticker": "XBI",
-        "name": "XBI",
+        "name": "State Street SPDR S&P Biotech ETF",
         "sector": "",
         "industry": "",
         "price": 127.37,
@@ -1305,7 +1305,7 @@
   "all": [
     {
       "ticker": "VGT",
-      "name": "VGT",
+      "name": "Vanguard Information Technology Index Fund ETF Shares",
       "sector": "",
       "industry": "",
       "price": 726.7,
@@ -1333,7 +1333,7 @@
     },
     {
       "ticker": "VUG",
-      "name": "VUG",
+      "name": "Vanguard Growth Index Fund ETF Shares",
       "sector": "",
       "industry": "",
       "price": 460.87,
@@ -1417,7 +1417,7 @@
     },
     {
       "ticker": "COPX",
-      "name": "COPX",
+      "name": "Global X Copper Miners ETF",
       "sector": "",
       "industry": "",
       "price": 95.7,
@@ -1445,7 +1445,7 @@
     },
     {
       "ticker": "GLD",
-      "name": "GLD",
+      "name": "SPDR Gold Shares",
       "sector": "",
       "industry": "",
       "price": 483.75,
@@ -1473,7 +1473,7 @@
     },
     {
       "ticker": "XLI",
-      "name": "XLI",
+      "name": "State Street Industrial Select Sector SPDR ETF",
       "sector": "",
       "industry": "",
       "price": 177.14,
@@ -1501,7 +1501,7 @@
     },
     {
       "ticker": "VOO",
-      "name": "VOO",
+      "name": "Vanguard S&P 500 ETF",
       "sector": "",
       "industry": "",
       "price": 631.04,
@@ -1529,7 +1529,7 @@
     },
     {
       "ticker": "DXJ",
-      "name": "DXJ",
+      "name": "WisdomTree Japan Hedged Equity Fund",
       "sector": "",
       "industry": "",
       "price": 169.58,
@@ -1585,7 +1585,7 @@
     },
     {
       "ticker": "SIL",
-      "name": "SIL",
+      "name": "Global X Silver Miners ETF",
       "sector": "",
       "industry": "",
       "price": 118.03,
@@ -1613,7 +1613,7 @@
     },
     {
       "ticker": "NLR",
-      "name": "NLR",
+      "name": "VanEck Uranium and Nuclear ETF",
       "sector": "",
       "industry": "",
       "price": 148.27,
@@ -1781,7 +1781,7 @@
     },
     {
       "ticker": "GRID",
-      "name": "GRID",
+      "name": "First Trust NASDAQ Clean Edge Smart Grid Infrastructure Index Fund",
       "sector": "",
       "industry": "",
       "price": 177.85,
@@ -2145,7 +2145,7 @@
     },
     {
       "ticker": "UFO",
-      "name": "UFO",
+      "name": "Procure Space ETF",
       "sector": "",
       "industry": "",
       "price": 44.47,
@@ -2481,7 +2481,7 @@
     },
     {
       "ticker": "XBI",
-      "name": "XBI",
+      "name": "State Street SPDR S&P Biotech ETF",
       "sector": "",
       "industry": "",
       "price": 127.37,

@@ -42,70 +42,53 @@ def load_stock_db():
 
 
 def fetch_live_prices(tickers):
-    """Bulk fetch live prices + previous close for daily % change"""
+    """Fetch live prices + names using yfinance Tickers"""
     live = {}
+    names = {}
     try:
-        # yfinance bulk download — single API call for all tickers
-        data = yf.download(tickers, period="2d", group_by="ticker", progress=False, threads=True)
+        tickers_obj = yf.Tickers(' '.join(tickers))
         for t in tickers:
             try:
-                if len(tickers) == 1:
-                    closes = data['Close'].dropna()
-                else:
-                    closes = data[t]['Close'].dropna()
-                if len(closes) >= 2:
-                    prev = float(closes.iloc[-2])
-                    curr = float(closes.iloc[-1])
+                info = tickers_obj.tickers[t].info
+                curr = info.get('regularMarketPrice') or info.get('currentPrice')
+                prev = info.get('previousClose')
+                names[t] = info.get('longName') or info.get('shortName') or t
+                # Capture growth data too
+                rev_g = info.get('revenueGrowth')
+                earn_g = info.get('earningsGrowth')
+                live[t] = live.get(t, {})
+                if rev_g is not None:
+                    live[t]['revenue_growth'] = round(rev_g * 100, 1)
+                if earn_g is not None:
+                    live[t]['earnings_growth'] = round(earn_g * 100, 1)
+                if curr and prev and prev > 0:
                     live[t] = {
                         'price': round(curr, 2),
                         'previous_close': round(prev, 2),
                         'daily_change': round((curr - prev) / prev * 100, 2)
                     }
-                elif len(closes) == 1:
-                    live[t] = {
-                        'price': round(float(closes.iloc[-1]), 2),
-                        'previous_close': None,
-                        'daily_change': None
-                    }
             except Exception:
                 pass
     except Exception as e:
-        logger.warning(f"Bulk price fetch failed: {e}")
-    return live
+        logger.warning(f"Price fetch failed: {e}")
+    return live, names
 
 
-def build_stock_entry(ticker, basket_name, db, live_prices):
+def build_stock_entry(ticker, basket_name, db, live_prices, names_cache):
     """Build a watchlist entry from DB + live price data"""
     stock = db.get(ticker, {})
     live = live_prices.get(ticker, {})
+    
+    # Get name: DB first, then names_cache (from yf.Tickers)
+    name = stock.get('name') or names_cache.get(ticker, ticker)
 
-    # Extract revenue/earnings growth from criteria if available
-    revenue_growth = None
-    earnings_growth = None
-    for c in stock.get('criteria', []):
-        if c.get('name') == 'Sales Growth (2yr)' and c.get('value'):
-            # Parse "Cur: 22.7%, Prior: 16.7%"
-            try:
-                parts = c['value'].split(',')
-                cur = parts[0].split(':')[1].strip().replace('%', '')
-                revenue_growth = float(cur)
-            except:
-                pass
-        if c.get('name') == 'Earnings Acceleration' and c.get('value'):
-            try:
-                val = c['value']
-                if 'accelerating' in val.lower():
-                    earnings_growth = 'Accelerating'
-                elif 'positive' in val.lower():
-                    earnings_growth = 'Positive'
-                elif 'decelerating' in val.lower():
-                    earnings_growth = 'Decelerating'
-            except:
-                pass
+    # Growth data from bulk fetch
+    revenue_growth = live.get('revenue_growth')
+    earnings_growth = live.get('earnings_growth')
 
     return {
         "ticker": ticker,
-        "name": stock.get('name', ticker),
+        "name": name,
         "sector": stock.get('sector', ''),
         "industry": stock.get('industry', ''),
         "price": live.get('price') or stock.get('current_price'),
@@ -152,8 +135,8 @@ def generate_watchlist():
 
     # Bulk fetch live prices (single API call)
     logger.info(f"Fetching live prices for {len(all_tickers)} tickers...")
-    live_prices = fetch_live_prices(all_tickers)
-    logger.info(f"Got live prices for {len(live_prices)} tickers")
+    live_prices, names_cache = fetch_live_prices(all_tickers)
+    logger.info(f"Got live prices for {len(live_prices)} tickers, {len(names_cache)} names")
 
     # Build watchlist
     watchlist_data = {
@@ -167,7 +150,7 @@ def generate_watchlist():
         basket_stocks = []
 
         for ticker in tickers:
-            entry = build_stock_entry(ticker, basket_name, db, live_prices)
+            entry = build_stock_entry(ticker, basket_name, db, live_prices, names_cache)
             basket_stocks.append(entry)
             watchlist_data['all'].append(entry)
 
