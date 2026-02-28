@@ -30,13 +30,22 @@ def load_ratings():
         with open('all_stocks.json', 'r') as f:
             data = json.load(f)
             ratings = {}
-            for stock in data.get('stocks', []):
-                ticker = stock.get('ticker')
-                if ticker:
+            stocks_data = data.get('stocks', {})
+            # Handle both dict (keyed by ticker) and list formats
+            if isinstance(stocks_data, dict):
+                for ticker, stock in stocks_data.items():
                     ratings[ticker] = {
                         'score': stock.get('score', 0),
                         'grade': stock.get('grade', 'N/A')
                     }
+            else:
+                for stock in stocks_data:
+                    ticker = stock.get('ticker')
+                    if ticker:
+                        ratings[ticker] = {
+                            'score': stock.get('score', 0),
+                            'grade': stock.get('grade', 'N/A')
+                        }
             logger.info(f"Loaded ratings for {len(ratings)} stocks")
             return ratings
     except Exception as e:
