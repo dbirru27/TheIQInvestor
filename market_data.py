@@ -79,9 +79,33 @@ class MarketDB:
         self.conn.commit()
 
 
-    def get_history(self, symbol, period="1y"):
-        query = "SELECT date, open, high, low, close, volume FROM prices WHERE symbol = ? ORDER BY date ASC"
-        df = pd.read_sql(query, self.conn, params=(symbol,), parse_dates=['date'])
+    def get_history(self, symbol, period="1y", start_date=None):
+        """
+        Get price history for a symbol.
+        
+        Args:
+            symbol: Stock ticker symbol
+            period: Time period (backward compatibility, not used with start_date)
+            start_date: Optional start date filter (default: 1 year ago)
+                       Can be datetime.date, datetime, or string 'YYYY-MM-DD'
+        
+        Returns:
+            DataFrame with OHLCV data, or None if no data found
+        """
+        # Default start_date to 1 year ago if not provided
+        if start_date is None:
+            start_date = (datetime.now() - timedelta(days=365)).date()
+        
+        # Convert start_date to string format for SQL
+        if isinstance(start_date, datetime):
+            start_date_str = start_date.strftime('%Y-%m-%d')
+        elif hasattr(start_date, 'strftime'):  # datetime.date
+            start_date_str = start_date.strftime('%Y-%m-%d')
+        else:
+            start_date_str = str(start_date)
+        
+        query = "SELECT date, open, high, low, close, volume FROM prices WHERE symbol = ? AND date >= ? ORDER BY date ASC"
+        df = pd.read_sql(query, self.conn, params=(symbol, start_date_str), parse_dates=['date'])
         
         if df.empty:
             return None

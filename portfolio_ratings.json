@@ -1,70 +1,106 @@
 {
-  "updated": "2026-02-05T15:01:13.399431",
+  "updated": "2026-02-27T18:30:19.692503",
   "results": [
     {
-      "ticker": "GE",
-      "name": "GE Aerospace",
-      "sector": "Industrials",
-      "score": 55,
+      "ticker": "NVDA",
+      "name": "NVIDIA Corporation",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "score": 109,
       "grade": "A",
-      "momentum_score": 50.0,
-      "quality_score": 100.0,
+      "max_score": 100,
+      "technical_score": 58,
+      "growth_score": 33,
+      "quality_score": 18,
+      "context_score": 0,
       "results": [
         {
           "name": "Trend Alignment",
           "category": "Momentum",
-          "passed": true,
-          "value": "$306.37 > $304.90 > $275.98",
+          "passed": false,
+          "value": "$177.19 > $185.61 > $174.94",
           "threshold": "Price > SMA50 > SMA200",
-          "points": 5
+          "points": 8
         },
         {
           "name": "Breakout Pattern",
           "category": "Breakout",
           "passed": false,
-          "value": "+7.9% from Base",
+          "value": "+16.5% from Base",
           "threshold": "Flat Base + Near High",
-          "points": 20
+          "points": 22
         },
         {
           "name": "Consolidation",
           "category": "Breakout",
           "passed": true,
-          "value": "Depth 22%",
+          "value": "Depth 23%",
           "threshold": "Depth < 40%",
           "points": 10
         },
         {
           "name": "Volume Dry-up",
           "category": "Breakout",
-          "passed": true,
-          "value": "0.9x avg",
+          "passed": false,
+          "value": "1.5x avg",
           "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": false,
+          "value": "83.5%",
+          "threshold": "> 90% of 52W High",
           "points": 5
         },
         {
-          "name": "Sales Growth",
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "ATR Squeezing",
+          "threshold": "ATR < 80% of 20D ATR",
+          "points": 5
+        },
+        {
+          "name": "Sales Growth (2yr)",
           "category": "Growth",
           "passed": true,
-          "value": "17.6%",
-          "threshold": "> 10%",
-          "points": 10
+          "value": "73.2% (avg: 99.5%)",
+          "threshold": "Both years >= 10% required",
+          "points": 30
         },
         {
           "name": "Earnings Growth",
           "category": "Growth",
           "passed": true,
-          "value": "37.4%",
+          "value": "95.6%",
           "threshold": "> 15%",
-          "points": 10
+          "points": 3
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "101.5%",
+          "threshold": "> 15%",
+          "points": 5
         },
         {
           "name": "Operating Margin",
           "category": "Quality",
           "passed": true,
-          "value": "19.5%",
+          "value": "65.0%",
           "threshold": "> 10%",
-          "points": 10
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 5
         },
         {
           "name": "FCF Quality",
@@ -72,78 +108,989 @@
           "passed": true,
           "value": "Positive",
           "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Technology",
+          "threshold": "High-Conviction Sector",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "-7.5%",
+          "threshold": "> 5% vs Market",
+          "points": 5
+        },
+        {
+          "name": "Size Factor",
+          "category": "Context",
+          "passed": false,
+          "value": "$4.3T",
+          "threshold": "Large Cap Penalty",
+          "points": -10
+        }
+      ],
+      "news": [
+        {
+          "title": "Earnings live: Block mass layoffs earn Wall Street's approval, Duolingo shares plunge",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/news/live/earnings-live-block-mass-layoffs-earn-wall-streets-approval-duolingo-shares-plunge-214740021.html",
+          "time": "Feb 27, 21:47"
+        },
+        {
+          "title": "Nvidia will remain the bellwether of AI, analyst explains",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/nvidia-remain-bellwether-ai-analyst-113019100.html",
+          "time": "Feb 27, 11:30"
+        },
+        {
+          "title": "Why Figs Stock Jumped Today",
+          "publisher": "Motley Fool",
+          "link": "https://www.fool.com/investing/2026/02/27/why-figs-stock-is-up-today/",
+          "time": "Feb 27, 23:17"
+        },
+        {
+          "title": "Is Intel Stock Going to $100?",
+          "publisher": "Motley Fool",
+          "link": "https://www.fool.com/investing/2026/02/27/is-intel-stock-going-to-100/",
+          "time": "Feb 27, 23:05"
+        },
+        {
+          "title": "Before Retiring, Warren Buffett Sold These 3 Stocks and Piled Into This High-Yield Investment",
+          "publisher": "Motley Fool",
+          "link": "https://www.fool.com/investing/2026/02/27/retire-warren-buffett-sold-stocks-high-yield/",
+          "time": "Feb 27, 22:55"
+        }
+      ],
+      "market_cap": 4314045087744,
+      "valuation": {
+        "forward_pe": 16.620033,
+        "trailing_pe": 43.750614,
+        "peg_ratio": null,
+        "book_value": 6.472,
+        "price_to_book": 27.377935,
+        "roe": 1.01485
+      },
+      "opinions": {
+        "recommendation": "Strong Buy",
+        "target_mean": 262.50742,
+        "analysts": 58
+      }
+    },
+    {
+      "ticker": "AMD",
+      "name": "Advanced Micro Devices, Inc.",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "score": 101,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 58,
+      "growth_score": 15,
+      "quality_score": 18,
+      "context_score": 10,
+      "results": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": false,
+          "value": "$200.21 > $218.66 > $186.58",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "value": "+25.0% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 44%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "1.2x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": false,
+          "value": "75.0%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "ATR Squeezing",
+          "threshold": "ATR < 80% of 20D ATR",
+          "points": 5
+        },
+        {
+          "name": "Sales Growth (2yr)",
+          "category": "Growth",
+          "passed": true,
+          "value": "34.1% (avg: 23.9%)",
+          "threshold": "Both years >= 10% required",
+          "points": 12
+        },
+        {
+          "name": "Earnings Growth",
+          "category": "Growth",
+          "passed": true,
+          "value": "217.1%",
+          "threshold": "> 15%",
+          "points": 3
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": false,
+          "value": "7.1%",
+          "threshold": "> 15%",
+          "points": 5
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "17.1%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 5
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Technology",
+          "threshold": "High-Conviction Sector",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "-20.8%",
+          "threshold": "> 5% vs Market",
           "points": 5
         }
       ],
       "news": [
         {
-          "title": "GE Aerospace's Commercial Engines Unit Gains Momentum: Can It Sustain?",
-          "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/news/ge-aerospaces-commercial-engines-unit-171500140.html",
-          "time": "Feb 05, 17:15"
+          "title": "Is AMD a Buy After Meta Deal?",
+          "publisher": "Motley Fool",
+          "link": "https://www.fool.com/investing/2026/02/27/is-amd-a-buy-after-meta-deal/",
+          "time": "Feb 27, 18:50"
         },
         {
-          "title": "GE Vernova Inc. (GEV) Is a Trending Stock: Facts to Know Before Betting on It",
-          "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/news/ge-vernova-inc-gev-trending-140005959.html",
-          "time": "Feb 05, 14:00"
+          "title": "Meta's Chip Dreams Face Hard Limits",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/news/metas-chip-dreams-face-hard-184815201.html",
+          "time": "Feb 27, 18:48"
         },
         {
-          "title": "GE Aerospace Expands Singapore Engine Hub With Automation And AI Focus",
+          "title": "Nvidia\u2019s Earnings Can\u2019t Buy a Rally, but Anthropic Just Threw Software a Lifeline",
+          "publisher": "Barrons.com",
+          "link": "https://www.barrons.com/articles/nvidia-software-stocks-hair-trigger-call-bottom-28c82478?siteid=yhoof2&yptr=yahoo",
+          "time": "Feb 27, 17:34"
+        },
+        {
+          "title": "A Look At Credo Technology Group Holding\u2019s (CRDO) Valuation After New TensorWave Partnership And Analyst Upgrades",
           "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/news/ge-aerospace-expands-singapore-engine-032134643.html",
-          "time": "Feb 05, 03:21"
+          "link": "https://finance.yahoo.com/news/look-credo-technology-group-holding-172042066.html",
+          "time": "Feb 27, 17:20"
         },
         {
-          "title": "Is GE HealthCare Technologies (GEHC) Offering Value After Recent Share Price Weakness",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/news/ge-healthcare-technologies-gehc-offering-021105809.html",
-          "time": "Feb 05, 02:11"
-        },
-        {
-          "title": "Is GE\u2019s (GE) Singapore AI Bet Quietly Redefining Its Aerospace Services Moat?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/news/ge-ge-singapore-ai-bet-020944404.html",
-          "time": "Feb 05, 02:09"
+          "title": "Meta Platforms Does It Again, Signs a Multi-Billion Deal With Google",
+          "publisher": "24/7 Wall St.",
+          "link": "https://247wallst.com/investing/2026/02/27/meta-platforms-does-it-again-signs-a-multi-billion-deal-with-google/",
+          "time": "Feb 27, 17:20"
         }
       ],
+      "market_cap": 326424559616,
       "valuation": {
-        "forward_pe": 36.22769,
-        "trailing_pe": 38.058384,
+        "forward_pe": 18.394283,
+        "trailing_pe": 76.70882,
         "peg_ratio": null,
-        "book_value": 17.809,
-        "price_to_book": 17.2031
+        "book_value": 38.65,
+        "price_to_book": 5.1800776,
+        "roe": 0.07082
       },
       "opinions": {
-        "recommendation": "Strong Buy",
-        "target_mean": 357.2353,
-        "analysts": 17
+        "recommendation": "Buy",
+        "target_mean": 290.2553,
+        "analysts": 47
+      }
+    },
+    {
+      "ticker": "LLY",
+      "name": "Eli Lilly and Company",
+      "sector": "Healthcare",
+      "industry": "Drug Manufacturers - General",
+      "score": 101,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 58,
+      "growth_score": 20,
+      "quality_score": 18,
+      "context_score": 5,
+      "results": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": true,
+          "value": "$1051.99 > $1051.79 > $871.79",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "value": "+7.1% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 39%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "1.0x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": true,
+          "value": "92.9%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "ATR Squeezing",
+          "threshold": "ATR < 80% of 20D ATR",
+          "points": 5
+        },
+        {
+          "name": "Sales Growth (2yr)",
+          "category": "Growth",
+          "passed": true,
+          "value": "42.6% (avg: 37.3%)",
+          "threshold": "Both years >= 10% required",
+          "points": 17
+        },
+        {
+          "name": "Earnings Growth",
+          "category": "Growth",
+          "passed": true,
+          "value": "51.4%",
+          "threshold": "> 15%",
+          "points": 3
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "101.2%",
+          "threshold": "> 15%",
+          "points": 5
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "44.9%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 5
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Healthcare",
+          "threshold": "High-Conviction Sector",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "+2.9%",
+          "threshold": "> 5% vs Market",
+          "points": 5
+        },
+        {
+          "name": "Size Factor",
+          "category": "Context",
+          "passed": false,
+          "value": "$992B",
+          "threshold": "Large Cap Penalty",
+          "points": -5
+        }
+      ],
+      "news": [
+        {
+          "title": "Sector Update: Health Care Stocks Advance Late Afternoon",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/news/sector-health-care-stocks-advance-210229048.html",
+          "time": "Feb 27, 21:02"
+        },
+        {
+          "title": "Sector Update: Health Care Stocks Higher Friday Afternoon",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/news/sector-health-care-stocks-higher-190129206.html",
+          "time": "Feb 27, 19:01"
+        },
+        {
+          "title": "5 US Blue Chip Giants That Have Paid Dividends for Over 100 Years",
+          "publisher": "24/7 Wall St.",
+          "link": "https://247wallst.com/investing/2026/02/27/5-american-blue-chip-giants-that-have-paid-dividends-for-over-100-years/",
+          "time": "Feb 27, 13:11"
+        },
+        {
+          "title": "RBC Capital Initiates Eli Lilly (LLY), Cites Long-Term Leadership in Obesity Market",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/news/rbc-capital-initiates-eli-lilly-061818278.html",
+          "time": "Feb 27, 06:18"
+        },
+        {
+          "title": "Why Shares of Novo Nordisk Stock Sank (Again) This Week",
+          "publisher": "Motley Fool",
+          "link": "https://www.fool.com/investing/2026/02/26/why-shares-of-novo-nordisk-stock-sank-again-this-w/",
+          "time": "Feb 26, 20:59"
+        }
+      ],
+      "market_cap": 992402604032,
+      "valuation": {
+        "forward_pe": 25.117891,
+        "trailing_pe": 45.738697,
+        "peg_ratio": null,
+        "book_value": 29.655,
+        "price_to_book": 35.474285,
+        "roe": 1.01159
+      },
+      "opinions": {
+        "recommendation": "Buy",
+        "target_mean": 1214.3448,
+        "analysts": 29
       }
     },
     {
       "ticker": "PWR",
       "name": "Quanta Services, Inc.",
       "sector": "Industrials",
-      "score": 55,
+      "industry": "Engineering & Construction",
+      "score": 100,
       "grade": "A",
-      "momentum_score": 100.0,
-      "quality_score": 42.85714285714286,
+      "max_score": 100,
+      "technical_score": 58,
+      "growth_score": 14,
+      "quality_score": 18,
+      "context_score": 10,
       "results": [
         {
           "name": "Trend Alignment",
           "category": "Momentum",
           "passed": true,
-          "value": "$477.72 > $450.87 > $401.11",
+          "value": "$563.08 > $475.23 > $418.50",
           "threshold": "Price > SMA50 > SMA200",
-          "points": 5
+          "points": 8
         },
         {
           "name": "Breakout Pattern",
           "category": "Breakout",
-          "passed": true,
-          "value": "+2.3% from Base",
+          "passed": false,
+          "value": "+0.5% from Base",
           "threshold": "Flat Base + Near High",
-          "points": 20
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 36%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "1.0x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": true,
+          "value": "98.1%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "ATR Squeezing",
+          "threshold": "ATR < 80% of 20D ATR",
+          "points": 5
+        },
+        {
+          "name": "Sales Growth (2yr)",
+          "category": "Growth",
+          "passed": true,
+          "value": "19.7% (avg: 21.0%)",
+          "threshold": "Both years >= 10% required",
+          "points": 11
+        },
+        {
+          "name": "Earnings Growth",
+          "category": "Growth",
+          "passed": false,
+          "value": "2.6%",
+          "threshold": "> 15%",
+          "points": 3
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": false,
+          "value": "12.7%",
+          "threshold": "> 15%",
+          "points": 5
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": false,
+          "value": "5.2%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 5
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Industrials",
+          "threshold": "High-Conviction Sector",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "+17.0%",
+          "threshold": "> 5% vs Market",
+          "points": 5
+        }
+      ],
+      "news": [
+        {
+          "title": "Innodata Q4 Earnings & Revenues Top, Gross Margin Down Y/Y, Stock Down",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/news/innodata-q4-earnings-revenues-top-161800359.html",
+          "time": "Feb 27, 16:18"
+        },
+        {
+          "title": "MasTec Beats Q4 Earnings & Revenue Estimates, Books Solid Backlog",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/news/mastec-beats-q4-earnings-revenue-133400218.html",
+          "time": "Feb 27, 13:34"
+        },
+        {
+          "title": "Truist Raises the Price Target on Quanta Services, Inc. (PWR) to $643 and Maintains a Buy Rating",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/news/truist-raises-price-target-quanta-032936612.html",
+          "time": "Feb 27, 03:29"
+        },
+        {
+          "title": "EMCOR's Q4 Earnings & Revenues Beat Estimates, Operating Margin Up Y/Y",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/news/emcors-q4-earnings-revenues-beat-154400643.html",
+          "time": "Feb 26, 15:44"
+        },
+        {
+          "title": "Here's How Much You'd Have If You Invested $1000 in Quanta Services a Decade Ago",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/news/heres-much-youd-invested-1000-133004870.html",
+          "time": "Feb 26, 13:30"
+        }
+      ],
+      "market_cap": 83964174336,
+      "valuation": {
+        "forward_pe": 36.826733,
+        "trailing_pe": 83.79167,
+        "peg_ratio": null,
+        "book_value": 59.757,
+        "price_to_book": 9.42283,
+        "roe": 0.12739
+      },
+      "opinions": {
+        "recommendation": "Buy",
+        "target_mean": 580.1272,
+        "analysts": 25
+      }
+    },
+    {
+      "ticker": "VRT",
+      "name": "Vertiv Holdings, LLC",
+      "sector": "Industrials",
+      "industry": "Electrical Equipment & Parts",
+      "score": 99,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 58,
+      "growth_score": 13,
+      "quality_score": 18,
+      "context_score": 10,
+      "results": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": true,
+          "value": "$254.89 > $192.74 > $156.03",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "value": "+0.3% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": false,
+          "value": "Depth 54%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "1.1x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": true,
+          "value": "96.2%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "ATR Squeezing",
+          "threshold": "ATR < 80% of 20D ATR",
+          "points": 5
+        },
+        {
+          "name": "Sales Growth (2yr)",
+          "category": "Growth",
+          "passed": true,
+          "value": "22.7% (avg: 19.7%)",
+          "threshold": "Both years >= 10% required",
+          "points": 10
+        },
+        {
+          "name": "Earnings Growth",
+          "category": "Growth",
+          "passed": true,
+          "value": "199.5%",
+          "threshold": "> 15%",
+          "points": 3
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "41.8%",
+          "threshold": "> 15%",
+          "points": 5
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "21.2%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 5
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Industrials",
+          "threshold": "High-Conviction Sector",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "+31.5%",
+          "threshold": "> 5% vs Market",
+          "points": 5
+        }
+      ],
+      "news": [
+        {
+          "title": "SOUN Posts In-Line Earnings, Strong Revenue Growth in Q4, Stock Up",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/news/soun-posts-line-earnings-strong-143600500.html",
+          "time": "Feb 27, 14:36"
+        },
+        {
+          "title": "Vertiv Taps Hut 8 For AI Data Center Growth As Valuation Stretches",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/news/vertiv-taps-hut-8-ai-002759962.html",
+          "time": "Feb 27, 00:27"
+        },
+        {
+          "title": "Vertiv Holdings Co. (VRT) Registers a Bigger Fall Than the Market: Important Facts to Note",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/news/vertiv-holdings-co-vrt-registers-224501700.html",
+          "time": "Feb 26, 22:45"
+        },
+        {
+          "title": "Is This The Best Growth Stock to Buy Under $300?",
+          "publisher": "Barchart",
+          "link": "https://www.barchart.com/story/news/446526/is-this-the-best-growth-stock-to-buy-under-300",
+          "time": "Feb 26, 16:34"
+        },
+        {
+          "title": "Jim Cramer Says \u201cVertiv\u2019s the Best, I Love Vertiv\u201d",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/news/jim-cramer-says-vertiv-best-150312753.html",
+          "time": "Feb 26, 15:03"
+        }
+      ],
+      "market_cap": 97520525312,
+      "valuation": {
+        "forward_pe": 32.237297,
+        "trailing_pe": 74.529236,
+        "peg_ratio": null,
+        "book_value": 10.303,
+        "price_to_book": 24.739395,
+        "roe": 0.41809
+      },
+      "opinions": {
+        "recommendation": "Strong Buy",
+        "target_mean": 263.1979,
+        "analysts": 24
+      }
+    },
+    {
+      "ticker": "AVGO",
+      "name": "Broadcom Inc.",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "score": 94,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 58,
+      "growth_score": 18,
+      "quality_score": 18,
+      "context_score": 0,
+      "results": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": false,
+          "value": "$319.55 > $335.58 > $317.66",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "value": "+22.8% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 31%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "0.8x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": false,
+          "value": "77.2%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "ATR Squeezing",
+          "threshold": "ATR < 80% of 20D ATR",
+          "points": 5
+        },
+        {
+          "name": "Sales Growth (2yr)",
+          "category": "Growth",
+          "passed": true,
+          "value": "16.4% (avg: 30.2%)",
+          "threshold": "Both years >= 10% required",
+          "points": 15
+        },
+        {
+          "name": "Earnings Growth",
+          "category": "Growth",
+          "passed": true,
+          "value": "188.1%",
+          "threshold": "> 15%",
+          "points": 3
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "31.0%",
+          "threshold": "> 15%",
+          "points": 5
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "31.8%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 5
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Technology",
+          "threshold": "High-Conviction Sector",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "-4.1%",
+          "threshold": "> 5% vs Market",
+          "points": 5
+        },
+        {
+          "name": "Size Factor",
+          "category": "Context",
+          "passed": false,
+          "value": "$1.5T",
+          "threshold": "Large Cap Penalty",
+          "points": -10
+        }
+      ],
+      "news": [
+        {
+          "title": "Earnings live: Block mass layoffs earn Wall Street's approval, Duolingo shares plunge",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/news/live/earnings-live-block-mass-layoffs-earn-wall-streets-approval-duolingo-shares-plunge-214740021.html",
+          "time": "Feb 27, 21:47"
+        },
+        {
+          "title": "Apple to Purchase 100M Chips from Taiwan Semiconductor Manufacturing (TSM) Arizona Facility",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/news/apple-purchase-100m-chips-taiwan-210611210.html",
+          "time": "Feb 27, 21:06"
+        },
+        {
+          "title": "Jobs Data, Earnings From Broadcom and Target: What to Watch Next Week",
+          "publisher": "The Wall Street Journal",
+          "link": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-02-27-2026/card/jobs-data-earnings-from-broadcom-and-target-what-to-watch-next-week-dfXcvWg5MeC8syzOG3yE?siteid=yhoof2&yptr=yahoo",
+          "time": "Feb 27, 20:45"
+        },
+        {
+          "title": "NVIDIA vs. Broadcom: The Smarter AI Stock to Buy for March 2026",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/news/nvidia-vs-broadcom-smarter-ai-200000819.html",
+          "time": "Feb 27, 20:00"
+        },
+        {
+          "title": "2 Reasons to Buy Broadcom Stock Before March 4",
+          "publisher": "Barchart",
+          "link": "https://www.barchart.com/story/news/472123/2-reasons-to-buy-broadcom-stock-ahead-before-march-4",
+          "time": "Feb 27, 16:24"
+        }
+      ],
+      "market_cap": 1515073961984,
+      "valuation": {
+        "forward_pe": 22.00909,
+        "trailing_pe": 67.13235,
+        "peg_ratio": null,
+        "book_value": 59.221,
+        "price_to_book": 5.3958898,
+        "roe": 0.31048
+      },
+      "opinions": {
+        "recommendation": "Strong Buy",
+        "target_mean": 455.0997,
+        "analysts": 45
+      }
+    },
+    {
+      "ticker": "META",
+      "name": "Meta Platforms, Inc.",
+      "sector": "Communication Services",
+      "industry": "Internet Content & Information",
+      "score": 91,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 58,
+      "growth_score": 15,
+      "quality_score": 18,
+      "context_score": 0,
+      "results": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": false,
+          "value": "$648.18 > $656.69 > $690.59",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "value": "+17.9% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
         },
         {
           "name": "Consolidation",
@@ -157,1207 +1104,33 @@
           "name": "Volume Dry-up",
           "category": "Breakout",
           "passed": true,
-          "value": "1.2x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 5
-        },
-        {
-          "name": "Sales Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "17.5%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "Earnings Growth",
-          "category": "Growth",
-          "passed": false,
-          "value": "14.9%",
-          "threshold": "> 15%",
-          "points": 10
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": false,
-          "value": "7.1%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 5
-        }
-      ],
-      "news": [
-        {
-          "title": "Jacobs Wins Texas Coastal Storm Surge Barrier Design Contract",
-          "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/news/jacobs-wins-texas-coastal-storm-174000668.html",
-          "time": "Feb 05, 17:40"
-        },
-        {
-          "title": "Dow Jones Leader Cisco, Halozyme, Toll Brothers In Or Near Buy Zones",
-          "publisher": "Investor's Business Daily",
-          "link": "https://www.investors.com/stock-lists/stocks-near-a-buy-zone/dow-jones-cisco-csco-halozyme-toll-brothers-buy-zones/?src=A00220&yptr=yahoo",
-          "time": "Feb 04, 19:18"
-        },
-        {
-          "title": "KBR Wins $149M Air Force Contract, Boosts Defense Digital Franchise",
-          "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/news/kbr-wins-149m-air-force-174200454.html",
-          "time": "Feb 04, 17:42"
-        },
-        {
-          "title": "Comfort Systems Soars 75% in 6 Months: Buy the Stock or Hold?",
-          "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/news/comfort-systems-soars-75-6-132800645.html",
-          "time": "Feb 04, 13:28"
-        },
-        {
-          "title": "A Look At Quanta Services (PWR) Valuation As Shares Rise Ahead Of Earnings Release",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/news/look-quanta-services-pwr-valuation-022234554.html",
-          "time": "Feb 04, 02:22"
-        }
-      ],
-      "valuation": {
-        "forward_pe": 38.57845,
-        "trailing_pe": 70.87834,
-        "peg_ratio": null,
-        "book_value": 56.305,
-        "price_to_book": 8.484504
-      },
-      "opinions": {
-        "recommendation": "Buy",
-        "target_mean": 477.3672,
-        "analysts": 25
-      }
-    },
-    {
-      "ticker": "VRT",
-      "name": "Vertiv Holdings, LLC",
-      "sector": "Industrials",
-      "score": 55,
-      "grade": "A",
-      "momentum_score": 50.0,
-      "quality_score": 100.0,
-      "results": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": true,
-          "value": "$177.75 > $174.48 > $144.92",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 5
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": false,
-          "value": "+12.2% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 20
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 41%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
           "value": "0.7x avg",
           "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": false,
+          "value": "81.5%",
+          "threshold": "> 90% of 52W High",
           "points": 5
         },
         {
-          "name": "Sales Growth",
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "ATR Squeezing",
+          "threshold": "ATR < 80% of 20D ATR",
+          "points": 5
+        },
+        {
+          "name": "Sales Growth (2yr)",
           "category": "Growth",
           "passed": true,
-          "value": "29.0%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "Earnings Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "121.7%",
-          "threshold": "> 15%",
-          "points": 10
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "20.5%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 5
-        }
-      ],
-      "news": [
-        {
-          "title": "Chase Investment Counsel Adds Clearwater Analytics Shares",
-          "publisher": "Motley Fool",
-          "link": "https://www.fool.com/coverage/filings/2026/02/05/chase-investment-counsel-adds-clearwater-analytics-shares/",
-          "time": "Feb 05, 22:38"
-        },
-        {
-          "title": "The Secret AI Infrastructure Stock That Could Turn $1,000 Into a Fortune",
-          "publisher": "Motley Fool",
-          "link": "https://www.fool.com/investing/2026/02/05/the-secret-ai-infrastructure-stock-that-could-turn/",
-          "time": "Feb 05, 18:30"
-        },
-        {
-          "title": "Could This REIT Be the Best Way to Play the Data Center Surge?",
-          "publisher": "Motley Fool",
-          "link": "https://www.fool.com/investing/2026/02/05/could-reit-be-best-way-play-data-center-surge/",
-          "time": "Feb 05, 15:05"
-        },
-        {
-          "title": "Vertiv Holdings Co. (VRT) Sees a More Significant Dip Than Broader Market: Some Facts to Know",
-          "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/news/vertiv-holdings-co-vrt-sees-224505858.html",
-          "time": "Feb 04, 22:45"
-        },
-        {
-          "title": "Vertiv Unveils AI Maintenance Service To Deepen Data Center Ties",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/news/vertiv-unveils-ai-maintenance-deepen-211052336.html",
-          "time": "Feb 04, 21:10"
-        }
-      ],
-      "valuation": {
-        "forward_pe": 33.33746,
-        "trailing_pe": 67.07547,
-        "peg_ratio": null,
-        "book_value": 9.179,
-        "price_to_book": 19.364855
-      },
-      "opinions": {
-        "recommendation": "Strong Buy",
-        "target_mean": 200.15625,
-        "analysts": 24
-      }
-    },
-    {
-      "ticker": "GEV",
-      "name": "GE Vernova Inc.",
-      "sector": "Industrials",
-      "score": 55,
-      "grade": "A",
-      "momentum_score": 100.0,
-      "quality_score": 42.85714285714286,
-      "results": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": true,
-          "value": "$737.53 > $661.55 > $577.72",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 5
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": true,
-          "value": "-1.0% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 20
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 27%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "1.0x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 5
-        },
-        {
-          "name": "Sales Growth",
-          "category": "Growth",
-          "passed": false,
-          "value": "3.8%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "Earnings Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "671.7%",
-          "threshold": "> 15%",
-          "points": 10
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": false,
-          "value": "7.4%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 5
-        }
-      ],
-      "news": [
-        {
-          "title": "Xcel Energy Inc (XEL) Q4 2025 Earnings Call Highlights: Strong Earnings Amid Strategic ...",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/news/xcel-energy-inc-xel-q4-211050031.html",
-          "time": "Feb 05, 21:10"
-        },
-        {
-          "title": "Catch Up on Trump\u2019s Breakneck Critical-Minerals Drive",
-          "publisher": "The Wall Street Journal",
-          "link": "https://www.wsj.com/finance/investing/catch-up-on-trumps-breakneck-critical-minerals-drive-277d9589?siteid=yhoof2&yptr=yahoo",
-          "time": "Feb 05, 14:25"
-        },
-        {
-          "title": "GE Vernova Inc. (GEV) Is a Trending Stock: Facts to Know Before Betting on It",
-          "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/news/ge-vernova-inc-gev-trending-140005959.html",
-          "time": "Feb 05, 14:00"
-        },
-        {
-          "title": "GE Vernova Xcel Alliance Highlights Grid Growth Potential And Valuation Tension",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/news/ge-vernova-xcel-alliance-highlights-101209240.html",
-          "time": "Feb 05, 10:12"
-        },
-        {
-          "title": "Heard on the Street Wednesday Recap: Tech Tantrum",
-          "publisher": "The Wall Street Journal",
-          "link": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-02-05-2026/card/heard-on-the-street-wednesday-recap-tech-tantrum-ljtzcfNMCFjoPCjUvHHA?siteid=yhoof2&yptr=yahoo",
-          "time": "Feb 05, 08:45"
-        }
-      ],
-      "valuation": {
-        "forward_pe": 33.22405,
-        "trailing_pe": 41.691917,
-        "peg_ratio": null,
-        "book_value": 41.472,
-        "price_to_book": 17.783806
-      },
-      "opinions": {
-        "recommendation": "Buy",
-        "target_mean": 819.916,
-        "analysts": 30
-      }
-    },
-    {
-      "ticker": "NVDA",
-      "name": "NVIDIA Corporation",
-      "sector": "Technology",
-      "score": 50,
-      "grade": "A",
-      "momentum_score": 37.5,
-      "quality_score": 100.0,
-      "results": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": false,
-          "value": "$171.88 > $183.59 > $169.25",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 5
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": false,
-          "value": "+19.0% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 20
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 23%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "0.9x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 5
-        },
-        {
-          "name": "Sales Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "62.5%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "Earnings Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "66.7%",
-          "threshold": "> 15%",
-          "points": 10
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "63.2%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 5
-        }
-      ],
-      "news": [
-        {
-          "title": "Big Tech CEOs seek to quell AI worries hammering software stocks",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/news/big-tech-ceos-seek-to-quell-ai-worries-hammering-software-stocks-170124972.html",
-          "time": "Feb 05, 17:01"
-        },
-        {
-          "title": "Chase Investment Counsel Adds Clearwater Analytics Shares",
-          "publisher": "Motley Fool",
-          "link": "https://www.fool.com/coverage/filings/2026/02/05/chase-investment-counsel-adds-clearwater-analytics-shares/",
-          "time": "Feb 05, 22:38"
-        },
-        {
-          "title": "Broadcom Stock Rises On Google's Massive Capex Increase",
-          "publisher": "Investor's Business Daily",
-          "link": "https://www.investors.com/news/technology/broadcom-stock-rises-google-capex-hike/?src=A00220&yptr=yahoo",
-          "time": "Feb 05, 22:10"
-        },
-        {
-          "title": "These Stocks Are Today\u2019s Movers: Alphabet, Qualcomm, Broadcom, AMD, Strategy, Novo Nordisk, Amazon, and More",
-          "publisher": "Barrons.com",
-          "link": "https://www.barrons.com/articles/stock-movers-323f4531?siteid=yhoof2&yptr=yahoo",
-          "time": "Feb 05, 21:53"
-        },
-        {
-          "title": "Why Google\u2019s Bad News Was Good News for Broadcom and Nvidia",
-          "publisher": "Barrons.com",
-          "link": "https://www.barrons.com/articles/broadcom-stock-price-google-news-earnings-capex-ac6e4775?siteid=yhoof2&yptr=yahoo",
-          "time": "Feb 05, 21:49"
-        }
-      ],
-      "valuation": {
-        "forward_pe": 22.427341,
-        "trailing_pe": 42.544556,
-        "peg_ratio": null,
-        "book_value": 4.892,
-        "price_to_book": 35.134914
-      },
-      "opinions": {
-        "recommendation": "Strong Buy",
-        "target_mean": 253.62138,
-        "analysts": 58
-      }
-    },
-    {
-      "ticker": "AVGO",
-      "name": "Broadcom Inc.",
-      "sector": "Technology",
-      "score": 50,
-      "grade": "A",
-      "momentum_score": 37.5,
-      "quality_score": 100.0,
-      "results": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": false,
-          "value": "$310.51 > $352.05 > $307.44",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 5
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": false,
-          "value": "+25.0% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 20
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 32%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "0.8x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 5
-        },
-        {
-          "name": "Sales Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "16.4%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "Earnings Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "188.1%",
-          "threshold": "> 15%",
-          "points": 10
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "31.8%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 5
-        }
-      ],
-      "news": [
-        {
-          "title": "Chase Investment Counsel Adds Clearwater Analytics Shares",
-          "publisher": "Motley Fool",
-          "link": "https://www.fool.com/coverage/filings/2026/02/05/chase-investment-counsel-adds-clearwater-analytics-shares/",
-          "time": "Feb 05, 22:38"
-        },
-        {
-          "title": "Broadcom Stock Rises On Google's Massive Capex Increase",
-          "publisher": "Investor's Business Daily",
-          "link": "https://www.investors.com/news/technology/broadcom-stock-rises-google-capex-hike/?src=A00220&yptr=yahoo",
-          "time": "Feb 05, 22:10"
-        },
-        {
-          "title": "These Stocks Are Today\u2019s Movers: Alphabet, Qualcomm, Broadcom, AMD, Strategy, Novo Nordisk, Amazon, and More",
-          "publisher": "Barrons.com",
-          "link": "https://www.barrons.com/articles/stock-movers-323f4531?siteid=yhoof2&yptr=yahoo",
-          "time": "Feb 05, 21:53"
-        },
-        {
-          "title": "Why Google\u2019s Bad News Was Good News for Broadcom and Nvidia",
-          "publisher": "Barrons.com",
-          "link": "https://www.barrons.com/articles/broadcom-stock-price-google-news-earnings-capex-ac6e4775?siteid=yhoof2&yptr=yahoo",
-          "time": "Feb 05, 21:49"
-        },
-        {
-          "title": "2 Monster Stocks to Hold for the Next 5 Years",
-          "publisher": "Motley Fool",
-          "link": "https://www.fool.com/investing/2026/02/05/2-monster-stocks-to-hold-for-the-next-5-years/",
-          "time": "Feb 05, 21:05"
-        }
-      ],
-      "valuation": {
-        "forward_pe": 21.61912,
-        "trailing_pe": 65.096436,
-        "peg_ratio": null,
-        "book_value": 59.221,
-        "price_to_book": 5.2432413
-      },
-      "opinions": {
-        "recommendation": "Strong Buy",
-        "target_mean": 458.5886,
-        "analysts": 45
-      }
-    },
-    {
-      "ticker": "NOC",
-      "name": "Northrop Grumman Corporation",
-      "sector": "Industrials",
-      "score": 45,
-      "grade": "B",
-      "momentum_score": 50.0,
-      "quality_score": 71.42857142857143,
-      "results": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": true,
-          "value": "$696.50 > $607.39 > $558.85",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 5
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": false,
-          "value": "+1.3% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 20
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 23%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "0.9x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 5
-        },
-        {
-          "name": "Sales Growth",
-          "category": "Growth",
-          "passed": false,
-          "value": "9.6%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "Earnings Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "15.2%",
-          "threshold": "> 15%",
-          "points": 10
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "16.5%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 5
-        }
-      ],
-      "news": [
-        {
-          "title": "Strong Newport News Shipbuilding Performance Drives HII's Q4 Results",
-          "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/news/strong-newport-news-shipbuilding-performance-170000246.html",
-          "time": "Feb 05, 17:00"
-        },
-        {
-          "title": "Northrop Grumman\u2019s New Defense Deals Deepen Semiconductor And Training Exposure",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/news/northrop-grumman-defense-deals-deepen-151146976.html",
-          "time": "Feb 05, 15:11"
-        },
-        {
-          "title": "Is Northrop Grumman (NOC) Still Attractive After Its Strong Multi\u2011Year Share Price Run?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/news/northrop-grumman-noc-still-attractive-031904375.html",
-          "time": "Feb 05, 03:19"
-        },
-        {
-          "title": "Boeing Stock Surges 2.2% in a Month: What Should Investors Know?",
-          "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/news/boeing-stock-surges-2-2-152400034.html",
-          "time": "Feb 04, 15:24"
-        },
-        {
-          "title": "Defense ETFs in Focus: Q4 Earnings & 2026 Spending Boost",
-          "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/news/defense-etfs-focus-q4-earnings-171200589.html",
-          "time": "Feb 03, 17:12"
-        }
-      ],
-      "valuation": {
-        "forward_pe": 23.027054,
-        "trailing_pe": 23.926485,
-        "peg_ratio": null,
-        "book_value": 117.425,
-        "price_to_book": 5.9314456
-      },
-      "opinions": {
-        "recommendation": "Buy",
-        "target_mean": 721.439,
-        "analysts": 21
-      }
-    },
-    {
-      "ticker": "MSFT",
-      "name": "Microsoft Corporation",
-      "sector": "Technology",
-      "score": 45,
-      "grade": "B",
-      "momentum_score": 25.0,
-      "quality_score": 100.0,
-      "results": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": false,
-          "value": "$393.67 > $470.34 > $485.66",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 5
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": false,
-          "value": "+28.8% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 20
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 24%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": false,
-          "value": "1.6x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 5
-        },
-        {
-          "name": "Sales Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "16.7%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "Earnings Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "59.8%",
-          "threshold": "> 15%",
-          "points": 10
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "47.1%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 5
-        }
-      ],
-      "news": [
-        {
-          "title": "Amazon plans $200B AI spending surge, sinking stock",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/news/amazon-plans-200b-ai-spending-surge-sinking-stock-173054864.html",
-          "time": "Feb 04, 17:30"
-        },
-        {
-          "title": "Alphabet stock sinks after Google parent announces $180 billion spending plan for 2026 in massive AI bet",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/news/alphabet-stock-sinks-after-google-parent-announces-180-billion-spending-plan-for-2026-in-massive-ai-bet-155410864.html",
-          "time": "Feb 05, 15:54"
-        },
-        {
-          "title": "How Recent AI And Power Moves Are Reshaping The IREN (IREN) Investment Story",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/news/recent-ai-power-moves-reshaping-220834749.html",
-          "time": "Feb 05, 22:08"
-        },
-        {
-          "title": "Wall Street Suffers Worst Day in More Than 2 Weeks Amid Fresh Labor Market Data",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/news/wall-street-suffers-worst-day-220612593.html",
-          "time": "Feb 05, 22:06"
-        },
-        {
-          "title": "Amazon Misses Views on Quarterly Earnings Despite Cloud Growth; Shares Slide After Hours",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/news/amazon-misses-views-quarterly-earnings-214632148.html",
-          "time": "Feb 05, 21:46"
-        }
-      ],
-      "valuation": {
-        "forward_pe": 20.84739,
-        "trailing_pe": 24.619764,
-        "peg_ratio": null,
-        "book_value": 52.615,
-        "price_to_book": 7.4820867
-      },
-      "opinions": {
-        "recommendation": "Strong Buy",
-        "target_mean": 599.8636,
-        "analysts": 53
-      }
-    },
-    {
-      "ticker": "AMZN",
-      "name": "Amazon.com, Inc.",
-      "sector": "Consumer Cyclical",
-      "score": 45,
-      "grade": "B",
-      "momentum_score": 25.0,
-      "quality_score": 100.0,
-      "results": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": false,
-          "value": "$222.69 > $233.65 > $223.01",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 5
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": false,
-          "value": "+13.9% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 20
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 18%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": false,
-          "value": "1.2x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 5
-        },
-        {
-          "name": "Sales Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "13.4%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "Earnings Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "36.4%",
-          "threshold": "> 15%",
-          "points": 10
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "11.1%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 5
-        }
-      ],
-      "news": [
-        {
-          "title": "Amazon CEO Andy Jassy plans to 'invest aggressively' in AI",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/amazon-ceo-andy-jassy-plans-224630166.html",
-          "time": "Feb 05, 22:46"
-        },
-        {
-          "title": "Amazon plans $200B AI spending surge, sinking stock",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/news/amazon-plans-200b-ai-spending-surge-sinking-stock-173054864.html",
-          "time": "Feb 04, 17:30"
-        },
-        {
-          "title": "Mortgage rates hold steady, bitcoin slides lower in sell-off",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/mortgage-rates-hold-steady-bitcoin-181007081.html",
-          "time": "Feb 05, 18:10"
-        },
-        {
-          "title": "Why Amazon is this analyst's 'top pick' this year",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/why-amazon-is-this-analysts-top-pick-this-year-113000262.html",
-          "time": "Feb 05, 11:30"
-        },
-        {
-          "title": "Dow Jones Futures: Stock Market Breaks Key Levels, Bitcoin Dives; Amazon Tumbles Late On This",
-          "publisher": "Investor's Business Daily",
-          "link": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-bitcoin-dives-amazon-earnings-capital-spending/?src=A00220&yptr=yahoo",
-          "time": "Feb 05, 22:55"
-        }
-      ],
-      "valuation": {
-        "forward_pe": 28.394594,
-        "trailing_pe": 31.45339,
-        "peg_ratio": null,
-        "book_value": 34.587,
-        "price_to_book": 6.438546
-      },
-      "opinions": {
-        "recommendation": "Strong Buy",
-        "target_mean": 296.10904,
-        "analysts": 63
-      }
-    },
-    {
-      "ticker": "GOOGL",
-      "name": "Alphabet Inc.",
-      "sector": "Communication Services",
-      "score": 45,
-      "grade": "B",
-      "momentum_score": 25.0,
-      "quality_score": 100.0,
-      "results": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": true,
-          "value": "$331.25 > $321.67 > $237.93",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 5
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": false,
-          "value": "+3.2% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 20
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": false,
-          "value": "Depth 45%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "1.1x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 5
-        },
-        {
-          "name": "Sales Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "15.9%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "Earnings Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "35.3%",
-          "threshold": "> 15%",
-          "points": 10
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "30.5%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 5
-        }
-      ],
-      "news": [
-        {
-          "title": "Earnings live: Strategy gets caught in bitcoin crash, Amazon stock plunges, Roblox surges",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/news/live/earnings-live-strategy-gets-caught-in-bitcoin-crash-amazon-stock-plunges-roblox-surges-213043924.html",
-          "time": "Feb 05, 21:30"
-        },
-        {
-          "title": "What Alphabet's earnings reveal about the decline in software stocks",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/alphabets-earnings-reveal-decline-software-183000814.html",
-          "time": "Feb 05, 18:30"
-        },
-        {
-          "title": "Alphabet stock sinks after Google parent announces $180 billion spending plan for 2026 in massive AI bet",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/news/alphabet-stock-sinks-after-google-parent-announces-180-billion-spending-plan-for-2026-in-massive-ai-bet-155410864.html",
-          "time": "Feb 05, 15:54"
-        },
-        {
-          "title": "Anthropic doubles down on ad-free model, takes shot at OpenAI in upcoming Super Bowl ad",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/news/anthropic-doubles-down-on-ad-free-model-takes-shot-at-openai-in-upcoming-super-bowl-ad-170004629.html",
-          "time": "Feb 04, 17:00"
-        },
-        {
-          "title": "What keeps Google's CEO up at night",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/keeps-googles-ceo-night-000000815.html",
-          "time": "Feb 05, 00:00"
-        }
-      ],
-      "valuation": {
-        "forward_pe": 24.964954,
-        "trailing_pe": 30.614603,
-        "peg_ratio": null,
-        "book_value": 32.033,
-        "price_to_book": 10.3408985
-      },
-      "opinions": {
-        "recommendation": "Strong Buy",
-        "target_mean": 355.28604,
-        "analysts": 53
-      }
-    },
-    {
-      "ticker": "AMD",
-      "name": "Advanced Micro Devices, Inc.",
-      "sector": "Technology",
-      "score": 45,
-      "grade": "B",
-      "momentum_score": 25.0,
-      "quality_score": 100.0,
-      "results": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": false,
-          "value": "$192.50 > $221.72 > $178.45",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 5
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": false,
-          "value": "+27.9% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 20
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 44%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": false,
-          "value": "1.2x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 5
-        },
-        {
-          "name": "Sales Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "34.1%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "Earnings Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "217.1%",
-          "threshold": "> 15%",
-          "points": 10
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "16.6%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 5
-        }
-      ],
-      "news": [
-        {
-          "title": "Earnings live: Strategy gets caught in bitcoin crash, Amazon stock plunges, Roblox surges",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/news/live/earnings-live-strategy-gets-caught-in-bitcoin-crash-amazon-stock-plunges-roblox-surges-213043924.html",
-          "time": "Feb 05, 21:30"
-        },
-        {
-          "title": "These Stocks Are Today\u2019s Movers: Alphabet, Qualcomm, Broadcom, AMD, Strategy, Novo Nordisk, Amazon, and More",
-          "publisher": "Barrons.com",
-          "link": "https://www.barrons.com/articles/stock-movers-323f4531?siteid=yhoof2&yptr=yahoo",
-          "time": "Feb 05, 21:53"
-        },
-        {
-          "title": "Cathie Wood\u2019s ARK Funds Buy the AMD Stock Drop",
-          "publisher": "Barrons.com",
-          "link": "https://www.barrons.com/articles/amd-stock-cathie-wood-ark-buy-34a57cf8?siteid=yhoof2&yptr=yahoo",
-          "time": "Feb 05, 21:45"
-        },
-        {
-          "title": "Is the Sell-Off in AMD's Stock Overblown?",
-          "publisher": "Motley Fool",
-          "link": "https://www.fool.com/investing/2026/02/05/is-the-sell-off-in-amds-stock-overblown/",
-          "time": "Feb 05, 21:36"
-        },
-        {
-          "title": "Trump Approved Nvidia's H200 China Chip Sales \u2014 But State Department Review Is Holding Things Up: Report",
-          "publisher": "Benzinga",
-          "link": "https://finance.yahoo.com/news/trump-approved-nvidias-h200-china-213116066.html",
-          "time": "Feb 05, 21:31"
-        }
-      ],
-      "valuation": {
-        "forward_pe": 18.281137,
-        "trailing_pe": 74.03847,
-        "peg_ratio": null,
-        "book_value": 38.65,
-        "price_to_book": 4.980595
-      },
-      "opinions": {
-        "recommendation": "Buy",
-        "target_mean": 288.06522,
-        "analysts": 46
-      }
-    },
-    {
-      "ticker": "META",
-      "name": "Meta Platforms, Inc.",
-      "sector": "Communication Services",
-      "score": 40,
-      "grade": "B",
-      "momentum_score": 37.5,
-      "quality_score": 71.42857142857143,
-      "results": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": false,
-          "value": "$670.21 > $655.12 > $684.26",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 5
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": false,
-          "value": "+15.7% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 20
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 27%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "0.9x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 5
-        },
-        {
-          "name": "Sales Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "23.8%",
-          "threshold": "> 10%",
-          "points": 10
+          "value": "23.8% (avg: 22.9%)",
+          "threshold": "Both years >= 10% required",
+          "points": 12
         },
         {
           "name": "Earnings Growth",
@@ -1365,7 +1138,15 @@
           "passed": false,
           "value": "10.7%",
           "threshold": "> 15%",
-          "points": 10
+          "points": 3
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "30.2%",
+          "threshold": "> 15%",
+          "points": 5
         },
         {
           "name": "Operating Margin",
@@ -1373,7 +1154,15 @@
           "passed": true,
           "value": "41.3%",
           "threshold": "> 10%",
-          "points": 10
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 5
         },
         {
           "name": "FCF Quality",
@@ -1381,51 +1170,77 @@
           "passed": true,
           "value": "Positive",
           "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Communication Services",
+          "threshold": "High-Conviction Sector",
           "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "-3.1%",
+          "threshold": "> 5% vs Market",
+          "points": 5
+        },
+        {
+          "name": "Size Factor",
+          "category": "Context",
+          "passed": false,
+          "value": "$1.6T",
+          "threshold": "Large Cap Penalty",
+          "points": -10
         }
       ],
       "news": [
         {
-          "title": "Amazon plans $200B AI spending surge, sinking stock",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/news/amazon-plans-200b-ai-spending-surge-sinking-stock-173054864.html",
-          "time": "Feb 04, 17:30"
+          "title": "CoreWeave\u2019s AI Buildout Tests Valuation As Losses Mount And Funding Surges",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/news/coreweave-ai-buildout-tests-valuation-231019266.html",
+          "time": "Feb 27, 23:10"
         },
         {
-          "title": "Alphabet stock sinks after Google parent announces $180 billion spending plan for 2026 in massive AI bet",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/news/alphabet-stock-sinks-after-google-parent-announces-180-billion-spending-plan-for-2026-in-massive-ai-bet-155410864.html",
-          "time": "Feb 05, 15:54"
+          "title": "CoreWeave suffers worst rout in six months over spending fears",
+          "publisher": "Bloomberg",
+          "link": "https://finance.yahoo.com/news/coreweave-shares-slide-heavy-spending-104424431.html",
+          "time": "Feb 27, 21:22"
         },
         {
-          "title": "Amazon Web Services CEO Says Space-Based Data Centers 'Not Economical' Despite Jeff Bezos Pursuing The Idea",
-          "publisher": "Benzinga",
-          "link": "https://finance.yahoo.com/news/amazon-services-ceo-says-space-223108910.html",
-          "time": "Feb 05, 22:31"
+          "title": "Best Buy Seen Reporting Tough Q4 With Sales Down 2%, Says UBS",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/news/best-buy-seen-reporting-tough-201210047.html",
+          "time": "Feb 27, 20:12"
         },
         {
-          "title": "Reddit Stock Jumps on Earnings. CFO Cites Modest AI Spending.",
-          "publisher": "Barrons.com",
-          "link": "https://www.barrons.com/articles/reddit-earnings-stock-price-5ae21820?siteid=yhoof2&yptr=yahoo",
-          "time": "Feb 05, 22:01"
+          "title": "Why the Dow Is Holding Up Better Than the Nasdaq and S&P 500 Today",
+          "publisher": "Motley Fool",
+          "link": "https://www.fool.com/investing/2026/02/27/why-the-dow-is-holding-up-better-than-the-nasdaq/",
+          "time": "Feb 27, 19:14"
         },
         {
-          "title": "Amazon Stock Slides On Mixed Q4 Results, $200 Billion Capex Forecast",
-          "publisher": "Investor's Business Daily",
-          "link": "https://www.investors.com/news/technology/amazon-stock-amzn-q4-2025-earnings/?src=A00220&yptr=yahoo",
-          "time": "Feb 05, 21:57"
+          "title": "Is AMD a Buy After Meta Deal?",
+          "publisher": "Motley Fool",
+          "link": "https://www.fool.com/investing/2026/02/27/is-amd-a-buy-after-meta-deal/",
+          "time": "Feb 27, 18:50"
         }
       ],
+      "market_cap": 1639607173120,
       "valuation": {
-        "forward_pe": 18.90373,
-        "trailing_pe": 28.543869,
+        "forward_pe": 18.065216,
+        "trailing_pe": 27.558672,
         "peg_ratio": null,
         "book_value": 85.867,
-        "price_to_book": 7.805211
+        "price_to_book": 7.548651,
+        "roe": 0.30238
       },
       "opinions": {
         "recommendation": "Strong Buy",
-        "target_mean": 859.8475,
+        "target_mean": 863.19934,
         "analysts": 59
       }
     },
@@ -1433,26 +1248,30 @@
       "ticker": "LHX",
       "name": "L3Harris Technologies, Inc.",
       "sector": "Industrials",
-      "score": 35,
-      "grade": "B",
-      "momentum_score": 50.0,
-      "quality_score": 42.85714285714286,
+      "industry": "Aerospace & Defense",
+      "score": 89,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 58,
+      "growth_score": 3,
+      "quality_score": 18,
+      "context_score": 10,
       "results": [
         {
           "name": "Trend Alignment",
           "category": "Momentum",
           "passed": true,
-          "value": "$342.22 > $311.42 > $275.66",
+          "value": "$364.54 > $332.40 > $285.75",
           "threshold": "Price > SMA50 > SMA200",
-          "points": 5
+          "points": 8
         },
         {
           "name": "Breakout Pattern",
           "category": "Breakout",
           "passed": false,
-          "value": "+7.4% from Base",
+          "value": "+1.4% from Base",
           "threshold": "Flat Base + Near High",
-          "points": 20
+          "points": 22
         },
         {
           "name": "Consolidation",
@@ -1466,33 +1285,65 @@
           "name": "Volume Dry-up",
           "category": "Breakout",
           "passed": true,
-          "value": "0.9x avg",
+          "value": "1.0x avg",
           "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": true,
+          "value": "98.6%",
+          "threshold": "> 90% of 52W High",
           "points": 5
         },
         {
-          "name": "Sales Growth",
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "ATR Squeezing",
+          "threshold": "ATR < 80% of 20D ATR",
+          "points": 5
+        },
+        {
+          "name": "Sales Growth (2yr)",
           "category": "Growth",
           "passed": false,
-          "value": "2.3%",
-          "threshold": "> 10%",
-          "points": 10
+          "value": "2.3% (current < 10%)",
+          "threshold": "Both years >= 10% required",
+          "points": 0
         },
         {
           "name": "Earnings Growth",
           "category": "Growth",
           "passed": false,
-          "value": "-32.9%",
+          "value": "-32.3%",
           "threshold": "> 15%",
-          "points": 10
+          "points": 3
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": false,
+          "value": "8.2%",
+          "threshold": "> 15%",
+          "points": 5
         },
         {
           "name": "Operating Margin",
           "category": "Quality",
           "passed": true,
-          "value": "10.8%",
+          "value": "12.9%",
           "threshold": "> 10%",
-          "points": 10
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 5
         },
         {
           "name": "FCF Quality",
@@ -1500,51 +1351,69 @@
           "passed": true,
           "value": "Positive",
           "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Industrials",
+          "threshold": "High-Conviction Sector",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "+1.2%",
+          "threshold": "> 5% vs Market",
           "points": 5
         }
       ],
       "news": [
         {
-          "title": "L3Harris Red Wolf Award Deepens Role In Long Range Precision Strike",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/news/l3harris-red-wolf-award-deepens-071245783.html",
-          "time": "Feb 04, 07:12"
-        },
-        {
-          "title": "Aerospace Name Clocks Q4 Trounce; ARK Makes $18 Mil Defense Bet",
-          "publisher": "Investor's Business Daily",
-          "link": "https://www.investors.com/news/cathie-wood-woodward-earnings-ark-invest-18-million-defense-stocks-lockheed-martin-aerovironment-avav-stock-lmt/?src=A00220&yptr=yahoo",
-          "time": "Feb 03, 21:22"
-        },
-        {
-          "title": "RTX Secures a $1.03B Contract to Supply LTAMDS System to U.S. Army",
+          "title": "Joby Aviation Incurs Loss in Q4, Beats Revenue Estimates",
           "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/news/rtx-secures-1-03b-contract-164900849.html",
-          "time": "Feb 03, 16:49"
+          "link": "https://finance.yahoo.com/news/joby-aviation-incurs-loss-q4-182100342.html",
+          "time": "Feb 27, 18:21"
         },
         {
-          "title": "L3Harris Technologies, Inc. (LHX): A\u00a0Bull\u00a0Case Theory",
+          "title": "Assessing L3Harris Technologies (LHX) Valuation After Its Strong 1 Year Shareholder Return",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/news/assessing-l3harris-technologies-lhx-valuation-171846532.html",
+          "time": "Feb 27, 17:18"
+        },
+        {
+          "title": "Baird Lifts L3Harris (LHX) Price Target on Confidence in Long-Term Strategy and Execution",
           "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/news/l3harris-technologies-inc-lhx-bull-024114110.html",
-          "time": "Feb 03, 02:41"
+          "link": "https://finance.yahoo.com/news/baird-lifts-l3harris-lhx-price-151123216.html",
+          "time": "Feb 27, 15:11"
         },
         {
-          "title": "Where the Smart Money Is Focused in Defense",
+          "title": "Can GE's Growth Investments Create Long-Term Value for Investors?",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/news/ges-growth-investments-create-long-153800069.html",
+          "time": "Feb 26, 15:38"
+        },
+        {
+          "title": "3 Reasons L3 Harris and Other Defense Stocks Are Taking a Hit",
           "publisher": "Barrons.com",
-          "link": "https://www.barrons.com/articles/defense-stocks-smart-money-d98aa31c?siteid=yhoof2&yptr=yahoo",
-          "time": "Feb 02, 22:02"
+          "link": "https://www.barrons.com/articles/l3-harris-stock-price-defense-selloff-487135c8?siteid=yhoof2&yptr=yahoo",
+          "time": "Feb 25, 21:17"
         }
       ],
+      "market_cap": 68188246016,
       "valuation": {
-        "forward_pe": 25.074533,
-        "trailing_pe": 40.0726,
+        "forward_pe": 26.775745,
+        "trailing_pe": 42.786385,
         "peg_ratio": null,
-        "book_value": 105.0,
-        "price_to_book": 3.259238
+        "book_value": 105.088,
+        "price_to_book": 3.4689023,
+        "roe": 0.08191
       },
       "opinions": {
         "recommendation": "Buy",
-        "target_mean": 380.21054,
+        "target_mean": 388.10526,
         "analysts": 19
       }
     },
@@ -1552,26 +1421,1265 @@
       "ticker": "LMT",
       "name": "Lockheed Martin Corporation",
       "sector": "Industrials",
-      "score": 35,
-      "grade": "B",
-      "momentum_score": 50.0,
-      "quality_score": 42.85714285714286,
+      "industry": "Aerospace & Defense",
+      "score": 89,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 58,
+      "growth_score": 3,
+      "quality_score": 18,
+      "context_score": 10,
       "results": [
         {
           "name": "Trend Alignment",
           "category": "Momentum",
           "passed": true,
-          "value": "$609.18 > $519.16 > $475.73",
+          "value": "$658.08 > $575.64 > $489.54",
           "threshold": "Price > SMA50 > SMA200",
-          "points": 5
+          "points": 8
         },
         {
           "name": "Breakout Pattern",
           "category": "Breakout",
           "passed": false,
-          "value": "+5.7% from Base",
+          "value": "+1.7% from Base",
           "threshold": "Flat Base + Near High",
-          "points": 20
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 35%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "0.8x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": true,
+          "value": "98.3%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "ATR Squeezing",
+          "threshold": "ATR < 80% of 20D ATR",
+          "points": 5
+        },
+        {
+          "name": "Sales Growth (2yr)",
+          "category": "Growth",
+          "passed": false,
+          "value": "9.1% (current < 10%)",
+          "threshold": "Both years >= 10% required",
+          "points": 0
+        },
+        {
+          "name": "Earnings Growth",
+          "category": "Growth",
+          "passed": true,
+          "value": "161.0%",
+          "threshold": "> 15%",
+          "points": 3
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "76.9%",
+          "threshold": "> 15%",
+          "points": 5
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": false,
+          "value": "9.0%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 5
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Industrials",
+          "threshold": "High-Conviction Sector",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "+10.2%",
+          "threshold": "> 5% vs Market",
+          "points": 5
+        }
+      ],
+      "news": [
+        {
+          "title": "Pentagon Anthropic feud has sales and AI warfare\u00a0at stake as Friday deadline looms",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/news/pentagon-anthropic-feud-sales-ai-110712468.html",
+          "time": "Feb 27, 13:51"
+        },
+        {
+          "title": "Five Rare Earth Stocks To Watch As Shortages Hit Aerospace",
+          "publisher": "Investor's Business Daily",
+          "link": "https://www.investors.com/news/five-rare-earth-stocks-to-watch-as-shortages-hit-aerospace/?src=A00220&yptr=yahoo",
+          "time": "Feb 26, 15:56"
+        },
+        {
+          "title": "Defense Giants Face AI Questions",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/news/defense-giants-face-ai-questions-150248111.html",
+          "time": "Feb 26, 15:02"
+        },
+        {
+          "title": "Is Lockheed Martin Stock Outperforming the Nasdaq?",
+          "publisher": "Barchart",
+          "link": "https://www.barchart.com/story/news/433844/is-lockheed-martin-stock-outperforming-the-nasdaq",
+          "time": "Feb 26, 08:30"
+        },
+        {
+          "title": "3 Reasons L3 Harris and Other Defense Stocks Are Taking a Hit",
+          "publisher": "Barrons.com",
+          "link": "https://www.barrons.com/articles/l3-harris-stock-price-defense-selloff-487135c8?siteid=yhoof2&yptr=yahoo",
+          "time": "Feb 25, 21:17"
+        }
+      ],
+      "market_cap": 152278269952,
+      "valuation": {
+        "forward_pe": 20.56709,
+        "trailing_pe": 30.622616,
+        "peg_ratio": null,
+        "book_value": 29.349,
+        "price_to_book": 22.42257,
+        "roe": 0.76865
+      },
+      "opinions": {
+        "recommendation": "None",
+        "target_mean": 657.579,
+        "analysts": 19
+      }
+    },
+    {
+      "ticker": "NOC",
+      "name": "Northrop Grumman Corporation",
+      "sector": "Industrials",
+      "industry": "Aerospace & Defense",
+      "score": 89,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 58,
+      "growth_score": 3,
+      "quality_score": 18,
+      "context_score": 10,
+      "results": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": true,
+          "value": "$724.38 > $652.69 > $576.45",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "value": "+2.8% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 27%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "0.9x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": true,
+          "value": "97.2%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "ATR Squeezing",
+          "threshold": "ATR < 80% of 20D ATR",
+          "points": 5
+        },
+        {
+          "name": "Sales Growth (2yr)",
+          "category": "Growth",
+          "passed": false,
+          "value": "9.6% (current < 10%)",
+          "threshold": "Both years >= 10% required",
+          "points": 0
+        },
+        {
+          "name": "Earnings Growth",
+          "category": "Growth",
+          "passed": true,
+          "value": "15.2%",
+          "threshold": "> 15%",
+          "points": 3
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "26.2%",
+          "threshold": "> 15%",
+          "points": 5
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "16.5%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 5
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Industrials",
+          "threshold": "High-Conviction Sector",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "+5.1%",
+          "threshold": "> 5% vs Market",
+          "points": 5
+        }
+      ],
+      "news": [
+        {
+          "title": "Joby Aviation Incurs Loss in Q4, Beats Revenue Estimates",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/news/joby-aviation-incurs-loss-q4-182100342.html",
+          "time": "Feb 27, 18:21"
+        },
+        {
+          "title": "Why Is Textron (TXT) Up 12.3% Since Last Earnings Report?",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/news/why-textron-txt-12-3-163013613.html",
+          "time": "Feb 27, 16:30"
+        },
+        {
+          "title": "Why Is Northrop Grumman (NOC) Up 2.1% Since Last Earnings Report?",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/news/why-northrop-grumman-noc-2-163006036.html",
+          "time": "Feb 26, 16:30"
+        },
+        {
+          "title": "3 Reasons L3 Harris and Other Defense Stocks Are Taking a Hit",
+          "publisher": "Barrons.com",
+          "link": "https://www.barrons.com/articles/l3-harris-stock-price-defense-selloff-487135c8?siteid=yhoof2&yptr=yahoo",
+          "time": "Feb 25, 21:17"
+        },
+        {
+          "title": "Is It Too Late To Consider Northrop Grumman (NOC) After Its Recent Share Price Surge?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/news/too-consider-northrop-grumman-noc-011148688.html",
+          "time": "Feb 25, 01:11"
+        }
+      ],
+      "market_cap": 103383564288,
+      "valuation": {
+        "forward_pe": 24.116875,
+        "trailing_pe": 24.909904,
+        "peg_ratio": null,
+        "book_value": 117.425,
+        "price_to_book": 6.168874,
+        "roe": 0.26167
+      },
+      "opinions": {
+        "recommendation": "Buy",
+        "target_mean": 724.3914,
+        "analysts": 21
+      }
+    },
+    {
+      "ticker": "GE",
+      "name": "GE Aerospace",
+      "sector": "Industrials",
+      "industry": "Aerospace & Defense",
+      "score": 89,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 58,
+      "growth_score": 3,
+      "quality_score": 18,
+      "context_score": 10,
+      "results": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": true,
+          "value": "$342.26 > $316.45 > $285.40",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": true,
+          "value": "+0.6% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 23%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "0.9x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": true,
+          "value": "98.2%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "ATR Squeezing",
+          "threshold": "ATR < 80% of 20D ATR",
+          "points": 5
+        },
+        {
+          "name": "Sales Growth (2yr)",
+          "category": "Growth",
+          "passed": false,
+          "value": "17.6% (prior < 10%)",
+          "threshold": "Both years >= 10% required",
+          "points": 0
+        },
+        {
+          "name": "Earnings Growth",
+          "category": "Growth",
+          "passed": true,
+          "value": "37.4%",
+          "threshold": "> 15%",
+          "points": 3
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "44.7%",
+          "threshold": "> 15%",
+          "points": 5
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "19.5%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 5
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Industrials",
+          "threshold": "High-Conviction Sector",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "+17.0%",
+          "threshold": "> 5% vs Market",
+          "points": 5
+        }
+      ],
+      "news": [
+        {
+          "title": "GE Stock Jets To A New High. A Natural Gas Name Joins It.",
+          "publisher": "Investor's Business Daily",
+          "link": "https://www.investors.com/stock-lists/new-highs/ge-stock-aerospace-natural-gas-mcdonalds-mcd-energy-ato/?src=A00220&yptr=yahoo",
+          "time": "Feb 27, 20:32"
+        },
+        {
+          "title": "General Dynamics (GD) Up 0.2% Since Last Earnings Report: Can It Continue?",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/news/general-dynamics-gd-0-2-163006798.html",
+          "time": "Feb 27, 16:30"
+        },
+        {
+          "title": "2 Nasdaq 100 Stocks with Exciting Potential and 1 We Question",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/news/2-nasdaq-100-stocks-exciting-161132032.html",
+          "time": "Feb 27, 16:11"
+        },
+        {
+          "title": "Palantir AI Partnerships And Defense Work Weighed Against Rich Valuation",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/news/palantir-ai-partnerships-defense-weighed-043635373.html",
+          "time": "Feb 27, 04:36"
+        },
+        {
+          "title": "One Fund Bet $5 Million on Enovis Stock Last Quarter. Shares Surged 14% Post-Earnings",
+          "publisher": "Motley Fool",
+          "link": "https://www.fool.com/coverage/filings/2026/02/26/one-fund-bet-usd5-million-on-enovis-stock-last-quarter-shares-surged-14-post-earnings/",
+          "time": "Feb 26, 22:00"
+        }
+      ],
+      "market_cap": 361020620800,
+      "valuation": {
+        "forward_pe": 40.13575,
+        "trailing_pe": 42.569653,
+        "peg_ratio": null,
+        "book_value": 17.809,
+        "price_to_book": 19.218372,
+        "roe": 0.44692
+      },
+      "opinions": {
+        "recommendation": "Strong Buy",
+        "target_mean": 361.1111,
+        "analysts": 18
+      }
+    },
+    {
+      "ticker": "GEV",
+      "name": "GE Vernova Inc.",
+      "sector": "Industrials",
+      "industry": "Specialty Industrial Machinery",
+      "score": 89,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 58,
+      "growth_score": 3,
+      "quality_score": 18,
+      "context_score": 10,
+      "results": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": true,
+          "value": "$857.04 > $721.71 > $611.30",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "value": "-1.3% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 37%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "0.7x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": true,
+          "value": "95.8%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "ATR Squeezing",
+          "threshold": "ATR < 80% of 20D ATR",
+          "points": 5
+        },
+        {
+          "name": "Sales Growth (2yr)",
+          "category": "Growth",
+          "passed": false,
+          "value": "3.8% (current < 10%)",
+          "threshold": "Both years >= 10% required",
+          "points": 0
+        },
+        {
+          "name": "Earnings Growth",
+          "category": "Growth",
+          "passed": true,
+          "value": "671.7%",
+          "threshold": "> 15%",
+          "points": 3
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "42.6%",
+          "threshold": "> 15%",
+          "points": 5
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": false,
+          "value": "7.4%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 5
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Industrials",
+          "threshold": "High-Conviction Sector",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "+20.4%",
+          "threshold": "> 5% vs Market",
+          "points": 5
+        }
+      ],
+      "news": [
+        {
+          "title": "11 S&P 500 Stocks Blow Away Analysts' Quarterly Estimates",
+          "publisher": "Investor's Business Daily",
+          "link": "https://www.investors.com/etfs-and-funds/sectors/sp-500-stocks-blow-away-analysts-quarterly-estimates/?src=A00220&yptr=yahoo",
+          "time": "Feb 27, 12:24"
+        },
+        {
+          "title": "GE Vernova Stock: Buy, Sell, or Hold?",
+          "publisher": "Motley Fool",
+          "link": "https://www.fool.com/investing/2026/02/27/ge-vernova-stock-buy-sell-or-hold/",
+          "time": "Feb 27, 10:31"
+        },
+        {
+          "title": "The AI Trade Is Alive and Living in Industrials, Small-Caps, and Asia",
+          "publisher": "Barrons.com",
+          "link": "https://www.barrons.com/articles/nvidia-deere-hyundai-small-caps-ai-e362a88e?siteid=yhoof2&yptr=yahoo",
+          "time": "Feb 26, 20:37"
+        },
+        {
+          "title": "Assessing GE Vernova (GEV) Valuation After Dividend Hike Upgrades And AI Power Demand Tailwinds",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/news/assessing-ge-vernova-gev-valuation-192352739.html",
+          "time": "Feb 26, 19:23"
+        },
+        {
+          "title": "Jim Cramer on GE Vernova: \u201cI Still Like It\u201d",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/news/jim-cramer-ge-vernova-still-145650803.html",
+          "time": "Feb 26, 14:56"
+        }
+      ],
+      "market_cap": 237025542144,
+      "valuation": {
+        "forward_pe": 38.754875,
+        "trailing_pe": 49.35593,
+        "peg_ratio": null,
+        "book_value": 41.472,
+        "price_to_book": 21.064814,
+        "roe": 0.42641
+      },
+      "opinions": {
+        "recommendation": "Buy",
+        "target_mean": 836.98267,
+        "analysts": 30
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "name": "Microsoft Corporation",
+      "sector": "Technology",
+      "industry": "Software - Infrastructure",
+      "score": 88,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 58,
+      "growth_score": 12,
+      "quality_score": 18,
+      "context_score": 0,
+      "results": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": false,
+          "value": "$392.74 > $445.35 > $484.85",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "value": "+28.9% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 29%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": false,
+          "value": "1.2x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": false,
+          "value": "71.0%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "ATR Squeezing",
+          "threshold": "ATR < 80% of 20D ATR",
+          "points": 5
+        },
+        {
+          "name": "Sales Growth (2yr)",
+          "category": "Growth",
+          "passed": true,
+          "value": "16.7% (avg: 16.2%)",
+          "threshold": "Both years >= 10% required",
+          "points": 9
+        },
+        {
+          "name": "Earnings Growth",
+          "category": "Growth",
+          "passed": true,
+          "value": "59.8%",
+          "threshold": "> 15%",
+          "points": 3
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "34.4%",
+          "threshold": "> 15%",
+          "points": 5
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "47.1%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 5
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Technology",
+          "threshold": "High-Conviction Sector",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "-18.5%",
+          "threshold": "> 5% vs Market",
+          "points": 5
+        },
+        {
+          "name": "Size Factor",
+          "category": "Context",
+          "passed": false,
+          "value": "$2.9T",
+          "threshold": "Large Cap Penalty",
+          "points": -10
+        }
+      ],
+      "news": [
+        {
+          "title": "Stock Market Today, Feb. 27: CoreWeave Falls After Q4 Loss Widens and Revenue Guidance Misses Expectations",
+          "publisher": "Motley Fool",
+          "link": "https://www.fool.com/coverage/stock-market-today/2026/02/27/stock-market-today-feb-27-coreweave-falls-after-q4-loss-widens-and-revenue-guidance-misses-expectations/",
+          "time": "Feb 27, 22:34"
+        },
+        {
+          "title": "Top Stock Reports for NVIDIA, Microsoft & JPMorgan",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/news/top-stock-reports-nvidia-microsoft-215100677.html",
+          "time": "Feb 27, 21:51"
+        },
+        {
+          "title": "These Stocks Lead Dow Jones In February. Hint: It's Not AI Companies.",
+          "publisher": "Investor's Business Daily",
+          "link": "https://www.investors.com/news/dow-jones-stocks-led-february-not-ai-companies/?src=A00220&yptr=yahoo",
+          "time": "Feb 27, 21:30"
+        },
+        {
+          "title": "CoreWeave suffers worst rout in six months over spending fears",
+          "publisher": "Bloomberg",
+          "link": "https://finance.yahoo.com/news/coreweave-shares-slide-heavy-spending-104424431.html",
+          "time": "Feb 27, 21:22"
+        },
+        {
+          "title": "The Dow Is on Fire This Year. What Ignited the Gains.",
+          "publisher": "Barrons.com",
+          "link": "https://www.barrons.com/articles/dow-jones-nasdaq-caterpillar-honeywell-e23534fa?siteid=yhoof2&yptr=yahoo",
+          "time": "Feb 27, 20:58"
+        }
+      ],
+      "market_cap": 2918992052224,
+      "valuation": {
+        "forward_pe": 20.835466,
+        "trailing_pe": 24.561602,
+        "peg_ratio": null,
+        "book_value": 52.615,
+        "price_to_book": 7.464411,
+        "roe": 0.34390998
+      },
+      "opinions": {
+        "recommendation": "Strong Buy",
+        "target_mean": 595.99567,
+        "analysts": 53
+      }
+    },
+    {
+      "ticker": "GOOGL",
+      "name": "Alphabet Inc.",
+      "sector": "Communication Services",
+      "industry": "Internet Content & Information",
+      "score": 88,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 58,
+      "growth_score": 12,
+      "quality_score": 18,
+      "context_score": 0,
+      "results": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": false,
+          "value": "$311.76 > $319.99 > $249.41",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "value": "+10.7% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 42%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "1.0x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": false,
+          "value": "89.3%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "ATR Squeezing",
+          "threshold": "ATR < 80% of 20D ATR",
+          "points": 5
+        },
+        {
+          "name": "Sales Growth (2yr)",
+          "category": "Growth",
+          "passed": true,
+          "value": "18.0% (avg: 15.9%)",
+          "threshold": "Both years >= 10% required",
+          "points": 9
+        },
+        {
+          "name": "Earnings Growth",
+          "category": "Growth",
+          "passed": true,
+          "value": "31.1%",
+          "threshold": "> 15%",
+          "points": 3
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "35.7%",
+          "threshold": "> 15%",
+          "points": 5
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "31.6%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 5
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Communication Services",
+          "threshold": "High-Conviction Sector",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "-7.2%",
+          "threshold": "> 5% vs Market",
+          "points": 5
+        },
+        {
+          "name": "Size Factor",
+          "category": "Context",
+          "passed": false,
+          "value": "$3.8T",
+          "threshold": "Large Cap Penalty",
+          "points": -10
+        }
+      ],
+      "news": [
+        {
+          "title": "Why Google Stock Is Still An Undisputed IPO Benchmark To Learn From",
+          "publisher": "Investor's Business Daily",
+          "link": "https://www.investors.com/news/why-google-stock-is-still-an-undisputed-ipo-benchmark-to-learn-from/?src=A00220&yptr=yahoo",
+          "time": "Feb 27, 22:33"
+        },
+        {
+          "title": "Tesla Stock Posts Another Weekly Loss. Cybercab Exec Exits Vital Robo-Taxi Arm.",
+          "publisher": "Barrons.com",
+          "link": "https://www.barrons.com/articles/tesla-stock-cybercab-robo-taxi-b30d4e87?siteid=yhoof2&yptr=yahoo",
+          "time": "Feb 27, 21:25"
+        },
+        {
+          "title": "Alphabet (GOOGL) Secures Power Deals with AES, Xcel for Data Centers",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/news/alphabet-googl-secures-power-deals-210448694.html",
+          "time": "Feb 27, 21:04"
+        },
+        {
+          "title": "On The Road To A Breakout: Sector Leader Paves AI-Enabled Path",
+          "publisher": "Investor's Business Daily",
+          "link": "https://www.investors.com/research/ibd-stock-analysis/road-stock-construction-partners-paves-ai-assisted-path-to-breakout/?src=A00220&yptr=yahoo",
+          "time": "Feb 27, 21:00"
+        },
+        {
+          "title": "Market Chatter: Tech Unions Oppose Pentagon Push on AI Guardrails",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/news/market-chatter-tech-unions-oppose-202432699.html",
+          "time": "Feb 27, 20:24"
+        }
+      ],
+      "market_cap": 3771360870400,
+      "valuation": {
+        "forward_pe": 23.236176,
+        "trailing_pe": 28.81331,
+        "peg_ratio": null,
+        "book_value": 34.353,
+        "price_to_book": 9.07519,
+        "roe": 0.35705003
+      },
+      "opinions": {
+        "recommendation": "Strong Buy",
+        "target_mean": 376.86,
+        "analysts": 56
+      }
+    },
+    {
+      "ticker": "AMZN",
+      "name": "Amazon.com, Inc.",
+      "sector": "Consumer Cyclical",
+      "industry": "Internet Retail",
+      "score": 86,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 58,
+      "growth_score": 10,
+      "quality_score": 18,
+      "context_score": 0,
+      "results": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": false,
+          "value": "$210.00 > $226.58 > $224.34",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "value": "+18.8% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 24%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "1.0x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": false,
+          "value": "81.2%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "ATR Squeezing",
+          "threshold": "ATR < 80% of 20D ATR",
+          "points": 5
+        },
+        {
+          "name": "Sales Growth (2yr)",
+          "category": "Growth",
+          "passed": true,
+          "value": "13.6% (avg: 12.3%)",
+          "threshold": "Both years >= 10% required",
+          "points": 7
+        },
+        {
+          "name": "Earnings Growth",
+          "category": "Growth",
+          "passed": false,
+          "value": "5.0%",
+          "threshold": "> 15%",
+          "points": 3
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "22.3%",
+          "threshold": "> 15%",
+          "points": 5
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "10.5%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 5
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "Consumer Cyclical",
+          "threshold": "High-Conviction Sector",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "-13.6%",
+          "threshold": "> 5% vs Market",
+          "points": 5
+        },
+        {
+          "name": "Size Factor",
+          "category": "Context",
+          "passed": false,
+          "value": "$2.3T",
+          "threshold": "Large Cap Penalty",
+          "points": -10
+        }
+      ],
+      "news": [
+        {
+          "title": "Coinbase exec says crypto 'corrections' are simple math, not a catastrophe",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/news/coinbase-exec-says-crypto-corrections-are-simple-math-not-a-catastrophe-191545557.html",
+          "time": "Feb 27, 19:15"
+        },
+        {
+          "title": "A look at Warren Buffett's final moves as Berkshire CEO",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/look-warren-buffetts-final-moves-161408880.html",
+          "time": "Feb 27, 16:14"
+        },
+        {
+          "title": "Before Retiring, Warren Buffett Sold These 3 Stocks and Piled Into This High-Yield Investment",
+          "publisher": "Motley Fool",
+          "link": "https://www.fool.com/investing/2026/02/27/retire-warren-buffett-sold-stocks-high-yield/",
+          "time": "Feb 27, 22:55"
+        },
+        {
+          "title": "Nasdaq, S&P 500 Fall After Hot PPI Report; Both Indexes Log Monthly Declines",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/news/nasdaq-p-500-fall-hot-215707595.html",
+          "time": "Feb 27, 21:57"
+        },
+        {
+          "title": "With Trump\u2019s apparent blessing, the Ellisons are amassing a media empire",
+          "publisher": "CNN Business",
+          "link": "https://www.cnn.com/2026/02/26/business/paramount-wbd-merger-david-ellison",
+          "time": "Feb 27, 21:45"
+        }
+      ],
+      "market_cap": 2254333280256,
+      "valuation": {
+        "forward_pe": 22.488394,
+        "trailing_pe": 29.288702,
+        "peg_ratio": null,
+        "book_value": 38.306,
+        "price_to_book": 5.48217,
+        "roe": 0.22286
+      },
+      "opinions": {
+        "recommendation": "Strong Buy",
+        "target_mean": 280.46774,
+        "analysts": 62
+      }
+    },
+    {
+      "ticker": "TSLA",
+      "name": "Tesla, Inc.",
+      "sector": "Consumer Cyclical",
+      "industry": "Auto Manufacturers",
+      "score": 79,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 58,
+      "growth_score": 3,
+      "quality_score": 18,
+      "context_score": 0,
+      "results": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": false,
+          "value": "$402.51 > $436.13 > $390.66",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "value": "+19.3% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
         },
         {
           "name": "Consolidation",
@@ -1587,253 +2695,31 @@
           "passed": true,
           "value": "0.9x avg",
           "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": false,
+          "value": "80.7%",
+          "threshold": "> 90% of 52W High",
           "points": 5
         },
         {
-          "name": "Sales Growth",
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "ATR Squeezing",
+          "threshold": "ATR < 80% of 20D ATR",
+          "points": 5
+        },
+        {
+          "name": "Sales Growth (2yr)",
           "category": "Growth",
           "passed": false,
-          "value": "9.1%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "Earnings Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "161.0%",
-          "threshold": "> 15%",
-          "points": 10
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": false,
-          "value": "9.0%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 5
-        }
-      ],
-      "news": [
-        {
-          "title": "Lockheed Martin Balances Defense Growth And New Wildfire Technology Venture",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/news/lockheed-martin-balances-defense-growth-141619427.html",
-          "time": "Feb 05, 14:16"
-        },
-        {
-          "title": "Lockheed Wins $249 Million U.S. Navy Contract",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/news/lockheed-wins-249-million-u-110743308.html",
-          "time": "Feb 05, 11:07"
-        },
-        {
-          "title": "5 Revealing Analyst Questions From Lockheed Martin\u2019s Q4 Earnings Call",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/news/5-revealing-analyst-questions-lockheed-054040974.html",
-          "time": "Feb 05, 05:40"
-        },
-        {
-          "title": "This Defense Contractor Smashed Earnings. Why the Stock Fell 22%.",
-          "publisher": "Barrons.com",
-          "link": "https://www.barrons.com/articles/mercury-system-stock-price-earnings-cf3b3a85?siteid=yhoof2&yptr=yahoo",
-          "time": "Feb 04, 21:25"
-        },
-        {
-          "title": "Lockheed Martin (LMT) Is Up 5.6% After Q4 Beat, Backlog Record and Taiwan Sensor Deal \u2013 What's Changed",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/news/lockheed-martin-lmt-5-6-191332295.html",
-          "time": "Feb 04, 19:13"
-        }
-      ],
-      "valuation": {
-        "forward_pe": 19.096994,
-        "trailing_pe": 28.30762,
-        "peg_ratio": null,
-        "book_value": 29.349,
-        "price_to_book": 20.756413
-      },
-      "opinions": {
-        "recommendation": "Hold",
-        "target_mean": 648.9474,
-        "analysts": 19
-      }
-    },
-    {
-      "ticker": "LLY",
-      "name": "Eli Lilly and Company",
-      "sector": "Healthcare",
-      "score": 30,
-      "grade": "C",
-      "momentum_score": 0.0,
-      "quality_score": 85.71428571428572,
-      "results": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": false,
-          "value": "$1020.84 > $1054.15 > $856.55",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 5
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": false,
-          "value": "+10.0% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 20
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": false,
-          "value": "Depth 45%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": false,
-          "value": "1.2x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 5
-        },
-        {
-          "name": "Sales Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "42.6%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "Earnings Growth",
-          "category": "Growth",
-          "passed": true,
-          "value": "51.4%",
-          "threshold": "> 15%",
-          "points": 10
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "46.6%",
-          "threshold": "> 10%",
-          "points": 10
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": false,
-          "value": "Negative/NA",
-          "threshold": "FCF > 0",
-          "points": 5
-        }
-      ],
-      "news": [
-        {
-          "title": "Hims Is Already Knocking Off Novo's Wegovy Pill \u2014 For Just $49 A Month",
-          "publisher": "Investor's Business Daily",
-          "link": "https://www.investors.com/news/technology/hims-stock-wegovy-pill-compounded/?src=A00220&yptr=yahoo",
-          "time": "Feb 05, 21:31"
-        },
-        {
-          "title": "Hims & Hers Launches New Pill That Sends Shockwaves Across Weight-Loss Drugmakers' Stocks",
-          "publisher": "Investopedia",
-          "link": "https://www.investopedia.com/hims-and-hers-launches-new-pill-that-sends-shockwaves-across-weight-loss-drugmakers-stocks-11900371",
-          "time": "Feb 05, 21:11"
-        },
-        {
-          "title": "Hims offers cheapest GLP-1 weight-loss pill in US in a shock to Novo, Lilly",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/news/exclusive-hims-hers-health-launches-133502712.html",
-          "time": "Feb 05, 21:08"
-        },
-        {
-          "title": "Eli Lilly Just Delivered Fantastic News to Shareholders",
-          "publisher": "Motley Fool",
-          "link": "https://www.fool.com/investing/2026/02/05/eli-lilly-delivered-fantastic-news-to-investors/",
-          "time": "Feb 05, 19:30"
-        },
-        {
-          "title": "Hims & Hers Is Introducing a Cheaper Wegovy Copycat. Novo Nordisk Stock Falls.",
-          "publisher": "Barrons.com",
-          "link": "https://www.barrons.com/articles/wegovy-novo-nordisk-stock-hims-hers-copycat-8ad49160?siteid=yhoof2&yptr=yahoo",
-          "time": "Feb 05, 19:05"
-        }
-      ],
-      "valuation": {
-        "forward_pe": 24.587221,
-        "trailing_pe": 44.53927,
-        "peg_ratio": null,
-        "book_value": 26.56,
-        "price_to_book": 38.43524
-      },
-      "opinions": {
-        "recommendation": "Buy",
-        "target_mean": 1177.2222,
-        "analysts": 27
-      }
-    },
-    {
-      "ticker": "TSLA",
-      "name": "Tesla, Inc.",
-      "sector": "Consumer Cyclical",
-      "score": 20,
-      "grade": "C",
-      "momentum_score": 37.5,
-      "quality_score": 14.285714285714286,
-      "results": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": false,
-          "value": "$397.21 > $444.88 > $380.68",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 5
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": false,
-          "value": "+20.4% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 20
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 40%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "0.8x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 5
-        },
-        {
-          "name": "Sales Growth",
-          "category": "Growth",
-          "passed": false,
-          "value": "-3.1%",
-          "threshold": "> 10%",
-          "points": 10
+          "value": "-3.1% (current < 10%)",
+          "threshold": "Both years >= 10% required",
+          "points": 0
         },
         {
           "name": "Earnings Growth",
@@ -1841,7 +2727,15 @@
           "passed": false,
           "value": "-60.6%",
           "threshold": "> 15%",
-          "points": 10
+          "points": 3
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": false,
+          "value": "4.9%",
+          "threshold": "> 15%",
+          "points": 5
         },
         {
           "name": "Operating Margin",
@@ -1849,7 +2743,15 @@
           "passed": false,
           "value": "4.7%",
           "threshold": "> 10%",
-          "points": 10
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 5
         },
         {
           "name": "FCF Quality",
@@ -1857,52 +2759,78 @@
           "passed": true,
           "value": "Positive",
           "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "Consumer Cyclical",
+          "threshold": "High-Conviction Sector",
           "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "-6.7%",
+          "threshold": "> 5% vs Market",
+          "points": 5
+        },
+        {
+          "name": "Size Factor",
+          "category": "Context",
+          "passed": false,
+          "value": "$1.5T",
+          "threshold": "Large Cap Penalty",
+          "points": -10
         }
       ],
       "news": [
         {
-          "title": "IPOs: How companies get into an index when planning to go public",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/ipos-companies-index-planning-public-213000070.html",
-          "time": "Feb 05, 21:30"
+          "title": "Tesla Stock Posts Another Weekly Loss. Cybercab Exec Exits Vital Robo-Taxi Arm.",
+          "publisher": "Barrons.com",
+          "link": "https://www.barrons.com/articles/tesla-stock-cybercab-robo-taxi-b30d4e87?siteid=yhoof2&yptr=yahoo",
+          "time": "Feb 27, 21:25"
         },
         {
-          "title": "World Economic Forum founder on Trump's Davos speech and the future of humanity",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/news/world-economic-forum-founder-on-trumps-davos-speech-and-the-future-of-humanity-151312903.html",
-          "time": "Feb 05, 15:13"
-        },
-        {
-          "title": "Stock Market Today, Feb. 5: Nio Jumps After Forecasting Its First Adjusted Operating Profit in Q4 2025",
+          "title": "Old Mission Capital Boosts iShares MSCI China ETF Allocation During China\u2019s Market Reset",
           "publisher": "Motley Fool",
-          "link": "https://www.fool.com/coverage/stock-market-today/2026/02/05/stock-market-today-feb-5-nio-jumps-after-forecasting-its-first-adjusted-operating-profit-in-q4-2025/",
-          "time": "Feb 05, 22:14"
+          "link": "https://www.fool.com/coverage/filings/2026/02/27/old-mission-capital-boosts-ishares-msci-china-etf-allocation-during-china-s-market-reset/",
+          "time": "Feb 27, 20:36"
         },
         {
-          "title": "Cathie Wood\u2019s ARK Funds Buy the AMD Stock Drop",
-          "publisher": "Barrons.com",
-          "link": "https://www.barrons.com/articles/amd-stock-cathie-wood-ark-buy-34a57cf8?siteid=yhoof2&yptr=yahoo",
-          "time": "Feb 05, 21:45"
+          "title": "Elon Musk: Tesla FSD Coming To Europe, Alongside Cybercab, Optimus Production",
+          "publisher": "Investor's Business Daily",
+          "link": "https://www.investors.com/news/tesla-cybercab-coming-to-europe/?src=A00220&yptr=yahoo",
+          "time": "Feb 27, 20:25"
         },
         {
-          "title": "Tesla Stock Falls. Play the Odds of Musk Merging It With SpaceX.",
-          "publisher": "Barrons.com",
-          "link": "https://www.barrons.com/articles/tesla-stock-spacex-merger-musk-a1a2a7ac?siteid=yhoof2&yptr=yahoo",
-          "time": "Feb 05, 21:20"
+          "title": "Forget Tech Stocks: The Construction Stock Building Tomorrow's Data Centers",
+          "publisher": "Motley Fool",
+          "link": "https://www.fool.com/investing/2026/02/27/forget-tech-stocks-the-construction-stock-building/",
+          "time": "Feb 27, 19:06"
+        },
+        {
+          "title": "Tesla\u2019s China Problem Is Getting Worse \u2014 Here Are the 3 Rivals Taking Its Market Share",
+          "publisher": "24/7 Wall St.",
+          "link": "https://247wallst.com/investing/2026/02/27/teslas-china-problem-is-getting-worse-here-are-the-3-rivals-taking-its-market-share/",
+          "time": "Feb 27, 18:53"
         }
       ],
+      "market_cap": 1510391414784,
       "valuation": {
-        "forward_pe": 138.56581,
-        "trailing_pe": 361.09998,
+        "forward_pe": 143.53212,
+        "trailing_pe": 379.72644,
         "peg_ratio": null,
         "book_value": 21.897,
-        "price_to_book": 18.139929
+        "price_to_book": 18.381971,
+        "roe": 0.049250003
       },
       "opinions": {
-        "recommendation": "Buy",
-        "target_mean": 418.81384,
-        "analysts": 39
+        "recommendation": "Hold",
+        "target_mean": 421.729,
+        "analysts": 40
       }
     }
   ]

@@ -1,9 +1,9 @@
 import yfinance as yf
 import pandas as pd
-import datetime
+from datetime import datetime
 
 # --- Configuration ---
-TARGET_DATE = "2026-01-30" # Friday
+TARGET_DATE = datetime.now().strftime("%Y-%m-%d")  # Use today's date dynamically
 SECTOR_ETFS = ["XLK", "XLC", "XLY", "XLV", "XLF", "XLI", "XLB", "XLE", "XLU", "XLRE", "SMH", "XBI", "IGV"]
 # A mix of large cap leaders and high-beta momentum names
 WATCHLIST = [

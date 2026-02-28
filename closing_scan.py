@@ -6,6 +6,10 @@ import yfinance as yf
 import pandas as pd
 import traceback
 from dataclasses import dataclass, asdict
+import config
+from utils.logger import get_logger
+
+logger = get_logger('closing_scan')
 
 # Ensure we're in the workspace root
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -90,21 +94,20 @@ class ScanEngine:
         except: return None
 
 def run_closing_protocol():
-    print(f"--- 6:00 PM PST CLOSING RUN ---")
+    logger.info("--- 6:00 PM PST CLOSING RUN ---")
     tickers = []
     if os.path.exists('vug_tickers.txt'):
         with open('vug_tickers.txt', 'r') as f:
             tickers = [line.strip().upper() for line in f if line.strip()]
     
-    # Core focus names
-    core_names = ["VRT", "GE", "MU", "LLY", "NVDA", "MLM", "O", "PWR", "MSCI", "ROL", "TPL", "ECL", "MPWR"]
-    tickers = list(set(tickers + core_names))
+    # Add core portfolio tickers from config
+    tickers = list(set(tickers + config.PORTFOLIO_TICKERS))
     
     engine = ScanEngine()
     
     final_list = []
     for t in tickers:
-        print(f"Rating {t}...")
+        logger.info(f"Rating {t}...")
         res = engine.rate(t)
         if res: final_list.append(res)
     
@@ -118,7 +121,7 @@ def run_closing_protocol():
     with open('top_stocks.json', 'w') as f:
         json.dump(output, f, indent=2)
     
-    print("✅ Scan complete.")
+    logger.info("✅ Scan complete.")
 
 if __name__ == "__main__":
     run_closing_protocol()

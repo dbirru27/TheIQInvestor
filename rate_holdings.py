@@ -2,19 +2,20 @@ import sys
 import os
 import json
 from market_data import MarketDB
+import config
+from utils.logger import get_logger
+
+logger = get_logger('rate_holdings')
 
 # Add path for existing logic
 sys.path.append(os.getcwd())
-try:
-    from invest_iq.app import InvestIQEngine
-except ImportError:
-    # Fallback if running from a different dir
-    sys.path.append(os.path.join(os.getcwd(), "invest_iq"))
-    from app import InvestIQEngine
+from rater import BreakoutRater
+
+_rater = BreakoutRater()
 
 def rate_holdings(holdings_file):
     if not os.path.exists(holdings_file):
-        print(f"Error: {holdings_file} not found.")
+        logger.error(f"Error: {holdings_file} not found.")
         return
         
     with open(holdings_file, 'r') as f:
@@ -30,32 +31,35 @@ def rate_holdings(holdings_file):
     tickers = list(set(tickers))
     
     # 1. Ensure DB has data for these specific tickers
-    print(f"Updating DB for {len(tickers)} holdings...")
+    logger.info(f"Updating DB for {len(tickers)} holdings...")
     db = MarketDB()
     for t in tickers:
         try:
             db.update_ticker(t)
         except:
-            print(f"Failed to update {t}")
+            logger.warning(f"Failed to update {t}")
 
     # 2. Rate them
     results = []
-    print(f"\nRating {len(tickers)} holdings...")
+    logger.info(f"Rating {len(tickers)} holdings...")
     
     for i, ticker in enumerate(tickers):
         try:
-            print(f"Rating {ticker}...")
-            data = InvestIQEngine.get_rating(ticker)
+            logger.debug(f"Rating {ticker}...")
+            data = _rater.rate_stock(ticker)
+            if "error" in data:
+                logger.warning(f"Skipping {ticker}: {data['error']}")
+                continue
             results.append({
                 "ticker": ticker,
-                "name": data['name'],
-                "momentum": data['momentum_score'],
-                "quality": data['quality_score'],
-                "total": data['total_score'],
-                "grade": data['grade']
+                "name": data.get('name', ticker),
+                "momentum": data.get('technical_score', 0),
+                "quality": data.get('quality_score', 0),
+                "total": data.get('score', 0),
+                "grade": data.get('grade', 'F')
             })
         except Exception as e:
-            print(f"Error rating {ticker}: {e}")
+            logger.error(f"Error rating {ticker}: {e}")
             continue
             
     # Sort by Score

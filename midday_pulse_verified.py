@@ -10,16 +10,19 @@ from email.mime.multipart import MIMEMultipart
 import json
 import os
 
+# Import from config
+import config
+
 EMAIL_SENDER = "***REMOVED***"
-EMAIL_RECEIVER = "dbirru@gmail.com"
-CONFIG_PATH = "/Users/dansmacmini/.openclaw/workspace/.email_config.ini"
+EMAIL_RECEIVER = config.EMAIL_RECIPIENT
+CONFIG_PATH = config.EMAIL_CONFIG_PATH
 
 MARKET_ETFS = {"SPY": "S&P 500", "QQQ": "Nasdaq 100", "IWM": "Russell 2000"}
 PORTFOLIO = {
     "Defense": ["LHX", "LMT", "NOC"],
     "Grid-to-Chip": ["PWR", "VRT", "GEV"],
     "TopVOO": ["MSFT", "AMZN", "GOOGL", "META", "NVDA"],
-    "Core ETFs": ["COPX", "GLD", "ITA", "NLR"]
+    "Core ETFs": config.CORE_ETFS
 }
 
 def get_quote(ticker):

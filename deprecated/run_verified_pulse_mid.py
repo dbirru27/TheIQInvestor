@@ -11,7 +11,7 @@ from verified_fetch import fetch_and_verify
 import pulse
 
 def run():
-    holdings = ["SPY", "QQQ", "IWM", "VIX", "GLD", "COPX", "NLR", "VOO", "XLI", "ITA"]
+    holdings = ["SPY", "QQQ", "IWM", "^VIX", "GLD", "COPX", "NLR", "VOO", "XLI", "ITA"]
     
     print("[Task] Starting Midday Verification...")
     prices, verification = fetch_and_verify(holdings)

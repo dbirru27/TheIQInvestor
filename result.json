@@ -1,0 +1,17 @@
+{
+  "status": "stale",
+  "prices": {
+    "SPY": 682.85,
+    "QQQ": null,
+    "IWM": null,
+    "VIX": null,
+    "GLD": null,
+    "COPX": null,
+    "NLR": null,
+    "VOO": null,
+    "XLI": null,
+    "ITA": null
+  },
+  "timestamp": "2026-02-18T11:00:00-05:00",
+  "notes": "Market is open today (Wed Feb 18). Confirmed by recent news headlines. However, real-time quote data is inaccessible or stale (showing Feb 17 close: SPY 682.85) due to bot restrictions/delays on free sources (Yahoo/Google/CNBC). Recommend using a brokerage API or refreshing yfinance locally."
+}

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestIQ Daily Alpha Report - February 26, 2026</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background: #0f172a; color: #e2e8f0; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { text-align: center; padding: 30px 0; border-bottom: 2px solid #3b82f6; margin-bottom: 30px; }
+        .header h1 { color: #3b82f6; margin: 0; font-size: 2.2em; }
+        .header .date { color: #94a3b8; font-size: 1.1em; margin-top: 10px; }
+        .card { background: #1e293b; border-radius: 12px; padding: 25px; margin-bottom: 25px; border-left: 4px solid #3b82f6; }
+        .card h2 { margin-top: 0; color: #60a5fa; font-size: 1.4em; }
+        .snapshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .metric { background: #0f172a; padding: 15px; border-radius: 8px; text-align: center; }
+        .metric-label { color: #94a3b8; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px; }
+        .metric-value { font-size: 1.8em; font-weight: bold; margin: 8px 0; }
+        .metric-change { font-size: 0.95em; font-weight: 500; }
+        .up { color: #22c55e; }
+        .down { color: #ef4444; }
+        .neutral { color: #94a3b8; }
+        .portfolio-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .portfolio-table th { text-align: left; padding: 12px; background: #0f172a; color: #60a5fa; font-weight: 600; }
+        .portfolio-table td { padding: 12px; border-bottom: 1px solid #334155; }
+        .portfolio-table tr:hover { background: #253449; }
+        .idea-card { background: #0f172a; padding: 20px; border-radius: 8px; margin-bottom: 15px; }
+        .idea-card h3 { margin-top: 0; color: #fbbf24; }
+        .highlight { background: #fef3c7; color: #1e293b; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .highlight p { margin: 0; }
+        .footer { text-align: center; padding: 30px; color: #64748b; font-size: 0.9em; border-top: 1px solid #334155; margin-top: 30px; }
+        .sector-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .sector { padding: 12px; background: #0f172a; border-radius: 6px; text-align: center; }
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.75em; font-weight: 600; margin-left: 8px; }
+        .badge-hot { background: #fef3c7; color: #92400e; }
+        .badge-cold { background: #dbeafe; color: #1e40af; }
+        .badge-neutral { background: #e2e8f0; color: #475569; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🦉 InvestIQ Daily Alpha Report</h1>
+            <div class="date">Thursday, February 26, 2026 | Market Close</div>
+        </div>
+
+        <!-- Market Snapshot -->
+        <div class="card">
+            <h2>📊 Market Snapshot</h2>
+            <div class="snapshot-grid">
+                <div class="metric">
+                    <div class="metric-label">S&P 500 (SPY)</div>
+                    <div class="metric-value">$689.30</div>
+                    <div class="metric-change down">-0.56% (-$3.85)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Nasdaq 100 (QQQ)</div>
+                    <div class="metric-value">$609.24</div>
+                    <div class="metric-change down">-1.16% (-$7.18)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Russell 2000 (IWM)</div>
+                    <div class="metric-value">$265.99</div>
+                    <div class="metric-change up">+0.53% (+$1.41)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Gold (GLD)</div>
+                    <div class="metric-value">$477.48</div>
+                    <div class="metric-change up">+0.86% (+$4.06)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Bitcoin (BTC)</div>
+                    <div class="metric-value">$29.83</div>
+                    <div class="metric-change down">-2.58% (-$0.79)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Crude Oil (CL=F)</div>
+                    <div class="metric-value">$65.23</div>
+                    <div class="metric-change neutral">+0.03% (+$0.02)</div>
+                </div>
+            </div>
+            <p style="margin-top: 20px; color: #94a3b8;">
+                <strong>Market Narrative:</strong> Mixed session with rotation out of mega-cap tech into small-caps. IWM outperformance (+0.53%) vs SPY decline (-0.56%) signals breadth expansion. Gold continues its ascent, hitting new highs as risk-off sentiment persists.
+            </p>
+        </div>
+
+        <!-- Macro Drivers -->
+        <div class="card">
+            <h2>🌍 Macro Drivers & Key News</h2>
+            <ul style="line-height: 2; color: #cbd5e1;">
+                <li><strong>AI Chip Selloff:</strong> NVDA (-5.49%) and AMD (-3.41%) leading semiconductor decline. Profit-taking after extended rally. DeepSeek competition concerns persist.</li>
+                <li><strong>Defense Strength:</strong> NOC (+1.03%) outperforming as geopolitical tensions remain elevated. LMT (-0.91%) consolidating near highs.</li>
+                <li><strong>Gold Surge:</strong> GLD +0.86% continues its march higher. Safe-haven demand amid market uncertainty.</li>
+                <li><strong>Small-Cap Rotation:</strong> IWM positive while QQQ down 1.16% suggests rebalancing from mega-caps to value/infrastructure plays.</li>
+                <li><strong>Crypto Weakness:</strong> BTC proxy down 2.58% as risk assets face pressure. Correlation with tech stocks remains elevated.</li>
+            </ul>
+        </div>
+
+        <!-- Smart Money Flows -->
+        <div class="card">
+            <h2>💰 Smart Money Flows</h2>
+            <div class="snapshot-grid">
+                <div class="metric">
+                    <div class="metric-label">Institutional Bias</div>
+                    <div class="metric-value" style="color: #fbbf24;">DEFENSIVE</div>
+                    <div class="metric-change neutral">Gold outperforming</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Sector Rotation</div>
+                    <div class="metric-value" style="color: #22c55e;">INDUSTRIALS</div>
+                    <div class="metric-change up">Infrastructure bid</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Risk Sentiment</div>
+                    <div class="metric-value" style="color: #ef4444;">CAUTIOUS</div>
+                    <div class="metric-change down">Tech profit-taking</div>
+                </div>
+            </div>
+            <p style="margin-top: 20px; color: #94a3b8;">
+                Smart money appears to be rotating from overextended tech leaders into infrastructure (PWR +0.41%), defense (NOC +1.03%), and hard assets (GLD +0.86%). This is classic late-cycle behavior.
+            </p>
+        </div>
+
+        <!-- Sector Temperature -->
+        <div class="card">
+            <h2>🌡️ Sector Temperature</h2>
+            <div class="sector-grid">
+                <div class="sector">
+                    <strong>Technology</strong>
+                    <div class="badge badge-cold">COOLING</div>
+                </div>
+                <div class="sector">
+                    <strong>Defense</strong>
+                    <div class="badge badge-hot">HOT</div>
+                </div>
+                <div class="sector">
+                    <strong>Industrials</strong>
+                    <div class="badge badge-hot">HOT</div>
+                </div>
+                <div class="sector">
+                    <strong>Energy</strong>
+                    <div class="badge badge-neutral">NEUTRAL</div>
+                </div>
+                <div class="sector">
+                    <strong>Gold/Metals</strong>
+                    <div class="badge badge-hot">HOT</div>
+                </div>
+                <div class="sector">
+                    <strong>Small-Caps</strong>
+                    <div class="badge badge-hot">WARMING</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Holdings -->
+        <div class="card">
+            <h2>📈 Dan's Portfolio Performance</h2>
+            <table class="portfolio-table">
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Price</th>
+                        <th>Change</th>
+                        <th>% Change</th>
+                        <th>Trend</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>NOC</strong> (Defense)</td>
+                        <td>$710.90</td>
+                        <td class="up">+$7.25</td>
+                        <td class="up">+1.03%</td>
+                        <td>Strong 💪</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PLTR</strong> (AI/Defense)</td>
+                        <td>$135.94</td>
+                        <td class="up">+$1.75</td>
+                        <td class="up">+1.30%</td>
+                        <td>Rallying 📈</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PWR</strong> (Grid)</td>
+                        <td>$565.05</td>
+                        <td class="up">+$2.28</td>
+                        <td class="up">+0.41%</td>
+                        <td>Holding 🎯</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MSFT</strong> (Tech)</td>
+                        <td>$401.72</td>
+                        <td class="up">+$1.09</td>
+                        <td class="up">+0.27%</td>
+                        <td>Resilient 🛡️</td>
+                    </tr>
+                    <tr>
+                        <td><strong>META</strong> (Tech)</td>
+                        <td>$657.01</td>
+                        <td class="up">+$3.32</td>
+                        <td class="up">+0.51%</td>
+                        <td>Green 💚</td>
+                    </tr>
+                    <tr>
+                        <td><strong>XLI</strong> (Industrials ETF)</td>
+                        <td>$176.70</td>
+                        <td class="up">+$1.10</td>
+                        <td class="up">+0.63%</td>
+                        <td>Leading 🏆</td>
+                    </tr>
+                    <tr>
+                        <td><strong>VOO</strong> (S&P 500)</td>
+                        <td>$633.95</td>
+                        <td class="down">-$3.58</td>
+                        <td class="down">-0.56%</td>
+                        <td>Consolidating ➡️</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GE</strong> (Industrial)</td>
+                        <td>$340.84</td>
+                        <td class="down">-$2.05</td>
+                        <td class="down">-0.60%</td>
+                        <td>Slight Pullback 📉</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LMT</strong> (Defense)</td>
+                        <td>$641.63</td>
+                        <td class="down">-$5.87</td>
+                        <td class="down">-0.91%</td>
+                        <td>Minor Dip 📉</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LLY</strong> (Healthcare)</td>
+                        <td>$1,022.02</td>
+                        <td class="down">-$6.81</td>
+                        <td class="down">-0.66%</td>
+                        <td>Cooling 🧊</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NLR</strong> (Nuclear ETF)</td>
+                        <td>$149.74</td>
+                        <td class="down">-$1.19</td>
+                        <td class="down">-0.79%</td>
+                        <td>Soft 📉</td>
+                    </tr>
+                    <tr>
+                        <td><strong>COPX</strong> (Copper ETF)</td>
+                        <td>$94.45</td>
+                        <td class="down">-$0.61</td>
+                        <td class="down">-0.64%</td>
+                        <td>Slipping 📉</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AMZN</strong> (Tech)</td>
+                        <td>$207.92</td>
+                        <td class="down">-$2.72</td>
+                        <td class="down">-1.29%</td>
+                        <td>Weak ⚠️</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GOOGL</strong> (Tech)</td>
+                        <td>$307.38</td>
+                        <td class="down">-$5.58</td>
+                        <td class="down">-1.78%</td>
+                        <td>Selling 📉</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AMD</strong> (Semiconductors)</td>
+                        <td>$203.68</td>
+                        <td class="down">-$7.18</td>
+                        <td class="down">-3.41%</td>
+                        <td>Sharp Drop 🔻</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NVDA</strong> (AI/GPUs)</td>
+                        <td>$184.89</td>
+                        <td class="down">-$10.74</td>
+                        <td class="down">-5.49%</td>
+                        <td>Bloodbath 🚨</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 5 High-Conviction Ideas -->
+        <div class="card">
+            <h2>🎯 5 High-Conviction Ideas</h2>
+            
+            <div class="idea-card">
+                <h3>1. nVent Electric (NVT) — Score: 83/100</h3>
+                <p><strong>Sector:</strong> Industrials | Electrical Equipment</p>
+                <p><strong>Why:</strong> Top-rated stock in our system. Strong breakout pattern with 3.2% from base. Revenue growth consistency + grid electrification tailwinds. Price: $116.96 (3% above 50d).</p>
+                <p><strong>Action:</strong> Consider on any pullback to $112-114 range.</p>
+            </div>
+
+            <div class="idea-card">
+                <h3>2. Northrop Grumman (NOC) — Defense Play</h3>
+                <p><strong>Sector:</strong> Defense Aerospace</p>
+                <p><strong>Why:</strong> Strongest performer in Dan's portfolio today (+1.03%). Defense spending remains bipartisan priority. Nuclear modernization and space programs driving multi-year backlog.</p>
+                <p><strong>Action:</strong> Core holding; add on weakness.</p>
+            </div>
+
+            <div class="idea-card">
+                <h3>3. Quanta Services (PWR) — Grid Infrastructure</h3>
+                <p><strong>Sector:</strong> Industrials | Infrastructure</p>
+                <p><strong>Why:</strong> Grid-to-chip thesis intact. Data center power buildouts + renewable transmission = massive TAM. Holding up well (+0.41%) while tech sells off.</p>
+                <p><strong>Action:</strong> Long-term compounder; accumulate.</p>
+            </div>
+
+            <div class="idea-card">
+                <h3>4. Meta Platforms (META) — AI Infrastructure</h3>
+                <p><strong>Sector:</strong> Technology | Social/Media</p>
+                <p><strong>Why:</strong> Only mega-cap tech showing green (+0.51%). AI capex accelerating, Llama models gaining traction, Reels monetization strong. Best risk/reward among FAANG.</p>
+                <p><strong>Action:</strong> Quality growth at reasonable valuation.</p>
+            </div>
+
+            <div class="idea-card">
+                <h3>5. Gold (GLD) — Risk Off Hedge</h3>
+                <p><strong>Asset:</strong> Precious Metals</p>
+                <p><strong>Why:</strong> Continues marching higher (+0.86% today). Central bank buying, geopolitical uncertainty, and USD concerns driving structural demand. Already in Dan's basket.</p>
+                <p><strong>Action:</strong> Hold current allocation; consider adding on any $470 dip.</p>
+            </div>
+        </div>
+
+        <!-- Portfolio Positioning -->
+        <div class="card">
+            <h2>🎪 Portfolio Positioning Thoughts</h2>
+            
+            <div class="highlight">
+                <p><strong>📌 Key Insight:</strong> Today's price action confirms the rotation thesis. Money is flowing OUT of overextended AI/semiconductor stocks and INTO infrastructure, defense, and small-caps.</p>
+            </div>
+
+            <h3 style="color: #60a5fa;">What's Working:</h3>
+            <ul style="color: #cbd5e1;">
+                <li>✅ Defense (NOC +1.03%, PLTR +1.30%)</li>
+                <li>✅ Infrastructure (PWR +0.41%, XLI +0.63%)</li>
+                <li>✅ Gold/Metals (GLD +0.86%)</li>
+                <li>✅ Select Tech (META +0.51%, MSFT +0.27%)</li>
+            </ul>
+
+            <h3 style="color: #60a5fa;">Under Pressure:</h3>
+            <ul style="color: #cbd5e1;">
+                <li>⚠️ Semiconductors (NVDA -5.49%, AMD -3.41%)</li>
+                <li>⚠️ High-beta Tech (GOOGL -1.78%, AMZN -1.29%)</li>
+                <li>⚠️ Nuclear/Clean Energy (NLR -0.79%)</li>
+            </ul>
+
+            <h3 style="color: #60a5fa;">Recommendations:</h3>
+            <ol style="color: #cbd5e1; line-height: 1.8;">
+                <li><strong>Hold NVDA/AMD positions</strong> — Don't panic sell into this weakness. These are multi-year AI winners experiencing normal consolidation after massive runs.</li>
+                <li><strong>Add to NOC/PWR on dips</strong> — Defense and grid infrastructure remain the strongest themes. Any weakness is opportunity.</li>
+                <li><strong>Consider trimming speculative AI</strong> — If holding any smaller AI names outside the portfolio, consider rotating profits into quality.</li>
+                <li><strong>Watch IWM breakout</strong> — Small-caps showing relative strength. If this continues, consider adding IWM exposure.</li>
+                <li><strong>Maintain GLD allocation</strong> — Gold is in a structural uptrend. Don't fight it.</li>
+            </ol>
+
+            <div class="highlight" style="background: #dcfce7; color: #166534;">
+                <p><strong>💡 Bottom Line:</strong> The portfolio is well-positioned for this rotation. Defense + Infrastructure + Select Quality Tech + Gold is exactly where capital is flowing. Stay the course, but be ready to add to winners on any broader market pullback.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🦉 InvestIQ Daily Alpha Report</p>
+            <p>Generated: February 26, 2026 at 7:00 PM EST</p>
+            <p style="font-size: 0.85em; margin-top: 10px;">Not financial advice. For informational purposes only.</p>
+        </div>
+    </div>
+</body>
+</html>

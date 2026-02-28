@@ -45,6 +45,14 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - When you make a mistake → document it so future-you doesn't repeat it
 - **Text > Brain** 📝
 
+## Financial Data Integrity (Mandatory)
+
+1. **Verify Time:** Always run `date` or `session_status` before starting any market or stock analysis. Do not assume today's date or the market status.
+2. **Live Data Only:** Never cite stock prices, % changes, or ratings from memory or "internal training data." If it involves money, fetch it fresh.
+3. **Double-Check Tickers:** If a ticker is mentioned that is not in `all_stocks.json`, run `rater.py <TICKER>` live to get actual data.
+4. **No Guessing:** If a data fetch fails, tell the user. Do not "fill in the gaps" with hallucinated numbers.
+5. **Sync with Website:** If the user mentions the website shows different data, assume the local `all_stocks.json` is stale and run a fresh scan or fetch live for the specific tickers.
+
 ## Safety
 
 - Don't exfiltrate private data. Ever.

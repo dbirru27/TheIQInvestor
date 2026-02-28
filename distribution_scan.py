@@ -11,20 +11,17 @@ import yfinance as yf
 import pandas as pd
 import sys
 import datetime
+import config
+from utils.logger import get_logger
+
+logger = get_logger('distribution_scan')
 
 # Configuration
 LOOKBACK_DAYS = 30  # Analyze last 30 trading days
 DISTRIBUTION_THRESHOLD = 3  # Alert if >= 3 signals in window
 
-# Tickers to Scan (TopVOO + Indices)
-TICKERS = [
-    "SPY", "QQQ", "IWM",  # Indices
-    "NVDA", "MSFT", "AAPL", "AMZN", "GOOGL", "META", "TSLA", "AMD", "AVGO", # Mega Caps
-    "VRT", "SMCI", "PLTR", "ARM", "ANET", "MSTR", "COIN", # AI/Crypto Momentum
-    "LLY", "NVO", "VRTX", # Pharma Momentum
-    "GE", "CAT", "DE", "URI", "ETN", "PH", # Industrial/Cyclical
-    "JPM", "V", "MA", "AXP" # Financials
-]
+# Tickers to Scan - use config for portfolio and indices
+TICKERS = config.MARKET_INDICES + config.PORTFOLIO_TICKERS + config.CORE_ETFS
 
 def analyze_distribution(ticker_symbol):
     try:
@@ -98,21 +95,20 @@ def analyze_distribution(ticker_symbol):
         return None
 
 def main():
-    print(f"🔎 InvestIQ Distribution Scanner")
-    print(f"   Analyzing last {LOOKBACK_DAYS} days for institutional selling...")
-    print("-" * 60)
+    logger.info(f"🔎 InvestIQ Distribution Scanner")
+    logger.info(f"   Analyzing last {LOOKBACK_DAYS} days for institutional selling...")
+    logger.info("-" * 60)
     
     alerts = []
     
     for ticker in TICKERS:
-        sys.stdout.write(f"\rScanning {ticker}...")
-        sys.stdout.flush()
+        logger.debug(f"Scanning {ticker}...")
         
         result = analyze_distribution(ticker)
         if result and result['counts']['total_distribution'] >= DISTRIBUTION_THRESHOLD:
             alerts.append(result)
             
-    print(f"\rScanning Complete.             \n")
+    logger.info(f"Scanning Complete.")
     
     if not alerts:
         print("✅ No significant distribution detected in monitored list.")

@@ -8,11 +8,15 @@ import os
 import sqlite3
 import sys
 from datetime import datetime
+import config
+from utils.logger import get_logger
+
+logger = get_logger('web_scan')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from rater import CriterionResult, get_ttm_growth
 
-DB_PATH = os.path.join(os.getcwd(), 'market_data.db')
+DB_PATH = config.DB_PATH
 
 def get_db_connection():
     return sqlite3.connect(DB_PATH)
@@ -278,7 +282,7 @@ def rate_stock_v43_full(symbol, conn):
         return None
 
 def run_scan():
-    print("🚀 Starting InvestIQ v4.3 Full Scan (All Stocks + Details)...")
+    logger.info("🚀 Starting InvestIQ v4.3 Full Scan (All Stocks + Details)...")
     
     conn = get_db_connection()
     c = conn.cursor()
@@ -286,7 +290,7 @@ def run_scan():
     c.execute('SELECT DISTINCT symbol FROM prices')
     tickers = [row[0] for row in c.fetchall()]
     
-    print(f"Found {len(tickers)} tickers")
+    logger.info(f"Found {len(tickers)} tickers")
     
     results = []
     for i, ticker in enumerate(tickers, 1):
@@ -295,7 +299,7 @@ def run_scan():
             results.append(data)
         
         if i % 100 == 0:
-            print(f"  Processed {i}/{len(tickers)}...")
+            logger.info(f"  Processed {i}/{len(tickers)}...")
     
     conn.close()
     
@@ -328,9 +332,10 @@ def run_scan():
     with open('all_stocks.json', 'w') as f:
         json.dump(all_output, f, indent=2)
     
-    print(f"\n✅ Saved {len(filtered_results)} top stocks (both years >= 10% growth)")
-    print(f"   Saved {len(results)} total stocks with details to all_stocks.json")
-    print(f"   Filtered out: {len(results) - len(filtered_results)} stocks failed revenue gate")
+    logger.info(f"✅ Saved {len(filtered_results)} top stocks (both years >= 10% growth)")
+    logger.info(f"   Saved {len(results)} total stocks with details to all_stocks.json")
+    logger.info(f"   Filtered out: {len(results) - len(filtered_results)} stocks failed revenue gate")
+    print(f"✅ Scan complete: {len(filtered_results)} top stocks, {len(results)} total")
     print(f"   Top 5: {', '.join([s['ticker'] + ' ' + str(s['score']) for s in filtered_results[:5]])}")
 
 if __name__ == '__main__':

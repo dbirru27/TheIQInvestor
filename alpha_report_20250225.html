@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Alpha Report - Wednesday, February 25, 2026</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #14141f;
+            --bg-elevated: #1e1e2e;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --accent-green: #22c55e;
+            --accent-red: #ef4444;
+            --accent-gold: #f59e0b;
+            --accent-blue: #3b82f6;
+            --border: #2d2d3d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent-gold), #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        
+        .header .date {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .section {
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent-gold);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        
+        .metric-card {
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            padding: 16px;
+            border: 1px solid var(--border);
+        }
+        
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .metric-change {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .positive { color: var(--accent-green); }
+        .negative { color: var(--accent-red); }
+        .neutral { color: var(--text-secondary); }
+        
+        .drivers-list {
+            list-style: none;
+        }
+        
+        .drivers-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .drivers-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .driver-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            background: var(--bg-elevated);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        
+        .driver-content h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .driver-content p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        .basket-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .basket-card {
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            padding: 16px;
+            border: 1px solid var(--border);
+        }
+        
+        .basket-name {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        
+        .basket-return {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .ideas-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .idea-card {
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            padding: 16px;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent-gold);
+        }
+        
+        .idea-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .idea-ticker {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+        
+        .idea-return {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .idea-thesis {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        .portfolio-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        .portfolio-table th {
+            text-align: left;
+            padding: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .portfolio-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .portfolio-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--bg-elevated);
+            border-radius: 4px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        
+        @media (max-width: 600px) {
+            .basket-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🦉 Daily Alpha Report</h1>
+            <div class="date">Wednesday, February 25, 2026 | Generated at 7:00 PM EST</div>
+        </div>
+        
+        <!-- Market Snapshot -->
+        <div class="section">
+            <div class="section-title">📊 Market Snapshot</div>
+            <div class="grid">
+                <div class="metric-card">
+                    <div class="metric-label">S&P 500 (SPY)</div>
+                    <div class="metric-value">$693.15</div>
+                    <div class="metric-change positive">+5.80 (+0.84%)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Nasdaq 100 (QQQ)</div>
+                    <div class="metric-value">$616.68</div>
+                    <div class="metric-change positive">+8.81 (+1.45%)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Russell 2000 (IWM)</div>
+                    <div class="metric-value">$264.58</div>
+                    <div class="metric-change positive">+1.25 (+0.47%)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">VIX</div>
+                    <div class="metric-value">26.54</div>
+                    <div class="metric-change negative">-1.04 (-3.77%)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">US Dollar (DXY)</div>
+                    <div class="metric-value">97.64</div>
+                    <div class="metric-change negative">-0.24 (-0.24%)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Gold (GLD)</div>
+                    <div class="metric-value">$473.42</div>
+                    <div class="metric-change negative">-1.19 (-0.25%)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Bitcoin</div>
+                    <div class="metric-value">$67,973</div>
+                    <div class="metric-change positive">+0.00 (+0.00%)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Oil (WTI)</div>
+                    <div class="metric-value">$65.64</div>
+                    <div class="metric-change positive">+0.01 (+0.02%)</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Macro Drivers -->
+        <div class="section">
+            <div class="section-title">🎯 Macro Drivers & Key Themes</div>
+            <ul class="drivers-list">
+                <li>
+                    <div class="driver-icon">🚀</div>
+                    <div class="driver-content">
+                        <h4>Tech Rally Broadens</h4>
+                        <p>QQQ leading with +1.45% as MSFT (+2.98%) and META (+2.25%) power ahead. Big Tech reclaiming leadership after recent rotation.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="driver-icon">🛡️</div>
+                    <div class="driver-content">
+                        <h4>Defense Profit-Taking</h4>
+                        <p>Defense names pulling back - LMT (-2.55%), NOC (-3.31%) seeing consolidation after strong run. Normal corrective action.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="driver-icon">🤖</div>
+                    <div class="driver-content">
+                        <h4>AI Rotation Continues</h4>
+                        <p>NVDA (+1.41%) bouncing while AMD (-1.39%) pauses. PLTR (+4.15%) leading software names. Diversification within AI theme.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="driver-icon">🪙</div>
+                    <div class="driver-content">
+                        <h4>Gold Consolidates</h4>
+                        <p>GLD flat (-0.25%) after yesterday's decline. Holding above $470 support. Dollar weakness (-0.24%) providing tailwind.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="driver-icon">⚡</div>
+                    <div class="driver-content">
+                        <h4>Infrastructure Mixed</h4>
+                        <p>PWR (-0.96%) and XLI (-0.78%) seeing minor pullback after breakout. COPX (+1.81%) continues copper strength.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Smart Money Flows -->
+        <div class="section">
+            <div class="section-title">💰 Smart Money Flows</div>
+            <div class="grid">
+                <div class="metric-card">
+                    <div class="metric-label">Sector Rotation</div>
+                    <div style="font-size: 13px; color: var(--text-secondary); margin-top: 8px;">
+                        <div style="margin-bottom: 6px;"><span style="color: var(--accent-green);">▲</span> Big Tech (MSFT, META, NVDA)</div>
+                        <div style="margin-bottom: 6px;"><span style="color: var(--accent-red);">▼</span> Defense (LMT, NOC)</div>
+                        <div><span style="color: var(--accent-gold);">●</span> AI Software (PLTR)</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Key Levels</div>
+                    <div style="font-size: 13px; color: var(--text-secondary); margin-top: 8px;">
+                        <div style="margin-bottom: 6px;">SPY: Breaking above 690</div>
+                        <div style="margin-bottom: 6px;">QQQ: Reclaimed 615</div>
+                        <div>IWM: Holding above 260</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Volatility Signal</div>
+                    <div style="font-size: 13px; color: var(--text-secondary); margin-top: 8px;">
+                        <div>VIXY down -3.77% indicates fear subsiding. Risk-on environment favoring growth names. No panic selling detected.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sector Temperature -->
+        <div class="section">
+            <div class="section-title">🌡️ Sector Temperature - Dan's Baskets</div>
+            <div class="basket-grid">
+                <div class="basket-card">
+                    <div class="basket-name">🛡️ Defense</div>
+                    <div class="basket-return negative">-2.22%</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">LMT, NOC consolidating</div>
+                </div>
+                <div class="basket-card">
+                    <div class="basket-name">⚡ Grid-to-Chip</div>
+                    <div class="basket-return negative">-0.96%</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">PWR minor pullback</div>
+                </div>
+                <div class="basket-card">
+                    <div class="basket-name">📈 TopVOO</div>
+                    <div class="basket-return positive">+1.22%</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Tech leading, mixed bag</div>
+                </div>
+                <div class="basket-card">
+                    <div class="basket-name">🏛️ Core ETFs</div>
+                    <div class="basket-return positive">+0.53%</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Broad market +0.29%</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- High Conviction Ideas -->
+        <div class="section">
+            <div class="section-title">⭐ 5 High-Conviction Ideas</div>
+            <div class="ideas-list">
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <span class="idea-ticker">PLTR</span>
+                        <span class="idea-return positive">+4.15%</span>
+                    </div>
+                    <div class="idea-thesis">AI/Government software breaking out. Defense spending + commercial AI demand converging. Leading today's session.</div>
+                </div>
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <span class="idea-ticker">MSFT</span>
+                        <span class="idea-return positive">+2.98%</span>
+                    </div>
+                    <div class="idea-thesis">Reclaiming leadership with +2.98% move. AI infrastructure monetization + cloud growth intact. Core holding thesis validated.</div>
+                </div>
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <span class="idea-ticker">META</span>
+                        <span class="idea-return positive">+2.25%</span>
+                    </div>
+                    <div class="idea-thesis">Strong bounce back +2.25%. AI capex narrative + efficient cost structure. Rebounding from yesterday's weakness.</div>
+                </div>
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <span class="idea-ticker">COPX</span>
+                        <span class="idea-return positive">+1.81%</span>
+                    </div>
+                    <div class="idea-thesis">Copper miners continuing strength. Electrification demand structural. outperforming despite market noise.</div>
+                </div>
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <span class="idea-ticker">NVDA</span>
+                        <span class="idea-return positive">+1.41%</span>
+                    </div>
+                    <div class="idea-thesis">Bouncing +1.41% after consolidation. AI chip demand remains robust. Watch for reclaim of $200 level.</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Portfolio Positioning -->
+        <div class="section">
+            <div class="section-title">📋 Portfolio Positioning Thoughts</div>
+            <table class="portfolio-table">
+                <thead>
+                    <tr>
+                        <th>Ticker</th>
+                        <th>Price</th>
+                        <th>Change</th>
+                        <th>Basket</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>PLTR</strong></td>
+                        <td>$134.19</td>
+                        <td class="positive">+5.35 (+4.15%)</td>
+                        <td><span class="tag">TopVOO</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>MSFT</strong></td>
+                        <td>$400.60</td>
+                        <td class="positive">+11.60 (+2.98%)</td>
+                        <td><span class="tag">TopVOO</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>META</strong></td>
+                        <td>$653.69</td>
+                        <td class="positive">+14.39 (+2.25%)</td>
+                        <td><span class="tag">TopVOO</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>COPX</strong></td>
+                        <td>$95.06</td>
+                        <td class="positive">+1.69 (+1.81%)</td>
+                        <td><span class="tag">Core ETFs</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>NVDA</strong></td>
+                        <td>$195.56</td>
+                        <td class="positive">+2.71 (+1.41%)</td>
+                        <td><span class="tag">TopVOO</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>AMZN</strong></td>
+                        <td>$210.64</td>
+                        <td class="positive">+2.08 (+1.00%)</td>
+                        <td><span class="tag">TopVOO</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>VOO</strong></td>
+                        <td>$637.53</td>
+                        <td class="positive">+5.32 (+0.84%)</td>
+                        <td><span class="tag">Core ETFs</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>GOOGL</strong></td>
+                        <td>$312.90</td>
+                        <td class="positive">+2.00 (+0.64%)</td>
+                        <td><span class="tag">TopVOO</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>NLR</strong></td>
+                        <td>$150.93</td>
+                        <td class="positive">+0.40 (+0.27%)</td>
+                        <td><span class="tag">Core ETFs</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>XLI</strong></td>
+                        <td>$175.60</td>
+                        <td class="negative">-1.38 (-0.78%)</td>
+                        <td><span class="tag">Core ETFs</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>GE</strong></td>
+                        <td>$342.89</td>
+                        <td class="negative">-2.75 (-0.80%)</td>
+                        <td><span class="tag">Defense/TopVOO</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>PWR</strong></td>
+                        <td>$562.77</td>
+                        <td class="negative">-5.44 (-0.96%)</td>
+                        <td><span class="tag">Grid-to-Chip</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>LLY</strong></td>
+                        <td>$1028.83</td>
+                        <td class="negative">-13.32 (-1.28%)</td>
+                        <td><span class="tag">TopVOO</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>AMD</strong></td>
+                        <td>$210.86</td>
+                        <td class="negative">-2.98 (-1.39%)</td>
+                        <td><span class="tag">TopVOO</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>LMT</strong></td>
+                        <td>$647.50</td>
+                        <td class="negative">-16.93 (-2.55%)</td>
+                        <td><span class="tag">Defense</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>NOC</strong></td>
+                        <td>$703.65</td>
+                        <td class="negative">-24.08 (-3.31%)</td>
+                        <td><span class="tag">Defense</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div style="margin-top: 20px; padding: 16px; background: var(--bg-elevated); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
+                <strong style="color: var(--text-primary);">Key Observations:</strong><br><br>
+                • <strong>Big Tech leading</strong> - MSFT (+2.98%), META (+2.25%), NVDA (+1.41%) all green. Rotation back to quality.<br>
+                • <strong>Defense consolidating</strong> - LMT (-2.55%), NOC (-3.31%) normal pullback after strong run. Hold positions.<br>
+                • <strong>PLTR breaking out</strong> +4.15% - AI software theme gaining traction alongside hardware.<br>
+                • <strong>COPX continues</strong> +1.81% - copper/commodity trade working as electrification theme persists.<br>
+                • <strong>VIX compression</strong> -3.77% suggests calm markets. Good environment for equity exposure.<br>
+                • <strong>No action needed</strong> - let winners run, defense pullback is healthy consolidation not distribution.
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated by Danswiz 🦉 | InvestIQ Terminal<br>
+            <em>This report is for informational purposes only. Not investment advice.</em>
+        </div>
+    </div>
+</body>
+</html>

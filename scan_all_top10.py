@@ -1,18 +1,24 @@
 import sys
 import os
 from market_data import MarketDB
+import config
+from utils.logger import get_logger
+
+logger = get_logger('scan_all_top10')
 
 # Add path for existing logic
 sys.path.append(os.getcwd())
-try:
-    from invest_iq.app import InvestIQEngine
-except ImportError:
-    sys.path.append(os.path.join(os.getcwd(), "invest_iq"))
-    from app import InvestIQEngine
+from rater import BreakoutRater
+
+_rater = BreakoutRater()
 
 def scan_all():
     # 1. Aggregate all known tickers
     tickers = set()
+    
+    # Add config tickers
+    tickers.update(config.PORTFOLIO_TICKERS)
+    tickers.update(config.CORE_ETFS)
     
     # Load VUG Universe
     if os.path.exists('vug_tickers.txt'):
@@ -29,19 +35,21 @@ def scan_all():
                 if t: tickers.add(t)
 
     target_list = list(tickers)
-    print(f"Scanning universe of {len(target_list)} unique tickers...")
+    logger.info(f"Scanning universe of {len(target_list)} unique tickers...")
     
     results = []
     for t in target_list:
         try:
             # We assume DB is populated enough from previous runs
-            data = InvestIQEngine.get_rating(t)
+            data = _rater.rate_stock(t)
+            if "error" in data:
+                continue
             results.append({
                 "ticker": t,
-                "score": data['total_score'],
-                "grade": data['grade'],
-                "momentum": data['momentum_score'],
-                "quality": data['quality_score']
+                "score": data.get('score', 0),
+                "grade": data.get('grade', 'F'),
+                "momentum": data.get('technical_score', 0),
+                "quality": data.get('quality_score', 0)
             })
         except:
             continue

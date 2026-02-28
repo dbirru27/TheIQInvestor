@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Alpha Report - February 24, 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0f; color: #e8e8f0; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        header { text-align: center; margin-bottom: 40px; padding-bottom: 30px; border-bottom: 1px solid #2a2a35; }
+        h1 { font-size: 2.5rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
+        .date { color: #8888a0; font-size: 1.1rem; }
+        .section { margin: 35px 0; padding: 25px; background: #12121a; border-radius: 12px; border: 1px solid #1e1e2d; }
+        h2 { color: #667eea; font-size: 1.4rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .snapshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; }
+        .metric { background: #1a1a25; padding: 18px; border-radius: 10px; text-align: center; border: 1px solid #2a2a35; }
+        .metric-label { font-size: 0.85rem; color: #8888a0; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .metric-value { font-size: 1.6rem; font-weight: 700; color: #fff; }
+        .metric-change { font-size: 0.95rem; margin-top: 5px; font-weight: 600; }
+        .positive { color: #00d084; }
+        .negative { color: #ff4757; }
+        .neutral { color: #8888a0; }
+        .driver { background: #1a1a25; padding: 15px 18px; border-radius: 8px; margin: 10px 0; border-left: 3px solid #667eea; }
+        .driver-title { font-weight: 600; color: #fff; margin-bottom: 5px; }
+        .driver-desc { color: #a0a0b0; font-size: 0.95rem; }
+        .holding-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .holding-table th { text-align: left; padding: 12px 15px; color: #8888a0; font-weight: 500; font-size: 0.85rem; text-transform: uppercase; border-bottom: 1px solid #2a2a35; }
+        .holding-table td { padding: 14px 15px; border-bottom: 1px solid #1e1e2d; }
+        .holding-table tr:hover { background: #1a1a25; }
+        .ticker { font-weight: 700; color: #667eea; font-size: 1.05rem; }
+        .idea { background: #1a1a25; padding: 18px; border-radius: 10px; margin: 12px 0; border: 1px solid #2a2a35; }
+        .idea-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .idea-ticker { font-size: 1.2rem; font-weight: 700; color: #667eea; }
+        .idea-conviction { font-size: 0.75rem; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; font-weight: 600; }
+        .conviction-high { background: #00d08420; color: #00d084; }
+        .conviction-medium { background: #ffd70020; color: #ffd700; }
+        .tag { display: inline-block; padding: 4px 10px; background: #2a2a35; border-radius: 4px; font-size: 0.8rem; color: #8888a0; margin-right: 8px; }
+        .footer { text-align: center; margin-top: 50px; padding-top: 30px; border-top: 1px solid #2a2a35; color: #666670; font-size: 0.9rem; }
+        .note { background: #1a1a25; padding: 15px 20px; border-radius: 8px; margin: 15px 0; font-style: italic; color: #a0a0b0; border-left: 3px solid #ffd700; }
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .snapshot-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Daily Alpha Report</h1>
+            <div class="date">Tuesday, February 24, 2026 | Market Close</div>
+        </header>
+
+        <!-- MARKET SNAPSHOT -->
+        <div class="section">
+            <h2>🏛️ Market Snapshot</h2>
+            <div class="snapshot-grid">
+                <div class="metric">
+                    <div class="metric-label">S&P 500 (SPY)</div>
+                    <div class="metric-value">687.35</div>
+                    <div class="metric-change positive">+4.96 (+0.73%)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Nasdaq 100 (QQQ)</div>
+                    <div class="metric-value">607.87</div>
+                    <div class="metric-change positive">+6.46 (+1.07%)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Russell 2000 (IWM)</div>
+                    <div class="metric-value">263.33</div>
+                    <div class="metric-change positive">+2.84 (+1.09%)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">VIX</div>
+                    <div class="metric-value">19.55</div>
+                    <div class="metric-change positive">-1.46 (-6.95%)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">US Dollar (DXY)</div>
+                    <div class="metric-value">97.88</div>
+                    <div class="metric-change neutral">+0.04 (+0.04%)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Gold (GLD)</div>
+                    <div class="metric-value">474.61</div>
+                    <div class="metric-change negative">-6.67 (-1.39%)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Oil (WTI)</div>
+                    <div class="metric-value">66.04</div>
+                    <div class="metric-change positive">+0.41 (+0.62%)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Bitcoin (BTC)</div>
+                    <div class="metric-value">28.53</div>
+                    <div class="metric-change positive">+0.02 (+0.07%)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MACRO DRIVERS -->
+        <div class="section">
+            <h2>🌊 Macro Drivers & Key Themes</h2>
+            <div class="driver">
+                <div class="driver-title">Broad-Based Rally Continues</div>
+                <div class="driver-desc">All major indices closed higher with IWM leading (+1.09%), indicating risk-on sentiment and small-cap participation. VIX compressed nearly 7%, suggesting improved risk appetite.</div>
+            </div>
+            <div class="driver">
+                <div class="driver-title">Semiconductor Strength</div>
+                <div class="driver-desc">AMD surged +8.77% on the session, significantly outperforming peers. NVDA (+0.68%) held gains amid continued AI infrastructure demand narrative.</div>
+            </div>
+            <div class="driver">
+                <div class="driver-title">Industrial & Infrastructure Momentum</div>
+                <div class="driver-desc">PWR broke out with +3.48% gain, validating grid-to-chip thesis. XLI (+1.23%) and GE (+1.96%) showing synchronized strength in industrials.</div>
+            </div>
+            <div class="driver">
+                <div class="driver-title">Nuclear & Copper Themes Active</div>
+                <div class="driver-desc">NLR (+2.90%) and COPX (+2.77%) both showing strength, reflecting AI power demand and electrification infrastructure plays.</div>
+            </div>
+            <div class="driver">
+                <div class="driver-title">Safe Haven Pressure</div>
+                <div class="driver-desc">Gold (GLD -1.39%) and LLY (-1.55%) seeing profit-taking as capital rotates into risk assets. Defensive positioning unwinding.</div>
+            </div>
+        </div>
+
+        <!-- SMART MONEY FLOWS -->
+        <div class="section">
+            <h2>💰 Smart Money Flows</h2>
+            <div class="driver">
+                <div class="driver-title">Leadership: AMD (+8.77%)</div>
+                <div class="driver-desc">Unusual relative strength vs NVDA suggests potential rotation within semis or specific catalyst. Volume profile warranted for confirmation.</div>
+            </div>
+            <div class="driver">
+                <div class="driver-title">Breakout Candidates: PWR, COPX, NLR</div>
+                <div class="driver-desc">All three showing +2.7% to +3.5% moves with strong sector tailwinds. Infrastructure and energy transition themes in play.</div>
+            </div>
+            <div class="driver">
+                <div class="driver-title">Defense Steady: LMT (+0.58%), NOC (+0.32%)</div>
+                <div class="driver-desc">Modest gains maintaining uptrends. Geopolitical premium still embedded but not expanding.</div>
+            </div>
+        </div>
+
+        <!-- SECTOR TEMPERATURE -->
+        <div class="section">
+            <h2>🌡️ Sector Temperature</h2>
+            <table class="holding-table">
+                <tr>
+                    <th>Sector/Theme</th>
+                    <th>Temp</th>
+                    <th>Notes</th>
+                </tr>
+                <tr>
+                    <td><span class="ticker">Semiconductors</span></td>
+                    <td class="positive">🔥 Hot</td>
+                    <td>AMD leadership, AI demand intact</td>
+                </tr>
+                <tr>
+                    <td><span class="ticker">Industrials</span></td>
+                    <td class="positive">🔥 Hot</td>
+                    <td>PWR breakout, GE strength</td>
+                </tr>
+                <tr>
+                    <td><span class="ticker">Nuclear/Energy</span></td>
+                    <td class="positive">🌡️ Warm</td>
+                    <td>NLR participation, AI power demand</td>
+                </tr>
+                <tr>
+                    <td><span class="ticker">Commodities</span></td>
+                    <td class="positive">🌡️ Warm</td>
+                    <td>COPX strength, oil steady</td>
+                </tr>
+                <tr>
+                    <td><span class="ticker">Defense</span></td>
+                    <td class="neutral">➡️ Steady</td>
+                    <td>LMT/NOC grinding higher</td>
+                </tr>
+                <tr>
+                    <td><span class="ticker">Big Tech</span></td>
+                    <td class="positive">🌡️ Warm</td>
+                    <td>MSFT/AMZN/META positive</td>
+                </tr>
+                <tr>
+                    <td><span class="ticker">Safe Havens</span></td>
+                    <td class="negative">❄️ Cool</td>
+                    <td>GLD seeing rotation out</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 5 HIGH-CONVICTION IDEAS -->
+        <div class="section">
+            <h2>🎯 5 High-Conviction Ideas</h2>
+            
+            <div class="idea">
+                <div class="idea-header">
+                    <span class="idea-ticker">AMD</span>
+                    <span class="idea-conviction conviction-high">High Conviction</span>
+                </div>
+                <p>+8.77% breakout with unusual volume. Potential rotation leader in semis. AI PC cycle + data center share gains narrative. Watch for continuation above $215.</p>
+                <div style="margin-top: 12px;">
+                    <span class="tag">Momentum</span>
+                    <span class="tag">AI Infrastructure</span>
+                </div>
+            </div>
+
+            <div class="idea">
+                <div class="idea-header">
+                    <span class="idea-ticker">PWR</span>
+                    <span class="idea-conviction conviction-high">High Conviction</span>
+                </div>
+                <p>+3.48% move validates grid-to-chip thesis. Grid modernization accelerating with AI power demands. Clean breakout structure. Core position.</p>
+                <div style="margin-top: 12px;">
+                    <span class="tag">Infrastructure</span>
+                    <span class="tag">Grid-to-Chip</span>
+                </div>
+            </div>
+
+            <div class="idea">
+                <div class="idea-header">
+                    <span class="idea-ticker">COPX</span>
+                    <span class="idea-conviction conviction-high">High Conviction</span>
+                </div>
+                <p>Copper miners ETF +2.77%. Electrification + EV + grid buildout demand structural. Supply constrained. Commodity inflation hedge.</p>
+                <div style="margin-top: 12px;">
+                    <span class="tag">Commodities</span>
+                    <span class="tag">Electrification</span>
+                </div>
+            </div>
+
+            <div class="idea">
+                <div class="idea-header">
+                    <span class="idea-ticker">NLR</span>
+                    <span class="idea-conviction conviction-medium">Medium Conviction</span>
+                </div>
+                <p>Nuclear ETF +2.90% as AI power demand narrative intensifies. SMR and uranium names moving. Momentum building in clean baseload theme.</p>
+                <div style="margin-top: 12px;">
+                    <span class="tag">Nuclear</span>
+                    <span class="tag">AI Power</span>
+                </div>
+            </div>
+
+            <div class="idea">
+                <div class="idea-header">
+                    <span class="idea-ticker">GE</span>
+                    <span class="idea-conviction conviction-medium">Medium Conviction</span>
+                </div>
+                <p>+1.96% continuing post-split strength. Aerospace + renewable energy hybrid play. Institutional accumulation pattern.</p>
+                <div style="margin-top: 12px;">
+                    <span class="tag">Industrials</span>
+                    <span class="tag">Aerospace</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PORTFOLIO POSITIONING -->
+        <div class="section">
+            <h2>📈 Portfolio Positioning Thoughts</h2>
+            <table class="holding-table">
+                <tr>
+                    <th>Holding</th>
+                    <th>Price</th>
+                    <th>Change</th>
+                    <th>Notes</th>
+                </tr>
+                <tr>
+                    <td><span class="ticker">LMT</span></td>
+                    <td>$664.43</td>
+                    <td class="positive">+0.58%</td>
+                    <td>Holding, defense anchor</td>
+                </tr>
+                <tr>
+                    <td><span class="ticker">NOC</span></td>
+                    <td>$727.73</td>
+                    <td class="positive">+0.32%</td>
+                    <td>Holding, steady performer</td>
+                </tr>
+                <tr>
+                    <td><span class="ticker">GE</span></td>
+                    <td>$345.64</td>
+                    <td class="positive">+1.96%</td>
+                    <td>Strong, may add on dips</td>
+                </tr>
+                <tr>
+                    <td><span class="ticker">PWR</span></td>
+                    <td>$568.21</td>
+                    <td class="positive">+3.48%</td>
+                    <td>🎯 Breakout mode, core holding</td>
+                </tr>
+                <tr>
+                    <td><span class="ticker">COPX</span></td>
+                    <td>$93.37</td>
+                    <td class="positive">+2.77%</td>
+                    <td>Trending, infrastructure proxy</td>
+                </tr>
+                <tr>
+                    <td><span class="ticker">NLR</span></td>
+                    <td>$150.53</td>
+                    <td class="positive">+2.90%</td>
+                    <td>Momentum building</td>
+                </tr>
+                <tr>
+                    <td><span class="ticker">MSFT</span></td>
+                    <td>$389.00</td>
+                    <td class="positive">+1.18%</td>
+                    <td>Core AI position</td>
+                </tr>
+                <tr>
+                    <td><span class="ticker">NVDA</span></td>
+                    <td>$192.85</td>
+                    <td class="positive">+0.68%</td>
+                    <td>Resting, watching AMD vs NVDA</td>
+                </tr>
+                <tr>
+                    <td><span class="ticker">AMD</span></td>
+                    <td>$213.84</td>
+                    <td class="positive">+8.77%</td>
+                    <td>🚀 Today's leader, strong action</td>
+                </tr>
+                <tr>
+                    <td><span class="ticker">PLTR</span></td>
+                    <td>$128.84</td>
+                    <td class="negative">-1.35%</td>
+                    <td>Minor pullback, watching</td>
+                </tr>
+                <tr>
+                    <td><span class="ticker">LLY</span></td>
+                    <td>$1,042.15</td>
+                    <td class="negative">-1.55%</td>
+                    <td>Profit taking, not concerned</td>
+                </tr>
+            </table>
+
+            <div class="note">
+                💡 <strong>Key Observation:</strong> Portfolio showing broad-based strength today. Risk-on conditions favor cyclical exposure (PWR, COPX, GE). AMD's relative strength vs NVDA is notable — may signal rotation or catch-up trade. VIX compression supports maintaining equity exposure. Watch for continuation in infrastructure themes.
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📊 Daily Alpha Report by Danswiz</p>
+            <p style="margin-top: 8px; font-size: 0.85rem;">Generated: February 24, 2026 at 7:00 PM EST</p>
+            <p style="margin-top: 8px; font-size: 0.8rem; color: #555;">This report is for informational purposes only. Not financial advice.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# ============================================================================
+# DEPRECATED: This is the old v3.0 StockRater. 
+# Use /workspace/rater.py (BreakoutRater v4.4) instead.
+# Kept for backward compatibility. Will be removed in future cleanup.
+# ============================================================================
+
 import yfinance as yf
 import pandas as pd
 import numpy as np
