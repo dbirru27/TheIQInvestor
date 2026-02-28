@@ -62,11 +62,9 @@ def fetch_live_prices(tickers):
                 if earn_g is not None:
                     live[t]['earnings_growth'] = round(earn_g * 100, 1)
                 if curr and prev and prev > 0:
-                    live[t] = {
-                        'price': round(curr, 2),
-                        'previous_close': round(prev, 2),
-                        'daily_change': round((curr - prev) / prev * 100, 2)
-                    }
+                    live[t]['price'] = round(curr, 2)
+                    live[t]['previous_close'] = round(prev, 2)
+                    live[t]['daily_change'] = round((curr - prev) / prev * 100, 2)
             except Exception:
                 pass
     except Exception as e:
