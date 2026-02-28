@@ -319,6 +319,8 @@
                         <tr>
                             <th onclick="sortWatchlist('ticker')">Ticker</th>
                             <th onclick="sortWatchlist('name')">Company</th>
+                            <th onclick="sortWatchlist('price')">Price</th>
+                            <th onclick="sortWatchlist('daily_change')">Daily Chg</th>
                             <th onclick="sortWatchlist('trailing_pe')">Current PE</th>
                             <th onclick="sortWatchlist('forward_pe')">Forward PE</th>
                             <th onclick="sortWatchlist('revenue_growth')">Rev Growth</th>
@@ -326,11 +328,10 @@
                             <th onclick="sortWatchlist('peg_ratio')">PEG</th>
                             <th onclick="sortWatchlist('score')">Score</th>
                             <th onclick="sortWatchlist('grade')">Grade</th>
-                            <th onclick="sortWatchlist('daily_change')">Daily Chg</th>
                         </tr>
                     </thead>
                     <tbody id="watchlist-tbody">
-                        <tr><td colspan="10" style="text-align: center; padding: 40px; color: var(--text-dim);">Loading watchlist...</td></tr>
+                        <tr><td colspan="11" style="text-align: center; padding: 40px; color: var(--text-dim);">Loading watchlist...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -477,6 +478,7 @@
             document.getElementById('dashboard-view').style.display = 'block';
             document.getElementById('detail-view').style.display = 'none';
             document.getElementById('watchlist-view').style.display = 'none';
+            if (liveRefreshTimer) { clearInterval(liveRefreshTimer); liveRefreshTimer = null; }
             
             if (window.tvCheckInterval) {
                 clearInterval(window.tvCheckInterval);
@@ -496,6 +498,8 @@
         let watchlistSortColumn = null;
         let watchlistSortDirection = 'asc';
 
+        let liveRefreshTimer = null;
+
         async function showWatchlist() {
             document.getElementById('dashboard-view').style.display = 'none';
             document.getElementById('detail-view').style.display = 'none';
@@ -511,15 +515,59 @@
                 } catch (err) {
                     document.getElementById('watchlist-tbody').innerHTML = 
                         '<tr><td colspan="11" style="text-align: center; padding: 40px; color: #dc2626;">Error loading watchlist: ' + err.message + '</td></tr>';
+                    return;
                 }
             } else {
                 renderWatchlist();
             }
+            
+            // Fetch live prices and overlay
+            fetchLivePrices();
+            // Auto-refresh every 60 seconds while on watchlist tab
+            if (liveRefreshTimer) clearInterval(liveRefreshTimer);
+            liveRefreshTimer = setInterval(fetchLivePrices, 60000);
+        }
+
+        async function fetchLivePrices() {
+            try {
+                const res = await fetch('/api/watchlist/live');
+                if (!res.ok) return;
+                const live = await res.json();
+                
+                if (!live.prices || !watchlistData) return;
+                
+                // Update watchlistData with live prices
+                for (const stock of watchlistData.all) {
+                    const lp = live.prices[stock.ticker];
+                    if (lp) {
+                        stock.price = lp.price;
+                        stock.previous_close = lp.previous_close;
+                        stock.daily_change = lp.daily_change;
+                    }
+                }
+                // Also update basket arrays (they share object references)
+                for (const [basket, stocks] of Object.entries(watchlistData.baskets)) {
+                    for (const stock of stocks) {
+                        const lp = live.prices[stock.ticker];
+                        if (lp) {
+                            stock.price = lp.price;
+                            stock.previous_close = lp.previous_close;
+                            stock.daily_change = lp.daily_change;
+                        }
+                    }
+                }
+                
+                document.getElementById('watchlist-updated').textContent = live.timestamp + ' (LIVE)';
+                renderWatchlist();
+            } catch (e) {
+                console.log('Live price fetch failed:', e);
+            }
         }
 
         function renderStockRow(stock) {
-            const changeColor = stock.daily_change > 0 ? '#10b981' : stock.daily_change < 0 ? '#ef4444' : 'var(--text-dim)';
-            const changePrefix = stock.daily_change > 0 ? '+' : '';
+            const dc = stock.daily_change;
+            const changeColor = dc > 0 ? '#10b981' : dc < 0 ? '#ef4444' : 'var(--text-dim)';
+            const changePrefix = dc > 0 ? '+' : '';
             const pegColor = stock.peg_ratio === null ? 'var(--text-dim)' :
                              stock.peg_ratio < 1.5 ? '#10b981' :
                              stock.peg_ratio < 2.5 ? '#eab308' : '#ef4444';
@@ -531,16 +579,19 @@
             const scoreColor = scorePercent >= 70 ? '#059669' : 
                                scorePercent >= 50 ? '#0284c7' : 
                                scorePercent >= 30 ? '#d97706' : '#dc2626';
+            const na = '<span style="color: var(--text-dim);">N/A</span>';
             
             return `
-                <tr>
+                <tr data-ticker="${stock.ticker}">
                     <td><a href="#" onclick="viewStock('${stock.ticker}'); return false;" class="text-sky-400 hover:text-sky-300 font-bold">${stock.ticker}</a></td>
                     <td>${stock.name}</td>
-                    <td>${stock.trailing_pe !== null ? stock.trailing_pe.toFixed(2) : '<span style="color: var(--text-dim);">N/A</span>'}</td>
-                    <td>${stock.forward_pe !== null ? stock.forward_pe.toFixed(2) : '<span style="color: var(--text-dim);">N/A</span>'}</td>
-                    <td style="color: ${revGrowthColor};">${stock.revenue_growth !== null ? stock.revenue_growth.toFixed(1) + '%' : '<span style="color: var(--text-dim);">N/A</span>'}</td>
-                    <td style="color: ${earnGrowthColor};">${stock.earnings_growth !== null ? stock.earnings_growth.toFixed(1) + '%' : '<span style="color: var(--text-dim);">N/A</span>'}</td>
-                    <td style="color: ${pegColor}; font-weight: 600;">${stock.peg_ratio !== null ? stock.peg_ratio.toFixed(2) : '<span style="color: var(--text-dim); font-weight: 400;">N/A</span>'}</td>
+                    <td class="live-price" style="font-weight: 600;">${stock.price !== null && stock.price !== undefined ? '$' + stock.price.toFixed(2) : na}</td>
+                    <td class="live-change" style="color: ${changeColor}; font-weight: 600;">${dc !== null && dc !== undefined ? changePrefix + dc.toFixed(2) + '%' : na}</td>
+                    <td>${stock.trailing_pe !== null ? stock.trailing_pe.toFixed(2) : na}</td>
+                    <td>${stock.forward_pe !== null ? stock.forward_pe.toFixed(2) : na}</td>
+                    <td style="color: ${revGrowthColor};">${stock.revenue_growth !== null ? stock.revenue_growth.toFixed(1) + '%' : na}</td>
+                    <td style="color: ${earnGrowthColor};">${stock.earnings_growth !== null ? stock.earnings_growth.toFixed(1) + '%' : na}</td>
+                    <td style="color: ${pegColor}; font-weight: 600;">${stock.peg_ratio !== null ? stock.peg_ratio.toFixed(2) : na}</td>
                     <td>
                         <div class="score-container">
                             <div class="score-bar-bg">
@@ -550,7 +601,6 @@
                         </div>
                     </td>
                     <td><span class="grade-badge grade-${stock.grade}">${stock.grade}</span></td>
-                    <td style="color: ${changeColor}; font-weight: 600;">${stock.daily_change !== null ? changePrefix + stock.daily_change.toFixed(2) + '%' : '<span style="color: var(--text-dim); font-weight: 400;">N/A</span>'}</td>
                 </tr>
             `;
         }
@@ -573,7 +623,7 @@
             if (currentBasketFilter !== 'all') {
                 const stocks = watchlistData.baskets[currentBasketFilter] || [];
                 if (stocks.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; padding: 40px; color: var(--text-dim);">No holdings in this basket</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; padding: 40px; color: var(--text-dim);">No holdings in this basket</td></tr>';
                     return;
                 }
                 tbody.innerHTML = stocks.map(renderStockRow).join('');
@@ -593,12 +643,13 @@
                 const avgColor = avgChange > 0 ? '#10b981' : avgChange < 0 ? '#ef4444' : 'var(--text-dim)';
                 const avgPrefix = avgChange > 0 ? '+' : '';
                 
+                const totalValue = stocks.reduce((s, st) => s + (st.price || 0), 0);
                 html += `
-                    <tr>
-                        <td colspan="10" style="background: #0a0f1d; padding: 14px 16px; border-bottom: 2px solid var(--accent); font-weight: 700; font-size: 0.95rem;">
+                    <tr class="basket-header" data-basket="${basket}">
+                        <td colspan="11" style="background: #0a0f1d; padding: 14px 16px; border-bottom: 2px solid var(--accent); font-weight: 700; font-size: 0.95rem;">
                             ${icon} ${basket} 
                             <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 400; margin-left: 8px;">${stocks.length} holdings</span>
-                            <span style="font-size: 0.75rem; color: ${avgColor}; font-weight: 600; margin-left: 12px;">Avg: ${avgPrefix}${avgChange.toFixed(2)}%</span>
+                            <span class="basket-avg" style="font-size: 0.75rem; color: ${avgColor}; font-weight: 600; margin-left: 12px;">Avg: ${avgPrefix}${avgChange.toFixed(2)}%</span>
                         </td>
                     </tr>
                 `;

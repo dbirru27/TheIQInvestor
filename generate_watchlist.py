@@ -79,6 +79,8 @@ def fetch_stock_data(ticker, ratings):
         return {
             "ticker": ticker,
             "name": info.get('longName') or info.get('shortName') or ticker,
+            "price": round(current_price, 2) if current_price else None,
+            "previous_close": round(previous_close, 2) if previous_close else None,
             "trailing_pe": round(trailing_pe, 2) if trailing_pe else None,
             "forward_pe": round(forward_pe, 2) if forward_pe else None,
             "revenue_growth": round(revenue_growth, 2) if revenue_growth else None,
@@ -93,6 +95,8 @@ def fetch_stock_data(ticker, ratings):
         return {
             "ticker": ticker,
             "name": ticker,
+            "price": None,
+            "previous_close": None,
             "trailing_pe": None,
             "forward_pe": None,
             "revenue_growth": None,

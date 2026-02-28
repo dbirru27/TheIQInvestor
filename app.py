@@ -140,5 +140,41 @@ def watchlist():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/api/watchlist/live')
+def watchlist_live():
+    """Fetch live prices for all watchlist holdings"""
+    try:
+        import yfinance as yf
+        from datetime import datetime
+        with open('watchlist.json', 'r') as f:
+            data = json.load(f)
+
+        tickers = [s['ticker'] for s in data.get('all', [])]
+        if not tickers:
+            return jsonify({"error": "No tickers"}), 404
+
+        live = {}
+        for ticker in tickers:
+            try:
+                t = yf.Ticker(ticker)
+                info = t.fast_info
+                price = info.last_price
+                prev = info.previous_close
+                change = ((price - prev) / prev * 100) if price and prev and prev > 0 else None
+                live[ticker] = {
+                    "price": round(float(price), 2) if price else None,
+                    "previous_close": round(float(prev), 2) if prev else None,
+                    "daily_change": round(float(change), 2) if change is not None else None
+                }
+            except:
+                pass
+
+        return jsonify({
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S EST"),
+            "prices": live
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=18791, debug=True)
