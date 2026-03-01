@@ -147,66 +147,134 @@ def rate_stock_v43_full(symbol, conn):
         atr_val = f"{(atr_ratio*100):.1f}% of 50d ATR (${atr_10d:.2f} vs ${atr_50d:.2f})"
         results.append(CriterionResult("Volatility Compression", "Timing", passed_atr, atr_val, "10d ATR < 75% of 50d ATR", 5 if passed_atr else 0))
         
-        # 7. Sales Growth with Graduated Scoring (0-30 pts) - ENHANCED v5.0
-        rev_g_fallback = info.get('revenueGrowth')
-        rev_g, rev_g_prior = get_ttm_growth(symbol, conn)
+        # 7. Revenue Score (0-30 pts) - v5.1: 4-component continuous scoring
+        # Components: Magnitude (35%), Consistency (25%), Acceleration (25%), Beat Rate (15%)
+        import math
+        def _sigmoid_normalize(value, center=0.10, scale=5.0):
+            return 1.0 / (1.0 + math.exp(-scale * (value - center)))
         
-        if rev_g is None:
-            rev_g = rev_g_fallback
+        revenue_pts = 0
+        growth_display = "N/A"
+        rev_components = {}
         
-        if rev_g_prior is None:
+        try:
+            # Get quarterly revenue from DB
+            quarterly_revenues = []
             try:
                 c = conn.cursor()
                 c.execute('''
-                    SELECT revenue_growth_yoy FROM revenue_history 
-                    WHERE symbol = ? AND revenue_growth_yoy IS NOT NULL
-                    ORDER BY fiscal_year DESC LIMIT 1 OFFSET 1
+                    SELECT year, quarter, revenue FROM quarterly_revenue
+                    WHERE symbol = ? AND revenue IS NOT NULL
+                    ORDER BY year ASC, quarter ASC
                 ''', (symbol,))
-                row = c.fetchone()
-                if row:
-                    rev_g_prior = row[0]
+                quarterly_revenues = [float(row[2]) for row in c.fetchall()]
             except:
                 pass
+            
+            # Fallback: yfinance quarterly data
+            if len(quarterly_revenues) < 5:
+                try:
+                    import yfinance as yf
+                    stock_yf = yf.Ticker(symbol)
+                    qi = stock_yf.quarterly_income_stmt
+                    if qi is not None and not qi.empty and 'Total Revenue' in qi.index:
+                        rev_series = qi.loc['Total Revenue'].dropna()
+                        quarterly_revenues = [float(v) for v in reversed(rev_series.values)]
+                except:
+                    pass
+            
+            n = len(quarterly_revenues)
+            yoy_growth = None
+            magnitude = 0
+            
+            # Component 1: Magnitude (10.5 pts max)
+            if n >= 8:
+                ttm_current = sum(quarterly_revenues[n-4:n])
+                ttm_prior = sum(quarterly_revenues[n-8:n-4])
+                if ttm_prior > 0:
+                    yoy_growth = ttm_current / ttm_prior - 1.0
+            elif n >= 5:
+                if quarterly_revenues[0] > 0:
+                    yoy_growth = quarterly_revenues[-1] / quarterly_revenues[0] - 1.0
+            
+            if yoy_growth is None:
+                # Fallback to yfinance or DB TTM
+                rev_g, _ = get_ttm_growth(symbol, conn)
+                if rev_g is None:
+                    rev_g = info.get('revenueGrowth')
+                if rev_g is not None:
+                    yoy_growth = float(rev_g)
+            
+            if yoy_growth is not None:
+                magnitude = _sigmoid_normalize(yoy_growth, center=0.10, scale=5.0) * 10.5
+                rev_components['yoy_growth'] = round(yoy_growth * 100, 1)
+            
+            # Component 2: Consistency (7.5 pts max)
+            consistency = 0
+            q_yoy_growths = []
+            if n >= 5:
+                for i in range(4, n):
+                    if quarterly_revenues[i-4] > 0:
+                        g = quarterly_revenues[i] / quarterly_revenues[i-4] - 1.0
+                        q_yoy_growths.append(g)
+            
+            if len(q_yoy_growths) >= 2:
+                mean_g = np.mean(q_yoy_growths)
+                std_g = np.std(q_yoy_growths)
+                cv = std_g / abs(mean_g) if abs(mean_g) > 0.001 else 1.0
+                consistency = max(0, (1.0 - min(cv, 2.0))) * 7.5
+            
+            # Component 3: Acceleration (7.5 pts max)
+            accel = 0
+            if len(q_yoy_growths) >= 2:
+                mid = len(q_yoy_growths) // 2
+                recent_avg = np.mean(q_yoy_growths[mid:])
+                older_avg = np.mean(q_yoy_growths[:mid])
+                accel_diff = recent_avg - older_avg
+                accel = _sigmoid_normalize(accel_diff, center=0.0, scale=10.0) * 7.5
+                rev_components['acceleration'] = round(accel_diff * 100, 1)
+            elif len(q_yoy_growths) == 1:
+                accel = 3.75  # neutral
+            
+            # Component 4: EPS Beat Rate (4.5 pts max)
+            beat_pts = 0
+            try:
+                import yfinance as yf
+                stock_yf = yf.Ticker(symbol)
+                eh = stock_yf.earnings_history
+                if eh is not None and not eh.empty and len(eh) >= 2:
+                    recent = eh.tail(4)
+                    beats = sum(1 for _, row in recent.iterrows()
+                               if pd.notna(row.get('epsActual')) and pd.notna(row.get('epsEstimate'))
+                               and row['epsActual'] > row['epsEstimate'])
+                    beat_rate = beats / len(recent)
+                    surprises = []
+                    for _, row in recent.iterrows():
+                        if (pd.notna(row.get('epsActual')) and pd.notna(row.get('epsEstimate'))
+                            and row['epsEstimate'] != 0):
+                            surprises.append((row['epsActual'] - row['epsEstimate']) / abs(row['epsEstimate']))
+                    avg_surprise = np.mean(surprises) if surprises else 0
+                    raw_beat = min(100, beat_rate * 50 + avg_surprise * 500)
+                    beat_pts = max(0, raw_beat * 0.045)
+                    rev_components['beat_rate'] = round(beat_rate * 100, 0)
+            except:
+                pass
+            
+            revenue_pts = min(30, magnitude + consistency + accel + beat_pts)
+            
+            parts = []
+            if yoy_growth is not None:
+                parts.append(f"YoY: {yoy_growth*100:.1f}%")
+            if 'acceleration' in rev_components:
+                sign = "+" if rev_components['acceleration'] > 0 else ""
+                parts.append(f"Accel: {sign}{rev_components['acceleration']:.0f}pp")
+            if 'beat_rate' in rev_components:
+                parts.append(f"Beats: {rev_components['beat_rate']:.0f}%")
+            growth_display = ", ".join(parts) if parts else "N/A"
+        except Exception as e:
+            growth_display = f"Error: {str(e)[:30]}"
         
-        # GRADUATED SCORING (v5.0): Softer gate, rewards tiers
-        if rev_g is None:
-            sales_points = 0
-            growth_display = "N/A"
-        else:
-            # Current year points (0-15)
-            if rev_g >= 0.20:
-                current_pts = 15
-            elif rev_g >= 0.10:
-                current_pts = 12
-            elif rev_g >= 0.05:
-                current_pts = 6
-            else:
-                current_pts = 0
-            
-            # Prior year points (0-12)
-            if rev_g_prior is not None:
-                if rev_g_prior >= 0.20:
-                    prior_pts = 12
-                elif rev_g_prior >= 0.10:
-                    prior_pts = 9
-                elif rev_g_prior >= 0.05:
-                    prior_pts = 4
-                else:
-                    prior_pts = 0
-            else:
-                prior_pts = 0
-            
-            # Consistency bonus: both years >= 10% = +3
-            consistency_bonus = 3 if (rev_g >= 0.10 and rev_g_prior is not None and rev_g_prior >= 0.10) else 0
-            
-            sales_points = current_pts + prior_pts + consistency_bonus  # max 30
-            
-            if rev_g_prior is not None:
-                growth_display = f"Cur: {float(rev_g)*100:.1f}%, Prior: {float(rev_g_prior)*100:.1f}%"
-            else:
-                growth_display = f"Current: {float(rev_g)*100:.1f}%"
-        
-        results.append(CriterionResult("Sales Growth (2yr)", "Growth", sales_points > 0, growth_display, "Graduated: 20%/10%/5% tiers", int(sales_points)))
+        results.append(CriterionResult("Revenue Score", "Growth", revenue_pts >= 15, growth_display, "Magnitude+Consistency+Accel+Beats", int(revenue_pts)))
         
         # 8. Earnings Acceleration (8 pts) - NEW v5.0
         # Fetch quarterly EPS and check if growth is ACCELERATING
@@ -359,6 +427,10 @@ def rate_stock_v43_full(symbol, conn):
         # --- MOONSHOT SCORE CALCULATION (0-100) ---
         ms_pts = 0
         
+        # Bridge variables for moonshot calc (from v5.1 revenue components)
+        rev_g = yoy_growth  # from revenue score component 1
+        rev_g_prior = q_yoy_growths[-2] if len(q_yoy_growths) >= 2 else None
+        
         # 1. Acceleration (40 pts)
         if rev_g and rev_g_prior and rev_g_prior > 0:
             accel = rev_g / rev_g_prior
@@ -439,6 +511,8 @@ def rate_stock_v43_full(symbol, conn):
         }
         
     except Exception as e:
+        import traceback
+        logger.error(f"Error rating {symbol}: {e}\n{traceback.format_exc()}")
         return None
 
 def run_scan():
@@ -480,8 +554,8 @@ def run_scan():
     conn.close()
     
     # FILTER: Only include stocks that passed BOTH years >= 10% revenue growth
-    # Filter: both years >= 10% revenue growth (growth_score >= 24) AND overall score >= 55
-    filtered_results = [r for r in results if r.get('growth_score', 0) >= 24 and r['score'] >= 55]
+    # Filter: v5.1 — score >= 55 (revenue quality baked into continuous scoring)
+    filtered_results = [r for r in results if r['score'] >= 55]
     
     results.sort(key=lambda x: x['score'], reverse=True)
     filtered_results.sort(key=lambda x: x['score'], reverse=True)
@@ -539,7 +613,7 @@ def run_scan():
     logger.info(f"✅ Saved {len(filtered_results)} top stocks (both years >= 10% growth)")
     logger.info(f"   Saved {total_count} total stocks with details to all_stocks.json")
     logger.info(f"   Filtered out: {total_count - len(filtered_results)} stocks failed revenue gate")
-    print(f"✅ Scan complete: {len(filtered_results)} top stocks, {len(results)} total")
+    print(f"✅ Scan complete: {len(filtered_results)} top stocks, {total_count} total")
     print(f"   Top 5: {', '.join([s['ticker'] + ' ' + str(s['score']) for s in filtered_results[:5]])}")
 
 if __name__ == '__main__':
