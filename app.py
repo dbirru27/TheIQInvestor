@@ -226,6 +226,15 @@ def rotation_scan():
         industry_breakdown = {}
         sector_breakdown = {}
 
+        # First pass: count total stocks per sector/industry (full universe)
+        sector_totals = {}
+        industry_totals = {}
+        for ticker, s in stocks.items():
+            sec = s.get('sector', 'Unknown')
+            ind = s.get('industry', 'Unknown')
+            sector_totals[sec] = sector_totals.get(sec, 0) + 1
+            industry_totals[ind] = industry_totals.get(ind, 0) + 1
+
         for ticker, s in stocks.items():
             rot = s.get('rotation_score', 0) or 0
             if rot < 60:
@@ -266,11 +275,17 @@ def rotation_scan():
             sector_breakdown[sec]['total_rot'] += rot
             sector_breakdown[sec]['tickers'].append(obj['ticker'])
 
-        # Compute averages
-        for b in (industry_breakdown, sector_breakdown):
-            for k, v in b.items():
-                v['avg_rotation'] = round(v['total_rot'] / v['count'], 1) if v['count'] else 0
-                del v['total_rot']
+        # Compute averages and penetration %
+        for k, v in industry_breakdown.items():
+            v['avg_rotation'] = round(v['total_rot'] / v['count'], 1) if v['count'] else 0
+            v['total'] = industry_totals.get(k, v['count'])
+            v['pct'] = round(v['count'] / v['total'] * 100, 1) if v['total'] else 0
+            del v['total_rot']
+        for k, v in sector_breakdown.items():
+            v['avg_rotation'] = round(v['total_rot'] / v['count'], 1) if v['count'] else 0
+            v['total'] = sector_totals.get(k, v['count'])
+            v['pct'] = round(v['count'] / v['total'] * 100, 1) if v['total'] else 0
+            del v['total_rot']
 
         strong_buys.sort(key=lambda x: x['rotation_score'], reverse=True)
         watch.sort(key=lambda x: x['rotation_score'], reverse=True)

@@ -1078,21 +1078,21 @@
             }).join('');
 
             // Industry Dominance
-            const indEntries = Object.entries(d.industry_breakdown).sort((a, b) => b[1].count - a[1].count).slice(0, 15);
-            const secEntries = Object.entries(d.sector_breakdown).sort((a, b) => b[1].count - a[1].count);
+            const indEntries = Object.entries(d.industry_breakdown).sort((a, b) => b[1].pct - a[1].pct).slice(0, 15);
+            const secEntries = Object.entries(d.sector_breakdown).sort((a, b) => b[1].pct - a[1].pct);
             document.getElementById('rotation-industries').innerHTML = `
                 <div class="card" style="padding:20px;font-family:'SF Mono','Fira Code','Consolas',monospace;font-size:0.82rem;line-height:1.8;">
-                    <div style="font-weight:800;font-size:0.95rem;margin-bottom:4px;color:#e2e8f0;">INDUSTRY DOMINANCE</div>
+                    <div style="font-weight:800;font-size:0.95rem;margin-bottom:4px;color:#e2e8f0;">INDUSTRY DOMINANCE <span style="font-size:0.7rem;font-weight:400;color:var(--text-dim);">(sorted by % of sector rotating)</span></div>
                     <div style="border-top:2px double rgba(255,255,255,0.15);margin-bottom:12px;"></div>
                     ${indEntries.map(([name, v]) => {
-                        const pad = String(v.count).padStart(2, ' ');
-                        return `<div style="white-space:nowrap;overflow-x:auto;"><span style="color:#e2e8f0;">${pad}×</span> <span style="color:#94a3b8;">${name}</span> <span style="color:var(--text-dim);float:right;">avg ${v.avg_rotation}</span></div>`;
+                        const pctColor = v.pct >= 20 ? '#10b981' : v.pct >= 10 ? '#f59e0b' : '#94a3b8';
+                        return `<div style="display:flex;justify-content:space-between;padding:2px 0;"><span style="color:#94a3b8;">${v.count}/${v.total} ${name}</span><span><span style="color:${pctColor};font-weight:700;">${v.pct}%</span> <span style="color:var(--text-dim);margin-left:10px;">avg ${v.avg_rotation}</span></span></div>`;
                     }).join('')}
                     <div style="font-weight:800;font-size:0.95rem;margin:24px 0 4px 0;color:#e2e8f0;">SECTOR BREAKDOWN</div>
                     <div style="border-top:2px double rgba(255,255,255,0.15);margin-bottom:12px;"></div>
                     ${secEntries.map(([name, v]) => {
-                        const pad = String(v.count).padStart(2, ' ');
-                        return `<div style="white-space:nowrap;overflow-x:auto;"><span style="color:#e2e8f0;">${pad}×</span> <span style="color:#94a3b8;">${name}</span> <span style="color:var(--text-dim);float:right;">avg ${v.avg_rotation}</span></div>`;
+                        const pctColor = v.pct >= 10 ? '#10b981' : v.pct >= 5 ? '#f59e0b' : '#94a3b8';
+                        return `<div style="display:flex;justify-content:space-between;padding:2px 0;"><span style="color:#94a3b8;">${v.count}/${v.total} ${name}</span><span><span style="color:${pctColor};font-weight:700;">${v.pct}%</span> <span style="color:var(--text-dim);margin-left:10px;">avg ${v.avg_rotation}</span></span></div>`;
                     }).join('')}
                 </div>`;
         }
