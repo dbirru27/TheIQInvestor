@@ -770,9 +770,11 @@
                 });
             };
             
-            // Apply sort
+            // Apply sort — sort within each basket so grouped view stays grouped
             if (currentBasketFilter === 'all') {
-                watchlistData.all = sortData(watchlistData.all);
+                for (const basket in watchlistData.baskets) {
+                    watchlistData.baskets[basket] = sortData(watchlistData.baskets[basket]);
+                }
             } else {
                 watchlistData.baskets[currentBasketFilter] = sortData(watchlistData.baskets[currentBasketFilter]);
             }
