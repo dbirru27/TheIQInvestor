@@ -96,6 +96,24 @@
         .filter-pill.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
         .filter-pill.clear { background: transparent; border-style: dashed; }
 
+        /* Sticky ticker column for horizontal scroll on mobile */
+        .sticky-col {
+            position: sticky;
+            left: 0;
+            z-index: 2;
+            background: var(--bg);
+        }
+        th.sticky-col {
+            background: #161b2a;
+        }
+        tr:hover .sticky-col {
+            background: #1e293b;
+        }
+        .basket-header .sticky-col,
+        tr.basket-header td.sticky-col {
+            background: #0a0f1d;
+        }
+
         @media (max-width: 768px) {
             main { padding: 70px 15px 20px 15px; }
             .card { padding: 16px; }
@@ -135,7 +153,7 @@
         <div style="font-weight: 800; font-size: 1.5rem; margin-bottom: 40px; color: var(--accent); letter-spacing: -1px;">InvestIQ</div>
         <nav>
             <div class="nav-item active" onclick="showDashboard(); toggleMenu();">Breakout Hunter</div>
-            <div class="nav-item" onclick="showWatchlist(); toggleMenu();">Watchlist</div>
+            <div class="nav-item" onclick="showWatchlist(); toggleMenu();">Portfolio</div>
             <div class="nav-item" onclick="showAlert('Portfolio tracker coming soon!'); toggleMenu();">Portfolio</div>
         </nav>
         <div style="margin-top: auto; font-size: 0.7rem; color: var(--text-dim)">v4.2 High Potential (100pt)</div>
@@ -304,7 +322,7 @@
             </div>
 
             <div style="margin-bottom: 24px; margin-left: 0;">
-                <h2 class="text-2xl font-bold mb-2">📊 My Watchlist</h2>
+                <h2 class="text-2xl font-bold mb-2">📊 My Portfolio</h2>
                 <span style="font-size: 0.8rem; color: var(--text-dim);">Last Updated: <strong id="watchlist-updated" style="color: var(--accent);">Loading...</strong></span>
             </div>
 
@@ -323,8 +341,8 @@
                 <table id="watchlist-table">
                     <thead>
                         <tr>
-                            <th onclick="sortWatchlist('ticker')">Ticker</th>
-                            <th onclick="sortWatchlist('name')">Company</th>
+                            <th onclick="sortWatchlist('ticker')" class="sticky-col">Ticker</th>
+                            <th onclick="sortWatchlist('position_size')">Pos %</th>
                             <th onclick="sortWatchlist('daily_change')">% Change</th>
                             <th onclick="sortWatchlist('trailing_pe')">Current PE</th>
                             <th onclick="sortWatchlist('forward_pe')">Forward PE</th>
@@ -594,10 +612,14 @@
                                scorePercent >= 30 ? '#d97706' : '#dc2626';
             const na = '<span style="color: var(--text-dim);">N/A</span>';
             
+            const posSize = stock.position_size !== null && stock.position_size !== undefined 
+                ? stock.position_size.toFixed(1) + '%' 
+                : '<span style="color: var(--text-dim);">—</span>';
+            
             return `
                 <tr data-ticker="${stock.ticker}">
-                    <td><a href="#" onclick="viewStock('${stock.ticker}'); return false;" class="text-sky-400 hover:text-sky-300 font-bold">${stock.ticker}</a></td>
-                    <td>${stock.name}</td>
+                    <td class="sticky-col"><a href="#" onclick="viewStock('${stock.ticker}'); return false;" class="text-sky-400 hover:text-sky-300 font-bold">${stock.ticker}</a></td>
+                    <td style="font-weight: 500;">${posSize}</td>
                     <td class="live-change" style="color: ${changeColor}; font-weight: 600;">${dc !== null && dc !== undefined ? changePrefix + dc.toFixed(2) + '%' : na}</td>
                     <td>${stock.trailing_pe !== null ? stock.trailing_pe.toFixed(2) : na}</td>
                     <td>${stock.forward_pe !== null ? stock.forward_pe.toFixed(2) : na}</td>

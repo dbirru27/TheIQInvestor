@@ -24,6 +24,26 @@ BASKETS = {
     "Biotech": BIOTECH
 }
 
+# Position sizes: account_weight * position_weight = portfolio_weight
+# Account weights as % of total portfolio
+ACCOUNT_WEIGHTS = {
+    "Trading Account": 0.26,
+    "IRA Core ETFs": 0.66,      # Part of Traditional IRA
+    "Grid-to-Chip": 0.66,       # Part of Traditional IRA
+    "Defense & Aerospace": 0.035 + 0.66,  # Roth (3.5%) + some IRA
+    "AI Semis": 0.66,           # Part of Traditional IRA
+    "Biotech": 0.66,            # Part of Traditional IRA
+}
+
+# Position size within each account/basket (% of that basket)
+POSITION_SIZES = {
+    # Trading Account (26% of portfolio)
+    "VGT": 40.13, "VUG": 17.22, "GOOGL": 19.88, "GOOG": 19.87,
+    # Roth Account (3.5% of portfolio) — Defense & Aerospace Roth portion
+    "LMT": 35.16, "NOC": 33.33, "LHX": 31.51,
+    # IRA positions — to be filled in later by Dan
+}
+
 
 def load_stock_db():
     """Load all stock data from all_stocks.json"""
@@ -113,8 +133,9 @@ def build_stock_entry(ticker, basket_name, db, live_prices, names_cache):
         "recommendation": stock.get('recommendation'),
         "target_mean": round(stock['target_mean'], 2) if stock.get('target_mean') else None,
         "analyst_count": stock.get('analyst_count', 0),
-        # Basket
+        # Basket & Position Size
         "basket": basket_name,
+        "position_size": POSITION_SIZES.get(ticker),
     }
 
 
