@@ -734,12 +734,12 @@
         function sortWatchlist(column) {
             if (!watchlistData) return;
             
-            // Toggle direction if same column, otherwise default to ascending
+            // Toggle direction if same column, otherwise default to descending (high to low first)
             if (watchlistSortColumn === column) {
-                watchlistSortDirection = watchlistSortDirection === 'asc' ? 'desc' : 'asc';
+                watchlistSortDirection = watchlistSortDirection === 'desc' ? 'asc' : 'desc';
             } else {
                 watchlistSortColumn = column;
-                watchlistSortDirection = 'asc';
+                watchlistSortDirection = column === 'ticker' ? 'asc' : 'desc';  // A-Z for ticker, high-to-low for numbers
             }
             
             // Update header indicators
