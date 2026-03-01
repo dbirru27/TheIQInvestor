@@ -21,7 +21,7 @@ os.makedirs(LOG_DIR, exist_ok=True)
 # --- Portfolio (source: MY_PORTFOLIO.md, updated 2026-02-28) ---
 
 # Trading Account (~26%)
-TRADING_ACCOUNT = ['VGT', 'VUG', 'GOOGL', 'GOOG']
+TRADING_ACCOUNT = ['VGT', 'VUG', 'GOOGL']
 
 # Defense & Aerospace (IRA + Roth)
 DEFENSE_AEROSPACE = ['LMT', 'NOC', 'LHX', 'HWM', 'HEI', 'RTX', 'HII', 'UFO', 'EUAD', 'SHLD']

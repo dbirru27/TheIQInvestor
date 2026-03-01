@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-01 09:04 EST",
+  "last_updated": "2026-03-01 09:13 EST",
   "baskets": {
     "Trading Account": [
       {
@@ -87,36 +87,7 @@
         "target_mean": 376.86,
         "analyst_count": 56,
         "basket": "Trading Account",
-        "position_size": 19.88
-      },
-      {
-        "ticker": "GOOG",
-        "name": "Alphabet Inc.",
-        "sector": "Communication Services",
-        "industry": "Internet Content & Information",
-        "price": 311.43,
-        "previous_close": 307.15,
-        "daily_change": 1.39,
-        "trailing_pe": 28.81,
-        "forward_pe": 23.21,
-        "revenue_growth": 18.0,
-        "earnings_growth": 31.1,
-        "peg_ratio": null,
-        "market_cap": 3767368679424,
-        "score": 41,
-        "grade": "C",
-        "technical_score": 18,
-        "growth_score": 10,
-        "quality_score": 13,
-        "context_score": 0,
-        "moonshot_score": 30,
-        "rotation_score": 34.6,
-        "rotation_signal": "WEAK",
-        "recommendation": "strong_buy",
-        "target_mean": 359.24,
-        "analyst_count": 17,
-        "basket": "Trading Account",
-        "position_size": 19.87
+        "position_size": 39.75
       }
     ],
     "IRA Core ETFs": [
@@ -1492,36 +1463,7 @@
       "target_mean": 376.86,
       "analyst_count": 56,
       "basket": "Trading Account",
-      "position_size": 19.88
-    },
-    {
-      "ticker": "GOOG",
-      "name": "Alphabet Inc.",
-      "sector": "Communication Services",
-      "industry": "Internet Content & Information",
-      "price": 311.43,
-      "previous_close": 307.15,
-      "daily_change": 1.39,
-      "trailing_pe": 28.81,
-      "forward_pe": 23.21,
-      "revenue_growth": 18.0,
-      "earnings_growth": 31.1,
-      "peg_ratio": null,
-      "market_cap": 3767368679424,
-      "score": 41,
-      "grade": "C",
-      "technical_score": 18,
-      "growth_score": 10,
-      "quality_score": 13,
-      "context_score": 0,
-      "moonshot_score": 30,
-      "rotation_score": 34.6,
-      "rotation_signal": "WEAK",
-      "recommendation": "strong_buy",
-      "target_mean": 359.24,
-      "analyst_count": 17,
-      "basket": "Trading Account",
-      "position_size": 19.87
+      "position_size": 39.75
     },
     {
       "ticker": "COPX",

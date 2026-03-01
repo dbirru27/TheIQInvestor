@@ -27,7 +27,7 @@ BASKETS = {
 # Position sizes within each basket (% of that basket's allocation)
 POSITION_SIZES = {
     # Trading Account (26% of total portfolio)
-    "VGT": 40.13, "VUG": 17.22, "GOOGL": 19.88, "GOOG": 19.87,
+    "VGT": 40.13, "VUG": 17.22, "GOOGL": 39.75,  # Combined GOOGL (19.88%) + GOOG (19.87%)
     # IRA Core ETFs (~41.5% of IRA)
     "COPX": 13.19, "GLD": 11.20, "XLI": 10.83, "VOO": 2.77,
     "DXJ": 1.35, "INDA": 1.23, "SIL": 0.74, "EEM": 0.0,
