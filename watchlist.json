@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-01 08:31 EST",
+  "last_updated": "2026-03-01 09:04 EST",
   "baskets": {
     "Trading Account": [
       {
@@ -147,7 +147,7 @@
         "target_mean": null,
         "analyst_count": 0,
         "basket": "IRA Core ETFs",
-        "position_size": null
+        "position_size": 13.19
       },
       {
         "ticker": "GLD",
@@ -176,7 +176,7 @@
         "target_mean": null,
         "analyst_count": 0,
         "basket": "IRA Core ETFs",
-        "position_size": null
+        "position_size": 11.2
       },
       {
         "ticker": "XLI",
@@ -205,7 +205,7 @@
         "target_mean": null,
         "analyst_count": 0,
         "basket": "IRA Core ETFs",
-        "position_size": null
+        "position_size": 10.83
       },
       {
         "ticker": "VOO",
@@ -234,7 +234,7 @@
         "target_mean": null,
         "analyst_count": 0,
         "basket": "IRA Core ETFs",
-        "position_size": null
+        "position_size": 2.77
       },
       {
         "ticker": "DXJ",
@@ -263,7 +263,7 @@
         "target_mean": null,
         "analyst_count": 0,
         "basket": "IRA Core ETFs",
-        "position_size": null
+        "position_size": 1.35
       },
       {
         "ticker": "INDA",
@@ -292,7 +292,7 @@
         "target_mean": null,
         "analyst_count": 0,
         "basket": "IRA Core ETFs",
-        "position_size": null
+        "position_size": 1.23
       },
       {
         "ticker": "SIL",
@@ -321,7 +321,36 @@
         "target_mean": null,
         "analyst_count": 0,
         "basket": "IRA Core ETFs",
-        "position_size": null
+        "position_size": 0.74
+      },
+      {
+        "ticker": "EEM",
+        "name": "EEM",
+        "sector": "Unknown",
+        "industry": "Unknown",
+        "price": 62.58,
+        "previous_close": 62.71,
+        "daily_change": -0.21,
+        "trailing_pe": null,
+        "forward_pe": null,
+        "revenue_growth": null,
+        "earnings_growth": null,
+        "peg_ratio": null,
+        "market_cap": 0,
+        "score": 36,
+        "grade": "D",
+        "technical_score": 31,
+        "growth_score": 0,
+        "quality_score": 0,
+        "context_score": 5,
+        "moonshot_score": 30,
+        "rotation_score": 43.8,
+        "rotation_signal": "NEUTRAL",
+        "recommendation": "N/A",
+        "target_mean": null,
+        "analyst_count": 0,
+        "basket": "IRA Core ETFs",
+        "position_size": 0.0
       }
     ],
     "Grid-to-Chip": [
@@ -352,7 +381,7 @@
         "target_mean": null,
         "analyst_count": 0,
         "basket": "Grid-to-Chip",
-        "position_size": null
+        "position_size": 16.9
       },
       {
         "ticker": "VRT",
@@ -381,7 +410,7 @@
         "target_mean": 263.2,
         "analyst_count": 24,
         "basket": "Grid-to-Chip",
-        "position_size": null
+        "position_size": 11.86
       },
       {
         "ticker": "CEG",
@@ -410,7 +439,7 @@
         "target_mean": 393.93,
         "analyst_count": 18,
         "basket": "Grid-to-Chip",
-        "position_size": null
+        "position_size": 11.34
       },
       {
         "ticker": "PWR",
@@ -439,7 +468,7 @@
         "target_mean": 534.85,
         "analyst_count": 25,
         "basket": "Grid-to-Chip",
-        "position_size": null
+        "position_size": 10.96
       },
       {
         "ticker": "GEV",
@@ -468,7 +497,7 @@
         "target_mean": 836.98,
         "analyst_count": 30,
         "basket": "Grid-to-Chip",
-        "position_size": null
+        "position_size": 10.69
       },
       {
         "ticker": "ETN",
@@ -497,7 +526,7 @@
         "target_mean": 407.52,
         "analyst_count": 26,
         "basket": "Grid-to-Chip",
-        "position_size": null
+        "position_size": 8.33
       },
       {
         "ticker": "GRID",
@@ -526,7 +555,7 @@
         "target_mean": null,
         "analyst_count": 0,
         "basket": "Grid-to-Chip",
-        "position_size": null
+        "position_size": 5.93
       },
       {
         "ticker": "NVT",
@@ -555,7 +584,7 @@
         "target_mean": 127.0,
         "analyst_count": 13,
         "basket": "Grid-to-Chip",
-        "position_size": null
+        "position_size": 5.73
       },
       {
         "ticker": "FIX",
@@ -584,7 +613,7 @@
         "target_mean": 1696.2,
         "analyst_count": 5,
         "basket": "Grid-to-Chip",
-        "position_size": null
+        "position_size": 5.42
       },
       {
         "ticker": "CCJ",
@@ -613,7 +642,7 @@
         "target_mean": null,
         "analyst_count": 0,
         "basket": "Grid-to-Chip",
-        "position_size": null
+        "position_size": 5.38
       },
       {
         "ticker": "APH",
@@ -642,7 +671,7 @@
         "target_mean": 169.44,
         "analyst_count": 18,
         "basket": "Grid-to-Chip",
-        "position_size": null
+        "position_size": 5.27
       },
       {
         "ticker": "HUBB",
@@ -671,7 +700,7 @@
         "target_mean": 532.85,
         "analyst_count": 13,
         "basket": "Grid-to-Chip",
-        "position_size": null
+        "position_size": 2.19
       }
     ],
     "Defense & Aerospace": [
@@ -702,7 +731,7 @@
         "target_mean": 657.58,
         "analyst_count": 19,
         "basket": "Defense & Aerospace",
-        "position_size": 35.16
+        "position_size": 12.28
       },
       {
         "ticker": "NOC",
@@ -731,7 +760,7 @@
         "target_mean": 730.45,
         "analyst_count": 21,
         "basket": "Defense & Aerospace",
-        "position_size": 33.33
+        "position_size": 10.68
       },
       {
         "ticker": "LHX",
@@ -760,7 +789,7 @@
         "target_mean": 388.11,
         "analyst_count": 19,
         "basket": "Defense & Aerospace",
-        "position_size": 31.51
+        "position_size": 5.9
       },
       {
         "ticker": "HWM",
@@ -789,7 +818,7 @@
         "target_mean": 276.65,
         "analyst_count": 20,
         "basket": "Defense & Aerospace",
-        "position_size": null
+        "position_size": 19.19
       },
       {
         "ticker": "HEI",
@@ -818,7 +847,7 @@
         "target_mean": 373.06,
         "analyst_count": 18,
         "basket": "Defense & Aerospace",
-        "position_size": null
+        "position_size": 13.85
       },
       {
         "ticker": "RTX",
@@ -847,7 +876,7 @@
         "target_mean": 215.02,
         "analyst_count": 21,
         "basket": "Defense & Aerospace",
-        "position_size": null
+        "position_size": 10.9
       },
       {
         "ticker": "HII",
@@ -876,7 +905,7 @@
         "target_mean": 401.0,
         "analyst_count": 10,
         "basket": "Defense & Aerospace",
-        "position_size": null
+        "position_size": 8.18
       },
       {
         "ticker": "UFO",
@@ -905,7 +934,7 @@
         "target_mean": null,
         "analyst_count": 0,
         "basket": "Defense & Aerospace",
-        "position_size": null
+        "position_size": 7.35
       },
       {
         "ticker": "EUAD",
@@ -934,7 +963,7 @@
         "target_mean": null,
         "analyst_count": 0,
         "basket": "Defense & Aerospace",
-        "position_size": null
+        "position_size": 6.69
       },
       {
         "ticker": "SHLD",
@@ -963,7 +992,7 @@
         "target_mean": null,
         "analyst_count": 0,
         "basket": "Defense & Aerospace",
-        "position_size": null
+        "position_size": 4.99
       }
     ],
     "AI Semis": [
@@ -994,7 +1023,7 @@
         "target_mean": 390.9,
         "analyst_count": 39,
         "basket": "AI Semis",
-        "position_size": null
+        "position_size": 22.7
       },
       {
         "ticker": "AVGO",
@@ -1023,7 +1052,7 @@
         "target_mean": 455.1,
         "analyst_count": 45,
         "basket": "AI Semis",
-        "position_size": null
+        "position_size": 15.87
       },
       {
         "ticker": "TSM",
@@ -1052,7 +1081,7 @@
         "target_mean": 421.49,
         "analyst_count": 18,
         "basket": "AI Semis",
-        "position_size": null
+        "position_size": 12.54
       },
       {
         "ticker": "ANET",
@@ -1081,7 +1110,7 @@
         "target_mean": 178.06,
         "analyst_count": 24,
         "basket": "AI Semis",
-        "position_size": null
+        "position_size": 10.18
       },
       {
         "ticker": "WDC",
@@ -1110,7 +1139,7 @@
         "target_mean": 321.0,
         "analyst_count": 23,
         "basket": "AI Semis",
-        "position_size": null
+        "position_size": 8.13
       },
       {
         "ticker": "MRVL",
@@ -1139,7 +1168,7 @@
         "target_mean": 115.65,
         "analyst_count": 40,
         "basket": "AI Semis",
-        "position_size": null
+        "position_size": 7.42
       },
       {
         "ticker": "ASML",
@@ -1168,7 +1197,7 @@
         "target_mean": 1487.97,
         "analyst_count": 15,
         "basket": "AI Semis",
-        "position_size": null
+        "position_size": 7.25
       },
       {
         "ticker": "AMD",
@@ -1197,7 +1226,7 @@
         "target_mean": 289.81,
         "analyst_count": 47,
         "basket": "AI Semis",
-        "position_size": null
+        "position_size": 6.63
       },
       {
         "ticker": "ALAB",
@@ -1226,7 +1255,36 @@
         "target_mean": 204.47,
         "analyst_count": 19,
         "basket": "AI Semis",
-        "position_size": null
+        "position_size": 5.66
+      },
+      {
+        "ticker": "STX",
+        "name": "Seagate Technology Holdings PLC",
+        "sector": "Technology",
+        "industry": "Computer Hardware",
+        "price": 407.84,
+        "previous_close": 409.67,
+        "daily_change": -0.45,
+        "trailing_pe": 46.72,
+        "forward_pe": 20.8,
+        "revenue_growth": 21.5,
+        "earnings_growth": 67.7,
+        "peg_ratio": null,
+        "market_cap": 89966043136,
+        "score": 35,
+        "grade": "D",
+        "technical_score": 16,
+        "growth_score": 6,
+        "quality_score": 8,
+        "context_score": 5,
+        "moonshot_score": 30,
+        "rotation_score": 0,
+        "rotation_signal": "NO DATA",
+        "recommendation": "buy",
+        "target_mean": 475.35,
+        "analyst_count": 21,
+        "basket": "AI Semis",
+        "position_size": 3.61
       }
     ],
     "Biotech": [
@@ -1257,7 +1315,7 @@
         "target_mean": null,
         "analyst_count": 0,
         "basket": "Biotech",
-        "position_size": null
+        "position_size": 44.9
       },
       {
         "ticker": "LLY",
@@ -1286,7 +1344,7 @@
         "target_mean": 1214.34,
         "analyst_count": 29,
         "basket": "Biotech",
-        "position_size": null
+        "position_size": 21.96
       },
       {
         "ticker": "ALNY",
@@ -1315,7 +1373,7 @@
         "target_mean": 457.0,
         "analyst_count": 25,
         "basket": "Biotech",
-        "position_size": null
+        "position_size": 18.06
       },
       {
         "ticker": "HALO",
@@ -1344,7 +1402,7 @@
         "target_mean": 84.5,
         "analyst_count": 8,
         "basket": "Biotech",
-        "position_size": null
+        "position_size": 15.09
       }
     ]
   },
@@ -1492,7 +1550,7 @@
       "target_mean": null,
       "analyst_count": 0,
       "basket": "IRA Core ETFs",
-      "position_size": null
+      "position_size": 13.19
     },
     {
       "ticker": "GLD",
@@ -1521,7 +1579,7 @@
       "target_mean": null,
       "analyst_count": 0,
       "basket": "IRA Core ETFs",
-      "position_size": null
+      "position_size": 11.2
     },
     {
       "ticker": "XLI",
@@ -1550,7 +1608,7 @@
       "target_mean": null,
       "analyst_count": 0,
       "basket": "IRA Core ETFs",
-      "position_size": null
+      "position_size": 10.83
     },
     {
       "ticker": "VOO",
@@ -1579,7 +1637,7 @@
       "target_mean": null,
       "analyst_count": 0,
       "basket": "IRA Core ETFs",
-      "position_size": null
+      "position_size": 2.77
     },
     {
       "ticker": "DXJ",
@@ -1608,7 +1666,7 @@
       "target_mean": null,
       "analyst_count": 0,
       "basket": "IRA Core ETFs",
-      "position_size": null
+      "position_size": 1.35
     },
     {
       "ticker": "INDA",
@@ -1637,7 +1695,7 @@
       "target_mean": null,
       "analyst_count": 0,
       "basket": "IRA Core ETFs",
-      "position_size": null
+      "position_size": 1.23
     },
     {
       "ticker": "SIL",
@@ -1666,7 +1724,36 @@
       "target_mean": null,
       "analyst_count": 0,
       "basket": "IRA Core ETFs",
-      "position_size": null
+      "position_size": 0.74
+    },
+    {
+      "ticker": "EEM",
+      "name": "EEM",
+      "sector": "Unknown",
+      "industry": "Unknown",
+      "price": 62.58,
+      "previous_close": 62.71,
+      "daily_change": -0.21,
+      "trailing_pe": null,
+      "forward_pe": null,
+      "revenue_growth": null,
+      "earnings_growth": null,
+      "peg_ratio": null,
+      "market_cap": 0,
+      "score": 36,
+      "grade": "D",
+      "technical_score": 31,
+      "growth_score": 0,
+      "quality_score": 0,
+      "context_score": 5,
+      "moonshot_score": 30,
+      "rotation_score": 43.8,
+      "rotation_signal": "NEUTRAL",
+      "recommendation": "N/A",
+      "target_mean": null,
+      "analyst_count": 0,
+      "basket": "IRA Core ETFs",
+      "position_size": 0.0
     },
     {
       "ticker": "NLR",
@@ -1695,7 +1782,7 @@
       "target_mean": null,
       "analyst_count": 0,
       "basket": "Grid-to-Chip",
-      "position_size": null
+      "position_size": 16.9
     },
     {
       "ticker": "VRT",
@@ -1724,7 +1811,7 @@
       "target_mean": 263.2,
       "analyst_count": 24,
       "basket": "Grid-to-Chip",
-      "position_size": null
+      "position_size": 11.86
     },
     {
       "ticker": "CEG",
@@ -1753,7 +1840,7 @@
       "target_mean": 393.93,
       "analyst_count": 18,
       "basket": "Grid-to-Chip",
-      "position_size": null
+      "position_size": 11.34
     },
     {
       "ticker": "PWR",
@@ -1782,7 +1869,7 @@
       "target_mean": 534.85,
       "analyst_count": 25,
       "basket": "Grid-to-Chip",
-      "position_size": null
+      "position_size": 10.96
     },
     {
       "ticker": "GEV",
@@ -1811,7 +1898,7 @@
       "target_mean": 836.98,
       "analyst_count": 30,
       "basket": "Grid-to-Chip",
-      "position_size": null
+      "position_size": 10.69
     },
     {
       "ticker": "ETN",
@@ -1840,7 +1927,7 @@
       "target_mean": 407.52,
       "analyst_count": 26,
       "basket": "Grid-to-Chip",
-      "position_size": null
+      "position_size": 8.33
     },
     {
       "ticker": "GRID",
@@ -1869,7 +1956,7 @@
       "target_mean": null,
       "analyst_count": 0,
       "basket": "Grid-to-Chip",
-      "position_size": null
+      "position_size": 5.93
     },
     {
       "ticker": "NVT",
@@ -1898,7 +1985,7 @@
       "target_mean": 127.0,
       "analyst_count": 13,
       "basket": "Grid-to-Chip",
-      "position_size": null
+      "position_size": 5.73
     },
     {
       "ticker": "FIX",
@@ -1927,7 +2014,7 @@
       "target_mean": 1696.2,
       "analyst_count": 5,
       "basket": "Grid-to-Chip",
-      "position_size": null
+      "position_size": 5.42
     },
     {
       "ticker": "CCJ",
@@ -1956,7 +2043,7 @@
       "target_mean": null,
       "analyst_count": 0,
       "basket": "Grid-to-Chip",
-      "position_size": null
+      "position_size": 5.38
     },
     {
       "ticker": "APH",
@@ -1985,7 +2072,7 @@
       "target_mean": 169.44,
       "analyst_count": 18,
       "basket": "Grid-to-Chip",
-      "position_size": null
+      "position_size": 5.27
     },
     {
       "ticker": "HUBB",
@@ -2014,7 +2101,7 @@
       "target_mean": 532.85,
       "analyst_count": 13,
       "basket": "Grid-to-Chip",
-      "position_size": null
+      "position_size": 2.19
     },
     {
       "ticker": "LMT",
@@ -2043,7 +2130,7 @@
       "target_mean": 657.58,
       "analyst_count": 19,
       "basket": "Defense & Aerospace",
-      "position_size": 35.16
+      "position_size": 12.28
     },
     {
       "ticker": "NOC",
@@ -2072,7 +2159,7 @@
       "target_mean": 730.45,
       "analyst_count": 21,
       "basket": "Defense & Aerospace",
-      "position_size": 33.33
+      "position_size": 10.68
     },
     {
       "ticker": "LHX",
@@ -2101,7 +2188,7 @@
       "target_mean": 388.11,
       "analyst_count": 19,
       "basket": "Defense & Aerospace",
-      "position_size": 31.51
+      "position_size": 5.9
     },
     {
       "ticker": "HWM",
@@ -2130,7 +2217,7 @@
       "target_mean": 276.65,
       "analyst_count": 20,
       "basket": "Defense & Aerospace",
-      "position_size": null
+      "position_size": 19.19
     },
     {
       "ticker": "HEI",
@@ -2159,7 +2246,7 @@
       "target_mean": 373.06,
       "analyst_count": 18,
       "basket": "Defense & Aerospace",
-      "position_size": null
+      "position_size": 13.85
     },
     {
       "ticker": "RTX",
@@ -2188,7 +2275,7 @@
       "target_mean": 215.02,
       "analyst_count": 21,
       "basket": "Defense & Aerospace",
-      "position_size": null
+      "position_size": 10.9
     },
     {
       "ticker": "HII",
@@ -2217,7 +2304,7 @@
       "target_mean": 401.0,
       "analyst_count": 10,
       "basket": "Defense & Aerospace",
-      "position_size": null
+      "position_size": 8.18
     },
     {
       "ticker": "UFO",
@@ -2246,7 +2333,7 @@
       "target_mean": null,
       "analyst_count": 0,
       "basket": "Defense & Aerospace",
-      "position_size": null
+      "position_size": 7.35
     },
     {
       "ticker": "EUAD",
@@ -2275,7 +2362,7 @@
       "target_mean": null,
       "analyst_count": 0,
       "basket": "Defense & Aerospace",
-      "position_size": null
+      "position_size": 6.69
     },
     {
       "ticker": "SHLD",
@@ -2304,7 +2391,7 @@
       "target_mean": null,
       "analyst_count": 0,
       "basket": "Defense & Aerospace",
-      "position_size": null
+      "position_size": 4.99
     },
     {
       "ticker": "MU",
@@ -2333,7 +2420,7 @@
       "target_mean": 390.9,
       "analyst_count": 39,
       "basket": "AI Semis",
-      "position_size": null
+      "position_size": 22.7
     },
     {
       "ticker": "AVGO",
@@ -2362,7 +2449,7 @@
       "target_mean": 455.1,
       "analyst_count": 45,
       "basket": "AI Semis",
-      "position_size": null
+      "position_size": 15.87
     },
     {
       "ticker": "TSM",
@@ -2391,7 +2478,7 @@
       "target_mean": 421.49,
       "analyst_count": 18,
       "basket": "AI Semis",
-      "position_size": null
+      "position_size": 12.54
     },
     {
       "ticker": "ANET",
@@ -2420,7 +2507,7 @@
       "target_mean": 178.06,
       "analyst_count": 24,
       "basket": "AI Semis",
-      "position_size": null
+      "position_size": 10.18
     },
     {
       "ticker": "WDC",
@@ -2449,7 +2536,7 @@
       "target_mean": 321.0,
       "analyst_count": 23,
       "basket": "AI Semis",
-      "position_size": null
+      "position_size": 8.13
     },
     {
       "ticker": "MRVL",
@@ -2478,7 +2565,7 @@
       "target_mean": 115.65,
       "analyst_count": 40,
       "basket": "AI Semis",
-      "position_size": null
+      "position_size": 7.42
     },
     {
       "ticker": "ASML",
@@ -2507,7 +2594,7 @@
       "target_mean": 1487.97,
       "analyst_count": 15,
       "basket": "AI Semis",
-      "position_size": null
+      "position_size": 7.25
     },
     {
       "ticker": "AMD",
@@ -2536,7 +2623,7 @@
       "target_mean": 289.81,
       "analyst_count": 47,
       "basket": "AI Semis",
-      "position_size": null
+      "position_size": 6.63
     },
     {
       "ticker": "ALAB",
@@ -2565,7 +2652,36 @@
       "target_mean": 204.47,
       "analyst_count": 19,
       "basket": "AI Semis",
-      "position_size": null
+      "position_size": 5.66
+    },
+    {
+      "ticker": "STX",
+      "name": "Seagate Technology Holdings PLC",
+      "sector": "Technology",
+      "industry": "Computer Hardware",
+      "price": 407.84,
+      "previous_close": 409.67,
+      "daily_change": -0.45,
+      "trailing_pe": 46.72,
+      "forward_pe": 20.8,
+      "revenue_growth": 21.5,
+      "earnings_growth": 67.7,
+      "peg_ratio": null,
+      "market_cap": 89966043136,
+      "score": 35,
+      "grade": "D",
+      "technical_score": 16,
+      "growth_score": 6,
+      "quality_score": 8,
+      "context_score": 5,
+      "moonshot_score": 30,
+      "rotation_score": 0,
+      "rotation_signal": "NO DATA",
+      "recommendation": "buy",
+      "target_mean": 475.35,
+      "analyst_count": 21,
+      "basket": "AI Semis",
+      "position_size": 3.61
     },
     {
       "ticker": "XBI",
@@ -2594,7 +2710,7 @@
       "target_mean": null,
       "analyst_count": 0,
       "basket": "Biotech",
-      "position_size": null
+      "position_size": 44.9
     },
     {
       "ticker": "LLY",
@@ -2623,7 +2739,7 @@
       "target_mean": 1214.34,
       "analyst_count": 29,
       "basket": "Biotech",
-      "position_size": null
+      "position_size": 21.96
     },
     {
       "ticker": "ALNY",
@@ -2652,7 +2768,7 @@
       "target_mean": 457.0,
       "analyst_count": 25,
       "basket": "Biotech",
-      "position_size": null
+      "position_size": 18.06
     },
     {
       "ticker": "HALO",
@@ -2681,7 +2797,7 @@
       "target_mean": 84.5,
       "analyst_count": 8,
       "basket": "Biotech",
-      "position_size": null
+      "position_size": 15.09
     }
   ]
 }

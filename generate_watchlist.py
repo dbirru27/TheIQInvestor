@@ -24,24 +24,27 @@ BASKETS = {
     "Biotech": BIOTECH
 }
 
-# Position sizes: account_weight * position_weight = portfolio_weight
-# Account weights as % of total portfolio
-ACCOUNT_WEIGHTS = {
-    "Trading Account": 0.26,
-    "IRA Core ETFs": 0.66,      # Part of Traditional IRA
-    "Grid-to-Chip": 0.66,       # Part of Traditional IRA
-    "Defense & Aerospace": 0.035 + 0.66,  # Roth (3.5%) + some IRA
-    "AI Semis": 0.66,           # Part of Traditional IRA
-    "Biotech": 0.66,            # Part of Traditional IRA
-}
-
-# Position size within each account/basket (% of that basket)
+# Position sizes within each basket (% of that basket's allocation)
 POSITION_SIZES = {
-    # Trading Account (26% of portfolio)
+    # Trading Account (26% of total portfolio)
     "VGT": 40.13, "VUG": 17.22, "GOOGL": 19.88, "GOOG": 19.87,
-    # Roth Account (3.5% of portfolio) — Defense & Aerospace Roth portion
-    "LMT": 35.16, "NOC": 33.33, "LHX": 31.51,
-    # IRA positions — to be filled in later by Dan
+    # IRA Core ETFs (~41.5% of IRA)
+    "COPX": 13.19, "GLD": 11.20, "XLI": 10.83, "VOO": 2.77,
+    "DXJ": 1.35, "INDA": 1.23, "SIL": 0.74, "EEM": 0.0,
+    # Grid-to-Chip (22.5% of IRA)
+    "NLR": 16.90, "VRT": 11.86, "CEG": 11.34, "PWR": 10.96,
+    "GEV": 10.69, "ETN": 8.33, "GRID": 5.93, "NVT": 5.73,
+    "FIX": 5.42, "CCJ": 5.38, "APH": 5.27, "HUBB": 2.19,
+    # Defense & Aerospace (18% of IRA)
+    "HWM": 19.19, "HEI": 13.85, "LMT": 12.28, "RTX": 10.90,
+    "NOC": 10.68, "HII": 8.18, "UFO": 7.35, "EUAD": 6.69,
+    "LHX": 5.90, "SHLD": 4.99,
+    # AI Semis (15% of IRA)
+    "MU": 22.70, "AVGO": 15.87, "TSM": 12.54, "ANET": 10.18,
+    "WDC": 8.13, "MRVL": 7.42, "ASML": 7.25, "AMD": 6.63,
+    "ALAB": 5.66, "STX": 3.61,
+    # Biotech (3% of IRA)
+    "XBI": 44.90, "LLY": 21.96, "ALNY": 18.06, "HALO": 15.09,
 }
 
 

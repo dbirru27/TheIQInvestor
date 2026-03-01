@@ -1,0 +1,14 @@
+2026-03-01 05:00:04,497 [INFO] 🚀 Cache Refresh Started: 2026-03-01 05:00
+2026-03-01 05:00:04,500 [INFO] 📊 Refreshing 1013 tickers with ThreadPool (max 2 workers)...
+2026-03-01 05:00:04,501 [INFO] ⏭️  Skipping 0 already updated tickers.
+2026-03-01 05:08:14,515 [INFO] 
+============================================================
+2026-03-01 05:08:14,516 [INFO] CACHE REFRESH COMPLETE
+2026-03-01 05:08:14,516 [INFO] ============================================================
+2026-03-01 05:08:14,516 [INFO] ✅ Price/Fundamental Success: 1011/1013 (99.8%)
+2026-03-01 05:08:14,516 [INFO] 💰 Revenue History Updated:   0
+2026-03-01 05:08:14,516 [INFO] ❌ Failed:                    2/1013 (0.2%)
+2026-03-01 05:08:14,516 [INFO] ⏱️  Duration:                  8.2 minutes
+2026-03-01 05:08:14,516 [INFO] 
+--- FAILURE BREAKDOWN ---
+2026-03-01 05:08:14,516 [INFO]      INVALID_DATA:    2 (100.0%)
