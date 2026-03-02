@@ -595,6 +595,8 @@
             }
             
             // Fetch live prices in background (don't block render)
+            document.getElementById('watchlist-updated').textContent = 
+                (watchlistData.last_updated || '') + '  ⏳ Loading live prices...';
             fetchLivePrices();
             if (liveRefreshTimer) clearInterval(liveRefreshTimer);
             liveRefreshTimer = setInterval(fetchLivePrices, 60000);
