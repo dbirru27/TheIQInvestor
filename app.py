@@ -415,9 +415,12 @@ def save_portfolio():
             # If Supabase fails, fall back to JSON file
             pass
         
-        # Always save to JSON as backup
-        with open('data/portfolio.json', 'w') as f:
-            json.dump(data, f, indent=2)
+        # Save JSON backup (skip on read-only filesystems like Vercel)
+        try:
+            with open('data/portfolio.json', 'w') as f:
+                json.dump(data, f, indent=2)
+        except OSError:
+            pass
         return jsonify({"status": "ok"})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -490,9 +493,12 @@ def save_watchlist_entries():
             # If Supabase fails, fall back to JSON
             pass
         
-        # Always save to JSON as backup
-        with open('data/watchlist_entries.json', 'w') as f:
-            json.dump(data, f, indent=2)
+        # Save JSON backup (skip on read-only filesystems like Vercel)
+        try:
+            with open('data/watchlist_entries.json', 'w') as f:
+                json.dump(data, f, indent=2)
+        except OSError:
+            pass
         return jsonify({"status": "ok"})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
