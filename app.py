@@ -568,15 +568,5 @@ def watchlist_entries_live():
     except:
         return jsonify({"prices": {}})
 
-@app.route('/api/debug/env')
-def debug_env():
-    return jsonify({
-        "key_set": bool(SUPABASE_KEY),
-        "key_len": len(SUPABASE_KEY),
-        "key_prefix": SUPABASE_KEY[:8] + "..." if len(SUPABASE_KEY) > 8 else "TOO_SHORT",
-        "url": SUPABASE_URL,
-        "env_key_raw": os.environ.get('SUPABASE_KEY', 'NOT_IN_ENV')[:8] + "..." if os.environ.get('SUPABASE_KEY') else "NOT_IN_ENV"
-    })
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=18791, debug=True)
