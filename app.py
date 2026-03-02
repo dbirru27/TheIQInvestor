@@ -302,5 +302,28 @@ def rotation_scan():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/api/portfolio', methods=['GET'])
+def get_portfolio():
+    """Return portfolio.json"""
+    try:
+        with open('data/portfolio.json') as f:
+            return jsonify(json.load(f))
+    except FileNotFoundError:
+        return jsonify({"error": "Portfolio not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/portfolio', methods=['POST'])
+def save_portfolio():
+    """Save entire portfolio (used after edits)"""
+    try:
+        from flask import request
+        data = request.get_json()
+        with open('data/portfolio.json', 'w') as f:
+            json.dump(data, f, indent=2)
+        return jsonify({"status": "ok"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=18791, debug=True)

@@ -90,3 +90,10 @@
 2026-03-02 11:18:05,665 [INFO] ✅ Saved 0 top stocks to top_stocks.json
 2026-03-02 11:18:05,665 [INFO]    Saved 3 total stocks to all_stocks.json
 2026-03-02 11:18:05,665 [INFO]    Errors: 0
+2026-03-02 11:21:01,611 [INFO] 🚀 Starting InvestIQ scan_all.py (unified scoring pipeline)...
+2026-03-02 11:21:01,617 [INFO] Limited to 3 tickers (test mode)
+2026-03-02 11:21:01,618 [INFO] Found 3 tickers to scan
+2026-03-02 11:21:01,618 [INFO] Initialized BreakoutRater + RotationCatcher
+2026-03-02 11:21:02,938 [INFO] ✅ Saved 0 top stocks to top_stocks.json
+2026-03-02 11:21:02,938 [INFO]    Saved 3 total stocks to all_stocks.json
+2026-03-02 11:21:02,938 [INFO]    Errors: 0

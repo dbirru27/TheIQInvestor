@@ -510,3 +510,16 @@
 2026-03-02 11:18:21,576 [INFO] ✓ Watchlist generated: watchlist.json
 2026-03-02 11:18:21,576 [INFO]   Total holdings: 46
 2026-03-02 11:18:21,576 [INFO]   Baskets: 6
+2026-03-02 12:25:25,846 [INFO] Starting watchlist generation...
+2026-03-02 12:25:25,846 [INFO] Loaded 3 stocks from database
+2026-03-02 12:25:25,846 [INFO] Fetching live prices for 46 tickers...
+2026-03-02 12:25:37,369 [INFO] Got live prices for 46 tickers, 46 names
+2026-03-02 12:25:37,370 [INFO] Processing basket: Trading Account (3 holdings)
+2026-03-02 12:25:37,370 [INFO] Processing basket: IRA Core ETFs (7 holdings)
+2026-03-02 12:25:37,370 [INFO] Processing basket: Grid-to-Chip (12 holdings)
+2026-03-02 12:25:37,370 [INFO] Processing basket: Defense & Aerospace (10 holdings)
+2026-03-02 12:25:37,371 [INFO] Processing basket: AI Semis (10 holdings)
+2026-03-02 12:25:37,371 [INFO] Processing basket: Biotech (4 holdings)
+2026-03-02 12:25:37,380 [INFO] ✓ Watchlist generated: watchlist.json
+2026-03-02 12:25:37,381 [INFO]   Total holdings: 46
+2026-03-02 12:25:37,381 [INFO]   Baskets: 6

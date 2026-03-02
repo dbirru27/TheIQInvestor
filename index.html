@@ -140,6 +140,99 @@
         .score-breakdown { font-size: 0.7rem; color: var(--text-dim); }
 
         #detail-view { display: none; }
+        
+        /* Edit Mode Styles */
+        .edit-mode-active { background: #1e293b !important; border-color: #eab308 !important; }
+        .edit-floating-bar { 
+            position: fixed; 
+            bottom: 20px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            background: linear-gradient(135deg, #1e293b 0%, #0a0f1d 100%); 
+            border: 2px solid #eab308; 
+            border-radius: 12px; 
+            padding: 16px 24px; 
+            display: flex; 
+            gap: 12px; 
+            z-index: 1000; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .edit-btn { 
+            padding: 8px 20px; 
+            border-radius: 8px; 
+            font-weight: 700; 
+            font-size: 0.9rem; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            border: none; 
+        }
+        .edit-btn-primary { background: #eab308; color: #000; }
+        .edit-btn-primary:hover { background: #ca8a04; }
+        .edit-btn-secondary { background: #334155; color: white; }
+        .edit-btn-secondary:hover { background: #475569; }
+        .edit-btn-danger { background: #dc2626; color: white; }
+        .edit-btn-danger:hover { background: #b91c1c; }
+        .edit-delete-btn { 
+            color: #dc2626; 
+            font-weight: 700; 
+            cursor: pointer; 
+            padding: 2px 8px; 
+            border-radius: 4px; 
+            transition: 0.2s;
+        }
+        .edit-delete-btn:hover { background: rgba(220, 38, 38, 0.1); }
+        .edit-add-btn {
+            background: #334155;
+            color: #eab308;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid #475569;
+            transition: 0.2s;
+        }
+        .edit-add-btn:hover { background: #475569; }
+        .edit-input {
+            background: #1a1a2e;
+            border: 1px solid #2d3748;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            width: 80px;
+            text-align: right;
+        }
+        .edit-input:focus { border-color: #eab308; outline: none; }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: var(--surface);
+            border: 1px solid #2d3748;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+        }
+        .modal-input {
+            width: 100%;
+            background: #1a1a2e;
+            border: 1px solid #2d3748;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+        .modal-input:focus { border-color: #eab308; outline: none; }
     </style>
 </head>
 <body>
@@ -323,9 +416,14 @@
                 </button>
             </div>
 
-            <div style="margin-bottom: 24px; margin-left: 0;">
-                <h2 class="text-2xl font-bold mb-2">📊 My Portfolio</h2>
-                <span style="font-size: 0.8rem; color: var(--text-dim);">Last Updated: <strong id="watchlist-updated" style="color: var(--accent);">Loading...</strong></span>
+            <div style="margin-bottom: 24px; margin-left: 0; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <h2 class="text-2xl font-bold mb-2">📊 My Portfolio</h2>
+                    <span style="font-size: 0.8rem; color: var(--text-dim);">Last Updated: <strong id="watchlist-updated" style="color: var(--accent);">Loading...</strong></span>
+                </div>
+                <button id="edit-portfolio-btn" onclick="toggleEditMode()" style="background: #1e293b; border: 1px solid #2d3748; padding: 8px 16px; border-radius: 8px; color: var(--accent); font-weight: 600; cursor: pointer; transition: 0.2s;">
+                    ✏️ Edit
+                </button>
             </div>
 
             <!-- Basket Filter Pills -->
@@ -400,6 +498,43 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Ticker Modal -->
+        <div id="add-ticker-modal" class="modal-overlay" onclick="if(event.target === this) closeAddTickerModal()">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <h3 style="font-weight: 700; margin-bottom: 16px; color: var(--accent);">Add Ticker</h3>
+                <input type="text" id="new-ticker-symbol" class="modal-input" placeholder="Ticker Symbol (e.g. AAPL)" style="text-transform: uppercase;">
+                <input type="number" id="new-ticker-position" class="modal-input" placeholder="Position % (e.g. 10.5)" step="0.01" min="0" max="100">
+                <div style="display: flex; gap: 8px; margin-top: 16px;">
+                    <button class="edit-btn edit-btn-primary" onclick="addTickerToBasket()">Add</button>
+                    <button class="edit-btn edit-btn-secondary" onclick="closeAddTickerModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Basket Modal -->
+        <div id="add-basket-modal" class="modal-overlay" onclick="if(event.target === this) closeAddBasketModal()">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <h3 style="font-weight: 700; margin-bottom: 16px; color: var(--accent);">Add Basket</h3>
+                <input type="text" id="new-basket-name" class="modal-input" placeholder="Basket Name">
+                <select id="new-basket-icon" class="modal-input">
+                    <option value="📈">📈 Trading</option>
+                    <option value="📦">📦 Core</option>
+                    <option value="⚡">⚡ Energy</option>
+                    <option value="🛡️">🛡️ Defense</option>
+                    <option value="🧠">🧠 Tech</option>
+                    <option value="🧬">🧬 Biotech</option>
+                    <option value="💰">💰 Finance</option>
+                    <option value="🏭">🏭 Industrial</option>
+                    <option value="🌐">🌐 Global</option>
+                </select>
+                <input type="text" id="new-basket-weight" class="modal-input" placeholder="Weight Description (e.g. 20% of Total)">
+                <div style="display: flex; gap: 8px; margin-top: 16px;">
+                    <button class="edit-btn edit-btn-primary" onclick="addNewBasket()">Create</button>
+                    <button class="edit-btn edit-btn-secondary" onclick="closeAddBasketModal()">Cancel</button>
                 </div>
             </div>
         </div>
@@ -656,13 +791,28 @@
                                scorePercent >= 30 ? '#d97706' : '#dc2626';
             const na = '<span style="color: var(--text-dim);">N/A</span>';
             
-            const posSize = stock.position_size !== null && stock.position_size !== undefined 
-                ? stock.position_size.toFixed(1) + '%' 
-                : '<span style="color: var(--text-dim);">—</span>';
+            // Edit mode: editable position size
+            let posSize;
+            if (editMode) {
+                const val = stock.position_size !== null && stock.position_size !== undefined ? stock.position_size : 0;
+                posSize = `<input type="number" class="edit-input" value="${val.toFixed(2)}" 
+                    onchange="updateTickerPosition('${stock.basket}', '${stock.ticker}', this.value)" 
+                    step="0.01" min="0" max="100">`;
+            } else {
+                posSize = stock.position_size !== null && stock.position_size !== undefined 
+                    ? stock.position_size.toFixed(1) + '%' 
+                    : '<span style="color: var(--text-dim);">—</span>';
+            }
+            
+            // Edit mode: delete button in ticker column
+            const tickerCell = editMode 
+                ? `<a href="#" onclick="viewStock('${stock.ticker}'); return false;" class="text-sky-400 hover:text-sky-300 font-bold">${stock.ticker}</a>
+                   <span class="edit-delete-btn" onclick="deleteTickerFromBasket('${stock.basket}', '${stock.ticker}')">✕</span>`
+                : `<a href="#" onclick="viewStock('${stock.ticker}'); return false;" class="text-sky-400 hover:text-sky-300 font-bold">${stock.ticker}</a>`;
             
             return `
                 <tr data-ticker="${stock.ticker}">
-                    <td class="sticky-col"><a href="#" onclick="viewStock('${stock.ticker}'); return false;" class="text-sky-400 hover:text-sky-300 font-bold">${stock.ticker}</a></td>
+                    <td class="sticky-col">${tickerCell}</td>
                     <td style="font-weight: 500;">${posSize}</td>
                     <td class="live-change" style="color: ${changeColor}; font-weight: 600;">${dc !== null && dc !== undefined ? changePrefix + dc.toFixed(2) + '%' : na}</td>
                     <td>${stock.trailing_pe !== null ? stock.trailing_pe.toFixed(2) : na}</td>
@@ -709,18 +859,32 @@
         }
 
         function renderWatchlist() {
-            if (!watchlistData) return;
+            const dataSource = editMode ? editModeData : watchlistData;
+            if (!dataSource) return;
             
             const tbody = document.getElementById('watchlist-tbody');
             
             // Single basket filter — flat list, no headers
             if (currentBasketFilter !== 'all') {
-                const stocks = watchlistData.baskets[currentBasketFilter] || [];
+                const stocks = dataSource.baskets[currentBasketFilter] || [];
                 if (stocks.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="12" style="text-align: center; padding: 40px; color: var(--text-dim);">No holdings in this basket</td></tr>';
                     return;
                 }
-                tbody.innerHTML = stocks.map(renderStockRow).join('');
+                
+                // Add "Add Ticker" button when in edit mode for single basket view
+                let html = '';
+                if (editMode) {
+                    html += `
+                        <tr>
+                            <td colspan="12" style="padding: 12px; text-align: center;">
+                                <button class="edit-add-btn" onclick="showAddTickerModal('${currentBasketFilter}')">+ Add Ticker to ${currentBasketFilter}</button>
+                            </td>
+                        </tr>
+                    `;
+                }
+                html += stocks.map(renderStockRow).join('');
+                tbody.innerHTML = html;
                 return;
             }
             
@@ -728,8 +892,14 @@
             let html = '';
             const basketOrder = ['Trading Account', 'IRA Core ETFs', 'Grid-to-Chip', 'Defense & Aerospace', 'AI Semis', 'Biotech'];
             
-            for (const basket of basketOrder) {
-                const stocks = watchlistData.baskets[basket];
+            // Include all baskets (standard + any new ones)
+            const allBaskets = [...basketOrder];
+            for (const basket in dataSource.baskets) {
+                if (!allBaskets.includes(basket)) allBaskets.push(basket);
+            }
+            
+            for (const basket of allBaskets) {
+                const stocks = dataSource.baskets[basket];
                 if (!stocks || stocks.length === 0) continue;
                 
                 const icon = basketIcons[basket] || '📋';
@@ -747,6 +917,12 @@
                 };
                 const weight = basketWeights[basket] || '';
                 
+                // Edit mode: Add controls to basket header
+                const basketControls = editMode 
+                    ? `<button class="edit-add-btn" onclick="showAddTickerModal('${basket}')" style="margin-left: 16px;">+ Add Ticker</button>
+                       <button class="edit-add-btn" onclick="deleteBasket('${basket}')" style="margin-left: 8px; border-color: #dc2626; color: #dc2626;">Delete Basket</button>`
+                    : '';
+                
                 html += `
                     <tr class="basket-header" data-basket="${basket}">
                         <td colspan="12" style="background: #0a0f1d; padding: 14px 16px; border-bottom: 2px solid var(--accent); font-weight: 700; font-size: 0.95rem;">
@@ -754,6 +930,7 @@
                             <span style="font-size: 0.75rem; color: var(--accent); font-weight: 600; margin-left: 8px;">${weight}</span>
                             <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 400; margin-left: 8px;">· ${stocks.length} holdings</span>
                             <span class="basket-avg" style="font-size: 0.75rem; color: ${avgColor}; font-weight: 600; margin-left: 12px;">Avg: ${avgPrefix}${avgChange.toFixed(2)}%</span>
+                            ${basketControls}
                         </td>
                     </tr>
                 `;
@@ -824,6 +1001,303 @@
             }
             
             renderWatchlist();
+        }
+
+        // ===== EDIT MODE FUNCTIONALITY =====
+        let editMode = false;
+        let editModeData = null; // Snapshot of portfolio for editing
+        let currentEditBasket = null; // Track which basket we're adding to
+
+        function toggleEditMode() {
+            editMode = !editMode;
+            
+            if (editMode) {
+                // Enter edit mode - take snapshot of current data
+                editModeData = JSON.parse(JSON.stringify(watchlistData));
+                document.getElementById('edit-portfolio-btn').textContent = '❌ Cancel Edit';
+                document.getElementById('edit-portfolio-btn').classList.add('edit-mode-active');
+                
+                // Show floating bar
+                if (!document.getElementById('edit-floating-bar')) {
+                    const bar = document.createElement('div');
+                    bar.id = 'edit-floating-bar';
+                    bar.className = 'edit-floating-bar';
+                    bar.innerHTML = `
+                        <button class="edit-btn edit-btn-secondary" onclick="showAddBasketModal()">+ Add Basket</button>
+                        <button class="edit-btn edit-btn-primary" onclick="savePortfolioEdits()">💾 Save Changes</button>
+                        <button class="edit-btn edit-btn-danger" onclick="cancelEditMode()">Cancel</button>
+                    `;
+                    document.body.appendChild(bar);
+                }
+            } else {
+                cancelEditMode();
+            }
+            
+            renderWatchlist();
+        }
+
+        function cancelEditMode() {
+            editMode = false;
+            editModeData = null;
+            document.getElementById('edit-portfolio-btn').textContent = '✏️ Edit';
+            document.getElementById('edit-portfolio-btn').classList.remove('edit-mode-active');
+            
+            const bar = document.getElementById('edit-floating-bar');
+            if (bar) bar.remove();
+            
+            renderWatchlist();
+        }
+
+        function collectPortfolioData() {
+            // Build portfolio object from current DOM state when in edit mode
+            if (!editModeData) return null;
+            
+            const portfolio = { baskets: {} };
+            
+            // Read from editModeData (which has been modified via the edit functions)
+            for (const [basketName, basketStocks] of Object.entries(editModeData.baskets)) {
+                // Get basket metadata from DOM or original data
+                const basketHeader = document.querySelector(`tr.basket-header[data-basket="${basketName}"]`);
+                let icon = '📋';
+                let weight = '';
+                
+                if (basketHeader) {
+                    const headerText = basketHeader.textContent;
+                    const iconMatch = headerText.match(/^([^\s]+)/);
+                    if (iconMatch) icon = iconMatch[1];
+                    const weightMatch = headerText.match(/·\s*([^·]+?)(?:\s*·|$)/);
+                    if (weightMatch) weight = weightMatch[1].trim();
+                }
+                
+                // Also check if there's stored metadata
+                const originalBasket = watchlistData.baskets[basketName];
+                if (originalBasket && originalBasket.length > 0 && originalBasket[0].basket_metadata) {
+                    icon = originalBasket[0].basket_metadata.icon || icon;
+                    weight = originalBasket[0].basket_metadata.weight || weight;
+                }
+                
+                // Build tickers object from editModeData
+                const tickers = {};
+                for (const stock of basketStocks) {
+                    tickers[stock.ticker] = stock.position_size || 0;
+                }
+                
+                portfolio.baskets[basketName] = {
+                    icon: icon,
+                    weight: weight,
+                    tickers: tickers
+                };
+            }
+            
+            return portfolio;
+        }
+
+        async function savePortfolioEdits() {
+            const portfolio = collectPortfolioData();
+            if (!portfolio) {
+                alert('No portfolio data to save');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/portfolio', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(portfolio)
+                });
+                
+                if (!response.ok) throw new Error('Save failed');
+                
+                // Success - reload watchlist and exit edit mode
+                watchlistData = null; // Force reload
+                cancelEditMode();
+                await showWatchlist();
+                
+                alert('✅ Portfolio saved successfully! Watchlist will regenerate on next scan.');
+            } catch (err) {
+                alert('Error saving portfolio: ' + err.message);
+            }
+        }
+
+        // Modal functions
+        function showAddTickerModal(basketName) {
+            currentEditBasket = basketName;
+            document.getElementById('new-ticker-symbol').value = '';
+            document.getElementById('new-ticker-position').value = '';
+            document.getElementById('add-ticker-modal').classList.add('active');
+        }
+
+        function closeAddTickerModal() {
+            document.getElementById('add-ticker-modal').classList.remove('active');
+            currentEditBasket = null;
+        }
+
+        function addTickerToBasket() {
+            const ticker = document.getElementById('new-ticker-symbol').value.trim().toUpperCase();
+            const position = parseFloat(document.getElementById('new-ticker-position').value);
+            
+            if (!ticker || isNaN(position) || position < 0) {
+                alert('Please enter valid ticker and position %');
+                return;
+            }
+            
+            if (!currentEditBasket || !editModeData.baskets[currentEditBasket]) {
+                alert('No basket selected');
+                return;
+            }
+            
+            // Check if ticker already exists in this basket
+            const exists = editModeData.baskets[currentEditBasket].find(s => s.ticker === ticker);
+            if (exists) {
+                alert('Ticker already exists in this basket');
+                return;
+            }
+            
+            // Add new ticker entry
+            editModeData.baskets[currentEditBasket].push({
+                ticker: ticker,
+                name: ticker, // Will be fetched on next scan
+                position_size: position,
+                basket: currentEditBasket,
+                // Placeholder values
+                sector: '—',
+                score: 0,
+                grade: '—'
+            });
+            
+            // Also add to 'all'
+            editModeData.all.push(editModeData.baskets[currentEditBasket][editModeData.baskets[currentEditBasket].length - 1]);
+            
+            closeAddTickerModal();
+            renderWatchlist();
+        }
+
+        function deleteTickerFromBasket(basketName, ticker) {
+            if (!confirm(`Remove ${ticker} from ${basketName}?`)) return;
+            
+            // Remove from basket
+            editModeData.baskets[basketName] = editModeData.baskets[basketName].filter(s => s.ticker !== ticker);
+            
+            // Remove from 'all'
+            editModeData.all = editModeData.all.filter(s => !(s.ticker === ticker && s.basket === basketName));
+            
+            renderWatchlist();
+        }
+
+        function updateTickerPosition(basketName, ticker, newValue) {
+            const stock = editModeData.baskets[basketName].find(s => s.ticker === ticker);
+            if (stock) {
+                stock.position_size = parseFloat(newValue) || 0;
+            }
+            
+            // Also update in 'all'
+            const stockInAll = editModeData.all.find(s => s.ticker === ticker && s.basket === basketName);
+            if (stockInAll) {
+                stockInAll.position_size = parseFloat(newValue) || 0;
+            }
+        }
+
+        function showAddBasketModal() {
+            document.getElementById('new-basket-name').value = '';
+            document.getElementById('new-basket-icon').selectedIndex = 0;
+            document.getElementById('new-basket-weight').value = '';
+            document.getElementById('add-basket-modal').classList.add('active');
+        }
+
+        function closeAddBasketModal() {
+            document.getElementById('add-basket-modal').classList.remove('active');
+        }
+
+        function addNewBasket() {
+            const name = document.getElementById('new-basket-name').value.trim();
+            const icon = document.getElementById('new-basket-icon').value;
+            const weight = document.getElementById('new-basket-weight').value.trim();
+            
+            if (!name) {
+                alert('Please enter a basket name');
+                return;
+            }
+            
+            if (editModeData.baskets[name]) {
+                alert('Basket already exists');
+                return;
+            }
+            
+            // Create new basket
+            editModeData.baskets[name] = [];
+            
+            // Store metadata for this basket (we'll use it when collecting data)
+            // For now, we'll add it to the first stock that gets added, or handle it specially
+            // Actually, let's store it in a separate structure
+            if (!editModeData.basket_metadata) editModeData.basket_metadata = {};
+            editModeData.basket_metadata[name] = { icon, weight };
+            
+            closeAddBasketModal();
+            renderWatchlist();
+            
+            // Update filter pills
+            updateBasketFilters();
+        }
+
+        function deleteBasket(basketName) {
+            if (!confirm(`Delete entire basket "${basketName}"? This will remove all ${editModeData.baskets[basketName].length} holdings.`)) return;
+            
+            // Remove all stocks from this basket in 'all'
+            editModeData.all = editModeData.all.filter(s => s.basket !== basketName);
+            
+            // Delete the basket
+            delete editModeData.baskets[basketName];
+            
+            // If we're filtering by this basket, switch to 'all'
+            if (currentBasketFilter === basketName) {
+                currentBasketFilter = 'all';
+            }
+            
+            renderWatchlist();
+            updateBasketFilters();
+        }
+
+        function updateBasketFilters() {
+            if (!watchlistData) return;
+            
+            const container = document.getElementById('basket-filters');
+            const basketOrder = ['Trading Account', 'IRA Core ETFs', 'Grid-to-Chip', 'Defense & Aerospace', 'AI Semis', 'Biotech'];
+            const basketIcons = {
+                'Trading Account': '📈',
+                'IRA Core ETFs': '📦',
+                'Grid-to-Chip': '⚡',
+                'Defense & Aerospace': '🛡️',
+                'AI Semis': '🧠',
+                'Biotech': '🧬'
+            };
+            
+            container.innerHTML = '<span class="filter-pill active" onclick="filterWatchlist(\'all\')">Show All</span>';
+            
+            const baskets = editMode ? editModeData.baskets : watchlistData.baskets;
+            
+            for (const basketName of basketOrder) {
+                if (baskets[basketName]) {
+                    const icon = basketIcons[basketName] || '📋';
+                    const pill = document.createElement('span');
+                    pill.className = 'filter-pill';
+                    if (currentBasketFilter === basketName) pill.classList.add('active');
+                    pill.textContent = `${icon} ${basketName}`;
+                    pill.onclick = () => filterWatchlist(basketName);
+                    container.appendChild(pill);
+                }
+            }
+            
+            // Add any new baskets not in the standard order
+            for (const basketName in baskets) {
+                if (!basketOrder.includes(basketName)) {
+                    const pill = document.createElement('span');
+                    pill.className = 'filter-pill';
+                    if (currentBasketFilter === basketName) pill.classList.add('active');
+                    pill.textContent = `📋 ${basketName}`;
+                    pill.onclick = () => filterWatchlist(basketName);
+                    container.appendChild(pill);
+                }
+            }
         }
 
         document.addEventListener('DOMContentLoaded', function() {

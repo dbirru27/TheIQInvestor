@@ -3,49 +3,37 @@
 Generate watchlist.json for InvestIQ portfolio holdings.
 Reads all scores and fundamentals from all_stocks.json (database).
 Only fetches live price for daily % change via yfinance bulk download.
+Now reads baskets and position sizes from portfolio.json.
 """
 import json
 import yfinance as yf
 from datetime import datetime
-from config import (
-    TRADING_ACCOUNT, CORE_ETFS,
-    GRID_TO_CHIP, DEFENSE_AEROSPACE, AI_SEMIS, BIOTECH
-)
+import os
 from utils.logger import get_logger
 
 logger = get_logger('watchlist')
 
-BASKETS = {
-    "Trading Account": TRADING_ACCOUNT,
-    "IRA Core ETFs": CORE_ETFS,
-    "Grid-to-Chip": GRID_TO_CHIP,
-    "Defense & Aerospace": DEFENSE_AEROSPACE,
-    "AI Semis": AI_SEMIS,
-    "Biotech": BIOTECH
-}
+def load_portfolio_data():
+    """Load baskets and position sizes from portfolio.json"""
+    portfolio_path = os.path.join(os.path.dirname(__file__), 'data', 'portfolio.json')
+    with open(portfolio_path, 'r') as f:
+        data = json.load(f)
+    
+    baskets = {}
+    position_sizes = {}
+    
+    for basket_name, basket_data in data.get('baskets', {}).items():
+        tickers = list(basket_data.get('tickers', {}).keys())
+        baskets[basket_name] = tickers
+        
+        # Extract position sizes
+        for ticker, size in basket_data.get('tickers', {}).items():
+            position_sizes[ticker] = size
+    
+    return baskets, position_sizes
 
-# Position sizes within each basket (% of that basket's allocation)
-POSITION_SIZES = {
-    # Trading Account (26% of total portfolio)
-    "VGT": 40.13, "VUG": 17.22, "GOOGL": 39.75,  # Combined GOOGL (19.88%) + GOOG (19.87%)
-    # IRA Core ETFs (~41.5% of IRA)
-    "COPX": 13.19, "GLD": 11.20, "XLI": 10.83, "VOO": 2.77,
-    "DXJ": 1.35, "INDA": 1.23, "SIL": 0.74,
-    # Grid-to-Chip (22.5% of IRA)
-    "NLR": 16.90, "VRT": 11.86, "CEG": 11.34, "PWR": 10.96,
-    "GEV": 10.69, "ETN": 8.33, "GRID": 5.93, "NVT": 5.73,
-    "FIX": 5.42, "CCJ": 5.38, "APH": 5.27, "HUBB": 2.19,
-    # Defense & Aerospace (18% of IRA)
-    "HWM": 19.19, "HEI": 13.85, "LMT": 12.28, "RTX": 10.90,
-    "NOC": 10.68, "HII": 8.18, "UFO": 7.35, "EUAD": 6.69,
-    "LHX": 5.90, "SHLD": 4.99,
-    # AI Semis (15% of IRA)
-    "MU": 22.70, "AVGO": 15.87, "TSM": 12.54, "ANET": 10.18,
-    "WDC": 8.13, "MRVL": 7.42, "ASML": 7.25, "AMD": 6.63,
-    "ALAB": 5.66, "STX": 3.61,
-    # Biotech (3% of IRA)
-    "XBI": 44.90, "LLY": 21.96, "ALNY": 18.06, "HALO": 15.09,
-}
+# Load from portfolio.json
+BASKETS, POSITION_SIZES = load_portfolio_data()
 
 
 def load_stock_db():
