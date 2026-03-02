@@ -1175,12 +1175,27 @@
                 
                 if (!response.ok) throw new Error('Save failed');
                 
-                // Success - reload watchlist and exit edit mode
-                watchlistData = null; // Force reload
-                cancelEditMode();
-                await showWatchlist();
+                // Success - reload portfolio data and re-render
+                // Fetch fresh data from Supabase via /api/portfolio
+                const freshPortfolio = await (await fetch('/api/portfolio')).json();
                 
-                alert('✅ Portfolio saved successfully! Watchlist will regenerate on next scan.');
+                // Rebuild watchlistData from portfolio data
+                if (freshPortfolio.baskets) {
+                    watchlistData = { baskets: {}, all: [] };
+                    for (const [name, basket] of Object.entries(freshPortfolio.baskets)) {
+                        watchlistData.baskets[name] = [];
+                        for (const [ticker, pct] of Object.entries(basket.tickers || {})) {
+                            const stock = { ticker, position_size: pct, basket_metadata: { icon: basket.icon, weight: basket.weight } };
+                            watchlistData.baskets[name].push(stock);
+                            watchlistData.all.push(stock);
+                        }
+                    }
+                }
+                
+                cancelEditMode();
+                renderWatchlist();
+                
+                alert('✅ Portfolio saved!');
             } catch (err) {
                 alert('Error saving portfolio: ' + err.message);
             }
