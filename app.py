@@ -130,10 +130,45 @@ def get_news(ticker):
 
 @app.route('/api/watchlist')
 def watchlist():
-    """Serve watchlist from static JSON (fast). Live prices fetched separately via /api/watchlist/live."""
+    """Serve watchlist with scores from DB + live prices from Yahoo"""
     try:
+        import yfinance as yf
+        from datetime import datetime
+
         with open('watchlist.json', 'r') as f:
             data = json.load(f)
+
+        # Bulk fetch live prices
+        tickers = [s['ticker'] for s in data.get('all', [])]
+        if tickers:
+            try:
+                tickers_obj = yf.Tickers(' '.join(tickers))
+                for stock in data.get('all', []):
+                    t = stock['ticker']
+                    try:
+                        info = tickers_obj.tickers[t].info
+                        curr = info.get('regularMarketPrice') or info.get('currentPrice')
+                        prev = info.get('previousClose')
+                        if curr and prev and prev > 0:
+                            stock['price'] = round(curr, 2)
+                            stock['previous_close'] = round(prev, 2)
+                            stock['daily_change'] = round((curr - prev) / prev * 100, 2)
+                        # Also update name if missing
+                        if stock.get('name') == stock['ticker'] or not stock.get('name'):
+                            stock['name'] = info.get('longName') or info.get('shortName') or t
+                    except:
+                        pass
+
+                # Update basket copies too
+                for basket_name, stocks in data.get('baskets', {}).items():
+                    for stock in stocks:
+                        match = next((s for s in data['all'] if s['ticker'] == stock['ticker']), None)
+                        if match:
+                            stock.update({k: match[k] for k in ['price', 'previous_close', 'daily_change', 'name'] if k in match})
+            except:
+                pass
+
+        data['last_updated'] = datetime.now().strftime("%Y-%m-%d %H:%M EST")
         return jsonify(data)
     except FileNotFoundError:
         return jsonify({"error": "Watchlist not generated yet"}), 404
@@ -142,7 +177,7 @@ def watchlist():
 
 @app.route('/api/watchlist/live')
 def watchlist_live():
-    """Fetch live prices for all watchlist holdings (bulk download, fast)"""
+    """Fetch live prices for all watchlist holdings (lightweight refresh)"""
     try:
         import yfinance as yf
         from datetime import datetime
@@ -153,21 +188,14 @@ def watchlist_live():
         if not tickers:
             return jsonify({"error": "No tickers"}), 404
 
-        # Bulk download — single HTTP request for all tickers (2 days for prev close)
-        df = yf.download(tickers, period="2d", group_by="ticker", progress=False, threads=True)
-        
         live = {}
+        tickers_obj = yf.Tickers(' '.join(tickers))
         for ticker in tickers:
             try:
-                if len(tickers) == 1:
-                    t_data = df
-                else:
-                    t_data = df[ticker]
-                if t_data.empty or len(t_data) < 2:
-                    continue
-                curr = float(t_data['Close'].iloc[-1])
-                prev = float(t_data['Close'].iloc[-2])
-                if prev > 0:
+                info = tickers_obj.tickers[ticker].info
+                curr = info.get('regularMarketPrice') or info.get('currentPrice')
+                prev = info.get('previousClose')
+                if curr and prev and prev > 0:
                     live[ticker] = {
                         "price": round(curr, 2),
                         "previous_close": round(prev, 2),
