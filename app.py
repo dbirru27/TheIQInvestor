@@ -449,149 +449,222 @@ def save_portfolio():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/watchlist_entries', methods=['GET'])
-def get_watchlist_entries():
-    """Fetch watchlist entries from Supabase, fall back to JSON"""
+@app.route('/api/watchlists', methods=['GET'])
+def get_watchlists():
+    """Fetch all watchlists with their items from Supabase"""
     try:
-        # Try Supabase first
-        url = f'{SUPABASE_URL}/rest/v1/watchlist_entries?select=*&order=created_at.desc'
+        url = f'{SUPABASE_URL}/rest/v1/watchlists?select=*,watchlist_items(*)&order=sort_order'
         req = urllib.request.Request(url, headers={
             'apikey': SUPABASE_KEY,
             'Authorization': f'Bearer {SUPABASE_KEY}'
         })
         resp = urllib.request.urlopen(req)
-        entries = json.loads(resp.read())
-        
-        # Transform to match frontend expectation
-        return jsonify({"entries": [{
-            "ticker": e["ticker"],
-            "added_date": e["added_date"],
-            "entry_price": float(e["entry_price"]),
-            "snapshot": e.get("snapshot", {})
-        } for e in entries]})
-    except Exception as e:
-        # Fall back to JSON file
-        try:
-            with open('data/watchlist_entries.json') as f:
-                return jsonify(json.load(f))
-        except FileNotFoundError:
-            return jsonify({"entries": []})
+        watchlists = json.loads(resp.read())
 
-@app.route('/api/watchlist_entries', methods=['POST'])
-def save_watchlist_entries():
-    """Save watchlist entries to Supabase, fall back to JSON"""
+        # Load scores from all_stocks.json
+        all_stocks = {}
+        try:
+            with open('data/all_stocks.json') as f:
+                all_stocks = json.load(f).get('stocks', {})
+        except:
+            pass
+
+        result = {"watchlists": {}}
+        for wl in watchlists:
+            items = []
+            for item in wl.get('watchlist_items', []):
+                scores = all_stocks.get(item['ticker'], {})
+                items.append({
+                    "id": item["id"],
+                    "ticker": item["ticker"],
+                    "added_date": item.get("added_date"),
+                    "entry_price": float(item["entry_price"]) if item.get("entry_price") else None,
+                    "snapshot": item.get("snapshot", {}),
+                    "score": scores.get("score", 0),
+                    "grade": scores.get("grade", "N/A"),
+                    "rotation_score": scores.get("rotation_score", 0),
+                    "sector": scores.get("sector", ""),
+                    "name": scores.get("name", item["ticker"])
+                })
+            result["watchlists"][wl["name"]] = {
+                "id": wl["id"],
+                "icon": wl.get("icon", "👁️"),
+                "items": items
+            }
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"watchlists": {}, "error": str(e)})
+
+@app.route('/api/watchlists', methods=['POST'])
+def create_watchlist():
+    """Create a new watchlist"""
     try:
         data = request.get_json()
-        entries = data.get('entries', [])
-        
-        # Try Supabase first
-        try:
-            # Delete all existing
-            req = urllib.request.Request(
-                f'{SUPABASE_URL}/rest/v1/watchlist_entries?id=gt.0',
-                method='DELETE',
-                headers={'apikey': SUPABASE_KEY, 'Authorization': f'Bearer {SUPABASE_KEY}'}
-            )
-            urllib.request.urlopen(req)
-            
-            # Insert all
-            if entries:
-                rows = [{
-                    "ticker": e["ticker"],
-                    "added_date": e.get("added_date"),
-                    "entry_price": e["entry_price"],
-                    "snapshot": e.get("snapshot", {})
-                } for e in entries]
-                req = urllib.request.Request(
-                    f'{SUPABASE_URL}/rest/v1/watchlist_entries',
-                    data=json.dumps(rows).encode(),
-                    method='POST',
-                    headers={
-                        'apikey': SUPABASE_KEY,
-                        'Authorization': f'Bearer {SUPABASE_KEY}',
-                        'Content-Type': 'application/json'
-                    }
-                )
-                urllib.request.urlopen(req)
-        except Exception as supabase_error:
-            # If Supabase fails, fall back to JSON
-            pass
-        
-        # Save JSON backup (skip on read-only filesystems like Vercel)
-        try:
-            with open('data/watchlist_entries.json', 'w') as f:
-                json.dump(data, f, indent=2)
-        except OSError:
-            pass
+        name = data.get('name', '').strip()
+        icon = data.get('icon', '👁️')
+        if not name:
+            return jsonify({"error": "Name required"}), 400
+
+        body = json.dumps({"name": name, "icon": icon}).encode()
+        req = urllib.request.Request(
+            f'{SUPABASE_URL}/rest/v1/watchlists',
+            data=body, method='POST',
+            headers={
+                'apikey': SUPABASE_KEY,
+                'Authorization': f'Bearer {SUPABASE_KEY}',
+                'Content-Type': 'application/json',
+                'Prefer': 'return=representation'
+            }
+        )
+        resp = urllib.request.urlopen(req)
+        row = json.loads(resp.read())[0]
+        return jsonify({"status": "ok", "id": row["id"], "name": row["name"]})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/watchlists/<int:wl_id>', methods=['DELETE'])
+def delete_watchlist(wl_id):
+    """Delete a watchlist and its items (CASCADE)"""
+    try:
+        req = urllib.request.Request(
+            f'{SUPABASE_URL}/rest/v1/watchlists?id=eq.{wl_id}',
+            method='DELETE',
+            headers={'apikey': SUPABASE_KEY, 'Authorization': f'Bearer {SUPABASE_KEY}'}
+        )
+        urllib.request.urlopen(req)
         return jsonify({"status": "ok"})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/api/watchlists/<int:wl_id>/items', methods=['POST'])
+def add_watchlist_item(wl_id):
+    """Add a ticker to a watchlist"""
+    try:
+        data = request.get_json()
+        ticker = data.get('ticker', '').strip().upper()
+        entry_price = data.get('entry_price')
+        snapshot = data.get('snapshot', {})
+        if not ticker:
+            return jsonify({"error": "Ticker required"}), 400
+
+        body = json.dumps({
+            "watchlist_id": wl_id,
+            "ticker": ticker,
+            "entry_price": entry_price,
+            "snapshot": snapshot
+        }).encode()
+        req = urllib.request.Request(
+            f'{SUPABASE_URL}/rest/v1/watchlist_items',
+            data=body, method='POST',
+            headers={
+                'apikey': SUPABASE_KEY,
+                'Authorization': f'Bearer {SUPABASE_KEY}',
+                'Content-Type': 'application/json',
+                'Prefer': 'return=representation'
+            }
+        )
+        resp = urllib.request.urlopen(req)
+        return jsonify({"status": "ok"})
+    except urllib.error.HTTPError as e:
+        err_body = e.read().decode()
+        if 'duplicate' in err_body.lower() or '23505' in err_body:
+            return jsonify({"error": f"{ticker} already in this watchlist"}), 409
+        return jsonify({"error": err_body}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/watchlist_items/<int:item_id>', methods=['DELETE'])
+def delete_watchlist_item(item_id):
+    """Remove a ticker from a watchlist"""
+    try:
+        req = urllib.request.Request(
+            f'{SUPABASE_URL}/rest/v1/watchlist_items?id=eq.{item_id}',
+            method='DELETE',
+            headers={'apikey': SUPABASE_KEY, 'Authorization': f'Bearer {SUPABASE_KEY}'}
+        )
+        urllib.request.urlopen(req)
+        return jsonify({"status": "ok"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/watchlists/live')
+def watchlists_live():
+    """Bulk fetch current prices for all watchlist tickers"""
+    try:
+        from datetime import datetime
+        url = f'{SUPABASE_URL}/rest/v1/watchlist_items?select=ticker'
+        req = urllib.request.Request(url, headers={
+            'apikey': SUPABASE_KEY,
+            'Authorization': f'Bearer {SUPABASE_KEY}'
+        })
+        resp = urllib.request.urlopen(req)
+        items = json.loads(resp.read())
+        tickers = list(set(i['ticker'] for i in items))
+        if not tickers:
+            return jsonify({"prices": {}})
+
+        live = {}
+        batch_size = 15
+        for i in range(0, len(tickers), batch_size):
+            batch = tickers[i:i+batch_size]
+            spark_url = f'https://query1.finance.yahoo.com/v8/finance/spark?symbols={",".join(batch)}&range=2d&interval=1d'
+            try:
+                req = urllib.request.Request(spark_url, headers={'User-Agent': 'Mozilla/5.0'})
+                resp = urllib.request.urlopen(req, timeout=8)
+                result = json.loads(resp.read())
+                for sym, info in result.items():
+                    closes = info.get('close', [])
+                    prev = info.get('chartPreviousClose')
+                    curr = closes[-1] if closes else None
+                    if curr:
+                        live[sym] = {
+                            "price": round(curr, 2),
+                            "daily_change": round((curr - prev) / prev * 100, 2) if prev and prev > 0 else 0
+                        }
+            except:
+                pass
+
+        return jsonify({"prices": live, "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S EST")})
+    except Exception as e:
+        return jsonify({"prices": {}, "error": str(e)})
+
 @app.route('/api/stock_price/<ticker>')
 def get_stock_price(ticker):
-    """Get current price for a ticker (used when adding to watchlist)"""
-    import yfinance as yf
+    """Get current price + snapshot for a ticker"""
     try:
-        stock = yf.Ticker(ticker.upper())
-        info = stock.info
-        price = info.get('regularMarketPrice') or info.get('currentPrice') or info.get('previousClose')
-        
-        # Fetch snapshot from all_stocks.json
+        ticker = ticker.upper()
+        # Get price from spark
+        spark_url = f'https://query1.finance.yahoo.com/v8/finance/spark?symbols={ticker}&range=2d&interval=1d'
+        req = urllib.request.Request(spark_url, headers={'User-Agent': 'Mozilla/5.0'})
+        resp = urllib.request.urlopen(req, timeout=5)
+        result = json.loads(resp.read())
+        closes = result.get(ticker, {}).get('close', [])
+        price = closes[-1] if closes else None
+
+        # Snapshot from all_stocks.json
         snapshot = {}
         try:
             with open('data/all_stocks.json') as f:
-                all_data = json.load(f)
-            stock_data = all_data.get('stocks', {}).get(ticker.upper(), {})
+                stock_data = json.load(f).get('stocks', {}).get(ticker, {})
             if stock_data:
                 snapshot = {
-                    "name": stock_data.get('name', ticker.upper()),
+                    "name": stock_data.get('name', ticker),
                     "sector": stock_data.get('sector', ''),
-                    "industry": stock_data.get('industry', ''),
                     "score": stock_data.get('score', 0),
                     "grade": stock_data.get('grade', 'N/A'),
                     "rotation_score": stock_data.get('rotation_score', 0),
-                    "rotation_signal": stock_data.get('rotation_signal', 'N/A'),
-                    "moonshot_score": stock_data.get('moonshot_score', 0),
-                    "forward_pe": stock_data.get('forward_pe'),
-                    "recommendation": stock_data.get('recommendation', ''),
-                    "target_mean": stock_data.get('target_mean')
                 }
         except:
             pass
-        
+
         return jsonify({
-            "ticker": ticker.upper(),
+            "ticker": ticker,
             "price": round(price, 2) if price else None,
-            "name": info.get('longName') or info.get('shortName') or ticker.upper(),
+            "name": snapshot.get("name", ticker),
             "snapshot": snapshot
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-@app.route('/api/watchlist_entries/live')
-def watchlist_entries_live():
-    """Bulk fetch current prices for all watchlist tickers"""
-    import yfinance as yf
-    try:
-        with open('data/watchlist_entries.json') as f:
-            data = json.load(f)
-        tickers = list(set(e['ticker'] for e in data.get('entries', [])))
-        if not tickers:
-            return jsonify({"prices": {}})
-        
-        tickers_obj = yf.Tickers(' '.join(tickers))
-        prices = {}
-        for t in tickers:
-            try:
-                info = tickers_obj.tickers[t].info
-                curr = info.get('regularMarketPrice') or info.get('currentPrice')
-                if curr:
-                    prices[t] = round(curr, 2)
-            except:
-                pass
-        return jsonify({"prices": prices})
-    except:
-        return jsonify({"prices": {}})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=18791, debug=True)
