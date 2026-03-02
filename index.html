@@ -33,7 +33,7 @@
             position: fixed;
             top: 15px;
             left: 15px;
-            z-index: 100;
+            z-index: 9999;
             background: var(--surface);
             border: 1px solid #2d3748;
             padding: 8px;
@@ -103,8 +103,15 @@
             z-index: 2;
             background: var(--bg);
         }
+        thead th {
+            position: sticky;
+            top: 0;
+            background: #161b2a;
+            z-index: 3;
+        }
         th.sticky-col {
             background: #161b2a;
+            z-index: 4;
         }
         tr:hover .sticky-col {
             background: #1e293b;
