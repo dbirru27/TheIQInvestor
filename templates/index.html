@@ -61,7 +61,7 @@
         /* Sortable Table Styles */
         table { width: 100%; border-collapse: collapse; min-width: 700px; }
         th { 
-            padding: 16px; 
+            padding: 8px 12px; 
             text-align: left; 
             background: #161b2a; 
             border-bottom: 2px solid #38bdf8; 
@@ -77,7 +77,7 @@
         th.sort-asc::after { content: ' ▲'; color: var(--accent); }
         th.sort-desc::after { content: ' ▼'; color: var(--accent); }
         
-        td { padding: 16px; border-bottom: 1px solid #2d3748; }
+        td { padding: 8px 12px; border-bottom: 1px solid #2d3748; font-size: 0.85rem; }
         tr:hover { background: #1e293b; }
         tr.filtered-out { display: none; }
 
@@ -1076,9 +1076,12 @@
                        <button class="edit-add-btn" onclick="deleteBasket('${basket}')" style="margin-left: 8px; border-color: #dc2626; color: #dc2626;">Delete Basket</button>`
                     : '';
                 
+                const safeBasket = basket.replace(/'/g, "\\'");
+                const collapsed = collapsedBaskets.has(basket);
                 html += `
-                    <tr class="basket-header" data-basket="${basket}">
-                        <td colspan="12" style="background: #0a0f1d; padding: 14px 16px; border-bottom: 2px solid var(--accent); font-weight: 700; font-size: 0.95rem;">
+                    <tr class="basket-header" data-basket="${basket}" onclick="toggleBasketCollapse('${safeBasket}')" style="cursor:pointer;">
+                        <td colspan="12" style="background: #0a0f1d; padding: 10px 16px; border-bottom: 2px solid var(--accent); font-weight: 700; font-size: 0.9rem;">
+                            <span style="display:inline-block;width:16px;font-size:0.7rem;color:var(--text-dim);">${collapsed ? '▶' : '▼'}</span>
                             ${icon} ${basket} 
                             <span style="font-size: 0.75rem; color: var(--accent); font-weight: 600; margin-left: 8px;">${weight}</span>
                             <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 400; margin-left: 8px;">· ${stocks.length} holdings</span>
@@ -1087,12 +1090,14 @@
                         </td>
                     </tr>
                 `;
-                if (stocks.length === 0) {
-                    html += `<tr><td colspan="12" style="text-align: center; padding: 20px; color: var(--text-dim); font-style: italic;">
-                        ${editMode ? 'Use "+ Add Ticker" above to add holdings' : 'No holdings — tap ✏️ Edit to add tickers'}
-                    </td></tr>`;
-                } else {
-                    html += stocks.map(renderStockRow).join('');
+                if (!collapsed) {
+                    if (stocks.length === 0) {
+                        html += `<tr data-basket-row="${basket}"><td colspan="12" style="text-align: center; padding: 14px; color: var(--text-dim); font-style: italic;">
+                            ${editMode ? 'Use "+ Add Ticker" above to add holdings' : 'No holdings — tap ✏️ Edit to add tickers'}
+                        </td></tr>`;
+                    } else {
+                        html += stocks.map(renderStockRow).join('');
+                    }
                 }
             }
             
@@ -1163,6 +1168,14 @@
         }
 
         // ===== EDIT MODE FUNCTIONALITY =====
+        const collapsedBaskets = new Set();
+        function toggleBasketCollapse(basket) {
+            if (editMode) return; // Don't collapse in edit mode
+            if (collapsedBaskets.has(basket)) collapsedBaskets.delete(basket);
+            else collapsedBaskets.add(basket);
+            renderWatchlist();
+        }
+
         let editMode = false;
         let editModeData = null; // Snapshot of portfolio for editing
         let currentEditBasket = null; // Track which basket we're adding to
