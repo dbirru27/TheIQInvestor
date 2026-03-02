@@ -1056,7 +1056,11 @@
                 const meta = (stocks.length > 0 && stocks[0].basket_metadata) ? stocks[0].basket_metadata : 
                              (editMode && editModeData?.basket_metadata?.[basket]) ? editModeData.basket_metadata[basket] : {};
                 const icon = meta.icon || basketIcons[basket] || '📋';
-                const avgChange = stocks.length > 0 ? stocks.reduce((s, st) => s + (st.daily_change || 0), 0) / stocks.length : 0;
+                // Weighted average: sum(change * position%) / sum(position%)
+                const totalWeight = stocks.reduce((s, st) => s + (st.position_size || 0), 0);
+                const avgChange = totalWeight > 0 
+                    ? stocks.reduce((s, st) => s + (st.daily_change || 0) * (st.position_size || 0), 0) / totalWeight 
+                    : 0;
                 const avgColor = avgChange > 0 ? '#10b981' : avgChange < 0 ? '#ef4444' : 'var(--text-dim)';
                 const avgPrefix = avgChange > 0 ? '+' : '';
                 
