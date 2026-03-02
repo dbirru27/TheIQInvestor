@@ -192,9 +192,8 @@ def watchlist():
 
 @app.route('/api/watchlist/live')
 def watchlist_live():
-    """Fetch live prices for all portfolio holdings"""
+    """Fetch live prices for all portfolio holdings using lightweight Yahoo API"""
     try:
-        import yfinance as yf
         from datetime import datetime
         
         # Get tickers from Supabase (source of truth), fall back to JSON
@@ -210,30 +209,41 @@ def watchlist_live():
             tickers = list(set(h['ticker'] for h in holdings))
         except:
             try:
-                with open('data/watchlist.json', 'r') as f:
+                with open('data/portfolio.json', 'r') as f:
                     data = json.load(f)
-                tickers = [s['ticker'] for s in data.get('all', [])]
+                for basket in data.get('baskets', {}).values():
+                    tickers.extend(basket.get('tickers', {}).keys())
+                tickers = list(set(tickers))
             except:
                 pass
         
         if not tickers:
             return jsonify({"error": "No tickers"}), 404
 
+        # Use Yahoo Finance v8 quote endpoint — single HTTP call for all tickers
+        symbols = ','.join(tickers)
+        quote_url = f'https://query1.finance.yahoo.com/v8/finance/chart/{tickers[0]}?comparisons={",".join(tickers[1:])}&range=1d&interval=1d'
+        
+        # Better approach: use v7 quote for batch prices
+        quote_url = f'https://query1.finance.yahoo.com/v7/finance/quote?symbols={symbols}'
+        req = urllib.request.Request(quote_url, headers={
+            'User-Agent': 'Mozilla/5.0',
+            'Accept': 'application/json'
+        })
+        resp = urllib.request.urlopen(req, timeout=8)
+        result = json.loads(resp.read())
+        
         live = {}
-        tickers_obj = yf.Tickers(' '.join(tickers))
-        for ticker in tickers:
-            try:
-                info = tickers_obj.tickers[ticker].info
-                curr = info.get('regularMarketPrice') or info.get('currentPrice')
-                prev = info.get('previousClose')
-                if curr and prev and prev > 0:
-                    live[ticker] = {
-                        "price": round(curr, 2),
-                        "previous_close": round(prev, 2),
-                        "daily_change": round((curr - prev) / prev * 100, 2)
-                    }
-            except:
-                pass
+        for q in result.get('quoteResponse', {}).get('result', []):
+            sym = q.get('symbol')
+            curr = q.get('regularMarketPrice')
+            prev = q.get('regularMarketPreviousClose')
+            if sym and curr and prev and prev > 0:
+                live[sym] = {
+                    "price": round(curr, 2),
+                    "previous_close": round(prev, 2),
+                    "daily_change": round((curr - prev) / prev * 100, 2)
+                }
 
         return jsonify({
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S EST"),
