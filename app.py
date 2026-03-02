@@ -412,8 +412,7 @@ def save_portfolio():
                     )
                     urllib.request.urlopen(req)
         except Exception as supabase_error:
-            # If Supabase fails, fall back to JSON file
-            pass
+            return jsonify({"error": f"Supabase save failed: {str(supabase_error)}"}), 500
         
         # Save JSON backup (skip on read-only filesystems like Vercel)
         try:
