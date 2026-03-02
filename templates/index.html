@@ -1014,10 +1014,13 @@
             for (const basket of allBaskets) {
                 const stocks = dataSource.baskets[basket];
                 if (!stocks) continue;
-                if (stocks.length === 0 && !editMode) continue;  // Show empty baskets in edit mode
+                // Show empty baskets always (they exist in DB), just with a message
                 
-                const icon = basketIcons[basket] || '📋';
-                const avgChange = stocks.reduce((s, st) => s + (st.daily_change || 0), 0) / stocks.length;
+                // Get icon/weight from data (supports new baskets from Supabase)
+                const meta = (stocks.length > 0 && stocks[0].basket_metadata) ? stocks[0].basket_metadata : 
+                             (editMode && editModeData?.basket_metadata?.[basket]) ? editModeData.basket_metadata[basket] : {};
+                const icon = meta.icon || basketIcons[basket] || '📋';
+                const avgChange = stocks.length > 0 ? stocks.reduce((s, st) => s + (st.daily_change || 0), 0) / stocks.length : 0;
                 const avgColor = avgChange > 0 ? '#10b981' : avgChange < 0 ? '#ef4444' : 'var(--text-dim)';
                 const avgPrefix = avgChange > 0 ? '+' : '';
                 
@@ -1029,7 +1032,7 @@
                     'AI Semis': '15% of IRA',
                     'Biotech': '3% of IRA'
                 };
-                const weight = basketWeights[basket] || '';
+                const weight = meta.weight || basketWeights[basket] || '';
                 
                 // Edit mode: Add controls to basket header
                 const basketControls = editMode 
@@ -1048,7 +1051,13 @@
                         </td>
                     </tr>
                 `;
-                html += stocks.map(renderStockRow).join('');
+                if (stocks.length === 0) {
+                    html += `<tr><td colspan="12" style="text-align: center; padding: 20px; color: var(--text-dim); font-style: italic;">
+                        ${editMode ? 'Use "+ Add Ticker" above to add holdings' : 'No holdings — tap ✏️ Edit to add tickers'}
+                    </td></tr>`;
+                } else {
+                    html += stocks.map(renderStockRow).join('');
+                }
             }
             
             tbody.innerHTML = html;
@@ -1232,7 +1241,8 @@
                     body: JSON.stringify(portfolio)
                 });
                 
-                if (!response.ok) throw new Error('Save failed');
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error || 'Save failed');
                 
                 // Success - force full reload from Supabase
                 cancelEditMode();
