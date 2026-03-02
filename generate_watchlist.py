@@ -14,23 +14,54 @@ from utils.logger import get_logger
 logger = get_logger('watchlist')
 
 def load_portfolio_data():
-    """Load baskets and position sizes from portfolio.json"""
-    portfolio_path = os.path.join(os.path.dirname(__file__), 'data', 'portfolio.json')
-    with open(portfolio_path, 'r') as f:
-        data = json.load(f)
-    
-    baskets = {}
-    position_sizes = {}
-    
-    for basket_name, basket_data in data.get('baskets', {}).items():
-        tickers = list(basket_data.get('tickers', {}).keys())
-        baskets[basket_name] = tickers
+    """Load baskets and position sizes from Supabase, fall back to portfolio.json"""
+    try:
+        # Try Supabase first
+        import urllib.request
+        supabase_url = os.environ.get('SUPABASE_URL', 'https://jvgxgfbthfsdqtvzeuqz.supabase.co')
+        supabase_key = os.environ.get('SUPABASE_KEY', '')
         
-        # Extract position sizes
-        for ticker, size in basket_data.get('tickers', {}).items():
-            position_sizes[ticker] = size
-    
-    return baskets, position_sizes
+        if not supabase_key:
+            raise Exception("SUPABASE_KEY not set")
+        
+        url = f'{supabase_url}/rest/v1/baskets?select=*,holdings(*)&order=sort_order'
+        req = urllib.request.Request(url, headers={
+            'apikey': supabase_key,
+            'Authorization': f'Bearer {supabase_key}'
+        })
+        resp = urllib.request.urlopen(req)
+        baskets_data = json.loads(resp.read())
+        
+        baskets = {}
+        position_sizes = {}
+        for b in baskets_data:
+            name = b['name']
+            tickers = [h['ticker'] for h in b['holdings']]
+            baskets[name] = tickers
+            for h in b['holdings']:
+                position_sizes[h['ticker']] = float(h['position_pct'])
+        
+        logger.info(f"Loaded {len(baskets)} baskets from Supabase")
+        return baskets, position_sizes
+    except Exception as e:
+        # Fall back to JSON
+        logger.warning(f"Supabase load failed ({e}), falling back to portfolio.json")
+        portfolio_path = os.path.join(os.path.dirname(__file__), 'data', 'portfolio.json')
+        with open(portfolio_path, 'r') as f:
+            data = json.load(f)
+        
+        baskets = {}
+        position_sizes = {}
+        
+        for basket_name, basket_data in data.get('baskets', {}).items():
+            tickers = list(basket_data.get('tickers', {}).keys())
+            baskets[basket_name] = tickers
+            
+            # Extract position sizes
+            for ticker, size in basket_data.get('tickers', {}).items():
+                position_sizes[ticker] = size
+        
+        return baskets, position_sizes
 
 # Load from portfolio.json
 BASKETS, POSITION_SIZES = load_portfolio_data()

@@ -1,10 +1,15 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 import os
 import json
 import traceback
 import sys
+import urllib.request
 
 app = Flask(__name__)
+
+# Supabase Configuration
+SUPABASE_URL = os.environ.get('SUPABASE_URL', 'https://jvgxgfbthfsdqtvzeuqz.supabase.co')
+SUPABASE_KEY = os.environ.get('SUPABASE_KEY', '')  # Set via environment variable
 
 @app.route('/health')
 def health():
@@ -304,21 +309,103 @@ def rotation_scan():
 
 @app.route('/api/portfolio', methods=['GET'])
 def get_portfolio():
-    """Return portfolio.json"""
+    """Fetch portfolio from Supabase, fall back to portfolio.json"""
     try:
-        with open('data/portfolio.json') as f:
-            return jsonify(json.load(f))
-    except FileNotFoundError:
-        return jsonify({"error": "Portfolio not found"}), 404
+        # Try Supabase first
+        url = f'{SUPABASE_URL}/rest/v1/baskets?select=*,holdings(*)&order=sort_order'
+        req = urllib.request.Request(url, headers={
+            'apikey': SUPABASE_KEY,
+            'Authorization': f'Bearer {SUPABASE_KEY}'
+        })
+        resp = urllib.request.urlopen(req)
+        baskets = json.loads(resp.read())
+        
+        # Transform to the format the frontend expects
+        result = {"baskets": {}}
+        for b in baskets:
+            result["baskets"][b["name"]] = {
+                "id": b["id"],
+                "icon": b["icon"],
+                "weight": b["weight"],
+                "tickers": {h["ticker"]: float(h["position_pct"]) for h in b["holdings"]}
+            }
+        return jsonify(result)
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        # Fall back to JSON file
+        try:
+            with open('data/portfolio.json') as f:
+                return jsonify(json.load(f))
+        except FileNotFoundError:
+            return jsonify({"error": "Portfolio not found"}), 404
+        except Exception as e2:
+            return jsonify({"error": str(e2)}), 500
 
 @app.route('/api/portfolio', methods=['POST'])
 def save_portfolio():
-    """Save entire portfolio (used after edits)"""
+    """Save portfolio to Supabase, fall back to portfolio.json"""
     try:
-        from flask import request
         data = request.get_json()
+        
+        # Try Supabase first
+        try:
+            # Delete all existing holdings
+            req = urllib.request.Request(
+                f'{SUPABASE_URL}/rest/v1/holdings?id=gt.0',
+                method='DELETE',
+                headers={'apikey': SUPABASE_KEY, 'Authorization': f'Bearer {SUPABASE_KEY}'}
+            )
+            urllib.request.urlopen(req)
+            
+            # Delete all baskets
+            req = urllib.request.Request(
+                f'{SUPABASE_URL}/rest/v1/baskets?id=gt.0',
+                method='DELETE',
+                headers={'apikey': SUPABASE_KEY, 'Authorization': f'Bearer {SUPABASE_KEY}'}
+            )
+            urllib.request.urlopen(req)
+            
+            # Re-insert baskets and holdings
+            for i, (name, basket) in enumerate(data.get('baskets', {}).items()):
+                basket_data = json.dumps({
+                    "name": name,
+                    "icon": basket.get("icon", "📋"),
+                    "weight": basket.get("weight", ""),
+                    "sort_order": i
+                }).encode()
+                req = urllib.request.Request(
+                    f'{SUPABASE_URL}/rest/v1/baskets',
+                    data=basket_data,
+                    method='POST',
+                    headers={
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': f'Bearer {SUPABASE_KEY}',
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=representation'
+                    }
+                )
+                resp = urllib.request.urlopen(req)
+                basket_row = json.loads(resp.read())[0]
+                basket_id = basket_row['id']
+                
+                holdings = [{"basket_id": basket_id, "ticker": t, "position_pct": p} 
+                           for t, p in basket.get("tickers", {}).items()]
+                if holdings:
+                    req = urllib.request.Request(
+                        f'{SUPABASE_URL}/rest/v1/holdings',
+                        data=json.dumps(holdings).encode(),
+                        method='POST',
+                        headers={
+                            'apikey': SUPABASE_KEY,
+                            'Authorization': f'Bearer {SUPABASE_KEY}',
+                            'Content-Type': 'application/json'
+                        }
+                    )
+                    urllib.request.urlopen(req)
+        except Exception as supabase_error:
+            # If Supabase fails, fall back to JSON file
+            pass
+        
+        # Always save to JSON as backup
         with open('data/portfolio.json', 'w') as f:
             json.dump(data, f, indent=2)
         return jsonify({"status": "ok"})
@@ -327,21 +414,78 @@ def save_portfolio():
 
 @app.route('/api/watchlist_entries', methods=['GET'])
 def get_watchlist_entries():
-    """Return watchlist entries"""
+    """Fetch watchlist entries from Supabase, fall back to JSON"""
     try:
-        with open('data/watchlist_entries.json') as f:
-            return jsonify(json.load(f))
-    except FileNotFoundError:
-        return jsonify({"entries": []})
+        # Try Supabase first
+        url = f'{SUPABASE_URL}/rest/v1/watchlist_entries?select=*&order=created_at.desc'
+        req = urllib.request.Request(url, headers={
+            'apikey': SUPABASE_KEY,
+            'Authorization': f'Bearer {SUPABASE_KEY}'
+        })
+        resp = urllib.request.urlopen(req)
+        entries = json.loads(resp.read())
+        
+        # Transform to match frontend expectation
+        return jsonify({"entries": [{
+            "ticker": e["ticker"],
+            "added_date": e["added_date"],
+            "entry_price": float(e["entry_price"]),
+            "snapshot": e.get("snapshot", {})
+        } for e in entries]})
+    except Exception as e:
+        # Fall back to JSON file
+        try:
+            with open('data/watchlist_entries.json') as f:
+                return jsonify(json.load(f))
+        except FileNotFoundError:
+            return jsonify({"entries": []})
 
 @app.route('/api/watchlist_entries', methods=['POST'])
 def save_watchlist_entries():
-    """Save watchlist entries"""
-    from flask import request
-    data = request.get_json()
-    with open('data/watchlist_entries.json', 'w') as f:
-        json.dump(data, f, indent=2)
-    return jsonify({"status": "ok"})
+    """Save watchlist entries to Supabase, fall back to JSON"""
+    try:
+        data = request.get_json()
+        entries = data.get('entries', [])
+        
+        # Try Supabase first
+        try:
+            # Delete all existing
+            req = urllib.request.Request(
+                f'{SUPABASE_URL}/rest/v1/watchlist_entries?id=gt.0',
+                method='DELETE',
+                headers={'apikey': SUPABASE_KEY, 'Authorization': f'Bearer {SUPABASE_KEY}'}
+            )
+            urllib.request.urlopen(req)
+            
+            # Insert all
+            if entries:
+                rows = [{
+                    "ticker": e["ticker"],
+                    "added_date": e.get("added_date"),
+                    "entry_price": e["entry_price"],
+                    "snapshot": e.get("snapshot", {})
+                } for e in entries]
+                req = urllib.request.Request(
+                    f'{SUPABASE_URL}/rest/v1/watchlist_entries',
+                    data=json.dumps(rows).encode(),
+                    method='POST',
+                    headers={
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': f'Bearer {SUPABASE_KEY}',
+                        'Content-Type': 'application/json'
+                    }
+                )
+                urllib.request.urlopen(req)
+        except Exception as supabase_error:
+            # If Supabase fails, fall back to JSON
+            pass
+        
+        # Always save to JSON as backup
+        with open('data/watchlist_entries.json', 'w') as f:
+            json.dump(data, f, indent=2)
+        return jsonify({"status": "ok"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/api/stock_price/<ticker>')
 def get_stock_price(ticker):
