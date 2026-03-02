@@ -9,7 +9,17 @@ app = Flask(__name__)
 
 # Supabase Configuration
 SUPABASE_URL = os.environ.get('SUPABASE_URL', 'https://jvgxgfbthfsdqtvzeuqz.supabase.co')
-SUPABASE_KEY = os.environ.get('SUPABASE_KEY', '')  # Set via environment variable
+SUPABASE_KEY = os.environ.get('SUPABASE_KEY', '')
+
+# Load from .env file if not set (local dev)
+if not SUPABASE_KEY:
+    try:
+        with open('.env') as f:
+            for line in f:
+                if line.startswith('SUPABASE_KEY='):
+                    SUPABASE_KEY = line.strip().split('=', 1)[1]
+    except FileNotFoundError:
+        pass
 
 @app.route('/health')
 def health():
