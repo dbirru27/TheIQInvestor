@@ -746,6 +746,7 @@
         function showAlert(msg) { alert(msg); }
         
         function showDashboard() {
+            if (location.hash !== '#dashboard' && location.hash !== '') history.pushState(null, '', '#dashboard');
             document.getElementById('dashboard-view').style.display = 'block';
             document.getElementById('detail-view').style.display = 'none';
             document.getElementById('watchlist-view').style.display = 'none';
@@ -775,6 +776,7 @@
 
         async function showWatchlist() {
             document.getElementById('dashboard-view').style.display = 'none';
+            if (location.hash !== '#portfolio') history.pushState(null, '', '#portfolio');
             document.getElementById('detail-view').style.display = 'none';
             document.getElementById('watchlist-view').style.display = 'block';
             document.getElementById('rotation-view').style.display = 'none';
@@ -1424,8 +1426,23 @@
             }
         }
 
+        // Hash-based routing — preserves page on refresh and enables back button
+        function handleRoute() {
+            const hash = location.hash.replace('#', '') || 'dashboard';
+            if (hash === 'portfolio') showWatchlist();
+            else if (hash === 'rotation') showRotation();
+            else if (hash === 'watchlist') showWatchlistEntries();
+            else if (hash.startsWith('stock/')) viewStock(hash.split('/')[1]);
+            else showDashboard();
+        }
+        window.addEventListener('hashchange', handleRoute);
+        window.addEventListener('popstate', handleRoute);
+
         document.addEventListener('DOMContentLoaded', function() {
             init();
+            
+            // Route to correct page based on URL hash
+            handleRoute();
             
             // Preload all stocks data in background
             loadAllStocks().catch(err => console.log('Background preload failed:', err));
@@ -1464,6 +1481,7 @@
         }
 
         async function viewStock(ticker) {
+            if (location.hash !== `#stock/${ticker}`) history.pushState(null, '', `#stock/${ticker}`);
             document.getElementById('dashboard-view').style.display = 'none';
             document.getElementById('detail-view').style.display = 'block';
             document.getElementById('rotation-view').style.display = 'none';
@@ -1579,6 +1597,7 @@
         let rotationSort = { column: 'rotation_score', direction: 'desc' };
 
         async function showRotation() {
+            if (location.hash !== '#rotation') history.pushState(null, '', '#rotation');
             document.getElementById('dashboard-view').style.display = 'none';
             document.getElementById('detail-view').style.display = 'none';
             document.getElementById('watchlist-view').style.display = 'none';
@@ -1720,6 +1739,7 @@
         let watchlistLivePrices = {};
 
         async function showWatchlistEntries() {
+            if (location.hash !== '#watchlist') history.pushState(null, '', '#watchlist');
             // Hide all other views
             document.getElementById('dashboard-view').style.display = 'none';
             document.getElementById('detail-view').style.display = 'none';
