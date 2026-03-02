@@ -220,25 +220,21 @@ def watchlist_live():
         if not tickers:
             return jsonify({"error": "No tickers"}), 404
 
-        # Use Yahoo Finance v8 quote endpoint — single HTTP call for all tickers
+        # Use Yahoo Finance spark endpoint — single HTTP call for all tickers
         symbols = ','.join(tickers)
-        quote_url = f'https://query1.finance.yahoo.com/v8/finance/chart/{tickers[0]}?comparisons={",".join(tickers[1:])}&range=1d&interval=1d'
-        
-        # Better approach: use v7 quote for batch prices
-        quote_url = f'https://query1.finance.yahoo.com/v7/finance/quote?symbols={symbols}'
-        req = urllib.request.Request(quote_url, headers={
-            'User-Agent': 'Mozilla/5.0',
-            'Accept': 'application/json'
+        spark_url = f'https://query1.finance.yahoo.com/v8/finance/spark?symbols={symbols}&range=2d&interval=1d'
+        req = urllib.request.Request(spark_url, headers={
+            'User-Agent': 'Mozilla/5.0'
         })
         resp = urllib.request.urlopen(req, timeout=8)
         result = json.loads(resp.read())
         
         live = {}
-        for q in result.get('quoteResponse', {}).get('result', []):
-            sym = q.get('symbol')
-            curr = q.get('regularMarketPrice')
-            prev = q.get('regularMarketPreviousClose')
-            if sym and curr and prev and prev > 0:
+        for sym, info in result.items():
+            closes = info.get('close', [])
+            prev = info.get('chartPreviousClose') or info.get('previousClose')
+            curr = closes[-1] if closes else None
+            if curr and prev and prev > 0:
                 live[sym] = {
                     "price": round(curr, 2),
                     "previous_close": round(prev, 2),
