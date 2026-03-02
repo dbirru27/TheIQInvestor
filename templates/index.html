@@ -835,6 +835,7 @@
                     }
                     
                     document.getElementById('watchlist-updated').textContent = new Date().toLocaleString();
+                    updateBasketFilters();
                     renderWatchlist();
                 } catch (err) {
                     document.getElementById('watchlist-tbody').innerHTML = 
