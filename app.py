@@ -192,14 +192,30 @@ def watchlist():
 
 @app.route('/api/watchlist/live')
 def watchlist_live():
-    """Fetch live prices for all watchlist holdings (lightweight refresh)"""
+    """Fetch live prices for all portfolio holdings"""
     try:
         import yfinance as yf
         from datetime import datetime
-        with open('data/watchlist.json', 'r') as f:
-            data = json.load(f)
-
-        tickers = [s['ticker'] for s in data.get('all', [])]
+        
+        # Get tickers from Supabase (source of truth), fall back to JSON
+        tickers = []
+        try:
+            url = f'{SUPABASE_URL}/rest/v1/holdings?select=ticker'
+            req = urllib.request.Request(url, headers={
+                'apikey': SUPABASE_KEY,
+                'Authorization': f'Bearer {SUPABASE_KEY}'
+            })
+            resp = urllib.request.urlopen(req)
+            holdings = json.loads(resp.read())
+            tickers = list(set(h['ticker'] for h in holdings))
+        except:
+            try:
+                with open('data/watchlist.json', 'r') as f:
+                    data = json.load(f)
+                tickers = [s['ticker'] for s in data.get('all', [])]
+            except:
+                pass
+        
         if not tickers:
             return jsonify({"error": "No tickers"}), 404
 
