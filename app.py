@@ -24,35 +24,37 @@ if not SUPABASE_KEY:
     except FileNotFoundError:
         pass
 
-def fetch_live_price(ticker):
-    """Fetch real-time price for a single ticker using Yahoo chart endpoint."""
-    try:
-        url = f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?interval=1d&range=2d'
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        resp = urllib.request.urlopen(req, timeout=8)
-        data = json.loads(resp.read())
-        meta = data['chart']['result'][0]['meta']
-        curr = meta.get('regularMarketPrice')
-        prev = meta.get('chartPreviousClose')
-        if curr and prev and prev > 0:
-            return ticker, {
-                "price": round(curr, 2),
-                "previous_close": round(prev, 2),
-                "daily_change": round((curr - prev) / prev * 100, 2)
-            }
-    except Exception:
-        pass
-    return ticker, None
-
-def fetch_live_prices_bulk(tickers, max_workers=10):
-    """Fetch real-time prices for multiple tickers in parallel."""
+def fetch_live_prices_bulk(tickers, batch_size=15):
+    """Fetch real-time prices using Yahoo spark endpoint (batch, fast).
+    Uses close[-1] as current price and close[-2] as previous close for correct daily change.
+    """
     results = {}
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = {executor.submit(fetch_live_price, t): t for t in tickers}
-        for future in as_completed(futures):
-            ticker, data = future.result()
-            if data:
-                results[ticker] = data
+    for i in range(0, len(tickers), batch_size):
+        batch = tickers[i:i+batch_size]
+        symbols = ','.join(batch)
+        url = f'https://query1.finance.yahoo.com/v8/finance/spark?symbols={symbols}&range=5d&interval=1d'
+        try:
+            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+            resp = urllib.request.urlopen(req, timeout=8)
+            data = json.loads(resp.read())
+            for sym, info in data.items():
+                closes = info.get('close', [])
+                if len(closes) >= 2:
+                    curr = closes[-1]
+                    prev = closes[-2]
+                elif len(closes) == 1:
+                    curr = closes[0]
+                    prev = info.get('chartPreviousClose') or curr
+                else:
+                    continue
+                if curr and prev and prev > 0:
+                    results[sym] = {
+                        "price": round(curr, 2),
+                        "previous_close": round(prev, 2),
+                        "daily_change": round((curr - prev) / prev * 100, 2)
+                    }
+        except Exception:
+            pass
     return results
 
 
@@ -623,8 +625,8 @@ def get_stock_price(ticker):
     """Get current price + snapshot for a ticker"""
     try:
         ticker = ticker.upper()
-        _, price_data = fetch_live_price(ticker)
-        price = price_data['price'] if price_data else None
+        price_data = fetch_live_prices_bulk([ticker])
+        price = price_data.get(ticker, {}).get('price')
 
         # Snapshot from all_stocks.json
         snapshot = {}
