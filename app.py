@@ -4,6 +4,7 @@ import json
 import traceback
 import sys
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 app = Flask(__name__)
 
@@ -20,6 +21,38 @@ if not SUPABASE_KEY:
                     SUPABASE_KEY = line.strip().split('=', 1)[1]
     except FileNotFoundError:
         pass
+
+def fetch_live_price(ticker):
+    """Fetch real-time price for a single ticker using Yahoo chart endpoint."""
+    try:
+        url = f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?interval=1d&range=2d'
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        resp = urllib.request.urlopen(req, timeout=8)
+        data = json.loads(resp.read())
+        meta = data['chart']['result'][0]['meta']
+        curr = meta.get('regularMarketPrice')
+        prev = meta.get('chartPreviousClose')
+        if curr and prev and prev > 0:
+            return ticker, {
+                "price": round(curr, 2),
+                "previous_close": round(prev, 2),
+                "daily_change": round((curr - prev) / prev * 100, 2)
+            }
+    except Exception:
+        pass
+    return ticker, None
+
+def fetch_live_prices_bulk(tickers, max_workers=10):
+    """Fetch real-time prices for multiple tickers in parallel."""
+    results = {}
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(fetch_live_price, t): t for t in tickers}
+        for future in as_completed(futures):
+            ticker, data = future.result()
+            if data:
+                results[ticker] = data
+    return results
+
 
 @app.route('/health')
 def health():
@@ -220,29 +253,7 @@ def watchlist_live():
         if not tickers:
             return jsonify({"error": "No tickers"}), 404
 
-        # Use Yahoo Finance spark endpoint — batch in groups of 15
-        live = {}
-        batch_size = 15
-        for i in range(0, len(tickers), batch_size):
-            batch = tickers[i:i+batch_size]
-            symbols = ','.join(batch)
-            spark_url = f'https://query1.finance.yahoo.com/v8/finance/spark?symbols={symbols}&range=2d&interval=1d'
-            try:
-                req = urllib.request.Request(spark_url, headers={'User-Agent': 'Mozilla/5.0'})
-                resp = urllib.request.urlopen(req, timeout=8)
-                result = json.loads(resp.read())
-                for sym, info in result.items():
-                    closes = info.get('close', [])
-                    prev = info.get('chartPreviousClose') or info.get('previousClose')
-                    curr = closes[-1] if closes else None
-                    if curr and prev and prev > 0:
-                        live[sym] = {
-                            "price": round(curr, 2),
-                            "previous_close": round(prev, 2),
-                            "daily_change": round((curr - prev) / prev * 100, 2)
-                        }
-            except:
-                pass  # Skip failed batches, return what we got
+        live = fetch_live_prices_bulk(tickers)
 
         return jsonify({
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S EST"),
@@ -603,26 +614,7 @@ def watchlists_live():
         if not tickers:
             return jsonify({"prices": {}})
 
-        live = {}
-        batch_size = 15
-        for i in range(0, len(tickers), batch_size):
-            batch = tickers[i:i+batch_size]
-            spark_url = f'https://query1.finance.yahoo.com/v8/finance/spark?symbols={",".join(batch)}&range=2d&interval=1d'
-            try:
-                req = urllib.request.Request(spark_url, headers={'User-Agent': 'Mozilla/5.0'})
-                resp = urllib.request.urlopen(req, timeout=8)
-                result = json.loads(resp.read())
-                for sym, info in result.items():
-                    closes = info.get('close', [])
-                    prev = info.get('chartPreviousClose')
-                    curr = closes[-1] if closes else None
-                    if curr:
-                        live[sym] = {
-                            "price": round(curr, 2),
-                            "daily_change": round((curr - prev) / prev * 100, 2) if prev and prev > 0 else 0
-                        }
-            except:
-                pass
+        live = fetch_live_prices_bulk(tickers)
 
         return jsonify({"prices": live, "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S EST")})
     except Exception as e:
@@ -633,13 +625,8 @@ def get_stock_price(ticker):
     """Get current price + snapshot for a ticker"""
     try:
         ticker = ticker.upper()
-        # Get price from spark
-        spark_url = f'https://query1.finance.yahoo.com/v8/finance/spark?symbols={ticker}&range=2d&interval=1d'
-        req = urllib.request.Request(spark_url, headers={'User-Agent': 'Mozilla/5.0'})
-        resp = urllib.request.urlopen(req, timeout=5)
-        result = json.loads(resp.read())
-        closes = result.get(ticker, {}).get('close', [])
-        price = closes[-1] if closes else None
+        _, price_data = fetch_live_price(ticker)
+        price = price_data['price'] if price_data else None
 
         # Snapshot from all_stocks.json
         snapshot = {}
