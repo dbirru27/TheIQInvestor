@@ -26,27 +26,22 @@ if not SUPABASE_KEY:
 
 def fetch_live_prices_bulk(tickers, batch_size=15):
     """Fetch real-time prices using Yahoo spark endpoint (batch, fast).
-    Uses close[-1] as current price and close[-2] as previous close for correct daily change.
+    range=1d&interval=1m gives true intraday real-time prices.
+    chartPreviousClose = yesterday's official close (correct daily change reference).
     """
     results = {}
     for i in range(0, len(tickers), batch_size):
         batch = tickers[i:i+batch_size]
         symbols = ','.join(batch)
-        url = f'https://query1.finance.yahoo.com/v8/finance/spark?symbols={symbols}&range=5d&interval=1d'
+        url = f'https://query1.finance.yahoo.com/v8/finance/spark?symbols={symbols}&range=1d&interval=1m'
         try:
             req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
             resp = urllib.request.urlopen(req, timeout=8)
             data = json.loads(resp.read())
             for sym, info in data.items():
                 closes = info.get('close', [])
-                if len(closes) >= 2:
-                    curr = closes[-1]
-                    prev = closes[-2]
-                elif len(closes) == 1:
-                    curr = closes[0]
-                    prev = info.get('chartPreviousClose') or curr
-                else:
-                    continue
+                curr = closes[-1] if closes else None
+                prev = info.get('chartPreviousClose')  # yesterday's official close
                 if curr and prev and prev > 0:
                     results[sym] = {
                         "price": round(curr, 2),
