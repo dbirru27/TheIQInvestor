@@ -384,74 +384,104 @@ def get_portfolio():
 
 @app.route('/api/portfolio', methods=['POST'])
 def save_portfolio():
-    """Save portfolio to Supabase, fall back to portfolio.json"""
+    """Save portfolio to Supabase using incremental updates (upsert/targeted delete).
+    Never wipes everything — only applies the diff: insert new, update changed, delete removed.
+    """
     try:
         data = request.get_json()
-        
-        # Try Supabase first
+        sb_headers = {
+            'apikey': SUPABASE_KEY,
+            'Authorization': f'Bearer {SUPABASE_KEY}',
+            'Content-Type': 'application/json'
+        }
+
+        def sb_get(path):
+            req = urllib.request.Request(f'{SUPABASE_URL}{path}', headers=sb_headers)
+            return json.loads(urllib.request.urlopen(req).read())
+
+        def sb_post(path, payload, prefer=None):
+            h = {**sb_headers}
+            if prefer: h['Prefer'] = prefer
+            req = urllib.request.Request(f'{SUPABASE_URL}{path}',
+                data=json.dumps(payload).encode(), method='POST', headers=h)
+            return json.loads(urllib.request.urlopen(req).read())
+
+        def sb_patch(path, payload):
+            req = urllib.request.Request(f'{SUPABASE_URL}{path}',
+                data=json.dumps(payload).encode(), method='PATCH', headers=sb_headers)
+            urllib.request.urlopen(req)
+
+        def sb_delete(path):
+            req = urllib.request.Request(f'{SUPABASE_URL}{path}', method='DELETE', headers=sb_headers)
+            urllib.request.urlopen(req)
+
         try:
-            # Delete all existing holdings
-            req = urllib.request.Request(
-                f'{SUPABASE_URL}/rest/v1/holdings?id=gt.0',
-                method='DELETE',
-                headers={'apikey': SUPABASE_KEY, 'Authorization': f'Bearer {SUPABASE_KEY}'}
-            )
-            urllib.request.urlopen(req)
-            
-            # Delete all baskets
-            req = urllib.request.Request(
-                f'{SUPABASE_URL}/rest/v1/baskets?id=gt.0',
-                method='DELETE',
-                headers={'apikey': SUPABASE_KEY, 'Authorization': f'Bearer {SUPABASE_KEY}'}
-            )
-            urllib.request.urlopen(req)
-            
-            # Re-insert baskets and holdings
-            for i, (name, basket) in enumerate(data.get('baskets', {}).items()):
-                basket_data = json.dumps({
-                    "name": name,
-                    "icon": basket.get("icon", "📋"),
-                    "weight": basket.get("weight", ""),
-                    "sort_order": i
-                }).encode()
-                req = urllib.request.Request(
-                    f'{SUPABASE_URL}/rest/v1/baskets',
-                    data=basket_data,
-                    method='POST',
-                    headers={
-                        'apikey': SUPABASE_KEY,
-                        'Authorization': f'Bearer {SUPABASE_KEY}',
-                        'Content-Type': 'application/json',
-                        'Prefer': 'return=representation'
-                    }
-                )
-                resp = urllib.request.urlopen(req)
-                basket_row = json.loads(resp.read())[0]
-                basket_id = basket_row['id']
-                
-                holdings = [{"basket_id": basket_id, "ticker": t, "position_pct": p} 
-                           for t, p in basket.get("tickers", {}).items()]
-                if holdings:
-                    req = urllib.request.Request(
-                        f'{SUPABASE_URL}/rest/v1/holdings',
-                        data=json.dumps(holdings).encode(),
-                        method='POST',
-                        headers={
-                            'apikey': SUPABASE_KEY,
-                            'Authorization': f'Bearer {SUPABASE_KEY}',
-                            'Content-Type': 'application/json'
-                        }
-                    )
-                    urllib.request.urlopen(req)
+            # --- Step 1: Get current state from Supabase ---
+            existing_baskets = sb_get('/rest/v1/baskets?select=id,name,icon,weight,sort_order')
+            existing_map = {b['name']: b for b in existing_baskets}
+
+            incoming_baskets = data.get('baskets', {})
+            incoming_names = set(incoming_baskets.keys())
+            existing_names = set(existing_map.keys())
+
+            # --- Step 2: Delete removed baskets (cascades to holdings via FK) ---
+            for name in existing_names - incoming_names:
+                bid = existing_map[name]['id']
+                sb_delete(f'/rest/v1/holdings?basket_id=eq.{bid}')
+                sb_delete(f'/rest/v1/baskets?id=eq.{bid}')
+
+            # --- Step 3: Upsert each basket + its holdings ---
+            for i, (name, basket) in enumerate(incoming_baskets.items()):
+                if name in existing_map:
+                    # Update existing basket metadata
+                    bid = existing_map[name]['id']
+                    sb_patch(f'/rest/v1/baskets?id=eq.{bid}', {
+                        "icon": basket.get("icon", "📋"),
+                        "weight": basket.get("weight", ""),
+                        "sort_order": i
+                    })
+                else:
+                    # Insert new basket
+                    rows = sb_post('/rest/v1/baskets', {
+                        "name": name,
+                        "icon": basket.get("icon", "📋"),
+                        "weight": basket.get("weight", ""),
+                        "sort_order": i
+                    }, prefer='return=representation')
+                    bid = rows[0]['id']
+                    existing_map[name] = {'id': bid}
+
+                # Sync holdings: get current, diff, apply changes
+                cur_holdings = sb_get(f'/rest/v1/holdings?basket_id=eq.{bid}&select=id,ticker,position_pct')
+                cur_map = {h['ticker']: h for h in cur_holdings}
+                new_tickers = basket.get("tickers", {})
+
+                # Delete removed tickers
+                for ticker in set(cur_map) - set(new_tickers):
+                    sb_delete(f'/rest/v1/holdings?id=eq.{cur_map[ticker]["id"]}')
+
+                # Insert new tickers
+                to_insert = [{"basket_id": bid, "ticker": t, "position_pct": p}
+                             for t, p in new_tickers.items() if t not in cur_map]
+                if to_insert:
+                    sb_post('/rest/v1/holdings', to_insert)
+
+                # Update changed position sizes
+                for ticker, pct in new_tickers.items():
+                    if ticker in cur_map and cur_map[ticker]['position_pct'] != pct:
+                        sb_patch(f'/rest/v1/holdings?id=eq.{cur_map[ticker]["id"]}',
+                                 {"position_pct": pct})
+
         except Exception as supabase_error:
             return jsonify({"error": f"Supabase save failed: {str(supabase_error)}"}), 500
-        
-        # Save JSON backup (skip on read-only filesystems like Vercel)
+
+        # Save JSON backup locally (skip on read-only filesystems like Vercel)
         try:
             with open('data/portfolio.json', 'w') as f:
                 json.dump(data, f, indent=2)
         except OSError:
             pass
+
         return jsonify({"status": "ok"})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
