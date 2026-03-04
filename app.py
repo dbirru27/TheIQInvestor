@@ -176,48 +176,79 @@ def get_news(ticker):
 
 @app.route('/api/watchlist')
 def watchlist():
-    """Serve watchlist with scores from DB + live prices from Yahoo"""
+    """Serve portfolio from Supabase (always fresh) + scores from all_stocks.json"""
     try:
-        import yfinance as yf
+        # Load scores from all_stocks.json
+        all_stocks = {}
+        try:
+            with open('data/all_stocks.json') as f:
+                raw = json.load(f)
+            all_stocks = raw.get('stocks', raw)
+        except Exception:
+            pass
 
-        with open('data/watchlist.json', 'r') as f:
-            data = json.load(f)
+        # Fetch baskets + holdings from Supabase (source of truth)
+        sb_headers = {'apikey': SUPABASE_KEY, 'Authorization': f'Bearer {SUPABASE_KEY}'}
+        req = urllib.request.Request(
+            f'{SUPABASE_URL}/rest/v1/baskets?select=name,icon,weight,sort_order,holdings(ticker,position_pct)&order=sort_order',
+            headers=sb_headers
+        )
+        baskets_raw = json.loads(urllib.request.urlopen(req).read())
 
-        # Bulk fetch live prices
-        tickers = [s['ticker'] for s in data.get('all', [])]
-        if tickers:
-            try:
-                tickers_obj = yf.Tickers(' '.join(tickers))
-                for stock in data.get('all', []):
-                    t = stock['ticker']
-                    try:
-                        info = tickers_obj.tickers[t].info
-                        curr = info.get('regularMarketPrice') or info.get('currentPrice')
-                        prev = info.get('previousClose')
-                        if curr and prev and prev > 0:
-                            stock['price'] = round(curr, 2)
-                            stock['previous_close'] = round(prev, 2)
-                            stock['daily_change'] = round((curr - prev) / prev * 100, 2)
-                        # Also update name if missing
-                        if stock.get('name') == stock['ticker'] or not stock.get('name'):
-                            stock['name'] = info.get('longName') or info.get('shortName') or t
-                    except:
-                        pass
+        all_stocks_list = []
+        baskets = {}
 
-                # Update basket copies too
-                for basket_name, stocks in data.get('baskets', {}).items():
-                    for stock in stocks:
-                        match = next((s for s in data['all'] if s['ticker'] == stock['ticker']), None)
-                        if match:
-                            stock.update({k: match[k] for k in ['price', 'previous_close', 'daily_change', 'name'] if k in match})
-            except:
-                pass
+        for b in baskets_raw:
+            basket_name = b['name']
+            basket_meta = {'icon': b.get('icon', '📋'), 'weight': b.get('weight', '')}
+            baskets[basket_name] = []
 
-        data['last_updated'] = datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M EST")
-        return jsonify(data)
-    except FileNotFoundError:
-        return jsonify({"error": "Watchlist not generated yet"}), 404
+            for h in b.get('holdings', []):
+                ticker = h['ticker']
+                scores = all_stocks.get(ticker, {})
+                stock = {
+                    'ticker': ticker,
+                    'name': scores.get('name', ticker),
+                    'sector': scores.get('sector', ''),
+                    'score': scores.get('score', 0),
+                    'grade': scores.get('grade', 'N/A'),
+                    'technical_score': scores.get('technical_score', 0),
+                    'growth_score': scores.get('growth_score', 0),
+                    'quality_score': scores.get('quality_score', 0),
+                    'context_score': scores.get('context_score', 0),
+                    'moonshot_score': scores.get('moonshot_score', 0),
+                    'rotation_score': scores.get('rotation_score', 0),
+                    'trailing_pe': scores.get('trailing_pe'),
+                    'forward_pe': scores.get('forward_pe'),
+                    'peg_ratio': scores.get('peg_ratio'),
+                    'revenue_growth': scores.get('revenue_growth'),
+                    'earnings_growth': scores.get('earnings_growth'),
+                    'current_price': scores.get('current_price'),
+                    'position_size': h.get('position_pct', 0),
+                    'basket': basket_name,
+                    'basket_metadata': basket_meta,
+                    'price': None,
+                    'previous_close': None,
+                    'daily_change': None,
+                }
+                all_stocks_list.append(stock)
+                baskets[basket_name].append(stock)
+
+        return jsonify({
+            'all': all_stocks_list,
+            'baskets': baskets,
+            'last_updated': datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M EST")
+        })
+
     except Exception as e:
+        # Fallback to cached watchlist.json if Supabase is unavailable
+        try:
+            with open('data/watchlist.json') as f:
+                data = json.load(f)
+            data['last_updated'] = datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M EST")
+            return jsonify(data)
+        except Exception:
+            pass
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/watchlist/live')
