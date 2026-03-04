@@ -545,6 +545,7 @@
                             <th>Score</th>
                             <th>Grade</th>
                             <th>Rotation</th>
+                            <th>Signal</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -869,7 +870,7 @@
                         }
                     }
                     
-                    document.getElementById('watchlist-updated').textContent = new Date().toLocaleString();
+                    document.getElementById('watchlist-updated').textContent = 'Fetching live prices...';
                     updateBasketFilters();
                     renderWatchlist();
                 } catch (err) {
@@ -1824,6 +1825,7 @@
             updateWLFilters();
             renderWL();
             fetchWLLivePrices();
+            loadSellSignals();
         }
 
         function updateWLFilters() {
@@ -1844,12 +1846,38 @@
             renderWL();
         }
 
+        // Sell signals data (loaded async)
+        let sellSignals = {};
+        async function loadSellSignals() {
+            try {
+                const res = await fetch('/api/sell_signals');
+                const data = await res.json();
+                sellSignals = {};
+                for (const s of (data.signals || [])) {
+                    sellSignals[s.ticker] = s;
+                }
+                renderWL();
+            } catch(e) {}
+        }
+
+        function getSellSignalBadge(ticker) {
+            const s = sellSignals[ticker];
+            if (!s) return '<span style="color:var(--text-dim); font-size:0.8rem;">—</span>';
+            const cfg = {
+                'SELL':  { color: '#ef4444', bg: 'rgba(239,68,68,0.15)',  label: '🔴 SELL'  },
+                'WATCH': { color: '#eab308', bg: 'rgba(234,179,8,0.15)',  label: '🟡 WATCH' },
+                'HOLD':  { color: '#10b981', bg: 'rgba(16,185,129,0.15)', label: '🟢 HOLD'  }
+            }[s.tier] || { color: 'var(--text-dim)', bg: 'transparent', label: s.tier };
+            const tooltip = s.reasons && s.reasons.length ? s.reasons.join(' | ') : 'Thesis intact';
+            return `<span title="${tooltip}" style="background:${cfg.bg}; color:${cfg.color}; border:1px solid ${cfg.color}; padding:2px 8px; border-radius:4px; font-size:0.75rem; font-weight:700; cursor:help;">${cfg.label}</span>`;
+        }
+
         function renderWL() {
             const tbody = document.getElementById('wl-tbody');
             const watchlists = wlData?.watchlists || {};
 
             if (Object.keys(watchlists).length === 0) {
-                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:40px; color:var(--text-dim);">No watchlists yet. Click "+ New Watchlist" to create one.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="11" style="text-align:center; padding:40px; color:var(--text-dim);">No watchlists yet. Click "+ New Watchlist" to create one.</td></tr>';
                 return;
             }
 
@@ -1863,7 +1891,7 @@
 
                 // Section header
                 html += `<tr class="basket-header">
-                    <td colspan="10" style="background:#0a0f1d; padding:14px 16px; border-bottom:2px solid var(--accent); font-weight:700; font-size:0.95rem;">
+                    <td colspan="11" style="background:#0a0f1d; padding:14px 16px; border-bottom:2px solid var(--accent); font-weight:700; font-size:0.95rem;">
                         ${wl.icon || '👁️'} ${name}
                         <span style="font-size:0.75rem; color:var(--text-dim); margin-left:8px;">· ${items.length} stocks</span>
                         <button onclick="showAddWLTickerModal('${name}', ${wl.id})" style="margin-left:16px; background:transparent; border:1px solid var(--accent); color:var(--accent); padding:3px 10px; border-radius:4px; cursor:pointer; font-size:0.75rem;">+ Add Ticker</button>
@@ -1872,7 +1900,7 @@
                 </tr>`;
 
                 if (items.length === 0) {
-                    html += `<tr><td colspan="10" style="text-align:center; padding:20px; color:var(--text-dim); font-style:italic;">Empty — add tickers above</td></tr>`;
+                    html += `<tr><td colspan="11" style="text-align:center; padding:20px; color:var(--text-dim); font-style:italic;">Empty — add tickers above</td></tr>`;
                 } else {
                     for (const item of items) {
                         const lp = wlLivePrices[item.ticker];
@@ -1893,6 +1921,7 @@
                             <td>${item.score || '—'}</td>
                             <td style="color:${gradeColor}; font-weight:700;">${item.grade || '—'}</td>
                             <td>${item.rotation_score ? item.rotation_score.toFixed(1) : '—'}</td>
+                            <td>${getSellSignalBadge(item.ticker)}</td>
                             <td><button onclick="removeWLItem(${item.id || 0}, '${item.ticker}', '${name}')" style="background:transparent; border:1px solid #374151; color:#ef4444; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem;">✕</button></td>
                         </tr>`;
                     }
