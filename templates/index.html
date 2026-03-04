@@ -461,10 +461,11 @@
                             <th onclick="sortWatchlist('moonshot_score')">Moonshot</th>
                             <th onclick="sortWatchlist('rotation_score')">Rotation</th>
                             <th onclick="sortWatchlist('grade')">Grade</th>
+                            <th>Signal</th>
                         </tr>
                     </thead>
                     <tbody id="watchlist-tbody">
-                        <tr><td colspan="12" style="text-align: center; padding: 40px; color: var(--text-dim);">Loading watchlist...</td></tr>
+                        <tr><td colspan="13" style="text-align: center; padding: 40px; color: var(--text-dim);">Loading watchlist...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -982,6 +983,7 @@
                     <td class="text-center font-bold text-amber-400">${stock.moonshot_score || 0}%</td>
                     <td class="text-center" style="color: ${getRotationColor(stock.rotation_score || 0)}; font-weight: ${getRotationWeight(stock.rotation_score || 0)};">${(stock.rotation_score || 0).toFixed(1)}</td>
                     <td><span class="grade-badge grade-${stock.grade}">${stock.grade}</span></td>
+                    <td>${getPortfolioSignalBadge(stock.rotation_score)}</td>
                 </tr>
             `;
         }
@@ -995,6 +997,13 @@
             'Biotech': '🧬'
         };
         
+        function getPortfolioSignalBadge(rotation_score) {
+            const rot = rotation_score || 0;
+            if (rot >= 60) return '<span style="background:rgba(16,185,129,0.15);color:#10b981;border:1px solid #10b981;padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:700;">🟢 HOLD</span>';
+            if (rot >= 35) return '<span style="background:rgba(234,179,8,0.15);color:#eab308;border:1px solid #eab308;padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:700;">🟡 WATCH</span>';
+            return '<span style="background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid #ef4444;padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:700;">🔴 EXIT</span>';
+        }
+
         function getRotationColor(score) {
             if (score >= 80) return '#10b981';
             if (score >= 60) return '#eab308';
@@ -1018,7 +1027,7 @@
             if (currentBasketFilter !== 'all') {
                 const stocks = dataSource.baskets[currentBasketFilter] || [];
                 if (stocks.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="12" style="text-align: center; padding: 40px; color: var(--text-dim);">No holdings in this basket</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="13" style="text-align: center; padding: 40px; color: var(--text-dim);">No holdings in this basket</td></tr>';
                     return;
                 }
                 
@@ -1027,7 +1036,7 @@
                 if (editMode) {
                     html += `
                         <tr>
-                            <td colspan="12" style="padding: 12px; text-align: center;">
+                            <td colspan="13" style="padding: 12px; text-align: center;">
                                 <button class="edit-add-btn" onclick="showAddTickerModal('${currentBasketFilter}')">+ Add Ticker to ${currentBasketFilter}</button>
                             </td>
                         </tr>
@@ -1085,7 +1094,7 @@
                 const collapsed = collapsedBaskets.has(basket);
                 html += `
                     <tr class="basket-header" data-basket="${basket}" onclick="toggleBasketCollapse('${safeBasket}')" style="cursor:pointer;">
-                        <td colspan="12" style="background: #0a0f1d; padding: 10px 16px; border-bottom: 2px solid var(--accent); font-weight: 700; font-size: 0.9rem;">
+                        <td colspan="13" style="background: #0a0f1d; padding: 10px 16px; border-bottom: 2px solid var(--accent); font-weight: 700; font-size: 0.9rem;">
                             <span style="display:inline-block;width:16px;font-size:0.7rem;color:var(--text-dim);">${collapsed ? '▶' : '▼'}</span>
                             ${icon} ${basket} 
                             <span style="font-size: 0.75rem; color: var(--accent); font-weight: 600; margin-left: 8px;">${weight}</span>
@@ -1097,7 +1106,7 @@
                 `;
                 if (!collapsed) {
                     if (stocks.length === 0) {
-                        html += `<tr data-basket-row="${basket}"><td colspan="12" style="text-align: center; padding: 14px; color: var(--text-dim); font-style: italic;">
+                        html += `<tr data-basket-row="${basket}"><td colspan="13" style="text-align: center; padding: 14px; color: var(--text-dim); font-style: italic;">
                             ${editMode ? 'Use "+ Add Ticker" above to add holdings' : 'No holdings — tap ✏️ Edit to add tickers'}
                         </td></tr>`;
                     } else {
