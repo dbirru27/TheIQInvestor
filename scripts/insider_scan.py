@@ -472,27 +472,128 @@ def main():
         for a in alerts:
             print(f"  {a}")
 
-    # Send Telegram alert if any dumping signals
-    if dumping:
-        try:
-            msg = "🚨 *Insider Dumping Alert*\n\n"
-            for ticker in dumping:
-                d = results[ticker]
-                msg += f"🔴 *{ticker}* INS={d['ins_score']:+d}\n"
-                for r in d['reasons']:
-                    msg += f"  • {r}\n"
-                msg += "\n"
+    # Build and send email report
+    send_email_report(results, dumping, accumulating, neutral)
 
-            bot_token = '8395342039:AAF1FJp7-ei-ZFC0ZjdVfOJEDwYeZFQrXjI'
-            chat_id = '690660528'
-            tg_url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
-            tg_data = json.dumps({'chat_id': chat_id, 'text': msg, 'parse_mode': 'Markdown'}).encode()
-            tg_req = urllib.request.Request(tg_url, data=tg_data,
-                                            headers={'Content-Type': 'application/json'})
-            urllib.request.urlopen(tg_req, timeout=10)
-            print("\n📱 Telegram alert sent!")
-        except Exception as e:
-            print(f"\n⚠️ Telegram send failed: {e}")
+
+def send_email_report(results, dumping, accumulating, neutral):
+    """Send insider scan results as a formatted HTML email"""
+    scan_date = datetime.now().strftime('%b %d, %Y')
+
+    html = f"""<html><body style="font-family: -apple-system, Arial, sans-serif; background: #0f0f0f; color: #e0e0e0; padding: 20px;">
+<div style="max-width: 700px; margin: 0 auto;">
+<h1 style="color: #fff; border-bottom: 2px solid #ef4444; padding-bottom: 10px;">
+🔍 Insider Transaction Report — {scan_date}</h1>
+
+<div style="display: flex; gap: 20px; margin: 20px 0;">
+  <div style="background: rgba(239,68,68,0.15); border: 1px solid #ef4444; border-radius: 8px; padding: 15px; flex: 1; text-align: center;">
+    <div style="font-size: 2rem; font-weight: 800; color: #ef4444;">{len(dumping)}</div>
+    <div style="color: #ef4444;">🔴 Dumping</div>
+  </div>
+  <div style="background: rgba(200,200,200,0.1); border: 1px solid #666; border-radius: 8px; padding: 15px; flex: 1; text-align: center;">
+    <div style="font-size: 2rem; font-weight: 800; color: #999;">{len(neutral)}</div>
+    <div style="color: #999;">⚪ Neutral</div>
+  </div>
+  <div style="background: rgba(16,185,129,0.15); border: 1px solid #10b981; border-radius: 8px; padding: 15px; flex: 1; text-align: center;">
+    <div style="font-size: 2rem; font-weight: 800; color: #10b981;">{len(accumulating)}</div>
+    <div style="color: #10b981;">🟢 Accumulating</div>
+  </div>
+</div>
+"""
+
+    # Sort dumping by severity
+    sorted_dumping = sorted(dumping, key=lambda t: results[t]['ins_score'])
+
+    if sorted_dumping:
+        html += """<h2 style="color: #ef4444; margin-top: 30px;">🔴 Insider Dumping Signals</h2>
+<table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+<tr style="background: #1a1a1a; color: #999; text-align: left;">
+  <th style="padding: 10px; border-bottom: 1px solid #333;">Ticker</th>
+  <th style="padding: 10px; border-bottom: 1px solid #333;">INS</th>
+  <th style="padding: 10px; border-bottom: 1px solid #333;">Sells</th>
+  <th style="padding: 10px; border-bottom: 1px solid #333;">$ Sold</th>
+  <th style="padding: 10px; border-bottom: 1px solid #333;">Key Details</th>
+</tr>"""
+        for ticker in sorted_dumping:
+            d = results[ticker]
+            sell_val = d.get('total_sell_value', 0)
+            sell_str = f"${sell_val/1e6:.1f}M" if sell_val >= 1e6 else f"${sell_val:,.0f}"
+            # Top 3 reasons
+            top_reasons = d['reasons'][:3]
+            reasons_html = '<br>'.join(f"• {r}" for r in top_reasons)
+            bg = '#1a0000' if d['ins_score'] <= -10 else '#111'
+            html += f"""<tr style="background: {bg}; border-bottom: 1px solid #222;">
+  <td style="padding: 10px; font-weight: 700; color: #fff;">{ticker}</td>
+  <td style="padding: 10px; color: #ef4444; font-weight: 700;">{d['ins_score']:+d}</td>
+  <td style="padding: 10px;">{d['sells']}</td>
+  <td style="padding: 10px; color: #ef4444;">{sell_str}</td>
+  <td style="padding: 10px; font-size: 0.8rem; color: #ccc;">{reasons_html}</td>
+</tr>"""
+        html += "</table>"
+
+    if accumulating:
+        html += """<h2 style="color: #10b981; margin-top: 30px;">🟢 Insider Accumulating</h2>
+<table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+<tr style="background: #1a1a1a; color: #999; text-align: left;">
+  <th style="padding: 10px;">Ticker</th><th style="padding: 10px;">INS</th>
+  <th style="padding: 10px;">Buys</th><th style="padding: 10px;">Details</th>
+</tr>"""
+        for ticker in accumulating:
+            d = results[ticker]
+            reasons_html = '<br>'.join(f"• {r}" for r in d['reasons'][:3])
+            html += f"""<tr style="border-bottom: 1px solid #222;">
+  <td style="padding: 10px; font-weight: 700; color: #10b981;">{ticker}</td>
+  <td style="padding: 10px; color: #10b981; font-weight: 700;">{d['ins_score']:+d}</td>
+  <td style="padding: 10px;">{d['buys']}</td>
+  <td style="padding: 10px; font-size: 0.8rem;">{reasons_html}</td>
+</tr>"""
+        html += "</table>"
+
+    if neutral:
+        html += f"""<h2 style="color: #999; margin-top: 30px;">⚪ Neutral ({len(neutral)} stocks)</h2>
+<p style="color: #666;">{', '.join(sorted(neutral))}</p>"""
+
+    html += """
+<hr style="border-color: #333; margin-top: 30px;">
+<p style="color: #666; font-size: 0.75rem;">
+Source: SEC EDGAR Form 4 filings (90-day lookback) · INS = Insider Net Score · 
+Scoring: cluster ±3, C-suite ±2/person, officer/director ±1/person, heavy sell (&gt;25%) -2, all sells no buys -2<br>
+⚠️ Many routine sales are 10b5-1 pre-planned. Focus on cluster sells and heavy % dumps.
+</p>
+</div></body></html>"""
+
+    # Save HTML report
+    report_path = os.path.join(WORKSPACE, 'reports', 'latest_insider_report.html')
+    os.makedirs(os.path.dirname(report_path), exist_ok=True)
+    with open(report_path, 'w') as f:
+        f.write(html)
+    print(f"\n📄 HTML report saved to {report_path}")
+
+    # Send email
+    try:
+        import configparser
+        import smtplib
+        from email.mime.text import MIMEText
+        from email.mime.multipart import MIMEMultipart
+
+        config = configparser.ConfigParser()
+        config.read(os.path.join(WORKSPACE, '.email_config.ini'))
+        smtp_cfg = config['smtp']
+
+        msg = MIMEMultipart('alternative')
+        msg['Subject'] = f'🔍 Insider Report: {len(dumping)} dumping, {len(accumulating)} accumulating — {scan_date}'
+        msg['From'] = smtp_cfg.get('from', smtp_cfg.get('from_email', smtp_cfg.get('username')))
+        msg['To'] = 'dbirru@gmail.com'
+        msg.attach(MIMEText(html, 'html'))
+
+        server = smtplib.SMTP(smtp_cfg.get('host', smtp_cfg.get('server')), int(smtp_cfg['port']))
+        server.starttls()
+        server.login(smtp_cfg['username'], smtp_cfg['password'])
+        server.send_message(msg)
+        server.quit()
+        print("📧 Email report sent to dbirru@gmail.com!")
+    except Exception as e:
+        print(f"⚠️ Email send failed: {e}")
 
 
 if __name__ == '__main__':
