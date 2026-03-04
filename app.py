@@ -803,6 +803,76 @@ def market_internals():
             'pct': round(up_count / len(breadth_tickers) * 100, 1)
         }
 
+        # --- O'Neil IBD Market Stage ---
+        # Distribution day = index drops ≥0.2% on higher volume than previous day
+        # Follow-through day = index gains ≥1.25% on higher volume, day 4+ of rally attempt
+        # 0-2 dist = Confirmed Rally, 3-4 = Under Pressure, 5+ = Correction
+        try:
+            url = 'https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1d&range=3mo'
+            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+            resp = urllib.request.urlopen(req, timeout=10)
+            spy_chart = json.loads(resp.read())['chart']['result'][0]
+            spy_closes = spy_chart['indicators']['quote'][0]['close']
+            spy_volumes = spy_chart['indicators']['quote'][0]['volume']
+
+            dist_count = 0
+            stall_count = 0
+            dist_dates = []
+            n = min(26, len(spy_closes))
+            for i in range(len(spy_closes) - n + 1, len(spy_closes)):
+                if i <= 0:
+                    continue
+                prev_c, curr_c = spy_closes[i-1], spy_closes[i]
+                prev_v, curr_v = spy_volumes[i-1], spy_volumes[i]
+                if not all([prev_c, curr_c, prev_v, curr_v]):
+                    continue
+                pct = (curr_c - prev_c) / prev_c * 100
+                if pct <= -0.2 and curr_v > prev_v:
+                    dist_count += 1
+                elif 0 <= pct < 0.4 and curr_v > prev_v * 1.1:
+                    stall_count += 1
+
+            total_dist = dist_count + stall_count
+
+            # Check for follow-through day in last 10 sessions
+            ftd = False
+            for i in range(-10, 0):
+                idx = len(spy_closes) + i
+                if idx > 0 and spy_closes[idx] and spy_closes[idx-1] and spy_volumes[idx] and spy_volumes[idx-1]:
+                    pct = (spy_closes[idx] - spy_closes[idx-1]) / spy_closes[idx-1] * 100
+                    if pct >= 1.25 and spy_volumes[idx] > spy_volumes[idx-1]:
+                        ftd = True
+
+            if total_dist >= 5:
+                stage = 'MARKET IN CORRECTION'
+                stage_color = 'red'
+                action = 'Avoid new buys. Raise cash. Protect profits.'
+            elif total_dist >= 3:
+                stage = 'RALLY UNDER PRESSURE'
+                stage_color = 'yellow'
+                action = 'Be cautious. Tighten stops. No aggressive buys.'
+            elif ftd or total_dist <= 2:
+                stage = 'CONFIRMED RALLY'
+                stage_color = 'green'
+                action = 'Green light for new buys. Follow rotation signals.'
+            else:
+                stage = 'RALLY ATTEMPT'
+                stage_color = 'orange'
+                action = 'Market trying to rally. Wait for follow-through day.'
+
+            results['market_stage'] = {
+                'stage': stage,
+                'color': stage_color,
+                'action': action,
+                'distribution_days': dist_count,
+                'stalling_days': stall_count,
+                'total_distribution': total_dist,
+                'follow_through_day': ftd,
+                'window': '25 sessions'
+            }
+        except Exception:
+            results['market_stage'] = None
+
         results['timestamp'] = datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M:%S EST")
         return jsonify(results)
     except Exception as e:
@@ -904,6 +974,366 @@ def catalyst_calendar():
             'earnings': events,
             'fomc': fomc_dates,
             'timestamp': datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M:%S EST")
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+## ===== THESIS JOURNAL =====
+def _load_json(path, default=None):
+    try:
+        with open(path) as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return default if default is not None else []
+
+def _save_json(path, data):
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, 'w') as f:
+            json.dump(data, f, indent=2)
+    except OSError:
+        pass
+
+THESIS_FILE = 'data/trade_theses.json'
+JOURNAL_FILE = 'data/trade_journal.json'
+
+@app.route('/api/thesis', methods=['GET'])
+def get_theses():
+    ticker = request.args.get('ticker', '').upper()
+    theses = _load_json(THESIS_FILE, [])
+    if ticker:
+        theses = [t for t in theses if t.get('ticker') == ticker]
+    return jsonify({"theses": theses})
+
+@app.route('/api/thesis', methods=['POST'])
+def save_thesis():
+    try:
+        data = request.get_json()
+        required = ['ticker', 'thesis', 'target_price', 'stop_loss']
+        for field in required:
+            if not data.get(field):
+                return jsonify({"error": f"{field} is required"}), 400
+
+        theses = _load_json(THESIS_FILE, [])
+        entry = {
+            "id": len(theses) + 1,
+            "ticker": data['ticker'].upper(),
+            "thesis": data['thesis'],
+            "target_price": float(data['target_price']),
+            "stop_loss": float(data['stop_loss']),
+            "entry_price": float(data.get('entry_price', 0)),
+            "catalyst": data.get('catalyst', ''),
+            "timeline": data.get('timeline', ''),
+            "prove_wrong": data.get('prove_wrong', ''),
+            "checklist": data.get('checklist', {}),
+            "rr_ratio": float(data.get('rr_ratio', 0)),
+            "created_at": datetime.now(ZoneInfo("America/New_York")).isoformat(),
+            "status": "OPEN"
+        }
+        theses.append(entry)
+        _save_json(THESIS_FILE, theses)
+        return jsonify({"status": "ok", "id": entry["id"]})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+## ===== TRADE JOURNAL =====
+@app.route('/api/trade_journal', methods=['GET'])
+def get_trade_journal():
+    trades = _load_json(JOURNAL_FILE, [])
+    # Calculate P&L for each trade
+    wins, losses = [], []
+    for t in trades:
+        if t.get('exit_price') and t.get('entry_price') and t['entry_price'] > 0:
+            t['pl_pct'] = round((t['exit_price'] - t['entry_price']) / t['entry_price'] * 100, 2)
+            if t['pl_pct'] > 0:
+                wins.append(t['pl_pct'])
+            else:
+                losses.append(t['pl_pct'])
+        else:
+            t['pl_pct'] = None
+        # Days held
+        if t.get('entry_date') and t.get('exit_date'):
+            try:
+                d1 = datetime.strptime(t['entry_date'][:10], '%Y-%m-%d')
+                d2 = datetime.strptime(t['exit_date'][:10], '%Y-%m-%d')
+                t['days_held'] = (d2 - d1).days
+            except:
+                t['days_held'] = None
+        else:
+            t['days_held'] = None
+
+    total_trades = len([t for t in trades if t.get('pl_pct') is not None])
+    win_rate = round(len(wins) / total_trades * 100, 1) if total_trades else 0
+    avg_win = round(sum(wins) / len(wins), 2) if wins else 0
+    avg_loss = round(sum(losses) / len(losses), 2) if losses else 0
+    gross_wins = sum(wins)
+    gross_losses = abs(sum(losses))
+    profit_factor = round(gross_wins / gross_losses, 2) if gross_losses > 0 else float('inf') if gross_wins > 0 else 0
+    total_pl = round(sum(t.get('pl_pct', 0) or 0 for t in trades), 2)
+
+    return jsonify({
+        "trades": trades,
+        "stats": {
+            "total_trades": total_trades,
+            "win_rate": win_rate,
+            "avg_win": avg_win,
+            "avg_loss": avg_loss,
+            "profit_factor": profit_factor,
+            "total_pl": total_pl
+        }
+    })
+
+@app.route('/api/trade_journal', methods=['POST'])
+def add_trade():
+    try:
+        data = request.get_json()
+        if not data.get('ticker'):
+            return jsonify({"error": "ticker required"}), 400
+
+        trades = _load_json(JOURNAL_FILE, [])
+        trade = {
+            "id": len(trades) + 1,
+            "ticker": data['ticker'].upper(),
+            "basket": data.get('basket', ''),
+            "action": data.get('action', 'BUY').upper(),
+            "entry_price": float(data.get('entry_price', 0)),
+            "exit_price": float(data['exit_price']) if data.get('exit_price') else None,
+            "quantity_or_pct": data.get('quantity_or_pct', ''),
+            "entry_date": data.get('entry_date', datetime.now(ZoneInfo("America/New_York")).strftime('%Y-%m-%d')),
+            "exit_date": data.get('exit_date'),
+            "thesis_id": data.get('thesis_id'),
+            "exit_reason": data.get('exit_reason', ''),
+            "notes": data.get('notes', ''),
+            "created_at": datetime.now(ZoneInfo("America/New_York")).isoformat()
+        }
+        trades.append(trade)
+        _save_json(JOURNAL_FILE, trades)
+        return jsonify({"status": "ok", "id": trade["id"]})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+## ===== INSIDER ACTIVITY =====
+@app.route('/api/insider_activity')
+def insider_activity():
+    """Fetch insider transactions from Finviz for portfolio tickers"""
+    try:
+        # Get portfolio tickers
+        tickers = []
+        try:
+            sb_headers = {'apikey': SUPABASE_KEY, 'Authorization': f'Bearer {SUPABASE_KEY}'}
+            req = urllib.request.Request(
+                f'{SUPABASE_URL}/rest/v1/holdings?select=ticker',
+                headers=sb_headers
+            )
+            holdings = json.loads(urllib.request.urlopen(req).read())
+            tickers = list(set(h['ticker'] for h in holdings))
+        except:
+            pass
+
+        if not tickers:
+            return jsonify({"insider_data": [], "cluster_buys": []})
+
+        insider_data = []
+
+        def fetch_insider(ticker):
+            results = []
+            try:
+                url = f'https://finviz.com/quote.ashx?t={ticker}&ty=i'
+                req = urllib.request.Request(url, headers={
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                })
+                resp = urllib.request.urlopen(req, timeout=10)
+                html = resp.read().decode('utf-8', errors='ignore')
+
+                # Parse insider table — look for rows with insider data
+                import re
+                # Find the insider trading table
+                insider_section = re.findall(r'insider-row[^>]*>(.*?)</tr>', html, re.DOTALL)
+                for row in insider_section[:10]:
+                    cells = re.findall(r'<td[^>]*>(.*?)</td>', row, re.DOTALL)
+                    if len(cells) >= 6:
+                        # Clean HTML tags
+                        clean = lambda s: re.sub(r'<[^>]+>', '', s).strip()
+                        results.append({
+                            'ticker': ticker,
+                            'insider': clean(cells[0]),
+                            'title': clean(cells[1]),
+                            'date': clean(cells[2]),
+                            'transaction': clean(cells[3]),
+                            'shares': clean(cells[4]),
+                            'value': clean(cells[5]) if len(cells) > 5 else ''
+                        })
+            except Exception:
+                pass
+            return results
+
+        with ThreadPoolExecutor(max_workers=6) as executor:
+            futures = {executor.submit(fetch_insider, t): t for t in tickers[:20]}
+            for f in as_completed(futures):
+                insider_data.extend(f.result())
+
+        # Detect cluster buys (3+ buys in same ticker in same month)
+        from collections import defaultdict
+        buy_counts = defaultdict(list)
+        for txn in insider_data:
+            if 'buy' in txn.get('transaction', '').lower() or 'purchase' in txn.get('transaction', '').lower():
+                key = txn['ticker']
+                buy_counts[key].append(txn)
+
+        cluster_buys = []
+        for ticker, buys in buy_counts.items():
+            if len(buys) >= 3:
+                cluster_buys.append({
+                    'ticker': ticker,
+                    'buy_count': len(buys),
+                    'insiders': [b['insider'] for b in buys[:5]]
+                })
+
+        return jsonify({
+            "insider_data": insider_data[:100],
+            "cluster_buys": cluster_buys,
+            "timestamp": datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M:%S EST")
+        })
+    except Exception as e:
+        return jsonify({"error": str(e), "insider_data": [], "cluster_buys": []}), 500
+
+## ===== PORTFOLIO RISK / CORRELATION =====
+@app.route('/api/portfolio_risk')
+def portfolio_risk():
+    """Calculate portfolio correlation, beta, and drawdown estimates"""
+    try:
+        # Get portfolio holdings with position sizes
+        sb_headers = {'apikey': SUPABASE_KEY, 'Authorization': f'Bearer {SUPABASE_KEY}'}
+        req = urllib.request.Request(
+            f'{SUPABASE_URL}/rest/v1/baskets?select=name,holdings(ticker,position_pct)&order=sort_order',
+            headers=sb_headers
+        )
+        baskets_raw = json.loads(urllib.request.urlopen(req).read())
+
+        basket_tickers = {}
+        all_tickers = set()
+        holdings_weights = {}
+        for b in baskets_raw:
+            name = b['name']
+            basket_tickers[name] = []
+            for h in b.get('holdings', []):
+                t = h['ticker']
+                basket_tickers[name].append(t)
+                all_tickers.add(t)
+                holdings_weights[t] = float(h.get('position_pct', 0))
+
+        all_tickers = list(all_tickers)
+        if not all_tickers:
+            return jsonify({"error": "No holdings found"}), 404
+
+        # Fetch 6-month daily closes for all tickers + SPY
+        fetch_tickers = all_tickers + (['SPY'] if 'SPY' not in all_tickers else [])
+        returns_data = {}
+
+        def fetch_returns(ticker):
+            try:
+                url = f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?range=6mo&interval=1d'
+                req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+                resp = urllib.request.urlopen(req, timeout=10)
+                chart = json.loads(resp.read())
+                closes = chart.get('chart', {}).get('result', [{}])[0].get('indicators', {}).get('quote', [{}])[0].get('close', [])
+                valid = [c for c in closes if c is not None]
+                if len(valid) < 20:
+                    return ticker, []
+                # Calculate daily returns
+                daily_returns = [(valid[i] - valid[i-1]) / valid[i-1] for i in range(1, len(valid))]
+                return ticker, daily_returns
+            except:
+                return ticker, []
+
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            futures = {executor.submit(fetch_returns, t): t for t in fetch_tickers}
+            for f in as_completed(futures):
+                ticker, rets = f.result()
+                if rets:
+                    returns_data[ticker] = rets
+
+        # Calculate basket-level average returns for correlation matrix
+        basket_returns = {}
+        for name, tickers in basket_tickers.items():
+            valid_tickers = [t for t in tickers if t in returns_data]
+            if not valid_tickers:
+                continue
+            min_len = min(len(returns_data[t]) for t in valid_tickers)
+            avg_returns = []
+            for i in range(min_len):
+                avg = sum(returns_data[t][i] for t in valid_tickers) / len(valid_tickers)
+                avg_returns.append(avg)
+            basket_returns[name] = avg_returns
+
+        # Pairwise correlation between baskets
+        def corr(a, b):
+            n = min(len(a), len(b))
+            if n < 10:
+                return None
+            a, b = a[:n], b[:n]
+            mean_a = sum(a) / n
+            mean_b = sum(b) / n
+            cov = sum((a[i] - mean_a) * (b[i] - mean_b) for i in range(n)) / n
+            std_a = (sum((x - mean_a)**2 for x in a) / n) ** 0.5
+            std_b = (sum((x - mean_b)**2 for x in b) / n) ** 0.5
+            if std_a == 0 or std_b == 0:
+                return None
+            return round(cov / (std_a * std_b), 3)
+
+        basket_names = list(basket_returns.keys())
+        correlation_matrix = {}
+        for i, name_a in enumerate(basket_names):
+            correlation_matrix[name_a] = {}
+            for j, name_b in enumerate(basket_names):
+                if i == j:
+                    correlation_matrix[name_a][name_b] = 1.0
+                else:
+                    c = corr(basket_returns[name_a], basket_returns[name_b])
+                    correlation_matrix[name_a][name_b] = c
+
+        # Portfolio beta vs SPY
+        spy_returns = returns_data.get('SPY', [])
+        portfolio_beta = None
+        estimated_drop = None
+        if spy_returns:
+            # Weighted portfolio returns
+            valid_holdings = [t for t in all_tickers if t in returns_data and t != 'SPY']
+            if valid_holdings:
+                total_weight = sum(holdings_weights.get(t, 1) for t in valid_holdings)
+                if total_weight == 0:
+                    total_weight = len(valid_holdings)
+                min_len = min(len(spy_returns), min(len(returns_data[t]) for t in valid_holdings))
+                port_returns = []
+                for i in range(min_len):
+                    weighted = sum(returns_data[t][i] * (holdings_weights.get(t, 1) / total_weight)
+                                   for t in valid_holdings if i < len(returns_data[t]))
+                    port_returns.append(weighted)
+
+                c = corr(port_returns, spy_returns[:min_len])
+                if c is not None:
+                    spy_std = (sum((x - sum(spy_returns[:min_len])/min_len)**2 for x in spy_returns[:min_len]) / min_len) ** 0.5
+                    port_std = (sum((x - sum(port_returns)/min_len)**2 for x in port_returns) / min_len) ** 0.5
+                    if spy_std > 0:
+                        portfolio_beta = round(c * port_std / spy_std, 2)
+                        estimated_drop = round(10 * portfolio_beta, 1)
+
+        # Top 5 concentration
+        sorted_holdings = sorted(holdings_weights.items(), key=lambda x: x[1], reverse=True)
+        top5 = [{"ticker": t, "weight": w} for t, w in sorted_holdings[:5]]
+        top5_total = round(sum(w for _, w in sorted_holdings[:5]), 1)
+
+        return jsonify({
+            "correlation_matrix": correlation_matrix,
+            "basket_names": basket_names,
+            "portfolio_beta": portfolio_beta,
+            "estimated_drop_10pct": estimated_drop,
+            "concentration": {
+                "top5": top5,
+                "top5_total_pct": top5_total
+            },
+            "timestamp": datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M:%S EST")
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
