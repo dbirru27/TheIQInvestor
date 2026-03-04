@@ -1293,31 +1293,29 @@ def portfolio_risk():
                     c = corr(basket_returns[name_a], basket_returns[name_b])
                     correlation_matrix[name_a][name_b] = c
 
-        # Portfolio beta vs SPY
+        # Portfolio beta vs SPY (equal-weight baskets, weighted tickers within each basket)
         spy_returns = returns_data.get('SPY', [])
         portfolio_beta = None
         estimated_drop = None
-        if spy_returns:
-            # Weighted portfolio returns
-            valid_holdings = [t for t in all_tickers if t in returns_data and t != 'SPY']
-            if valid_holdings:
-                total_weight = sum(holdings_weights.get(t, 1) for t in valid_holdings)
-                if total_weight == 0:
-                    total_weight = len(valid_holdings)
-                min_len = min(len(spy_returns), min(len(returns_data[t]) for t in valid_holdings))
-                port_returns = []
-                for i in range(min_len):
-                    weighted = sum(returns_data[t][i] * (holdings_weights.get(t, 1) / total_weight)
-                                   for t in valid_holdings if i < len(returns_data[t]))
-                    port_returns.append(weighted)
+        basket_betas = {}
+        if spy_returns and basket_returns:
+            # Calculate per-basket beta
+            min_len_spy = len(spy_returns)
+            for bname, brets in basket_returns.items():
+                ml = min(len(brets), min_len_spy)
+                if ml < 20:
+                    continue
+                mean_b = sum(brets[:ml]) / ml
+                mean_s = sum(spy_returns[:ml]) / ml
+                cov_bs = sum((brets[i] - mean_b) * (spy_returns[i] - mean_s) for i in range(ml)) / ml
+                var_s = sum((x - mean_s)**2 for x in spy_returns[:ml]) / ml
+                if var_s > 0:
+                    basket_betas[bname] = round(cov_bs / var_s, 3)
 
-                c = corr(port_returns, spy_returns[:min_len])
-                if c is not None:
-                    spy_std = (sum((x - sum(spy_returns[:min_len])/min_len)**2 for x in spy_returns[:min_len]) / min_len) ** 0.5
-                    port_std = (sum((x - sum(port_returns)/min_len)**2 for x in port_returns) / min_len) ** 0.5
-                    if spy_std > 0:
-                        portfolio_beta = round(c * port_std / spy_std, 2)
-                        estimated_drop = round(10 * portfolio_beta, 1)
+            # Portfolio beta = average of basket betas (equal-weight baskets)
+            if basket_betas:
+                portfolio_beta = round(sum(basket_betas.values()) / len(basket_betas), 2)
+                estimated_drop = round(10 * portfolio_beta, 1)
 
         # Top 5 concentration
         sorted_holdings = sorted(holdings_weights.items(), key=lambda x: x[1], reverse=True)
@@ -1327,6 +1325,7 @@ def portfolio_risk():
         return jsonify({
             "correlation_matrix": correlation_matrix,
             "basket_names": basket_names,
+            "basket_betas": basket_betas,
             "portfolio_beta": portfolio_beta,
             "estimated_drop_10pct": estimated_drop,
             "concentration": {
