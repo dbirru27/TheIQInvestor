@@ -466,6 +466,7 @@
                             <th onclick="sortWatchlist('rotation_score')">Rotation</th>
                             <th onclick="sortWatchlist('grade')">Grade</th>
                             <th>Signal</th>
+                            <th>Insider</th>
                         </tr>
                     </thead>
                     <tbody id="watchlist-tbody">
@@ -550,12 +551,13 @@
                             <th>Score</th>
                             <th>Grade</th>
                             <th>Rotation</th>
+                            <th>Insider</th>
                             <th>Signal</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="wl-tbody">
-                        <tr><td colspan="10" style="text-align: center; padding: 40px; color: var(--text-dim);">Loading...</td></tr>
+                        <tr><td colspan="12" style="text-align: center; padding: 40px; color: var(--text-dim);">Loading...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -987,6 +989,23 @@
             datalist.innerHTML = stocksData.map(s => `<option value="${s.ticker}">${s.name}</option>`).join('');
         }
 
+        // ═══ Shared: Insider Signal Badge ═══
+        function renderInsiderBadge(ins_score, insider_signal, compact=false) {
+            if (ins_score === undefined || ins_score === null) return '';
+            let color, emoji, label;
+            if (insider_signal === 'dumping' || ins_score <= -3) {
+                color = '#ef4444'; emoji = '🔴'; label = 'Dumping';
+            } else if (insider_signal === 'accumulating' || ins_score >= 3) {
+                color = '#10b981'; emoji = '🟢'; label = 'Buying';
+            } else {
+                color = '#666'; emoji = '⚪'; label = 'Neutral';
+            }
+            if (compact) {
+                return `<span title="Insider: ${label} (INS ${ins_score >= 0 ? '+' : ''}${ins_score})" style="font-size:0.7rem;padding:2px 5px;border-radius:4px;background:${color}22;color:${color};border:1px solid ${color}44;cursor:help;">${emoji}${ins_score >= 0 ? '+' : ''}${ins_score}</span>`;
+            }
+            return `<span style="font-size:0.75rem;padding:3px 8px;border-radius:6px;background:${color}15;color:${color};border:1px solid ${color}33;">${emoji} INS ${ins_score >= 0 ? '+' : ''}${ins_score} · ${label}</span>`;
+        }
+
         function renderTable() {
             const tbody = document.getElementById('stocks-tbody');
             let filtered = stocksData;
@@ -1192,6 +1211,8 @@
                                 daily_change: null,
                                 sector: scores.sector || '',
                                 industry: scores.industry || '',
+                                ins_score: scores.ins_score || 0,
+                                insider_signal: scores.insider_signal || 'neutral',
                                 basket_metadata: { icon: basket.icon, weight: basket.weight }
                             };
                             watchlistData.baskets[name].push(stock);
@@ -1204,7 +1225,7 @@
                     renderWatchlist();
                 } catch (err) {
                     document.getElementById('watchlist-tbody').innerHTML = 
-                        '<tr><td colspan="11" style="text-align: center; padding: 40px; color: #dc2626;">Error loading portfolio: ' + err.message + '</td></tr>';
+                        '<tr><td colspan="12" style="text-align: center; padding: 40px; color: #dc2626;">Error loading portfolio: ' + err.message + '</td></tr>';
                     return;
                 }
             } else {
@@ -1232,6 +1253,8 @@
                         stock.price = lp.price;
                         stock.previous_close = lp.previous_close;
                         stock.daily_change = lp.daily_change;
+                        if (lp.ins_score !== undefined) stock.ins_score = lp.ins_score;
+                        if (lp.insider_signal) stock.insider_signal = lp.insider_signal;
                     }
                 }
                 // Also update basket arrays (they share object references)
@@ -1242,6 +1265,8 @@
                             stock.price = lp.price;
                             stock.previous_close = lp.previous_close;
                             stock.daily_change = lp.daily_change;
+                            if (lp.ins_score !== undefined) stock.ins_score = lp.ins_score;
+                            if (lp.insider_signal) stock.insider_signal = lp.insider_signal;
                         }
                     }
                 }
@@ -1312,6 +1337,7 @@
                     <td class="text-center" style="color: ${getRotationColor(stock.rotation_score || 0)}; font-weight: ${getRotationWeight(stock.rotation_score || 0)};">${(stock.rotation_score || 0).toFixed(1)}</td>
                     <td><span class="grade-badge grade-${stock.grade}">${stock.grade}</span></td>
                     <td>${getPortfolioSignalBadge(stock)}</td>
+                    <td>${renderInsiderBadge(stock.ins_score, stock.insider_signal, true)}</td>
                 </tr>
             `;
         }
@@ -2285,20 +2311,24 @@
                                 <span>Rotation: <b style="color:#10b981;">${s.rotation_score}</b></span>
                                 <span>Quality: <b>${s.score}</b></span>
                             </div>
-                            <div style="font-size:0.7rem;color:var(--text-dim);margin-top:4px;">${s.sector} • ${s.industry}</div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
+                                <span style="font-size:0.7rem;color:var(--text-dim);">${s.sector}</span>
+                                ${renderInsiderBadge(s.ins_score, s.insider_signal, true)}
+                            </div>
                         </div>`).join('')}
                     </div>`;
             } else {
                 document.getElementById('rotation-dream').innerHTML = '';
             }
 
-            // Table header (no Signal column — entire table is rotation watch)
+            // Table header
             const cols = [
                 { key: 'ticker', label: 'Ticker' },
                 { key: 'rotation_score', label: 'Rotation' },
                 { key: 'rotation_convergence', label: 'Conv.' },
                 { key: 'score', label: 'Quality' },
                 { key: 'grade', label: 'Grade' },
+                { key: 'ins_score', label: 'Insider' },
                 { key: 'sector', label: 'Sector' },
                 { key: 'industry', label: 'Industry' },
                 { key: 'current_price', label: 'Price' }
@@ -2329,6 +2359,7 @@
                     <td style="padding:8px;">${s.rotation_convergence}</td>
                     <td style="padding:8px;">${s.score}</td>
                     <td style="padding:8px;"><span style="color:${gradeColor};font-weight:700;">${s.grade}</span></td>
+                    <td style="padding:8px;">${renderInsiderBadge(s.ins_score, s.insider_signal, true)}</td>
                     <td style="padding:8px;font-size:0.75rem;color:var(--text-dim);">${s.sector}</td>
                     <td style="padding:8px;font-size:0.75rem;color:var(--text-dim);">${s.industry}</td>
                     <td style="padding:8px;">$${s.current_price ? s.current_price.toFixed(2) : '—'}</td>
@@ -2441,7 +2472,7 @@
             const watchlists = wlData?.watchlists || {};
 
             if (Object.keys(watchlists).length === 0) {
-                tbody.innerHTML = '<tr><td colspan="11" style="text-align:center; padding:40px; color:var(--text-dim);">No watchlists yet. Click "+ New Watchlist" to create one.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="12" style="text-align:center; padding:40px; color:var(--text-dim);">No watchlists yet. Click "+ New Watchlist" to create one.</td></tr>';
                 return;
             }
 
@@ -2455,7 +2486,7 @@
 
                 // Section header
                 html += `<tr class="basket-header">
-                    <td colspan="11" style="background:#0a0f1d; padding:14px 16px; border-bottom:2px solid var(--accent); font-weight:700; font-size:0.95rem;">
+                    <td colspan="12" style="background:#0a0f1d; padding:14px 16px; border-bottom:2px solid var(--accent); font-weight:700; font-size:0.95rem;">
                         ${wl.icon || '👁️'} ${name}
                         <span style="font-size:0.75rem; color:var(--text-dim); margin-left:8px;">· ${items.length} stocks</span>
                         <button onclick="showAddWLTickerModal('${name}', ${wl.id})" style="margin-left:16px; background:transparent; border:1px solid var(--accent); color:var(--accent); padding:3px 10px; border-radius:4px; cursor:pointer; font-size:0.75rem;">+ Add Ticker</button>
@@ -2464,7 +2495,7 @@
                 </tr>`;
 
                 if (items.length === 0) {
-                    html += `<tr><td colspan="11" style="text-align:center; padding:20px; color:var(--text-dim); font-style:italic;">Empty — add tickers above</td></tr>`;
+                    html += `<tr><td colspan="12" style="text-align:center; padding:20px; color:var(--text-dim); font-style:italic;">Empty — add tickers above</td></tr>`;
                 } else {
                     for (const item of items) {
                         const lp = wlLivePrices[item.ticker];
@@ -2485,6 +2516,7 @@
                             <td>${item.score || '—'}</td>
                             <td style="color:${gradeColor}; font-weight:700;">${item.grade || '—'}</td>
                             <td>${item.rotation_score ? item.rotation_score.toFixed(1) : '—'}</td>
+                            <td>${renderInsiderBadge(wlLivePrices[item.ticker]?.ins_score ?? item.ins_score, wlLivePrices[item.ticker]?.insider_signal ?? item.insider_signal, true)}</td>
                             <td>${getSellSignalBadge(item.ticker)}</td>
                             <td><button onclick="removeWLItem(${item.id || 0}, '${item.ticker}', '${name}')" style="background:transparent; border:1px solid #374151; color:#ef4444; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem;">✕</button></td>
                         </tr>`;

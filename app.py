@@ -24,6 +24,24 @@ if not SUPABASE_KEY:
     except FileNotFoundError:
         pass
 
+def load_insider_scores():
+    """Load insider universe scores as a ticker -> {ins_score, insider_signal} lookup"""
+    try:
+        with open('data/insider_universe.json') as f:
+            data = json.load(f)
+        return {t: {'ins_score': d.get('ins_score', 0), 'insider_signal': d.get('signal', 'neutral')}
+                for t, d in data.get('signals', {}).items()}
+    except Exception:
+        # Fallback: try all_stocks.json which also has ins_score patched in
+        try:
+            with open('data/all_stocks.json') as f:
+                data = json.load(f)
+            return {t: {'ins_score': s.get('ins_score', 0), 'insider_signal': s.get('insider_signal', 'neutral')}
+                    for t, s in data.get('stocks', {}).items()}
+        except Exception:
+            return {}
+
+
 def fetch_live_prices_bulk(tickers, batch_size=15):
     """Fetch real-time prices using Yahoo spark endpoint (batch, fast).
     range=1d&interval=1m gives true intraday real-time prices.
@@ -281,6 +299,11 @@ def watchlist_live():
             return jsonify({"error": "No tickers"}), 404
 
         live = fetch_live_prices_bulk(tickers)
+        ins_lookup = load_insider_scores()
+        for t in live:
+            ins = ins_lookup.get(t, {})
+            live[t]['ins_score'] = ins.get('ins_score', 0)
+            live[t]['insider_signal'] = ins.get('insider_signal', 'neutral')
 
         return jsonify({
             "timestamp": datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M:%S EST"),
@@ -298,6 +321,7 @@ def rotation_scan():
 
         last_scan = data.get('last_scan', 'Unknown')
         stocks = data.get('stocks', {})
+        ins_lookup = load_insider_scores()
 
         strong_buys = []
         watch = []
@@ -318,6 +342,7 @@ def rotation_scan():
             if rot < 60:
                 continue
 
+            ins = ins_lookup.get(ticker, {})
             obj = {
                 'ticker': s.get('ticker', ticker),
                 'name': s.get('name', ticker),
@@ -328,7 +353,9 @@ def rotation_scan():
                 'grade': s.get('grade', '?'),
                 'sector': s.get('sector', 'Unknown'),
                 'industry': s.get('industry', 'Unknown'),
-                'current_price': s.get('current_price', 0)
+                'current_price': s.get('current_price', 0),
+                'ins_score': ins.get('ins_score', s.get('ins_score', 0)),
+                'insider_signal': ins.get('insider_signal', s.get('insider_signal', 'neutral'))
             }
 
             sig = (s.get('rotation_signal') or '').upper()
@@ -697,6 +724,12 @@ def watchlists_live():
             return jsonify({"prices": {}})
 
         live = fetch_live_prices_bulk(tickers)
+        ins_lookup = load_insider_scores()
+        # Attach INS to each price entry
+        for t in live:
+            ins = ins_lookup.get(t, {})
+            live[t]['ins_score'] = ins.get('ins_score', 0)
+            live[t]['insider_signal'] = ins.get('insider_signal', 'neutral')
 
         return jsonify({"prices": live, "timestamp": datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M:%S EST")})
     except Exception as e:
@@ -716,12 +749,15 @@ def get_stock_price(ticker):
             with open('data/all_stocks.json') as f:
                 stock_data = json.load(f).get('stocks', {}).get(ticker, {})
             if stock_data:
+                ins = load_insider_scores().get(ticker, {})
                 snapshot = {
                     "name": stock_data.get('name', ticker),
                     "sector": stock_data.get('sector', ''),
                     "score": stock_data.get('score', 0),
                     "grade": stock_data.get('grade', 'N/A'),
                     "rotation_score": stock_data.get('rotation_score', 0),
+                    "ins_score": ins.get('ins_score', stock_data.get('ins_score', 0)),
+                    "insider_signal": ins.get('insider_signal', stock_data.get('insider_signal', 'neutral')),
                 }
         except:
             pass
