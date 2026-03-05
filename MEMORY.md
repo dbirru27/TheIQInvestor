@@ -23,13 +23,15 @@
 - `value_growth_scan.py` — PE/PEG/Growth filter
 - `rate_holdings.py`, `rate_fundamentals.py`, `scan_all_top10.py`
 
-## Dan's Portfolio Baskets
-1. **Defense:** LHX, LMT, NOC
-2. **Grid-to-Chip:** PWR, VRT, GEV
-3. **TopVOO:** 29 stocks (GE, MSFT, AMZN, GOOGL, META, NVDA, AMD, etc.)
-4. **Core ETFs:** COPX, GLD, GLDM, ITA, IWM, NLR, VOO, XLI
-5. **FebAI scan:** UFO, XLP, COPX, SIL, XBI, XME, DXJ, GRID, ITA, GLD
-6. **MemoryAndMoats:** MRVL, ANET, WDC, AMD, MU, AVGO, TSM, STX, ASML
+## Dan's Portfolio Baskets (ALWAYS verify from Supabase - never trust this list blindly)
+1. **AI Semis (10):** ALAB, AMD, ANET, ASML, AVGO, MRVL, MU, STX, TSM, WDC
+2. **Biotech (4):** ALNY, HALO, LLY, XBI
+3. **Defense & Aerospace (10):** EUAD, HEI, HII, HWM, LHX, LMT, NOC, RTX, SHLD, UFO
+4. **Grid-to-Chip (12):** APH, CCJ, CEG, ETN, FIX, GEV, GRID, HUBB, NLR, NVT, PWR, VRT
+5. **IRA Core ETFs (6):** COPX, DXJ, GLD, SIL, VOO, XLI
+6. **Trading Account (3):** GOOGL, VGT, VUG
+7. **themastertest (1):** NVDA
+- ⚠️ Dan corrected me MULTIPLE TIMES for using stale tickers. Source of truth = Supabase ONLY.
 
 ## User Preferences
 - **Dan:** Likes "Quality Growth". Dislikes "fixed row-based date calculations" (drift risk).
@@ -68,6 +70,9 @@
 - **Never skip baskets** — show everything exactly as Supabase returns
 - **Realtime = realtime** — use range=1d&interval=1m for intraday prices
 - **ETFs = technical signals only** (no fundamentals available)
+- **Don't commit large binaries to git** — 33MB SQLite DB broke Vercel deployment (Mar 5, 2026)
+- **Domain searches on GoDaddy get front-run** — always use `whois` CLI first, buy on Cloudflare
+- **NEVER use stale portfolio from memory** — Dan corrected this multiple times. ALWAYS fetch Supabase.
 
 ## Website Features (as of Mar 4, 2026)
 - Dashboard, Portfolio, Rotation Scan, Watchlist tabs (existing)
