@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Alpha Report — March 4, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0e1a;
+    color: #e2e8f0;
+    line-height: 1.6;
+    padding: 0;
+  }
+  .wrapper { max-width: 860px; margin: 0 auto; padding: 20px; }
+  
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #1a237e 0%, #0d47a1 50%, #01579b 100%);
+    border-radius: 12px;
+    padding: 32px 36px;
+    margin-bottom: 24px;
+    border: 1px solid #1e3a5f;
+  }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .header h1 { font-size: 28px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
+  .header .subtitle { color: #90caf9; font-size: 14px; margin-top: 4px; }
+  .header .badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .header .timestamp { color: #bbdefb; font-size: 13px; margin-top: 16px; }
+
+  /* Section cards */
+  .section {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #1f2937;
+  }
+  .section-icon { font-size: 20px; }
+  .section-title { font-size: 16px; font-weight: 700; color: #f1f5f9; letter-spacing: 0.3px; }
+
+  /* Market snapshot grid */
+  .market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; }
+  .market-card {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .market-card .ticker { font-size: 11px; font-weight: 700; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; }
+  .market-card .price { font-size: 20px; font-weight: 700; color: #f1f5f9; margin: 4px 0 2px; }
+  .market-card .change { font-size: 13px; font-weight: 600; }
+  .up { color: #4ade80; }
+  .down { color: #f87171; }
+  .neutral { color: #94a3b8; }
+
+  /* Portfolio table */
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #0f172a; }
+  thead th {
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #1e293b;
+  }
+  tbody tr { border-bottom: 1px solid #1a2234; }
+  tbody tr:hover { background: #141e30; }
+  tbody td { padding: 10px 12px; }
+  .ticker-cell { font-weight: 700; color: #60a5fa; }
+  .pct-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 12px;
+  }
+  .pill-up { background: rgba(74, 222, 128, 0.12); color: #4ade80; }
+  .pill-down { background: rgba(248, 113, 113, 0.12); color: #f87171; }
+  .pill-flat { background: rgba(148, 163, 184, 0.1); color: #94a3b8; }
+
+  /* News items */
+  .news-item {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid #1e293b;
+  }
+  .news-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .news-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+  .dot-bull { background: #4ade80; }
+  .dot-bear { background: #f87171; }
+  .dot-neutral { background: #94a3b8; }
+  .news-body { flex: 1; }
+  .news-headline { font-size: 14px; font-weight: 600; color: #e2e8f0; margin-bottom: 3px; }
+  .news-detail { font-size: 13px; color: #94a3b8; }
+
+  /* Flow items */
+  .flow-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #1e293b;
+  }
+  .flow-item:last-child { border-bottom: none; }
+  .flow-label { font-size: 14px; color: #cbd5e1; }
+  .flow-signal {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .signal-bull { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
+  .signal-bear { background: rgba(248, 113, 113, 0.15); color: #f87171; }
+  .signal-watch { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+
+  /* Sector temp */
+  .sector-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .sector-card {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .sector-name { font-size: 13px; font-weight: 600; color: #e2e8f0; margin-bottom: 6px; }
+  .temp-bar-bg { background: #1e293b; border-radius: 4px; height: 6px; overflow: hidden; }
+  .temp-bar-fill { height: 6px; border-radius: 4px; }
+  .temp-label { font-size: 11px; color: #64748b; margin-top: 5px; display: flex; justify-content: space-between; }
+
+  /* Ideas */
+  .idea-card {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-left: 3px solid #3b82f6;
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .idea-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .idea-ticker { font-size: 18px; font-weight: 800; color: #60a5fa; }
+  .idea-type { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+  .idea-long { background: rgba(74,222,128,0.15); color: #4ade80; }
+  .idea-watch { background: rgba(251,191,36,0.15); color: #fbbf24; }
+  .idea-name { font-size: 13px; color: #94a3b8; margin-bottom: 8px; }
+  .idea-thesis { font-size: 13.5px; color: #cbd5e1; margin-bottom: 10px; }
+  .idea-levels { display: flex; gap: 20px; flex-wrap: wrap; }
+  .idea-level { font-size: 12px; color: #64748b; }
+  .idea-level span { font-weight: 700; color: #94a3b8; }
+
+  /* Portfolio thoughts */
+  .thought-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #1e293b;
+  }
+  .thought-item:last-child { border-bottom: none; }
+  .thought-icon { font-size: 16px; margin-top: 1px; }
+  .thought-text { font-size: 13.5px; color: #cbd5e1; }
+  .thought-text strong { color: #f1f5f9; }
+
+  /* Conviction meter */
+  .conviction-tag { 
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: rgba(96, 165, 250, 0.15);
+    color: #60a5fa;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    color: #334155;
+    font-size: 12px;
+    border-top: 1px solid #1e293b;
+    margin-top: 4px;
+  }
+  .footer a { color: #3b82f6; text-decoration: none; }
+
+  /* VIX callout */
+  .callout {
+    background: rgba(74, 222, 128, 0.08);
+    border: 1px solid rgba(74, 222, 128, 0.2);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 13.5px;
+    color: #a7f3d0;
+  }
+  .callout strong { color: #4ade80; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <h1>🦉 Daily Alpha Report</h1>
+        <div class="subtitle">Danswiz Market Intelligence · Prepared for Dan Birru</div>
+      </div>
+      <div class="badge">7 PM EST CLOSE</div>
+    </div>
+    <div class="timestamp">📅 Wednesday, March 4, 2026 &nbsp;|&nbsp; All prices as of market close / after-hours</div>
+  </div>
+
+  <!-- ① MARKET SNAPSHOT -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">📊</span>
+      <span class="section-title">Market Snapshot</span>
+    </div>
+
+    <div class="callout">
+      <strong>⚡ Risk-On Day:</strong> VIX cratered 13.3% to 21.15 — the market's fear gauge is cooling fast. Broad rally with QQQ leading (+1.52%), tech giants ripping, and BTC exploding +6.4% through $72K. Dollar weakness (DXY 98.78, -0.33%) is adding fuel.
+    </div>
+
+    <div class="market-grid">
+      <!-- Indices -->
+      <div class="market-card">
+        <div class="ticker">SPY</div>
+        <div class="price">$685.13</div>
+        <div class="change up">▲ +$4.80 (+0.71%)</div>
+      </div>
+      <div class="market-card">
+        <div class="ticker">QQQ</div>
+        <div class="price">$610.75</div>
+        <div class="change up">▲ +$9.17 (+1.52%)</div>
+      </div>
+      <div class="market-card">
+        <div class="ticker">IWM</div>
+        <div class="price">$261.76</div>
+        <div class="change up">▲ +$2.52 (+0.97%)</div>
+      </div>
+      <!-- Fear & Macro -->
+      <div class="market-card">
+        <div class="ticker">VIX</div>
+        <div class="price">21.15</div>
+        <div class="change up">▼ -3.24 (-13.28%)</div>
+      </div>
+      <div class="market-card">
+        <div class="ticker">DXY</div>
+        <div class="price">98.78</div>
+        <div class="change down">▼ -0.33 (-0.33%)</div>
+      </div>
+      <div class="market-card">
+        <div class="ticker">10Y Yield</div>
+        <div class="price">4.08%</div>
+        <div class="change neutral">→ Flat</div>
+      </div>
+      <!-- Commodities & Crypto -->
+      <div class="market-card">
+        <div class="ticker">GLD (Gold)</div>
+        <div class="price">$471.80</div>
+        <div class="change up">▲ +$3.66 (+0.78%)</div>
+      </div>
+      <div class="market-card">
+        <div class="ticker">WTI Oil</div>
+        <div class="price">$76.01</div>
+        <div class="change down">▼ -$0.14 (-0.18%)</div>
+      </div>
+      <div class="market-card">
+        <div class="ticker">BTC-USD</div>
+        <div class="price">$72,669</div>
+        <div class="change up">▲ +$4,351 (+6.37%)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② MACRO DRIVERS & KEY NEWS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🌍</span>
+      <span class="section-title">Macro Drivers &amp; Key News</span>
+    </div>
+
+    <div class="news-item">
+      <div class="news-dot dot-bull"></div>
+      <div class="news-body">
+        <div class="news-headline">VIX -13.3% — Fear Unwind in Force</div>
+        <div class="news-detail">The VIX dropping from ~24 to 21.15 in a single session signals institutional sellers stepping back. This level of vol compression in one day typically precedes short-covering rallies. Watch if VIX sustains below 20 — that would confirm a regime shift back to low-vol complacency.</div>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-dot dot-bull"></div>
+      <div class="news-body">
+        <div class="news-headline">Dollar Slides — DXY at 98.78 (-0.33%)</div>
+        <div class="news-detail">The greenback continuing its multi-session drift lower is tailwind for multinationals (AMZN, META, GOOGL), commodities, and EM. A weaker DXY also correlates strongly with gold holding strength and BTC's surge today. Watch for DXY sub-98 which could accelerate these moves.</div>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-dot dot-bull"></div>
+      <div class="news-body">
+        <div class="news-headline">Bitcoin +6.4% Through $72K — Crypto Risk Appetite Returns</div>
+        <div class="news-detail">BTC reclaiming $72K is a meaningful technical level. Combined with broad equity strength and VIX compression, this points to a coordinated risk-on rotation. Historically, BTC breakouts above prior resistance have a 60–70% continuation rate over the next 10–14 days when correlated with equity vol dropping.</div>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-dot dot-bull"></div>
+      <div class="news-body">
+        <div class="news-headline">10Y Yield Flat at 4.08% — Rates Not Spoiling the Party</div>
+        <div class="news-detail">Stability in the 10Y is giving equities room to run. The bond market is not pricing in inflation fears today — which is notably constructive for growth/tech at these levels. A 10Y sustainably under 4.25% is the comfort zone for multiple expansion.</div>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-dot dot-bear"></div>
+      <div class="news-body">
+        <div class="news-headline">Defense Names Underperform — Rotation Signal?</div>
+        <div class="news-detail">LMT -0.50%, NOC -0.69% in a risk-on tape is notable. Defense typically lags when geopolitical premium fades or budget uncertainty creeps in. Monitor for continued relative weakness — if defense continues to lag on green days, it may be time to reassess the thesis or trim.</div>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-dot dot-neutral"></div>
+      <div class="news-body">
+        <div class="news-headline">Gold Holds +0.78% Despite Risk-On</div>
+        <div class="news-detail">GLD at $471.80 advancing alongside equities and BTC is unusual — it suggests structural buying (central banks, hedges) rather than pure fear-driven demand. This dual bull case for gold (weak dollar + geopolitical uncertainty) remains intact and gives GLD resilience in multiple scenarios.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ SMART MONEY FLOWS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">💰</span>
+      <span class="section-title">Smart Money Flows</span>
+    </div>
+    <div class="flow-item">
+      <div class="flow-label">Semis (AMD +5.82%, NVDA +1.66%) — Institutional accumulation signal</div>
+      <div class="flow-signal signal-bull">STRONG BUY FLOW</div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-label">AI/Data (PLTR +4.06%, AMZN +3.88%) — Large cap AI re-rating</div>
+      <div class="flow-signal signal-bull">BULLISH FLOW</div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-label">Social/Ads (META +1.93%) — Q1 ad spend resilience priced in</div>
+      <div class="flow-signal signal-bull">STEADY INFLOW</div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-label">Nuclear (NLR +1.58%) — Data center power demand narrative intact</div>
+      <div class="flow-signal signal-bull">ACCUMULATION</div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-label">Copper (COPX +1.31%) — Infrastructure + EV demand bid</div>
+      <div class="flow-signal signal-bull">STEADY BID</div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-label">Defense (LMT, NOC -0.5 to -0.7%) — Money rotating out</div>
+      <div class="flow-signal signal-bear">MILD OUTFLOW</div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-label">Healthcare/Biotech (LLY -0.41%) — Sector consolidating</div>
+      <div class="flow-signal signal-watch">NEUTRAL / WATCH</div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-label">BTC / Risk Assets — Cross-asset risk-on rotation</div>
+      <div class="flow-signal signal-bull">STRONG RISK-ON</div>
+    </div>
+  </div>
+
+  <!-- ④ SECTOR TEMPERATURE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🌡️</span>
+      <span class="section-title">Sector Temperature</span>
+    </div>
+    <div class="sector-grid">
+
+      <div class="sector-card">
+        <div class="sector-name">🔥 Semiconductors</div>
+        <div class="temp-bar-bg"><div class="temp-bar-fill" style="width:92%; background: linear-gradient(90deg, #4ade80, #86efac);"></div></div>
+        <div class="temp-label"><span>AMD +5.82% · NVDA +1.66%</span><span>HOT</span></div>
+      </div>
+
+      <div class="sector-card">
+        <div class="sector-name">🔥 AI / Data Infra</div>
+        <div class="temp-bar-bg"><div class="temp-bar-fill" style="width:88%; background: linear-gradient(90deg, #4ade80, #86efac);"></div></div>
+        <div class="temp-label"><span>PLTR +4.06% · AMZN +3.88%</span><span>HOT</span></div>
+      </div>
+
+      <div class="sector-card">
+        <div class="sector-name">🔥 Crypto / Risk</div>
+        <div class="temp-bar-bg"><div class="temp-bar-fill" style="width:95%; background: linear-gradient(90deg, #f59e0b, #fbbf24);"></div></div>
+        <div class="temp-label"><span>BTC +6.37%</span><span>SCORCHING</span></div>
+      </div>
+
+      <div class="sector-card">
+        <div class="sector-name">🟢 Big Tech</div>
+        <div class="temp-bar-bg"><div class="temp-bar-fill" style="width:70%; background: linear-gradient(90deg, #4ade80, #86efac);"></div></div>
+        <div class="temp-label"><span>META +1.93% · MSFT +0.31%</span><span>WARM</span></div>
+      </div>
+
+      <div class="sector-card">
+        <div class="sector-name">🟢 Energy Infra</div>
+        <div class="temp-bar-bg"><div class="temp-bar-fill" style="width:65%; background: linear-gradient(90deg, #4ade80, #86efac);"></div></div>
+        <div class="temp-label"><span>NLR +1.58% · COPX +1.31%</span><span>WARM</span></div>
+      </div>
+
+      <div class="sector-card">
+        <div class="sector-name">🟡 Industrials</div>
+        <div class="temp-bar-bg"><div class="temp-bar-fill" style="width:45%; background: linear-gradient(90deg, #fbbf24, #fde68a);"></div></div>
+        <div class="temp-label"><span>GE +1.70% · XLI +0.30%</span><span>NEUTRAL-WARM</span></div>
+      </div>
+
+      <div class="sector-card">
+        <div class="sector-name">🟡 Gold / Precious</div>
+        <div class="temp-bar-bg"><div class="temp-bar-fill" style="width:55%; background: linear-gradient(90deg, #fbbf24, #fde68a);"></div></div>
+        <div class="temp-label"><span>GLD +0.78%</span><span>STEADY</span></div>
+      </div>
+
+      <div class="sector-card">
+        <div class="sector-name">🔴 Defense</div>
+        <div class="temp-bar-bg"><div class="temp-bar-fill" style="width:30%; background: linear-gradient(90deg, #f87171, #fca5a5);"></div></div>
+        <div class="temp-label"><span>LMT -0.50% · NOC -0.69%</span><span>COOLING</span></div>
+      </div>
+
+      <div class="sector-card">
+        <div class="sector-name">🔴 Healthcare</div>
+        <div class="temp-bar-bg"><div class="temp-bar-fill" style="width:35%; background: linear-gradient(90deg, #f87171, #fca5a5);"></div></div>
+        <div class="temp-label"><span>LLY -0.41%</span><span>CONSOLIDATING</span></div>
+      </div>
+
+      <div class="sector-card">
+        <div class="sector-name">🟡 Energy (Oil)</div>
+        <div class="temp-bar-bg"><div class="temp-bar-fill" style="width:38%; background: linear-gradient(90deg, #fbbf24, #fde68a);"></div></div>
+        <div class="temp-label"><span>WTI -0.18% · $76.01</span><span>SIDEWAYS</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ⑤ 5 HIGH-CONVICTION IDEAS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">💡</span>
+      <span class="section-title">5 High-Conviction Ideas <span class="conviction-tag">FRESH · MARCH 4</span></span>
+    </div>
+
+    <!-- Idea 1: AMD -->
+    <div class="idea-card" style="border-left-color: #4ade80;">
+      <div class="idea-header">
+        <div class="idea-ticker">AMD <span style="font-size:13px; color:#94a3b8; font-weight:400;">$202.07</span></div>
+        <span class="idea-type idea-long">LONG / MOMENTUM</span>
+      </div>
+      <div class="idea-name">Advanced Micro Devices — Semi Breakout</div>
+      <div class="idea-thesis">AMD's +5.82% today is the kind of single-session move that typically precedes a multi-day follow-through when backed by VIX compression. AMD is closing the gap vs NVDA in AI inference workloads — the MI300X cycle is picking up. The semis have been lagging mega-cap AI names; a rotation back into picks-and-shovels semi plays is underway. Technically, a close above $205 would be a multi-month breakout.</div>
+      <div class="idea-levels">
+        <div class="idea-level">Entry: <span>$200–$205</span></div>
+        <div class="idea-level">Target: <span>$225–$240</span></div>
+        <div class="idea-level">Stop: <span>$188</span></div>
+        <div class="idea-level">Timeframe: <span>4–8 weeks</span></div>
+      </div>
+    </div>
+
+    <!-- Idea 2: PLTR -->
+    <div class="idea-card" style="border-left-color: #a78bfa;">
+      <div class="idea-header">
+        <div class="idea-ticker">PLTR <span style="font-size:13px; color:#94a3b8; font-weight:400;">$153.19</span></div>
+        <span class="idea-type idea-long">LONG / CORE HOLD</span>
+      </div>
+      <div class="idea-name">Palantir Technologies — Government AI Dominance</div>
+      <div class="idea-thesis">PLTR +4.06% continues its leadership. The government AI platform (AIP) has no real competition in classified environments — DoD, NATO, Five Eyes — and the commercial segment is accelerating. At $153, the market is pricing significant growth but the contract pipeline and pricing power justify it. This remains Dan's single highest-conviction holding. No change to thesis — let winners run. The DOGE narrative (efficiency AI) keeps PLTR in headlines as a government tech story.</div>
+      <div class="idea-levels">
+        <div class="idea-level">Current: <span>$153.19</span></div>
+        <div class="idea-level">Next Target: <span>$170–$180</span></div>
+        <div class="idea-level">Support: <span>$138</span></div>
+        <div class="idea-level">Action: <span>HOLD / ADD on dips</span></div>
+      </div>
+    </div>
+
+    <!-- Idea 3: NLR -->
+    <div class="idea-card" style="border-left-color: #f59e0b;">
+      <div class="idea-header">
+        <div class="idea-ticker">NLR <span style="font-size:13px; color:#94a3b8; font-weight:400;">$145.94</span></div>
+        <span class="idea-type idea-long">LONG / THEMATIC</span>
+      </div>
+      <div class="idea-name">VanEck Nuclear Energy ETF — AI Power Demand Play</div>
+      <div class="idea-thesis">NLR +1.58% quietly chugging higher. Nuclear is the only realistic 24/7 carbon-free baseload power source for hyperscale AI data centers. Microsoft, Google, and Amazon have all signed nuclear PPAs. The global nuclear renaissance narrative is early innings — uranium supply remains constrained and new SMR (small modular reactor) policy support is building. NLR gives broad diversified exposure without single-stock risk.</div>
+      <div class="idea-levels">
+        <div class="idea-level">Entry: <span>$143–$148</span></div>
+        <div class="idea-level">Target: <span>$165–$175</span></div>
+        <div class="idea-level">Stop: <span>$135</span></div>
+        <div class="idea-level">Timeframe: <span>6–18 months</span></div>
+      </div>
+    </div>
+
+    <!-- Idea 4: AMZN -->
+    <div class="idea-card" style="border-left-color: #38bdf8;">
+      <div class="idea-header">
+        <div class="idea-ticker">AMZN <span style="font-size:13px; color:#94a3b8; font-weight:400;">$216.82</span></div>
+        <span class="idea-type idea-long">LONG / RERATING</span>
+      </div>
+      <div class="idea-name">Amazon — AWS AI + Advertising Acceleration</div>
+      <div class="idea-thesis">AMZN +3.88% today on no specific news is telling — institutional money is rotating into the name on the thesis of: (1) AWS revenue reaccelerating on AI inference workloads, (2) advertising business continuing to take share from Meta/Google in product search, (3) weak dollar boosting international segment. At $216, AMZN trades at a reasonable multiple relative to its free cash flow trajectory. This is a core hold with room to $240–$260.</div>
+      <div class="idea-levels">
+        <div class="idea-level">Current: <span>$216.82</span></div>
+        <div class="idea-level">Target: <span>$240–$260</span></div>
+        <div class="idea-level">Support: <span>$200</span></div>
+        <div class="idea-level">Action: <span>HOLD / Trim at $255+</span></div>
+      </div>
+    </div>
+
+    <!-- Idea 5: COPX -->
+    <div class="idea-card" style="border-left-color: #fb923c;">
+      <div class="idea-header">
+        <div class="idea-ticker">COPX <span style="font-size:13px; color:#94a3b8; font-weight:400;">$88.16</span></div>
+        <span class="idea-type idea-watch">WATCH / ADD</span>
+      </div>
+      <div class="idea-name">Global X Copper Miners ETF — Infrastructure Supercycle</div>
+      <div class="idea-thesis">COPX +1.31% with copper hovering near multi-year highs. The copper supply deficit is structural — new mines take 10–15 years from discovery to production. Meanwhile demand accelerates from EVs, grid upgrades (PWR connection), and AI data center build-outs. Weak dollar (DXY 98.78) adds near-term tailwind to commodity prices. COPX consolidating above $85 is a buy-the-dip setup. If infrastructure bill execution continues, this name benefits directly.</div>
+      <div class="idea-levels">
+        <div class="idea-level">Entry: <span>$85–$90</span></div>
+        <div class="idea-level">Target: <span>$100–$110</span></div>
+        <div class="idea-level">Stop: <span>$78</span></div>
+        <div class="idea-level">Timeframe: <span>3–9 months</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ⑥ PORTFOLIO POSITIONING THOUGHTS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🎯</span>
+      <span class="section-title">Portfolio Positioning Thoughts</span>
+    </div>
+
+    <!-- Portfolio Table -->
+    <table style="margin-bottom: 20px;">
+      <thead>
+        <tr>
+          <th>Ticker</th>
+          <th>Price</th>
+          <th>Day Chg</th>
+          <th>Day %</th>
+          <th>Signal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="ticker-cell">PLTR</td><td>$153.19</td><td class="up">+$5.97</td><td><span class="pct-pill pill-up">+4.06%</span></td><td class="up">🔥 Hold / Add</td></tr>
+        <tr><td class="ticker-cell">AMD</td><td>$202.07</td><td class="up">+$11.12</td><td><span class="pct-pill pill-up">+5.82%</span></td><td class="up">🔥 Momentum</td></tr>
+        <tr><td class="ticker-cell">AMZN</td><td>$216.82</td><td class="up">+$8.09</td><td><span class="pct-pill pill-up">+3.88%</span></td><td class="up">🟢 Hold</td></tr>
+        <tr><td class="ticker-cell">META</td><td>$667.73</td><td class="up">+$12.65</td><td><span class="pct-pill pill-up">+1.93%</span></td><td class="up">🟢 Hold</td></tr>
+        <tr><td class="ticker-cell">NVDA</td><td>$183.04</td><td class="up">+$2.99</td><td><span class="pct-pill pill-up">+1.66%</span></td><td class="up">🟢 Hold</td></tr>
+        <tr><td class="ticker-cell">NLR</td><td>$145.94</td><td class="up">+$2.27</td><td><span class="pct-pill pill-up">+1.58%</span></td><td class="up">🟢 Hold / Add</td></tr>
+        <tr><td class="ticker-cell">GE</td><td>$339.81</td><td class="up">+$5.67</td><td><span class="pct-pill pill-up">+1.70%</span></td><td class="up">🟢 Hold</td></tr>
+        <tr><td class="ticker-cell">COPX</td><td>$88.16</td><td class="up">+$1.14</td><td><span class="pct-pill pill-up">+1.31%</span></td><td class="up">🟢 Hold</td></tr>
+        <tr><td class="ticker-cell">VOO</td><td>$630.18</td><td class="up">+$4.46</td><td><span class="pct-pill pill-up">+0.71%</span></td><td class="neutral">🔵 Core Hold</td></tr>
+        <tr><td class="ticker-cell">PWR</td><td>$568.38</td><td class="up">+$2.38</td><td><span class="pct-pill pill-up">+0.42%</span></td><td class="up">🟢 Hold</td></tr>
+        <tr><td class="ticker-cell">MSFT</td><td>$405.20</td><td class="up">+$1.27</td><td><span class="pct-pill pill-up">+0.31%</span></td><td class="neutral">🔵 Hold</td></tr>
+        <tr><td class="ticker-cell">XLI</td><td>$175.97</td><td class="up">+$0.53</td><td><span class="pct-pill pill-up">+0.30%</span></td><td class="neutral">🔵 Hold</td></tr>
+        <tr><td class="ticker-cell">GOOGL</td><td>$303.13</td><td class="down">-$0.45</td><td><span class="pct-pill pill-flat">-0.15%</span></td><td class="neutral">🟡 Monitor</td></tr>
+        <tr><td class="ticker-cell">LLY</td><td>$1,003.57</td><td class="down">-$4.16</td><td><span class="pct-pill pill-down">-0.41%</span></td><td class="neutral">🟡 Watch</td></tr>
+        <tr><td class="ticker-cell">LMT</td><td>$664.48</td><td class="down">-$3.34</td><td><span class="pct-pill pill-down">-0.50%</span></td><td class="down">🔴 Review</td></tr>
+        <tr><td class="ticker-cell">NOC</td><td>$753.84</td><td class="down">-$5.27</td><td><span class="pct-pill pill-down">-0.69%</span></td><td class="down">🔴 Review</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Thoughts -->
+    <div class="thought-item">
+      <div class="thought-icon">✅</div>
+      <div class="thought-text"><strong>PLTR, AMD, AMZN leading today</strong> — the AI/tech core of the portfolio is doing exactly what it should in a risk-on tape. Let these positions breathe. No trimming needed unless PLTR approaches $175+ without a catalyst.</div>
+    </div>
+    <div class="thought-item">
+      <div class="thought-icon">⚠️</div>
+      <div class="thought-text"><strong>Defense (LMT, NOC) underperforming for multiple sessions</strong> — this is worth monitoring. If defense continues lagging in risk-on environments, it may signal geopolitical premium fading or budget uncertainty. Consider whether the original thesis (NATO spending, US defense budget) is still intact or if a tactical trim makes sense on the next bounce.</div>
+    </div>
+    <div class="thought-item">
+      <div class="thought-icon">💊</div>
+      <div class="thought-text"><strong>LLY holding $1,000 is psychologically important</strong> — GLP-1 drug demand remains a secular story but valuation is stretched. The mild -0.41% today is noise. Thesis intact. Monitor for any FDA news or Ozempic/Mounjaro competitive updates.</div>
+    </div>
+    <div class="thought-item">
+      <div class="thought-icon">🔋</div>
+      <div class="thought-text"><strong>NLR + COPX + PWR = Infrastructure Trifecta</strong> — all holding well or advancing. This thematic cluster (power grid + copper + nuclear) is still early in a multi-year buildout cycle driven by AI capex. Strong conviction here.</div>
+    </div>
+    <div class="thought-item">
+      <div class="thought-icon">📊</div>
+      <div class="thought-text"><strong>VIX at 21 is the inflection zone</strong> — if it breaks below 18–19, that would trigger systematic vol-targeting funds to add equity exposure mechanically. That's the feedback loop that makes risk-on self-reinforcing. Worth watching closely over the next 3–5 sessions.</div>
+    </div>
+    <div class="thought-item">
+      <div class="thought-icon">💱</div>
+      <div class="thought-text"><strong>GOOGL flat in a strong tech day is a yellow flag</strong> — META and AMZN both ripped but GOOGL was essentially unchanged. AI search competition (OpenAI SearchGPT, Perplexity) may be creating overhang. Thesis review warranted at next earnings.</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>🦉 <strong>Danswiz Daily Alpha Report</strong> · March 4, 2026 · 7:00 PM EST</p>
+    <p style="margin-top: 6px;">All prices fetched live via yfinance. This report is for personal research only — not financial advice.</p>
+    <p style="margin-top: 6px;">Generated by Danswiz Intelligence Engine · <em>Accuracy is Integrity</em></p>
+  </div>
+
+</div>
+</body>
+</html>

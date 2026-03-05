@@ -61,3 +61,24 @@
 - **Privacy Mode:** Disabled — I see all messages
 - **Reply Behavior:** Reply to ALL messages (not just tags)
 - Dan's preference: "reply to all messages in this group chat"
+
+## Critical Rules (learned the hard way)
+- **Frontend = templates/index.html** (Flask serves this, NOT root index.html)
+- **Portfolio source of truth = Supabase** (never local JSON/memory)
+- **Never skip baskets** — show everything exactly as Supabase returns
+- **Realtime = realtime** — use range=1d&interval=1m for intraday prices
+- **ETFs = technical signals only** (no fundamentals available)
+
+## Website Features (as of Mar 4, 2026)
+- Dashboard, Portfolio, Rotation Scan, Watchlist tabs (existing)
+- Signal column on both Portfolio + Watchlist tabs
+- Market Pulse tab (market internals dashboard)
+- Catalyst Calendar tab (earnings + FOMC dates)
+- Sell Signal Check cron (5 PM ET M-F)
+
+## Build Roadmap (Dan approved Mar 4)
+- Phase 2: Thesis Journal, Trade Journal + P&L Attribution
+- Phase 3: R/R Calculator, Insider Transactions (SEC Form 4), Correlation Dashboard, Pre-Trade Checklist
+
+## Model Preference
+- **Always use anthropic/claude-opus-4-6** — Dan's explicit preference (Mar 4, 2026)

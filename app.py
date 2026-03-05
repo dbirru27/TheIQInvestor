@@ -368,6 +368,7 @@ def rotation_scan():
                 'rotation_score': rot,
                 'rotation_signal': s.get('rotation_signal', 'NEUTRAL'),
                 'rotation_convergence': s.get('rotation_convergence', 0),
+                'rs_rating': s.get('rs_rating', 0),
                 'score': s.get('score', 0),
                 'grade': s.get('grade', '?'),
                 'sector': s.get('sector', 'Unknown'),
@@ -1404,6 +1405,137 @@ def portfolio_risk():
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+## ===== SCREENER =====
+@app.route('/api/screener')
+def screener():
+    """Filter all_stocks.json by query params: rotation_min, rotation_max, ins_min, ins_max,
+       grades (comma-sep), sector, rs_min, peg_max, sort, order"""
+    try:
+        with open('data/all_stocks.json') as f:
+            data = json.load(f)
+        stocks = data.get('stocks', {})
+        ins_lookup = load_insider_scores()
+
+        results = []
+        for ticker, s in stocks.items():
+            ins = ins_lookup.get(ticker, {})
+            s['ins_score'] = ins.get('ins_score', s.get('ins_score', 0))
+            s['insider_signal'] = ins.get('insider_signal', s.get('insider_signal', 'neutral'))
+            s['ticker'] = ticker
+            results.append(s)
+
+        # Apply filters
+        rot_min = request.args.get('rotation_min', type=float)
+        rot_max = request.args.get('rotation_max', type=float)
+        ins_min = request.args.get('ins_min', type=float)
+        ins_max = request.args.get('ins_max', type=float)
+        grades = request.args.get('grades', '')
+        sector = request.args.get('sector', '')
+        rs_min = request.args.get('rs_min', type=int)
+        peg_max = request.args.get('peg_max', type=float)
+
+        if rot_min is not None:
+            results = [s for s in results if (s.get('rotation_score') or 0) >= rot_min]
+        if rot_max is not None:
+            results = [s for s in results if (s.get('rotation_score') or 0) <= rot_max]
+        if ins_min is not None:
+            results = [s for s in results if (s.get('ins_score') or 0) >= ins_min]
+        if ins_max is not None:
+            results = [s for s in results if (s.get('ins_score') or 0) <= ins_max]
+        if grades:
+            grade_set = set(g.strip().upper() for g in grades.split(','))
+            results = [s for s in results if s.get('grade', '').upper() in grade_set]
+        if sector:
+            results = [s for s in results if s.get('sector', '').lower() == sector.lower()]
+        if rs_min is not None:
+            results = [s for s in results if (s.get('rs_rating') or 0) >= rs_min]
+        if peg_max is not None:
+            results = [s for s in results if s.get('peg_ratio') is not None and s['peg_ratio'] <= peg_max]
+
+        # Sort
+        sort_key = request.args.get('sort', 'rotation_score')
+        sort_order = request.args.get('order', 'desc')
+        results.sort(
+            key=lambda x: x.get(sort_key) if x.get(sort_key) is not None else -9999,
+            reverse=(sort_order == 'desc')
+        )
+
+        return jsonify({
+            'results': results[:200],
+            'total': len(results),
+            'timestamp': datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M EST")
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+## ===== ALERTS =====
+ALERTS_FILE = 'data/alerts.json'
+
+@app.route('/api/alerts', methods=['GET'])
+def get_alerts():
+    alerts = _load_json(ALERTS_FILE, [])
+    return jsonify({'alerts': alerts})
+
+@app.route('/api/alerts', methods=['POST'])
+def create_alert():
+    try:
+        data = request.get_json()
+        ticker = data.get('ticker', '').strip().upper()
+        atype = data.get('type', '')
+        threshold = data.get('threshold')
+        if not ticker or not atype or threshold is None:
+            return jsonify({'error': 'ticker, type, and threshold required'}), 400
+
+        alerts = _load_json(ALERTS_FILE, [])
+        alert = {
+            'id': len(alerts) + 1,
+            'ticker': ticker,
+            'type': atype,
+            'threshold': float(threshold),
+            'triggered': False,
+            'triggered_at': None,
+            'current_value': None,
+            'created_at': datetime.now(ZoneInfo("America/New_York")).isoformat()
+        }
+        alerts.append(alert)
+        _save_json(ALERTS_FILE, alerts)
+        return jsonify({'status': 'ok', 'alert': alert})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/alerts/<int:alert_id>', methods=['DELETE'])
+def delete_alert(alert_id):
+    try:
+        alerts = _load_json(ALERTS_FILE, [])
+        alerts = [a for a in alerts if a.get('id') != alert_id]
+        _save_json(ALERTS_FILE, alerts)
+        return jsonify({'status': 'ok'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+## ===== REPORT CARD =====
+@app.route('/api/report/<ticker>')
+def stock_report(ticker):
+    """Full report card data for a single stock"""
+    try:
+        ticker = ticker.upper()
+        with open('data/all_stocks.json') as f:
+            data = json.load(f)
+        stock = data.get('stocks', {}).get(ticker)
+        if not stock:
+            return jsonify({'error': f'{ticker} not found'}), 404
+
+        ins = load_insider_scores().get(ticker, {})
+        stock['ins_score'] = ins.get('ins_score', stock.get('ins_score', 0))
+        stock['insider_signal'] = ins.get('insider_signal', stock.get('insider_signal', 'neutral'))
+        stock['ticker'] = ticker
+        return jsonify(stock)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':

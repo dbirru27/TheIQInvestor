@@ -147,6 +147,15 @@
         .score-breakdown { font-size: 0.7rem; color: var(--text-dim); }
 
         #detail-view { display: none; }
+
+        @media print {
+            aside, .menu-toggle, .overlay, button, .nav-item { display: none !important; }
+            main { padding: 10px !important; }
+            .card { break-inside: avoid; border: 1px solid #ccc !important; }
+            body { background: white !important; color: black !important; }
+            #report-view { display: block !important; }
+            #report-share-btn { display: none !important; }
+        }
         
         /* Edit Mode Styles */
         .edit-mode-active { background: #1e293b !important; border-color: #eab308 !important; }
@@ -258,6 +267,8 @@
             <div class="nav-item" onclick="showCalendar(); toggleMenu();">Calendar</div>
             <div class="nav-item" onclick="showJournal(); toggleMenu();">Trade Journal</div>
             <div class="nav-item" onclick="showRiskDashboard(); toggleMenu();">Risk Dashboard</div>
+            <div class="nav-item" onclick="showScreener(); toggleMenu();">Screener</div>
+            <div class="nav-item" onclick="showAlerts(); toggleMenu();">Alerts</div>
             <div class="nav-item" onclick="showAlert('Chat with AI coming soon!'); toggleMenu();">💬 Chat with AI</div>
         </nav>
         <div style="margin-top: auto; font-size: 0.7rem; color: var(--text-dim)">v4.2 High Potential (100pt)</div>
@@ -368,6 +379,11 @@
                             <div class="text-xs uppercase font-bold tracking-wider mb-2" id="insider-card-label" style="color:#666;">Insider</div>
                             <div class="text-xl lg:text-2xl font-bold" id="insider-score-value">⚪ 0</div>
                             <div class="text-xs mt-1" id="insider-signal-label" style="color: var(--text-dim);">Click for details</div>
+                        </div>
+                        <div id="rs-score-card" class="card p-4 lg:p-6" style="border:1px solid #333;">
+                            <div class="text-xs uppercase font-bold tracking-wider mb-2" id="rs-card-label" style="color:#666;">RS Rating</div>
+                            <div class="text-xl lg:text-2xl font-bold" id="rs-score-value">—</div>
+                            <div class="text-xs mt-1" id="rs-signal-label" style="color: var(--text-dim);">Relative Strength</div>
                         </div>
                     </div>
 
@@ -480,13 +496,14 @@
                             <th onclick="sortWatchlist('score')">Score</th>
                             <th onclick="sortWatchlist('moonshot_score')">Moonshot</th>
                             <th onclick="sortWatchlist('rotation_score')">Rotation</th>
+                            <th onclick="sortWatchlist('rs_rating')">RS</th>
                             <th onclick="sortWatchlist('grade')">Grade</th>
                             <th>Signal</th>
                             <th>Insider</th>
                         </tr>
                     </thead>
                     <tbody id="watchlist-tbody">
-                        <tr><td colspan="13" style="text-align: center; padding: 40px; color: var(--text-dim);">Loading watchlist...</td></tr>
+                        <tr><td colspan="15" style="text-align: center; padding: 40px; color: var(--text-dim);">Loading watchlist...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -985,6 +1002,167 @@
             </div>
         </div>
 
+        <!-- SCREENER VIEW -->
+        <div id="screener-view" style="display: none;">
+            <div style="display: flex; gap: 8px; margin-bottom: 16px; align-items: center;">
+                <button onclick="showDashboard()" class="text-sm text-slate-400 hover:text-white flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    Back to Dashboard
+                </button>
+            </div>
+            <h2 class="text-2xl font-bold mb-4">Stock Screener</h2>
+
+            <div class="card" style="margin-bottom: 20px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; align-items: end;">
+                    <div>
+                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">Rotation Min</label>
+                        <input type="number" id="scr-rot-min" placeholder="e.g. 60" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
+                    </div>
+                    <div>
+                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">Rotation Max</label>
+                        <input type="number" id="scr-rot-max" placeholder="e.g. 100" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
+                    </div>
+                    <div>
+                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">INS Min</label>
+                        <input type="number" id="scr-ins-min" placeholder="e.g. 1" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
+                    </div>
+                    <div>
+                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">INS Max</label>
+                        <input type="number" id="scr-ins-max" placeholder="e.g. 10" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
+                    </div>
+                    <div>
+                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">RS Min</label>
+                        <input type="number" id="scr-rs-min" placeholder="e.g. 80" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
+                    </div>
+                    <div>
+                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">PEG Max</label>
+                        <input type="number" id="scr-peg-max" step="0.1" placeholder="e.g. 2.0" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
+                    </div>
+                    <div>
+                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">Sector</label>
+                        <select id="scr-sector" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
+                            <option value="">All</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">Grades</label>
+                        <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                            <label style="font-size:0.75rem; cursor:pointer;"><input type="checkbox" class="scr-grade" value="A" checked style="accent-color:var(--accent);"> A</label>
+                            <label style="font-size:0.75rem; cursor:pointer;"><input type="checkbox" class="scr-grade" value="B" checked style="accent-color:var(--accent);"> B</label>
+                            <label style="font-size:0.75rem; cursor:pointer;"><input type="checkbox" class="scr-grade" value="C" style="accent-color:var(--accent);"> C</label>
+                            <label style="font-size:0.75rem; cursor:pointer;"><input type="checkbox" class="scr-grade" value="D" style="accent-color:var(--accent);"> D</label>
+                            <label style="font-size:0.75rem; cursor:pointer;"><input type="checkbox" class="scr-grade" value="F" style="accent-color:var(--accent);"> F</label>
+                        </div>
+                    </div>
+                    <div>
+                        <button onclick="runScreener()" style="width:100%; padding:8px 16px; background:var(--accent); color:#000; border:none; border-radius:6px; font-weight:700; cursor:pointer;">Screen</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="screener-status" style="font-size:0.8rem; color:var(--text-dim); margin-bottom:12px;"></div>
+
+            <div style="overflow-x: auto; background: var(--surface); border-radius: 12px; border: 1px solid #2d3748;">
+                <table id="screener-table">
+                    <thead>
+                        <tr>
+                            <th onclick="sortScreener('ticker')">Ticker</th>
+                            <th onclick="sortScreener('name')">Name</th>
+                            <th onclick="sortScreener('sector')">Sector</th>
+                            <th onclick="sortScreener('rotation_score')">Rotation</th>
+                            <th onclick="sortScreener('rs_rating')">RS</th>
+                            <th onclick="sortScreener('score')">Score</th>
+                            <th onclick="sortScreener('grade')">Grade</th>
+                            <th onclick="sortScreener('ins_score')">INS</th>
+                            <th onclick="sortScreener('peg_ratio')">PEG</th>
+                            <th onclick="sortScreener('moonshot_score')">Moonshot</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="screener-tbody">
+                        <tr><td colspan="11" style="text-align:center; padding:40px; color:var(--text-dim);">Set filters and click Screen</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- REPORT CARD VIEW -->
+        <div id="report-view" style="display: none;">
+            <div style="display: flex; gap: 8px; margin-bottom: 16px; align-items: center;">
+                <button onclick="history.back()" class="text-sm text-slate-400 hover:text-white flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    Back
+                </button>
+                <div class="flex-1"></div>
+                <button id="report-share-btn" onclick="shareReport()" style="background:#1e293b; border:1px solid #2d3748; padding:8px 16px; border-radius:8px; color:var(--accent); font-weight:600; cursor:pointer;">
+                    Share Link
+                </button>
+            </div>
+            <div id="report-content"></div>
+        </div>
+
+        <!-- ALERTS VIEW -->
+        <div id="alerts-view" style="display: none;">
+            <div style="display: flex; gap: 8px; margin-bottom: 16px; align-items: center;">
+                <button onclick="showDashboard()" class="text-sm text-slate-400 hover:text-white flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    Back to Dashboard
+                </button>
+            </div>
+            <h2 class="text-2xl font-bold mb-4">Smart Alerts</h2>
+
+            <!-- Create Alert Form -->
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="font-weight:700; font-size:0.9rem; margin-bottom:12px;">Create Alert</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; align-items: end;">
+                    <div>
+                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">Ticker</label>
+                        <input type="text" id="alert-ticker" placeholder="e.g. NVDA" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; text-transform:uppercase; font-size:0.85rem;">
+                    </div>
+                    <div>
+                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">Alert Type</label>
+                        <select id="alert-type" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
+                            <option value="price_above">Price Above</option>
+                            <option value="price_below">Price Below</option>
+                            <option value="rotation_above">Rotation Above</option>
+                            <option value="rotation_below">Rotation Below</option>
+                            <option value="ins_above">INS Score Above</option>
+                            <option value="ins_below">INS Score Below</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">Threshold</label>
+                        <input type="number" id="alert-threshold" step="0.01" placeholder="Value" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
+                    </div>
+                    <div>
+                        <button onclick="createAlert()" style="width:100%; padding:8px 16px; background:var(--accent); color:#000; border:none; border-radius:6px; font-weight:700; cursor:pointer;">+ Add Alert</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Triggered Alerts -->
+            <div id="triggered-alerts" style="margin-bottom: 20px;"></div>
+
+            <!-- Active Alerts Table -->
+            <div style="overflow-x: auto; background: var(--surface); border-radius: 12px; border: 1px solid #2d3748;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ticker</th>
+                            <th>Type</th>
+                            <th>Threshold</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alerts-tbody">
+                        <tr><td colspan="6" style="text-align:center; padding:40px; color:var(--text-dim);">Loading alerts...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </main>
 
     <script>
@@ -1145,7 +1323,7 @@
         function showAlert(msg) { alert(msg); }
         
         function hideAllViews() {
-            ['dashboard-view','detail-view','watchlist-view','rotation-view','watchlist-entries-view','market-pulse-view','calendar-view','journal-view','risk-view'].forEach(id => {
+            ['dashboard-view','detail-view','watchlist-view','rotation-view','watchlist-entries-view','market-pulse-view','calendar-view','journal-view','risk-view','screener-view','report-view','alerts-view'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.style.display = 'none';
             });
@@ -1229,6 +1407,7 @@
                                 industry: scores.industry || '',
                                 ins_score: scores.ins_score || 0,
                                 insider_signal: scores.insider_signal || 'neutral',
+                                rs_rating: scores.rs_rating || 0,
                                 basket_metadata: { icon: basket.icon, weight: basket.weight }
                             };
                             watchlistData.baskets[name].push(stock);
@@ -1351,6 +1530,7 @@
                     </td>
                     <td class="text-center font-bold text-amber-400">${stock.moonshot_score || 0}%</td>
                     <td class="text-center" style="color: ${getRotationColor(stock.rotation_score || 0)}; font-weight: ${getRotationWeight(stock.rotation_score || 0)};">${(stock.rotation_score || 0).toFixed(1)}</td>
+                    <td class="text-center" style="font-weight:600; color:${(stock.rs_rating||0) >= 80 ? '#10b981' : (stock.rs_rating||0) >= 50 ? '#eab308' : '#64748b'};">${stock.rs_rating || '—'}</td>
                     <td><span class="grade-badge grade-${stock.grade}">${stock.grade}</span></td>
                     <td>${getPortfolioSignalBadge(stock)}</td>
                     <td>${renderInsiderBadge(stock.ins_score, stock.insider_signal, true)}</td>
@@ -1415,7 +1595,7 @@
             if (currentBasketFilter !== 'all') {
                 const stocks = dataSource.baskets[currentBasketFilter] || [];
                 if (stocks.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="13" style="text-align: center; padding: 40px; color: var(--text-dim);">No holdings in this basket</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="15" style="text-align: center; padding: 40px; color: var(--text-dim);">No holdings in this basket</td></tr>';
                     return;
                 }
                 
@@ -1424,7 +1604,7 @@
                 if (editMode) {
                     html += `
                         <tr>
-                            <td colspan="13" style="padding: 12px; text-align: center;">
+                            <td colspan="15" style="padding: 12px; text-align: center;">
                                 <button class="edit-add-btn" onclick="showAddTickerModal('${currentBasketFilter}')">+ Add Ticker to ${currentBasketFilter}</button>
                             </td>
                         </tr>
@@ -1482,7 +1662,7 @@
                 const collapsed = collapsedBaskets.has(basket);
                 html += `
                     <tr class="basket-header" data-basket="${basket}" onclick="toggleBasketCollapse('${safeBasket}')" style="cursor:pointer;">
-                        <td colspan="13" style="background: #0a0f1d; padding: 10px 16px; border-bottom: 2px solid var(--accent); font-weight: 700; font-size: 0.9rem;">
+                        <td colspan="15" style="background: #0a0f1d; padding: 10px 16px; border-bottom: 2px solid var(--accent); font-weight: 700; font-size: 0.9rem;">
                             <span style="display:inline-block;width:16px;font-size:0.7rem;color:var(--text-dim);">${collapsed ? '▶' : '▼'}</span>
                             ${icon} ${basket} 
                             <span style="font-size: 0.75rem; color: var(--accent); font-weight: 600; margin-left: 8px;">${weight}</span>
@@ -1494,7 +1674,7 @@
                 `;
                 if (!collapsed) {
                     if (stocks.length === 0) {
-                        html += `<tr data-basket-row="${basket}"><td colspan="13" style="text-align: center; padding: 14px; color: var(--text-dim); font-style: italic;">
+                        html += `<tr data-basket-row="${basket}"><td colspan="15" style="text-align: center; padding: 14px; color: var(--text-dim); font-style: italic;">
                             ${editMode ? 'Use "+ Add Ticker" above to add holdings' : 'No holdings — tap ✏️ Edit to add tickers'}
                         </td></tr>`;
                     } else {
@@ -2112,6 +2292,9 @@
             else if (hash === 'calendar') showCalendar();
             else if (hash === 'journal') showJournal();
             else if (hash === 'risk') showRiskDashboard();
+            else if (hash === 'screener') showScreener();
+            else if (hash === 'alerts') showAlerts();
+            else if (hash.startsWith('report/')) showReportCard(hash.split('/')[1]);
             else if (hash.startsWith('stock/')) viewStock(hash.split('/')[1]);
             else showDashboard();
         }
@@ -2220,6 +2403,22 @@
                 insValue.style.color = insColor;
                 insSignalLabel.textContent = `${insText} · Click for details`;
                 insSignalLabel.style.color = insColor + '99';
+
+                // RS Rating card
+                const rsRating = data.rs_rating || 0;
+                const rsCard = document.getElementById('rs-score-card');
+                const rsLabel = document.getElementById('rs-card-label');
+                const rsValue = document.getElementById('rs-score-value');
+                const rsSignal = document.getElementById('rs-signal-label');
+                let rsColor;
+                if (rsRating >= 80) { rsColor = '#10b981'; rsCard.style.background = 'linear-gradient(135deg, #1e293b, rgba(16,185,129,0.15))'; rsCard.style.borderColor = '#10b98166'; }
+                else if (rsRating >= 50) { rsColor = '#eab308'; rsCard.style.background = 'linear-gradient(135deg, #1e293b, rgba(234,179,8,0.1))'; rsCard.style.borderColor = '#eab30844'; }
+                else { rsColor = '#94a3b8'; rsCard.style.background = ''; rsCard.style.borderColor = '#333'; }
+                rsLabel.style.color = rsColor;
+                rsValue.textContent = rsRating || '—';
+                rsValue.style.color = rsColor;
+                rsSignal.textContent = rsRating >= 80 ? 'Leader' : rsRating >= 50 ? 'Average' : rsRating > 0 ? 'Laggard' : 'N/A';
+                rsSignal.style.color = rsColor + '99';
 
                 // Store ticker for detail fetch
                 window.currentInsiderTicker = ticker.toUpperCase();
@@ -2374,6 +2573,7 @@
                 { key: 'ticker', label: 'Ticker' },
                 { key: 'rotation_score', label: 'Rotation' },
                 { key: 'rotation_convergence', label: 'Conv.' },
+                { key: 'rs_rating', label: 'RS' },
                 { key: 'score', label: 'Quality' },
                 { key: 'grade', label: 'Grade' },
                 { key: 'ins_score', label: 'Insider' },
@@ -2405,6 +2605,7 @@
                     <td style="padding:8px;"><a href="#" onclick="viewStock('${s.ticker}'); return false;" class="text-sky-400 hover:text-sky-300 font-bold">${s.ticker}</a></td>
                     <td style="padding:8px;font-weight:700;color:#10b981;">${s.rotation_score}</td>
                     <td style="padding:8px;">${s.rotation_convergence}</td>
+                    <td style="padding:8px;font-weight:600;color:${(s.rs_rating||0) >= 80 ? '#10b981' : (s.rs_rating||0) >= 50 ? '#eab308' : '#64748b'};">${s.rs_rating || '—'}</td>
                     <td style="padding:8px;">${s.score}</td>
                     <td style="padding:8px;"><span style="color:${gradeColor};font-weight:700;">${s.grade}</span></td>
                     <td style="padding:8px;">${renderInsiderBadge(s.ins_score, s.insider_signal, true)}</td>
@@ -3145,6 +3346,310 @@
                 });
                 concHTML += '</div>';
                 document.getElementById('risk-concentration').innerHTML = concHTML;
+            }
+        }
+
+        // ===== SCREENER =====
+        let screenerData = [];
+        let screenerSort = { column: 'rotation_score', direction: 'desc' };
+
+        async function showScreener() {
+            if (location.hash !== '#screener') history.pushState(null, '', '#screener');
+            hideAllViews();
+            document.getElementById('screener-view').style.display = 'block';
+
+            // Populate sector dropdown from cached data
+            try {
+                const allData = await loadAllStocks();
+                const sectors = [...new Set(Object.values(allData.stocks || {}).map(s => s.sector).filter(Boolean))].sort();
+                const sel = document.getElementById('scr-sector');
+                if (sel.options.length <= 1) {
+                    sectors.forEach(s => {
+                        const opt = document.createElement('option');
+                        opt.value = s;
+                        opt.textContent = s;
+                        sel.appendChild(opt);
+                    });
+                }
+            } catch(e) {}
+        }
+
+        async function runScreener() {
+            const params = new URLSearchParams();
+            const rotMin = document.getElementById('scr-rot-min').value;
+            const rotMax = document.getElementById('scr-rot-max').value;
+            const insMin = document.getElementById('scr-ins-min').value;
+            const insMax = document.getElementById('scr-ins-max').value;
+            const rsMin = document.getElementById('scr-rs-min').value;
+            const pegMax = document.getElementById('scr-peg-max').value;
+            const sector = document.getElementById('scr-sector').value;
+            const grades = [...document.querySelectorAll('.scr-grade:checked')].map(cb => cb.value).join(',');
+
+            if (rotMin) params.set('rotation_min', rotMin);
+            if (rotMax) params.set('rotation_max', rotMax);
+            if (insMin) params.set('ins_min', insMin);
+            if (insMax) params.set('ins_max', insMax);
+            if (rsMin) params.set('rs_min', rsMin);
+            if (pegMax) params.set('peg_max', pegMax);
+            if (sector) params.set('sector', sector);
+            if (grades) params.set('grades', grades);
+            params.set('sort', screenerSort.column);
+            params.set('order', screenerSort.direction);
+
+            document.getElementById('screener-status').textContent = 'Screening...';
+
+            try {
+                const res = await fetch('/api/screener?' + params.toString());
+                const data = await res.json();
+                if (data.error) throw new Error(data.error);
+                screenerData = data.results;
+                document.getElementById('screener-status').textContent = `${data.total} matches found (showing ${data.results.length}) · ${data.timestamp}`;
+                renderScreenerTable();
+            } catch(e) {
+                document.getElementById('screener-status').textContent = 'Error: ' + e.message;
+            }
+        }
+
+        function renderScreenerTable() {
+            const tbody = document.getElementById('screener-tbody');
+            if (screenerData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="11" style="text-align:center; padding:40px; color:var(--text-dim);">No results. Adjust filters and try again.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = screenerData.map(s => {
+                const rotColor = (s.rotation_score||0) >= 80 ? '#10b981' : (s.rotation_score||0) >= 60 ? '#eab308' : '#64748b';
+                const rsColor = (s.rs_rating||0) >= 80 ? '#10b981' : (s.rs_rating||0) >= 50 ? '#eab308' : '#64748b';
+                const gradeColor = s.grade === 'A' ? '#10b981' : s.grade === 'B' ? '#38bdf8' : s.grade === 'C' ? '#f59e0b' : '#ef4444';
+                return `<tr>
+                    <td><a href="#" onclick="viewStock('${s.ticker}'); return false;" class="text-sky-400 hover:text-sky-300 font-bold">${s.ticker}</a></td>
+                    <td style="font-size:0.85rem; color:var(--text-dim);">${(s.name||'').substring(0, 25)}</td>
+                    <td style="font-size:0.8rem; color:var(--text-dim);">${s.sector || '—'}</td>
+                    <td style="font-weight:700; color:${rotColor};">${(s.rotation_score||0).toFixed(1)}</td>
+                    <td style="font-weight:600; color:${rsColor};">${s.rs_rating || '—'}</td>
+                    <td>${s.score || 0}</td>
+                    <td><span style="color:${gradeColor}; font-weight:700;">${s.grade || '—'}</span></td>
+                    <td>${renderInsiderBadge(s.ins_score, s.insider_signal, true)}</td>
+                    <td style="color:${(s.peg_ratio||0) < 1.5 ? '#10b981' : '#eab308'};">${s.peg_ratio ? s.peg_ratio.toFixed(2) : '—'}</td>
+                    <td class="text-amber-400 font-bold">${s.moonshot_score || 0}%</td>
+                    <td>
+                        <button onclick="viewStock('${s.ticker}')" class="text-xs bg-slate-700 px-3 py-1 rounded hover:bg-slate-600 transition">Analyze</button>
+                        <a href="#report/${s.ticker}" class="text-xs text-sky-400 hover:text-sky-300 ml-1">Report</a>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        function sortScreener(col) {
+            if (screenerSort.column === col) {
+                screenerSort.direction = screenerSort.direction === 'desc' ? 'asc' : 'desc';
+            } else {
+                screenerSort.column = col;
+                screenerSort.direction = col === 'ticker' || col === 'name' || col === 'sector' ? 'asc' : 'desc';
+            }
+            if (screenerData.length > 0) runScreener();
+        }
+
+        // ===== REPORT CARD =====
+        async function showReportCard(ticker) {
+            if (!ticker) return;
+            ticker = ticker.toUpperCase();
+            if (location.hash !== `#report/${ticker}`) history.pushState(null, '', `#report/${ticker}`);
+            hideAllViews();
+            document.getElementById('report-view').style.display = 'block';
+            document.getElementById('report-content').innerHTML = '<p style="color:var(--text-dim);">Loading report card...</p>';
+
+            try {
+                const res = await fetch(`/api/report/${ticker}`);
+                const s = await res.json();
+                if (s.error) throw new Error(s.error);
+
+                const gradeColors = {A:'#059669',B:'#0284c7',C:'#d97706',D:'#7c3aed',F:'#dc2626'};
+                const gc = gradeColors[s.grade] || '#64748b';
+                const rotColor = (s.rotation_score||0) >= 80 ? '#10b981' : (s.rotation_score||0) >= 60 ? '#eab308' : '#64748b';
+                const rsColor = (s.rs_rating||0) >= 80 ? '#10b981' : (s.rs_rating||0) >= 50 ? '#eab308' : '#64748b';
+                let insColor, insEmoji, insText;
+                if ((s.ins_score||0) <= -3) { insColor = '#ef4444'; insEmoji = '🔴'; insText = 'Dumping'; }
+                else if ((s.ins_score||0) >= 3) { insColor = '#10b981'; insEmoji = '🟢'; insText = 'Buying'; }
+                else { insColor = '#94a3b8'; insEmoji = '⚪'; insText = 'Neutral'; }
+
+                document.getElementById('report-content').innerHTML = `
+                    <div style="margin-bottom:24px;">
+                        <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                            <h1 style="font-size:2rem; font-weight:800; margin:0;">${s.name || ticker}</h1>
+                            <span class="grade-badge grade-${s.grade}" style="font-size:1.2rem; padding:6px 20px;">${s.grade}</span>
+                        </div>
+                        <div style="color:var(--text-dim); font-size:0.9rem; margin-top:4px;">${ticker} · ${s.sector || '—'} · ${s.industry || '—'}</div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); gap:12px; margin-bottom:24px;">
+                        <div class="card" style="text-align:center; padding:14px;">
+                            <div style="font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">Score</div>
+                            <div style="font-size:1.6rem; font-weight:800; color:${gc};">${s.score || 0}/100</div>
+                        </div>
+                        <div class="card" style="text-align:center; padding:14px;">
+                            <div style="font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">Rotation</div>
+                            <div style="font-size:1.6rem; font-weight:800; color:${rotColor};">${(s.rotation_score||0).toFixed(1)}</div>
+                        </div>
+                        <div class="card" style="text-align:center; padding:14px;">
+                            <div style="font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">RS Rating</div>
+                            <div style="font-size:1.6rem; font-weight:800; color:${rsColor};">${s.rs_rating || '—'}</div>
+                        </div>
+                        <div class="card" style="text-align:center; padding:14px;">
+                            <div style="font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">Moonshot</div>
+                            <div style="font-size:1.6rem; font-weight:800; color:#f59e0b;">${s.moonshot_score || 0}%</div>
+                        </div>
+                        <div class="card" style="text-align:center; padding:14px;">
+                            <div style="font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">Insider</div>
+                            <div style="font-size:1.6rem; font-weight:800; color:${insColor};">${insEmoji} ${s.ins_score >= 0 ? '+' : ''}${s.ins_score||0}</div>
+                            <div style="font-size:0.65rem; color:${insColor};">${insText}</div>
+                        </div>
+                        <div class="card" style="text-align:center; padding:14px;">
+                            <div style="font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">Price</div>
+                            <div style="font-size:1.6rem; font-weight:800;">$${s.current_price ? s.current_price.toFixed(2) : '—'}</div>
+                        </div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px;">
+                        <div class="card">
+                            <h3 style="font-weight:700; font-size:0.9rem; margin-bottom:12px; color:var(--text-dim); text-transform:uppercase;">Factor Breakdown</h3>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                                <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-dim);">Technical</span><span style="font-weight:700; color:#38bdf8;">${s.technical_score || 0}</span></div>
+                                <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-dim);">Growth</span><span style="font-weight:700; color:#10b981;">${s.growth_score || 0}</span></div>
+                                <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-dim);">Quality</span><span style="font-weight:700; color:#a78bfa;">${s.quality_score || 0}</span></div>
+                                <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-dim);">Context</span><span style="font-weight:700; color:#f59e0b;">${s.context_score || 0}</span></div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3 style="font-weight:700; font-size:0.9rem; margin-bottom:12px; color:var(--text-dim); text-transform:uppercase;">Valuation & Analyst</h3>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                                <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-dim);">Forward PE</span><span style="font-weight:700;">${s.forward_pe ? s.forward_pe.toFixed(2) : 'N/A'}</span></div>
+                                <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-dim);">PEG Ratio</span><span style="font-weight:700; color:${s.peg_ratio && s.peg_ratio < 1.5 ? '#10b981' : '#eab308'};">${s.peg_ratio ? s.peg_ratio.toFixed(2) : 'N/A'}</span></div>
+                                <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-dim);">Rev Growth</span><span style="font-weight:700; color:${(s.revenue_growth||0) > 0 ? '#10b981' : '#ef4444'};">${s.revenue_growth ? s.revenue_growth.toFixed(1) + '%' : 'N/A'}</span></div>
+                                <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-dim);">Recommendation</span><span style="font-weight:700;">${s.recommendation ? s.recommendation.toUpperCase() : 'N/A'}</span></div>
+                                <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-dim);">Target Price</span><span style="font-weight:700;">${s.target_mean ? '$' + s.target_mean.toFixed(2) : 'N/A'}</span></div>
+                                <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-dim);">Analysts</span><span style="font-weight:700;">${s.analyst_count || 0}</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="text-align:center; margin-top:16px;">
+                        <button onclick="viewStock('${ticker}')" style="background:var(--accent); color:#000; border:none; padding:10px 24px; border-radius:8px; font-weight:700; cursor:pointer; margin-right:8px;">Full Analysis</button>
+                    </div>
+                `;
+            } catch(e) {
+                document.getElementById('report-content').innerHTML = `<p style="color:#ef4444;">Error loading report: ${e.message}</p>`;
+            }
+        }
+
+        function shareReport() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const btn = document.getElementById('report-share-btn');
+                btn.textContent = 'Copied!';
+                setTimeout(() => { btn.textContent = 'Share Link'; }, 2000);
+            }).catch(() => {
+                prompt('Copy this URL:', url);
+            });
+        }
+
+        // ===== ALERTS =====
+        let alertsData = [];
+
+        async function showAlerts() {
+            if (location.hash !== '#alerts') history.pushState(null, '', '#alerts');
+            hideAllViews();
+            document.getElementById('alerts-view').style.display = 'block';
+
+            try {
+                const res = await fetch('/api/alerts');
+                const data = await res.json();
+                alertsData = data.alerts || [];
+                renderAlerts();
+            } catch(e) {
+                document.getElementById('alerts-tbody').innerHTML = `<tr><td colspan="6" style="text-align:center; padding:40px; color:#ef4444;">Error: ${e.message}</td></tr>`;
+            }
+        }
+
+        function renderAlerts() {
+            // Triggered alerts banner
+            const triggered = alertsData.filter(a => a.triggered);
+            const triggeredEl = document.getElementById('triggered-alerts');
+            if (triggered.length > 0) {
+                triggeredEl.innerHTML = triggered.map(a => `
+                    <div style="background:rgba(234,179,8,0.1); border:1px solid rgba(234,179,8,0.3); border-radius:8px; padding:10px 14px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+                        <span>
+                            <span style="color:#eab308; font-weight:700;">${a.ticker}</span>
+                            <span style="color:var(--text-dim); font-size:0.85rem; margin-left:8px;">${formatAlertType(a.type)} ${a.threshold} — triggered at ${a.current_value}</span>
+                        </span>
+                        <span style="font-size:0.75rem; color:var(--text-dim);">${a.triggered_at ? new Date(a.triggered_at).toLocaleString() : ''}</span>
+                    </div>
+                `).join('');
+            } else {
+                triggeredEl.innerHTML = '';
+            }
+
+            // Table
+            const tbody = document.getElementById('alerts-tbody');
+            if (alertsData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:40px; color:var(--text-dim);">No alerts configured. Create one above.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = alertsData.map(a => {
+                const statusColor = a.triggered ? '#eab308' : '#10b981';
+                const statusLabel = a.triggered ? 'TRIGGERED' : 'ACTIVE';
+                return `<tr>
+                    <td style="font-weight:700; color:var(--accent); cursor:pointer;" onclick="viewStock('${a.ticker}')">${a.ticker}</td>
+                    <td style="font-size:0.85rem;">${formatAlertType(a.type)}</td>
+                    <td style="font-weight:600;">${a.threshold}</td>
+                    <td><span style="color:${statusColor}; font-weight:600; font-size:0.8rem;">${statusLabel}</span>${a.current_value !== null && a.triggered ? ` (${a.current_value})` : ''}</td>
+                    <td style="font-size:0.8rem; color:var(--text-dim);">${a.created_at ? new Date(a.created_at).toLocaleDateString() : '—'}</td>
+                    <td><button onclick="deleteAlert(${a.id})" style="background:transparent; border:1px solid #374151; color:#ef4444; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem;">Delete</button></td>
+                </tr>`;
+            }).join('');
+        }
+
+        function formatAlertType(type) {
+            const labels = {
+                'price_above': 'Price >=',
+                'price_below': 'Price <=',
+                'rotation_above': 'Rotation >=',
+                'rotation_below': 'Rotation <=',
+                'ins_above': 'INS >=',
+                'ins_below': 'INS <='
+            };
+            return labels[type] || type;
+        }
+
+        async function createAlert() {
+            const ticker = document.getElementById('alert-ticker').value.trim().toUpperCase();
+            const type = document.getElementById('alert-type').value;
+            const threshold = parseFloat(document.getElementById('alert-threshold').value);
+            if (!ticker || isNaN(threshold)) { alert('Enter ticker and threshold'); return; }
+
+            try {
+                const res = await fetch('/api/alerts', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ticker, type, threshold })
+                });
+                const result = await res.json();
+                if (!res.ok) throw new Error(result.error || 'Failed');
+                document.getElementById('alert-ticker').value = '';
+                document.getElementById('alert-threshold').value = '';
+                await showAlerts();
+            } catch(e) {
+                alert('Error: ' + e.message);
+            }
+        }
+
+        async function deleteAlert(id) {
+            try {
+                const res = await fetch(`/api/alerts/${id}`, { method: 'DELETE' });
+                if (!res.ok) throw new Error('Delete failed');
+                alertsData = alertsData.filter(a => a.id !== id);
+                renderAlerts();
+            } catch(e) {
+                alert('Error: ' + e.message);
             }
         }
 
