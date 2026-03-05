@@ -26,20 +26,33 @@ if not SUPABASE_KEY:
 
 def load_insider_scores():
     """Load insider universe scores as a ticker -> {ins_score, insider_signal} lookup"""
+    # Try universe scan first (all stocks)
     try:
         with open('data/insider_universe.json') as f:
             data = json.load(f)
         return {t: {'ins_score': d.get('ins_score', 0), 'insider_signal': d.get('signal', 'neutral')}
                 for t, d in data.get('signals', {}).items()}
     except Exception:
-        # Fallback: try all_stocks.json which also has ins_score patched in
-        try:
-            with open('data/all_stocks.json') as f:
-                data = json.load(f)
-            return {t: {'ins_score': s.get('ins_score', 0), 'insider_signal': s.get('insider_signal', 'neutral')}
-                    for t, s in data.get('stocks', {}).items()}
-        except Exception:
-            return {}
+        pass
+    # Fallback: portfolio-only insider scan
+    try:
+        with open('data/insider_signals.json') as f:
+            data = json.load(f)
+        return {t: {'ins_score': d.get('ins_score', 0), 'insider_signal': d.get('signal', 'neutral')}
+                for t, d in data.get('signals', {}).items()}
+    except Exception:
+        pass
+    # Last fallback: all_stocks.json (if patched)
+    try:
+        with open('data/all_stocks.json') as f:
+            data = json.load(f)
+        result = {}
+        for t, s in data.get('stocks', {}).items():
+            if s.get('ins_score', 0) != 0:
+                result[t] = {'ins_score': s['ins_score'], 'insider_signal': s.get('insider_signal', 'neutral')}
+        return result
+    except Exception:
+        return {}
 
 
 def fetch_live_prices_bulk(tickers, batch_size=15):
