@@ -1,0 +1,235 @@
+{
+  "earnings": [
+    {
+      "ticker": "HEI",
+      "earnings_date": "2026-02-25",
+      "days_until": -9,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "MU",
+      "earnings_date": "2026-03-18",
+      "days_until": 12,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "ASML",
+      "earnings_date": "2026-04-15",
+      "days_until": 40,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "TSM",
+      "earnings_date": "2026-04-16",
+      "days_until": 41,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "RTX",
+      "earnings_date": "2026-04-21",
+      "days_until": 46,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "LMT",
+      "earnings_date": "2026-04-21",
+      "days_until": 46,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "NOC",
+      "earnings_date": "2026-04-21",
+      "days_until": 46,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "FIX",
+      "earnings_date": "2026-04-23",
+      "days_until": 48,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "GOOGL",
+      "earnings_date": "2026-04-23",
+      "days_until": 48,
+      "basket": "Trading Account"
+    },
+    {
+      "ticker": "VRT",
+      "earnings_date": "2026-04-29",
+      "days_until": 54,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "GEV",
+      "earnings_date": "2026-04-29",
+      "days_until": 54,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "APH",
+      "earnings_date": "2026-04-29",
+      "days_until": 54,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "HWM",
+      "earnings_date": "2026-04-30",
+      "days_until": 55,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "ALNY",
+      "earnings_date": "2026-04-30",
+      "days_until": 55,
+      "basket": "Biotech"
+    },
+    {
+      "ticker": "LHX",
+      "earnings_date": "2026-04-30",
+      "days_until": 55,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "PWR",
+      "earnings_date": "2026-04-30",
+      "days_until": 55,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "ETN",
+      "earnings_date": "2026-04-30",
+      "days_until": 55,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "HII",
+      "earnings_date": "2026-04-30",
+      "days_until": 55,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "HUBB",
+      "earnings_date": "2026-04-30",
+      "days_until": 55,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "LLY",
+      "earnings_date": "2026-04-30",
+      "days_until": 55,
+      "basket": "Biotech"
+    },
+    {
+      "ticker": "NVT",
+      "earnings_date": "2026-05-01",
+      "days_until": 56,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "CCJ",
+      "earnings_date": "2026-05-05",
+      "days_until": 60,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "HALO",
+      "earnings_date": "2026-05-05",
+      "days_until": 60,
+      "basket": "Biotech"
+    },
+    {
+      "ticker": "ANET",
+      "earnings_date": "2026-05-05",
+      "days_until": 60,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "AMD",
+      "earnings_date": "2026-05-05",
+      "days_until": 60,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "STX",
+      "earnings_date": "2026-05-05",
+      "days_until": 60,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "ALAB",
+      "earnings_date": "2026-05-05",
+      "days_until": 60,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "WDC",
+      "earnings_date": "2026-05-06",
+      "days_until": 61,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "CEG",
+      "earnings_date": "2026-05-11",
+      "days_until": 66,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "NVDA",
+      "earnings_date": "2026-05-20",
+      "days_until": 75,
+      "basket": "themastertest"
+    },
+    {
+      "ticker": "MRVL",
+      "earnings_date": "2026-05-28",
+      "days_until": 83,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "AVGO",
+      "earnings_date": "2026-06-03",
+      "days_until": 89,
+      "basket": "AI Semis"
+    }
+  ],
+  "fomc": [
+    {
+      "date": "2026-03-18",
+      "label": "FOMC Mar 18-19",
+      "days_until": 12
+    },
+    {
+      "date": "2026-05-06",
+      "label": "FOMC May 6-7",
+      "days_until": 61
+    },
+    {
+      "date": "2026-06-17",
+      "label": "FOMC Jun 17-18",
+      "days_until": 103
+    },
+    {
+      "date": "2026-07-29",
+      "label": "FOMC Jul 29-30",
+      "days_until": 145
+    },
+    {
+      "date": "2026-09-16",
+      "label": "FOMC Sep 16-17",
+      "days_until": 194
+    },
+    {
+      "date": "2026-11-04",
+      "label": "FOMC Nov 4-5",
+      "days_until": 243
+    },
+    {
+      "date": "2026-12-16",
+      "label": "FOMC Dec 16-17",
+      "days_until": 285
+    }
+  ],
+  "timestamp": "2026-03-06 12:38:00 EST",
+  "ticker_count": 46
+}

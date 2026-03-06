@@ -950,100 +950,14 @@ def market_internals():
 
 @app.route('/api/catalyst_calendar')
 def catalyst_calendar():
-    """Earnings dates for portfolio tickers + FOMC schedule"""
+    """Earnings dates + FOMC schedule — reads from daily cache file"""
     try:
-        import yfinance as yf
-
-        # Fetch portfolio tickers from Supabase
-        tickers = []
-        baskets_map = {}
-        try:
-            sb_headers = {'apikey': SUPABASE_KEY, 'Authorization': f'Bearer {SUPABASE_KEY}'}
-            req = urllib.request.Request(
-                f'{SUPABASE_URL}/rest/v1/baskets?select=name,holdings(ticker)',
-                headers=sb_headers
-            )
-            baskets_raw = json.loads(urllib.request.urlopen(req).read())
-            for b in baskets_raw:
-                for h in b.get('holdings', []):
-                    t = h['ticker']
-                    tickers.append(t)
-                    baskets_map[t] = b['name']
-        except Exception:
-            pass
-
-        tickers = list(set(tickers))
-        events = []
-        today = datetime.now(ZoneInfo("America/New_York")).date()
-
-        def fetch_earnings(ticker):
-            try:
-                stock = yf.Ticker(ticker)
-                cal = stock.calendar
-                if cal is not None and not (hasattr(cal, 'empty') and cal.empty):
-                    # calendar can be a dict or DataFrame
-                    if isinstance(cal, dict):
-                        ed = cal.get('Earnings Date')
-                        if isinstance(ed, list) and ed:
-                            ed = ed[0]
-                    else:
-                        # DataFrame
-                        if 'Earnings Date' in cal.columns:
-                            ed = cal['Earnings Date'].iloc[0]
-                        elif 'Earnings Date' in cal.index:
-                            ed = cal.loc['Earnings Date'].iloc[0] if hasattr(cal.loc['Earnings Date'], 'iloc') else cal.loc['Earnings Date']
-                        else:
-                            return None
-                    if ed is not None:
-                        from datetime import date
-                        if hasattr(ed, 'date'):
-                            ed_date = ed.date()
-                        elif isinstance(ed, str):
-                            ed_date = datetime.strptime(ed[:10], '%Y-%m-%d').date()
-                        elif isinstance(ed, date):
-                            ed_date = ed
-                        else:
-                            return None
-                        days_until = (ed_date - today).days
-                        return {
-                            'ticker': ticker,
-                            'basket': baskets_map.get(ticker, ''),
-                            'earnings_date': ed_date.isoformat(),
-                            'days_until': days_until
-                        }
-            except Exception:
-                pass
-            return None
-
-        with ThreadPoolExecutor(max_workers=8) as executor:
-            futures = {executor.submit(fetch_earnings, t): t for t in tickers}
-            for f in as_completed(futures):
-                result = f.result()
-                if result:
-                    events.append(result)
-
-        events.sort(key=lambda x: x['earnings_date'])
-
-        # FOMC dates 2026
-        fomc_dates = [
-            {'date': '2026-03-18', 'label': 'FOMC Mar 18-19'},
-            {'date': '2026-05-06', 'label': 'FOMC May 6-7'},
-            {'date': '2026-06-17', 'label': 'FOMC Jun 17-18'},
-            {'date': '2026-07-29', 'label': 'FOMC Jul 29-30'},
-            {'date': '2026-09-16', 'label': 'FOMC Sep 16-17'},
-            {'date': '2026-11-04', 'label': 'FOMC Nov 4-5'},
-            {'date': '2026-12-16', 'label': 'FOMC Dec 16-17'},
-        ]
-        for f in fomc_dates:
-            from datetime import date
-            fd = datetime.strptime(f['date'], '%Y-%m-%d').date()
-            f['days_until'] = (fd - today).days
-
-        return jsonify({
-            'earnings': events,
-            'fomc': fomc_dates,
-            'timestamp': datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M:%S EST")
-        })
+        cache_path = os.path.join(os.path.dirname(__file__), 'data', 'earnings_calendar.json')
+        if os.path.exists(cache_path):
+            with open(cache_path, 'r') as f:
+                return jsonify(json.load(f))
+        else:
+            return jsonify({"error": "Calendar cache not found. Run scripts/earnings_calendar.py to generate.", "earnings": [], "fomc": []}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
