@@ -368,7 +368,7 @@ def rotation_scan():
                 'rotation_score': rot,
                 'rotation_signal': s.get('rotation_signal', 'NEUTRAL'),
                 'rotation_convergence': s.get('rotation_convergence', 0),
-                'rs_rating': s.get('rs_rating', 0),
+                'ewros_score': s.get('ewros_score', 0),
                 'score': s.get('score', 0),
                 'grade': s.get('grade', '?'),
                 'sector': s.get('sector', 'Unknown'),
@@ -1364,7 +1364,7 @@ def screener():
         if sector:
             results = [s for s in results if s.get('sector', '').lower() == sector.lower()]
         if rs_min is not None:
-            results = [s for s in results if (s.get('rs_rating') or 0) >= rs_min]
+            results = [s for s in results if (s.get('ewros_score') or 0) >= rs_min]
         if peg_max is not None:
             results = [s for s in results if s.get('peg_ratio') is not None and s['peg_ratio'] <= peg_max]
 

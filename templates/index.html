@@ -572,6 +572,7 @@
                             <th onclick="sortTable('score')">Score</th>
                             <th onclick="sortTable('grade')">Grade</th>
                             <th onclick="sortTable('rotation_score')">Rotation</th>
+                            <th onclick="sortTable('ewros_score')">EWROS</th>
                             <th onclick="sortTable('ins_score')">Insider</th>
                             <th>Action</th>
                         </tr>
@@ -643,7 +644,7 @@
                             <div class="text-xs mt-1" id="insider-signal-label" style="color: var(--text-dim);">Click for details</div>
                         </div>
                         <div id="rs-score-card" class="card p-4 lg:p-6" style="border:1px solid #333;">
-                            <div class="text-xs uppercase font-bold tracking-wider mb-2" id="rs-card-label" style="color:#666;">RS Rating</div>
+                            <div class="text-xs uppercase font-bold tracking-wider mb-2" id="rs-card-label" style="color:#666;">EWROS</div>
                             <div class="text-xl lg:text-2xl font-bold" id="rs-score-value">—</div>
                             <div class="text-xs mt-1" id="rs-signal-label" style="color: var(--text-dim);">Relative Strength</div>
                         </div>
@@ -758,7 +759,7 @@
                             <th onclick="sortWatchlist('score')">Score</th>
                             <th onclick="sortWatchlist('moonshot_score')">Moonshot</th>
                             <th onclick="sortWatchlist('rotation_score')">Rotation</th>
-                            <th onclick="sortWatchlist('rs_rating')">RS</th>
+                            <th onclick="sortWatchlist('ewros_score')">EWROS</th>
                             <th onclick="sortWatchlist('grade')">Grade</th>
                             <th>Signal</th>
                             <th>Insider</th>
@@ -1285,7 +1286,7 @@
                             <th onclick="sortScreener('name')">Name</th>
                             <th onclick="sortScreener('sector')">Sector</th>
                             <th onclick="sortScreener('rotation_score')">Rotation</th>
-                            <th onclick="sortScreener('rs_rating')">RS</th>
+                            <th onclick="sortScreener('ewros_score')">EWROS</th>
                             <th onclick="sortScreener('score')">Score</th>
                             <th onclick="sortScreener('grade')">Grade</th>
                             <th onclick="sortScreener('ins_score')">INS</th>
@@ -1936,7 +1937,7 @@
                                 industry: scores.industry || '',
                                 ins_score: scores.ins_score || 0,
                                 insider_signal: scores.insider_signal || 'neutral',
-                                rs_rating: scores.rs_rating || 0,
+                                ewros_score: scores.ewros_score || 0,
                                 basket_metadata: { icon: basket.icon, weight: basket.weight }
                             };
                             watchlistData.baskets[name].push(stock);
@@ -2059,7 +2060,7 @@
                     </td>
                     <td class="text-center font-bold text-amber-400">${stock.moonshot_score || 0}%</td>
                     <td class="text-center" style="color: ${getRotationColor(stock.rotation_score || 0)}; font-weight: ${getRotationWeight(stock.rotation_score || 0)};">${(stock.rotation_score || 0).toFixed(1)}</td>
-                    <td class="text-center" style="font-weight:600; color:${(stock.rs_rating||0) >= 80 ? '#10b981' : (stock.rs_rating||0) >= 50 ? '#eab308' : '#64748b'};">${stock.rs_rating || '—'}</td>
+                    <td class="text-center" style="font-weight:600; color:${(stock.ewros_score||0) >= 70 ? '#10b981' : (stock.ewros_score||0) >= 40 ? '#eab308' : '#ef4444'};">${stock.ewros_score || '—'}</td>
                     <td><span class="grade-badge grade-${stock.grade}">${stock.grade}</span></td>
                     <td>${getPortfolioSignalBadge(stock)}</td>
                     <td>${renderInsiderBadge(stock.ins_score, stock.insider_signal, true)}</td>
@@ -2995,8 +2996,8 @@
                 insSignalLabel.textContent = `${insText} · Click for details`;
                 insSignalLabel.style.color = insColor + '99';
 
-                // RS Rating card
-                const rsRating = data.rs_rating || 0;
+                // EWROS card
+                const rsRating = data.ewros_score || 0;
                 const rsCard = document.getElementById('rs-score-card');
                 const rsLabel = document.getElementById('rs-card-label');
                 const rsValue = document.getElementById('rs-score-value');
@@ -3165,7 +3166,7 @@
                 { key: 'ticker', label: 'Ticker' },
                 { key: 'rotation_score', label: 'Rotation' },
                 { key: 'rotation_convergence', label: 'Conv.' },
-                { key: 'rs_rating', label: 'RS' },
+                { key: 'ewros_score', label: 'EWROS' },
                 { key: 'score', label: 'Quality' },
                 { key: 'grade', label: 'Grade' },
                 { key: 'ins_score', label: 'Insider' },
@@ -3197,7 +3198,7 @@
                     <td style="padding:8px;"><a href="#" onclick="viewStock('${s.ticker}'); return false;" class="text-sky-400 hover:text-sky-300 font-bold">${s.ticker}</a></td>
                     <td style="padding:8px;font-weight:700;color:#10b981;">${s.rotation_score}</td>
                     <td style="padding:8px;">${s.rotation_convergence}</td>
-                    <td style="padding:8px;font-weight:600;color:${(s.rs_rating||0) >= 80 ? '#10b981' : (s.rs_rating||0) >= 50 ? '#eab308' : '#64748b'};">${s.rs_rating || '—'}</td>
+                    <td style="padding:8px;font-weight:600;color:${(s.ewros_score||0) >= 80 ? '#10b981' : (s.ewros_score||0) >= 50 ? '#eab308' : '#64748b'};">${s.ewros_score || '—'}</td>
                     <td style="padding:8px;">${s.score}</td>
                     <td style="padding:8px;"><span style="color:${gradeColor};font-weight:700;">${s.grade}</span></td>
                     <td style="padding:8px;">${renderInsiderBadge(s.ins_score, s.insider_signal, true)}</td>
@@ -4014,14 +4015,14 @@
             }
             tbody.innerHTML = screenerData.map(s => {
                 const rotColor = (s.rotation_score||0) >= 80 ? '#10b981' : (s.rotation_score||0) >= 60 ? '#eab308' : '#64748b';
-                const rsColor = (s.rs_rating||0) >= 80 ? '#10b981' : (s.rs_rating||0) >= 50 ? '#eab308' : '#64748b';
+                const rsColor = (s.ewros_score||0) >= 80 ? '#10b981' : (s.ewros_score||0) >= 50 ? '#eab308' : '#64748b';
                 const gradeColor = s.grade === 'A' ? '#10b981' : s.grade === 'B' ? '#38bdf8' : s.grade === 'C' ? '#f59e0b' : '#ef4444';
                 return `<tr>
                     <td><a href="#" onclick="viewStock('${s.ticker}'); return false;" class="text-sky-400 hover:text-sky-300 font-bold">${s.ticker}</a></td>
                     <td style="font-size:0.85rem; color:var(--text-dim);">${(s.name||'').substring(0, 25)}</td>
                     <td style="font-size:0.8rem; color:var(--text-dim);">${s.sector || '—'}</td>
                     <td style="font-weight:700; color:${rotColor};">${(s.rotation_score||0).toFixed(1)}</td>
-                    <td style="font-weight:600; color:${rsColor};">${s.rs_rating || '—'}</td>
+                    <td style="font-weight:600; color:${rsColor};">${s.ewros_score || '—'}</td>
                     <td>${s.score || 0}</td>
                     <td><span style="color:${gradeColor}; font-weight:700;">${s.grade || '—'}</span></td>
                     <td>${renderInsiderBadge(s.ins_score, s.insider_signal, true)}</td>
@@ -4062,7 +4063,7 @@
                 const gradeColors = {A:'#059669',B:'#0284c7',C:'#d97706',D:'#7c3aed',F:'#dc2626'};
                 const gc = gradeColors[s.grade] || '#64748b';
                 const rotColor = (s.rotation_score||0) >= 80 ? '#10b981' : (s.rotation_score||0) >= 60 ? '#eab308' : '#64748b';
-                const rsColor = (s.rs_rating||0) >= 80 ? '#10b981' : (s.rs_rating||0) >= 50 ? '#eab308' : '#64748b';
+                const rsColor = (s.ewros_score||0) >= 80 ? '#10b981' : (s.ewros_score||0) >= 50 ? '#eab308' : '#64748b';
                 let insColor, insEmoji, insText;
                 if ((s.ins_score||0) <= -3) { insColor = '#ef4444'; insEmoji = '🔴'; insText = 'Dumping'; }
                 else if ((s.ins_score||0) >= 3) { insColor = '#10b981'; insEmoji = '🟢'; insText = 'Buying'; }
@@ -4087,8 +4088,8 @@
                             <div style="font-size:1.6rem; font-weight:800; color:${rotColor};">${(s.rotation_score||0).toFixed(1)}</div>
                         </div>
                         <div class="card" style="text-align:center; padding:14px;">
-                            <div style="font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">RS Rating</div>
-                            <div style="font-size:1.6rem; font-weight:800; color:${rsColor};">${s.rs_rating || '—'}</div>
+                            <div style="font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">EWROS</div>
+                            <div style="font-size:1.6rem; font-weight:800; color:${rsColor};">${s.ewros_score || '—'}</div>
                         </div>
                         <div class="card" style="text-align:center; padding:14px;">
                             <div style="font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">Moonshot</div>
