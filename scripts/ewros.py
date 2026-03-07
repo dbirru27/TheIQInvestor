@@ -117,20 +117,53 @@ def main():
         returns = compute_daily_returns(closes)
         current = compute_ewros_raw(returns, spy_returns, end_offset=0)
         prior = compute_ewros_raw(returns, spy_returns, end_offset=TREND_OFFSET)
-        return ticker, current, prior
 
+        # Compute extra stats for popup
+        stats = None
+        n = min(len(returns), len(spy_returns), LOOKBACK_DAYS)
+        if n >= 20:
+            s_ret = returns[-n:]
+            b_ret = spy_returns[-n:]
+            daily_alphas = [s_ret[i] - b_ret[i] for i in range(n)]
+            win_days = sum(1 for a in daily_alphas if a > 0)
+            avg_alpha = sum(daily_alphas) / n
+            best_alpha = max(daily_alphas)
+            worst_alpha = min(daily_alphas)
+
+            # 3-month total returns
+            s_closes = closes[-n-1:]  # need n+1 closes for n returns
+            stock_3mo_ret = (s_closes[-1] - s_closes[0]) / s_closes[0] * 100 if len(s_closes) > n and s_closes[0] > 0 else None
+
+            spy_3mo = spy_closes[-(n+1):]
+            spy_3mo_ret = (spy_3mo[-1] - spy_3mo[0]) / spy_3mo[0] * 100 if len(spy_3mo) > n and spy_3mo[0] > 0 else None
+
+            stats = {
+                'win_days': win_days,
+                'total_days': n,
+                'win_rate': round(win_days / n * 100, 1),
+                'avg_alpha_bps': round(avg_alpha * 10000, 1),
+                'best_alpha_pct': round(best_alpha * 100, 2),
+                'worst_alpha_pct': round(worst_alpha * 100, 2),
+                'stock_return_3mo': round(stock_3mo_ret, 1) if stock_3mo_ret is not None else None,
+                'spy_return_3mo': round(spy_3mo_ret, 1) if spy_3mo_ret is not None else None,
+            }
+        return ticker, current, prior, stats
+
+    all_stats = {}
     print(f"   Fetching {len(tickers)} stocks ({MAX_WORKERS} threads)...")
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         futures = {executor.submit(process_ticker, t): t for t in tickers}
         for f in as_completed(futures):
             completed += 1
-            ticker, current, prior = f.result()
+            ticker, current, prior, stats = f.result()
             if current is not None:
                 raw_scores[ticker] = current
             else:
                 failed += 1
             if prior is not None:
                 prior_scores[ticker] = prior
+            if stats is not None:
+                all_stats[ticker] = stats
             if completed % 100 == 0:
                 print(f"   ... {completed}/{len(tickers)} done")
 
@@ -162,13 +195,21 @@ def main():
             stocks[ticker]['ewros_raw'] = round(raw_scores[ticker] * 10000, 2)
             prior_pct = prior_percentiles.get(ticker)
             if prior_pct is not None:
-                stocks[ticker]['ewros_trend'] = percentiles[ticker] - prior_pct  # positive = improving
+                stocks[ticker]['ewros_trend'] = percentiles[ticker] - prior_pct
+                stocks[ticker]['ewros_prior'] = prior_pct
             else:
                 stocks[ticker]['ewros_trend'] = None
+                stocks[ticker]['ewros_prior'] = None
+            if ticker in all_stats:
+                stocks[ticker]['ewros_stats'] = all_stats[ticker]
+            else:
+                stocks[ticker]['ewros_stats'] = None
         else:
             stocks[ticker]['ewros_score'] = None
             stocks[ticker]['ewros_raw'] = None
             stocks[ticker]['ewros_trend'] = None
+            stocks[ticker]['ewros_prior'] = None
+            stocks[ticker]['ewros_stats'] = None
 
     with open(ALL_STOCKS_FILE, 'w') as f:
         json.dump(data, f, indent=2)
