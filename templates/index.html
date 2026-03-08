@@ -1263,6 +1263,17 @@
             </div>
             <h2 class="text-2xl font-bold mb-4">Stock Screener</h2>
 
+            <!-- Preset Buttons -->
+            <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
+                <button onclick="screenerPreset('power')" style="padding:8px 16px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#10b981; border-radius:8px; font-weight:700; font-size:0.8rem; cursor:pointer;">🎯 Power Zone</button>
+                <button onclick="screenerPreset('early')" style="padding:8px 16px; background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.4); color:#38bdf8; border-radius:8px; font-weight:700; font-size:0.8rem; cursor:pointer;">⏳ Early Signal</button>
+                <button onclick="screenerPreset('extended')" style="padding:8px 16px; background:rgba(234,179,8,0.15); border:1px solid rgba(234,179,8,0.4); color:#eab308; border-radius:8px; font-weight:700; font-size:0.8rem; cursor:pointer;">⚠️ Extended</button>
+                <button onclick="screenerPreset('clear')" style="padding:8px 16px; background:rgba(100,100,100,0.15); border:1px solid #374151; color:var(--text-dim); border-radius:8px; font-weight:600; font-size:0.8rem; cursor:pointer;">Clear</button>
+            </div>
+
+            <!-- Power Matrix in Screener -->
+            <div id="screener-matrix" style="margin-bottom:20px;"></div>
+
             <div class="card" style="margin-bottom: 20px;">
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; align-items: end;">
                     <div>
@@ -4384,11 +4395,81 @@
         let screenerData = [];
         let screenerSort = { column: 'rotation_score', direction: 'desc' };
 
+        function screenerPreset(type) {
+            const rotMin = document.getElementById('scr-rot-min');
+            const rotMax = document.getElementById('scr-rot-max');
+            const rsMin = document.getElementById('scr-rs-min');
+
+            // Clear all first
+            rotMin.value = '';
+            rotMax.value = '';
+            rsMin.value = '';
+            document.getElementById('scr-ins-min').value = '';
+            document.getElementById('scr-ins-max').value = '';
+            document.getElementById('scr-peg-max').value = '';
+            document.getElementById('scr-sector').value = '';
+            document.querySelectorAll('.scr-grade').forEach(cb => cb.checked = true);
+
+            if (type === 'power') {
+                rotMin.value = '60';
+                rsMin.value = '70';
+            } else if (type === 'early') {
+                rotMin.value = '60';
+                rsMin.value = '';
+                // We'll filter EWROS < 70 after results come back
+            } else if (type === 'extended') {
+                rotMax.value = '59';
+                rsMin.value = '70';
+            }
+
+            if (type !== 'clear') {
+                runScreener();
+            } else {
+                document.getElementById('screener-status').textContent = '';
+                document.getElementById('screener-tbody').innerHTML = '';
+            }
+        }
+
+        async function renderScreenerMatrix() {
+            try {
+                const allData = await loadAllStocks();
+                const stocks = Object.values(allData.stocks || {}).filter(s => s.ewros_score != null);
+                const EWROS_T = 70, ROT_T = 60;
+                const power = stocks.filter(s => (s.ewros_score||0) >= EWROS_T && (s.rotation_score||0) >= ROT_T).length;
+                const early = stocks.filter(s => (s.ewros_score||0) < EWROS_T && (s.rotation_score||0) >= ROT_T).length;
+                const extended = stocks.filter(s => (s.ewros_score||0) >= EWROS_T && (s.rotation_score||0) < ROT_T).length;
+                const avoid = stocks.filter(s => (s.ewros_score||0) < EWROS_T && (s.rotation_score||0) < ROT_T).length;
+
+                document.getElementById('screener-matrix').innerHTML = `
+                    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">
+                        <div onclick="screenerPreset('power')" style="cursor:pointer; text-align:center; padding:14px; background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); border-radius:10px;">
+                            <div style="font-size:1.5rem; font-weight:800; color:#10b981;">${power}</div>
+                            <div style="font-size:0.65rem; color:#10b981; font-weight:600;">🎯 Power Zone</div>
+                        </div>
+                        <div onclick="screenerPreset('early')" style="cursor:pointer; text-align:center; padding:14px; background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.3); border-radius:10px;">
+                            <div style="font-size:1.5rem; font-weight:800; color:#38bdf8;">${early}</div>
+                            <div style="font-size:0.65rem; color:#38bdf8; font-weight:600;">⏳ Early Signal</div>
+                        </div>
+                        <div onclick="screenerPreset('extended')" style="cursor:pointer; text-align:center; padding:14px; background:rgba(234,179,8,0.08); border:1px solid rgba(234,179,8,0.3); border-radius:10px;">
+                            <div style="font-size:1.5rem; font-weight:800; color:#eab308;">${extended}</div>
+                            <div style="font-size:0.65rem; color:#eab308; font-weight:600;">⚠️ Extended</div>
+                        </div>
+                        <div style="text-align:center; padding:14px; background:rgba(239,68,68,0.05); border:1px solid rgba(239,68,68,0.2); border-radius:10px;">
+                            <div style="font-size:1.5rem; font-weight:800; color:#ef4444;">${avoid}</div>
+                            <div style="font-size:0.65rem; color:#ef4444; font-weight:600;">💀 Avoid</div>
+                        </div>
+                    </div>`;
+            } catch(e) {}
+        }
+
         async function showScreener() {
             if (location.hash !== '#screener') history.pushState(null, '', '#screener');
             hideAllViews();
             document.getElementById('screener-view').style.display = 'block';
             updateActiveNav('screener');
+
+            // Render matrix cards
+            renderScreenerMatrix();
 
             // Populate sector dropdown from cached data
             try {
