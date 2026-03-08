@@ -1417,6 +1417,7 @@ def screener():
         sector = request.args.get('sector', '')
         ewros_min = request.args.get('ewros_min', type=int)
         ewros_max = request.args.get('ewros_max', type=int)
+        iq_edge_min = request.args.get('iq_edge_min', type=int)
         peg_max = request.args.get('peg_max', type=float)
 
         if rot_min is not None:
@@ -1436,6 +1437,8 @@ def screener():
             results = [s for s in results if (s.get('ewros_score') or 0) >= ewros_min]
         if ewros_max is not None:
             results = [s for s in results if (s.get('ewros_score') or 0) <= ewros_max]
+        if iq_edge_min is not None:
+            results = [s for s in results if (s.get('iq_edge') or 0) >= iq_edge_min]
         if peg_max is not None:
             results = [s for s in results if s.get('peg_ratio') is not None and s['peg_ratio'] <= peg_max]
 
