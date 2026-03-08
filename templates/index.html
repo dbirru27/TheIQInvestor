@@ -462,6 +462,12 @@
             margin-bottom: 12px;
         }
         .modal-input:focus { border-color: #eab308; outline: none; }
+
+        /* Landing page responsive */
+        @media (max-width: 768px) {
+            #landing-view h1 { font-size: 2rem !important; }
+            #landing-view > div:nth-child(2) { grid-template-columns: 1fr !important; }
+        }
     </style>
 </head>
 <body>
@@ -503,6 +509,78 @@
     <main>
         <!-- Ticker Datalist for Autocomplete -->
         <datalist id="ticker-list"></datalist>
+
+        <!-- LANDING PAGE (shown to first-time visitors) -->
+        <div id="landing-view" style="display:none;">
+            <!-- Hero -->
+            <div style="text-align:center; padding:60px 20px 40px; max-width:720px; margin:0 auto;">
+                <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:3px; color:var(--accent); font-weight:700; margin-bottom:16px;">The IQ Investor</div>
+                <h1 style="font-size:2.8rem; font-weight:800; line-height:1.1; margin:0 0 20px; background:linear-gradient(135deg, #f8fafc 0%, #38bdf8 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Find Quality Stocks<br>Before They Break Out</h1>
+                <p style="font-size:1.1rem; color:var(--text-dim); line-height:1.6; margin:0 0 32px;">We scan 1,000+ stocks daily on quality, momentum, and relative strength — so you spot winners before the crowd.</p>
+                <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+                    <button onclick="navTo('hunter')" style="padding:14px 32px; background:var(--accent); color:#000; border:none; border-radius:10px; font-weight:700; font-size:1rem; cursor:pointer; transition:0.2s;">Explore All Stocks →</button>
+                    <button onclick="document.getElementById('landing-power-zone').scrollIntoView({behavior:'smooth'})" style="padding:14px 32px; background:transparent; color:var(--accent); border:1px solid var(--accent); border-radius:10px; font-weight:600; font-size:1rem; cursor:pointer;">See Today's Picks ↓</button>
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:900px; margin:0 auto 48px; padding:0 20px;">
+                <div style="text-align:center; padding:24px;">
+                    <div style="font-size:2rem; margin-bottom:12px;">📊</div>
+                    <h3 style="font-size:0.95rem; font-weight:700; margin:0 0 8px;">Quality Score</h3>
+                    <p style="font-size:0.8rem; color:var(--text-dim); line-height:1.5;">Every stock rated on 14 factors: revenue growth, technicals, breakout patterns, and fundamentals.</p>
+                </div>
+                <div style="text-align:center; padding:24px;">
+                    <div style="font-size:2rem; margin-bottom:12px;">⚡</div>
+                    <h3 style="font-size:0.95rem; font-weight:700; margin:0 0 8px;">EWROS Momentum</h3>
+                    <p style="font-size:0.8rem; color:var(--text-dim); line-height:1.5;">Our proprietary metric tracks which stocks are consistently beating the S&P 500 — weighted toward recent performance.</p>
+                </div>
+                <div style="text-align:center; padding:24px;">
+                    <div style="font-size:2rem; margin-bottom:12px;">🎯</div>
+                    <h3 style="font-size:0.95rem; font-weight:700; margin:0 0 8px;">Power Zone</h3>
+                    <p style="font-size:0.8rem; color:var(--text-dim); line-height:1.5;">High momentum + fresh setup = optimal entry. We surface stocks in the sweet spot automatically.</p>
+                </div>
+            </div>
+
+            <!-- Today's Power Zone -->
+            <div id="landing-power-zone" style="max-width:1000px; margin:0 auto 48px; padding:0 20px;">
+                <div style="text-align:center; margin-bottom:24px;">
+                    <h2 style="font-size:1.5rem; font-weight:800; margin:0 0 8px;">🎯 Today's Power Zone</h2>
+                    <p style="font-size:0.85rem; color:var(--text-dim);">Stocks with strong momentum AND a fresh breakout setup — updated daily after market close.</p>
+                </div>
+                <div id="landing-power-stocks" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px;"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button onclick="navTo('ewros')" style="padding:10px 24px; background:transparent; color:var(--accent); border:1px solid #374151; border-radius:8px; font-weight:600; font-size:0.85rem; cursor:pointer;">See All EWROS Leaders →</button>
+                </div>
+            </div>
+
+            <!-- Top Rated Stocks Preview -->
+            <div style="max-width:1000px; margin:0 auto 48px; padding:0 20px;">
+                <div style="text-align:center; margin-bottom:24px;">
+                    <h2 style="font-size:1.5rem; font-weight:800; margin:0 0 8px;">🏆 Highest Rated Stocks</h2>
+                    <p style="font-size:0.85rem; color:var(--text-dim);">Top quality scores from our 14-factor analysis — the best setups in the market right now.</p>
+                </div>
+                <div id="landing-top-rated" style="overflow-x:auto; background:var(--surface); border-radius:12px; border:1px solid #2d3748;"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button onclick="navTo('hunter')" style="padding:10px 24px; background:transparent; color:var(--accent); border:1px solid #374151; border-radius:8px; font-weight:600; font-size:0.85rem; cursor:pointer;">See All 1,000+ Stocks →</button>
+                </div>
+            </div>
+
+            <!-- Quick Lookup -->
+            <div style="max-width:500px; margin:0 auto 60px; padding:0 20px; text-align:center;">
+                <h2 style="font-size:1.3rem; font-weight:700; margin:0 0 16px;">🔍 Look Up Any Stock</h2>
+                <div style="display:flex; gap:8px;">
+                    <input type="text" id="landing-ticker-input" placeholder="Enter ticker (e.g. NVDA, AAPL, TSLA)" list="ticker-list" style="flex:1; padding:14px 16px; background:#1a1a2e; border:1px solid #374151; border-radius:10px; color:white; font-size:1rem;" onkeydown="if(event.key==='Enter') viewStock(this.value)">
+                    <button onclick="viewStock(document.getElementById('landing-ticker-input').value)" style="padding:14px 24px; background:var(--accent); color:#000; border:none; border-radius:10px; font-weight:700; cursor:pointer;">Rate It</button>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div style="text-align:center; padding:40px 20px; border-top:1px solid #2d3748; font-size:0.75rem; color:var(--text-dim);">
+                <p style="margin:0 0 8px;">Scans 1,000+ stocks daily · 14-factor quality scoring · EWROS momentum tracking</p>
+                <p style="margin:0;">The IQ Investor — Your IQ Edge in Investing</p>
+            </div>
+        </div>
 
         <!-- DASHBOARD VIEW (Market Command Center) -->
         <div id="dashboard-view" style="position:relative;">
@@ -1432,6 +1510,7 @@
 
         // ═══ Top Navigation ═══
         function navTo(tab) {
+            hideLanding();
             const map = {
                 dashboard: () => showDashboard(),
                 hunter: () => showHunter(),
@@ -1725,7 +1804,7 @@
         function showAlert(msg) { alert(msg); }
         
         function hideAllViews() {
-            ['dashboard-view','hunter-view','detail-view','watchlist-view','rotation-view','ewros-view','watchlist-entries-view','calendar-view','journal-view','risk-view','screener-view','report-view','alerts-view'].forEach(id => {
+            ['landing-view','dashboard-view','hunter-view','detail-view','watchlist-view','rotation-view','ewros-view','watchlist-entries-view','calendar-view','journal-view','risk-view','screener-view','report-view','alerts-view'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.style.display = 'none';
             });
@@ -3311,10 +3390,115 @@
             fomcEl.innerHTML = fomcHTML;
         }
 
+        // Landing page loader
+        async function showLanding() {
+            hideAllViews();
+            document.getElementById('landing-view').style.display = 'block';
+            document.getElementById('top-nav').style.display = 'none';
+
+            try {
+                const data = await loadAllStocks();
+                const stocks = Object.values(data.stocks || {}).filter(s => s.ewros_score != null);
+
+                // Power Zone stocks
+                const EWROS_T = 70, ROT_T = 60;
+                const powerZone = stocks.filter(s => (s.ewros_score||0) >= EWROS_T && (s.rotation_score||0) >= ROT_T)
+                    .sort((a,b) => ((b.ewros_score||0) + (b.rotation_score||0)) - ((a.ewros_score||0) + (a.rotation_score||0)))
+                    .slice(0, 8);
+
+                const pzEl = document.getElementById('landing-power-stocks');
+                if (powerZone.length > 0) {
+                    pzEl.innerHTML = powerZone.map(s => {
+                        const e = s.ewros_score || 0;
+                        const r = (s.rotation_score || 0).toFixed(1);
+                        const t = s.ewros_trend || 0;
+                        const tArrow = t > 0 ? '▲' : t < 0 ? '▼' : '';
+                        const tColor = t > 0 ? '#10b981' : t < 0 ? '#ef4444' : '#94a3b8';
+                        const eColor = e >= 70 ? '#10b981' : e >= 40 ? '#eab308' : '#ef4444';
+                        const st = s.ewros_stats || {};
+                        const retColor = (st.stock_return_3mo||0) > 0 ? '#10b981' : '#ef4444';
+                        return `<div class="card" style="padding:16px; cursor:pointer;" onclick="viewStock('${s.ticker}')">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                                <div>
+                                    <span style="font-size:1.1rem; font-weight:800; color:var(--accent);">${s.ticker}</span>
+                                    <span style="font-size:0.7rem; color:var(--text-dim); margin-left:6px;">${s.name || ''}</span>
+                                </div>
+                                <span style="color:${s.grade === 'A' ? '#10b981' : '#38bdf8'}; font-weight:700; font-size:0.8rem;">${s.grade || ''}</span>
+                            </div>
+                            <div style="display:flex; gap:8px; margin-bottom:8px;">
+                                <div style="flex:1; text-align:center; background:#161b2a; border-radius:6px; padding:8px;">
+                                    <div style="font-size:0.5rem; text-transform:uppercase; color:var(--text-dim);">EWROS</div>
+                                    <div style="font-size:1.3rem; font-weight:800; color:${eColor};">${e}</div>
+                                </div>
+                                <div style="flex:1; text-align:center; background:#161b2a; border-radius:6px; padding:8px;">
+                                    <div style="font-size:0.5rem; text-transform:uppercase; color:var(--text-dim);">Rotation</div>
+                                    <div style="font-size:1.3rem; font-weight:800;">${r}</div>
+                                </div>
+                                <div style="flex:1; text-align:center; background:#161b2a; border-radius:6px; padding:8px;">
+                                    <div style="font-size:0.5rem; text-transform:uppercase; color:var(--text-dim);">Trend</div>
+                                    <div style="font-size:1.1rem; font-weight:800; color:${tColor};">${tArrow}${Math.abs(t)}</div>
+                                </div>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-dim);">
+                                <span>3mo: <span style="color:${retColor}; font-weight:600;">${st.stock_return_3mo != null ? st.stock_return_3mo + '%' : '—'}</span></span>
+                                <span>Win Rate: <span style="font-weight:600;">${st.win_rate || '—'}%</span></span>
+                                <span>${s.sector || ''}</span>
+                            </div>
+                        </div>`;
+                    }).join('');
+                } else {
+                    pzEl.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-dim);">No Power Zone stocks today — check back after market close.</div>';
+                }
+
+                // Top rated stocks table
+                const topRated = [...stocks].sort((a,b) => (b.score||0) - (a.score||0)).slice(0, 10);
+                document.getElementById('landing-top-rated').innerHTML = `
+                    <table style="min-width:auto;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Ticker</th>
+                                <th>Company</th>
+                                <th>Score</th>
+                                <th>Grade</th>
+                                <th>EWROS</th>
+                                <th>Sector</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${topRated.map((s, i) => {
+                                const eColor = (s.ewros_score||0) >= 70 ? '#10b981' : (s.ewros_score||0) >= 40 ? '#eab308' : '#64748b';
+                                const gradeColor = s.grade === 'A' ? '#10b981' : s.grade === 'B' ? '#38bdf8' : '#94a3b8';
+                                return `<tr style="cursor:pointer;" onclick="viewStock('${s.ticker}')">
+                                    <td style="color:var(--text-dim);">${i + 1}</td>
+                                    <td style="font-weight:700; color:var(--accent);">${s.ticker}</td>
+                                    <td style="font-size:0.8rem;">${s.name || ''}</td>
+                                    <td style="font-weight:700;">${s.score || '—'}</td>
+                                    <td style="color:${gradeColor}; font-weight:700;">${s.grade || '—'}</td>
+                                    <td style="color:${eColor}; font-weight:700;">${s.ewros_score || '—'}</td>
+                                    <td style="font-size:0.75rem; color:var(--text-dim);">${s.sector || ''}</td>
+                                </tr>`;
+                            }).join('')}
+                        </tbody>
+                    </table>`;
+            } catch(e) {
+                console.error('Landing data error:', e);
+            }
+        }
+
+        function hideLanding() {
+            document.getElementById('landing-view').style.display = 'none';
+            document.getElementById('top-nav').style.display = '';
+        }
+
         // Hash-based routing — preserves page on refresh and enables back button
         function handleRoute() {
-            const hash = location.hash.replace('#', '') || 'dashboard';
-            if (hash === 'hunter') showHunter();
+            const hash = location.hash.replace('#', '') || '';
+            // No hash = landing page for visitors
+            if (!hash) { showLanding(); return; }
+            hideLanding();
+            if (hash === 'dashboard') showDashboard();
+            else if (hash === 'hunter') showHunter();
             else if (hash === 'portfolio') showWatchlist();
             else if (hash === 'rotation') showRotation();
             else if (hash === 'ewros') showEwrosTab();

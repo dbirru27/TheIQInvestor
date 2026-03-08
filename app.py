@@ -141,6 +141,60 @@ def index():
     # v4.5 Moonshot Score integration
     return render_template('index.html', stocks=data.get('stocks', []), last_scan=data.get('last_scan'), version="4.5")
 
+@app.route('/power-zone')
+def power_zone_page():
+    """Shareable Power Zone page"""
+    return '''<!DOCTYPE html>
+<html><head>
+<meta charset="UTF-8">
+<meta property="og:title" content="Today's Power Zone | The IQ Investor">
+<meta property="og:description" content="Stocks with strong momentum AND fresh breakout setups — the optimal entry zone. Updated daily.">
+<meta property="og:type" content="website">
+<title>Today's Power Zone | The IQ Investor</title>
+<meta http-equiv="refresh" content="0;url=/#ewros">
+</head><body style="background:#0f172a;color:#f8fafc;font-family:sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;">
+<p>Loading Power Zone...</p>
+<script>window.location.replace("/#ewros");</script>
+</body></html>'''
+
+@app.route('/stock/<ticker>')
+def stock_page(ticker):
+    """Shareable stock URL with OG meta tags"""
+    ticker = ticker.upper()
+    stock = {}
+    try:
+        with open('data/all_stocks.json') as f:
+            data = json.load(f)
+        stock = data.get('stocks', {}).get(ticker, {})
+    except:
+        pass
+    
+    name = stock.get('name', ticker)
+    score = stock.get('score', '?')
+    grade = stock.get('grade', '?')
+    ewros = stock.get('ewros_score', '?')
+    sector = stock.get('sector', '')
+    
+    og_title = f"{ticker} — Score {score} (Grade {grade}) | The IQ Investor"
+    og_desc = f"{name} · EWROS {ewros} · {sector} · Quality growth analysis with 14-factor scoring"
+    
+    # Inject OG meta and redirect to hash route
+    return f'''<!DOCTYPE html>
+<html><head>
+<meta charset="UTF-8">
+<meta property="og:title" content="{og_title}">
+<meta property="og:description" content="{og_desc}">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{og_title}">
+<meta name="twitter:description" content="{og_desc}">
+<title>{og_title}</title>
+<meta http-equiv="refresh" content="0;url=/#stock/{ticker}">
+</head><body style="background:#0f172a;color:#f8fafc;font-family:sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;">
+<p>Loading {ticker}...</p>
+<script>window.location.replace("/#stock/{ticker}");</script>
+</body></html>'''
+
 @app.route('/api/rate/<ticker>')
 def rate_ticker(ticker):
     """Use live rater for detailed criteria breakdown"""
