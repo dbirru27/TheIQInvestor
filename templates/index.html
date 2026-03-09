@@ -2231,69 +2231,55 @@
             return !stock.trailing_pe && !stock.revenue_growth && !stock.peg_ratio;
         }
 
-        // ===== SIGNAL TOOLTIP POPUP =====
-        let _sigTipOpen = false;
-        function showSignalTip(el, html) {
-            hideSignalTip();
-            const tip = document.createElement('div');
-            tip.id = 'signal-tip';
-            tip.innerHTML = html;
-            Object.assign(tip.style, {
-                position: 'fixed', zIndex: 9999, background: '#1e293b', border: '1px solid #334155',
-                borderRadius: '8px', padding: '10px 14px', maxWidth: '260px', fontSize: '0.78rem',
-                lineHeight: '1.5', color: '#e2e8f0', boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
-                pointerEvents: 'auto'
-            });
-            document.body.appendChild(tip);
-            const r = el.getBoundingClientRect();
-            let top = r.bottom + 6, left = r.left;
-            if (top + tip.offsetHeight > window.innerHeight) top = r.top - tip.offsetHeight - 6;
-            if (left + tip.offsetWidth > window.innerWidth) left = window.innerWidth - tip.offsetWidth - 8;
-            tip.style.top = top + 'px'; tip.style.left = Math.max(4, left) + 'px';
-            _sigTipOpen = true;
+        // ===== SIGNAL POPUP (same pattern as EWROS popup) =====
+        function showSignalPopup(ticker, tier, reasons) {
+            const existing = document.getElementById('signal-popup');
+            if (existing) existing.remove();
+
+            const cfg = {
+                'HOLD':  { color: '#10b981', emoji: '🟢', desc: 'Thesis intact — strong relative momentum' },
+                'WATCH': { color: '#eab308', emoji: '🟡', desc: 'Weakening — monitor for exit triggers' },
+                'EXIT':  { color: '#ef4444', emoji: '🔴', desc: 'Momentum collapsed — consider exiting' },
+                'SELL':  { color: '#ef4444', emoji: '🔴', desc: 'Sell signal triggered' }
+            }[tier] || { color: '#94a3b8', emoji: '⚪', desc: '' };
+
+            const popup = document.createElement('div');
+            popup.id = 'signal-popup';
+            popup.style.cssText = 'position:fixed; top:0; left:0; right:0; bottom:0; z-index:10000; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px);';
+            popup.onclick = (e) => { if (e.target === popup) popup.remove(); };
+
+            popup.innerHTML = `
+                <div style="background:#1e293b; border:1px solid #374151; border-radius:16px; padding:24px; max-width:340px; width:90%; box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <div>
+                            <span style="font-size:1.2rem; font-weight:800; color:var(--accent);">${ticker}</span>
+                            <span style="font-size:0.8rem; color:var(--text-dim); margin-left:8px;">Signal</span>
+                        </div>
+                        <span onclick="this.closest('#signal-popup').remove()" style="cursor:pointer; color:var(--text-dim); font-size:1.2rem;">✕</span>
+                    </div>
+                    <div style="text-align:center; margin-bottom:16px;">
+                        <div style="font-size:2rem;">${cfg.emoji}</div>
+                        <div style="font-size:1.4rem; font-weight:800; color:${cfg.color}; margin-top:4px;">${tier}</div>
+                        <div style="font-size:0.8rem; color:var(--text-dim); margin-top:4px;">${cfg.desc}</div>
+                    </div>
+                    <div style="background:#0f172a; border-radius:10px; padding:14px;">
+                        <div style="font-size:0.7rem; color:#64748b; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:10px; font-weight:600;">Why this signal</div>
+                        ${reasons.map(r => `<div style="font-size:0.82rem; color:#e2e8f0; padding:5px 0; border-bottom:1px solid #1e293b;">• ${r}</div>`).join('')}
+                    </div>
+                    <div style="margin-top:14px; text-align:center; font-size:0.7rem; color:#475569;">
+                        Exit rules: below 50d MA (5d hold) · EWROS &lt; 50 (10d hold)
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(popup);
         }
-        function hideSignalTip() {
-            const t = document.getElementById('signal-tip');
-            if (t) t.remove();
-            _sigTipOpen = false;
-        }
+
         function sigBadge(color, bg, label, reasons, ticker) {
-            const uid = 'sig-' + (ticker || '') + '-' + Math.random().toString(36).slice(2,6);
-            window._sigReasons = window._sigReasons || {};
-            window._sigReasons[uid] = reasons;
-            return `<span class="sig-badge" data-sig-uid="${uid}"
-                style="background:${bg};color:${color};border:1px solid ${color};padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:700;cursor:pointer;user-select:none;"
-                title="${reasons.join(' | ')}">${label}</span>`;
+            const tier = label.replace(/[^\w]/g, '').trim();
+            const reasonsEsc = reasons.map(r => r.replace(/'/g, "\\&#39;").replace(/"/g, '&quot;')).join('|||');
+            return `<span onclick="showSignalPopup('${ticker}','${tier}','${reasonsEsc}'.split('|||'))"
+                style="background:${bg};color:${color};border:1px solid ${color};padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:700;cursor:pointer;user-select:none;">${label}</span>`;
         }
-        // Single delegated click handler for signal badges + dismiss
-        document.addEventListener('click', function(e) {
-            const badge = e.target.closest('.sig-badge');
-            const tip = e.target.closest('#signal-tip');
-            if (badge) {
-                e.preventDefault();
-                e.stopPropagation();
-                const uid = badge.dataset.sigUid;
-                const reasons = (window._sigReasons || {})[uid] || ['No details available'];
-                showSignalTip(badge, reasons.map(x => '• ' + x).join('<br>'));
-                return;
-            }
-            if (tip) return; // clicked inside popup, keep it open
-            if (_sigTipOpen) hideSignalTip(); // clicked outside, dismiss
-        }, true); // capture phase so we get it before other handlers
-        // Long-press for mobile
-        (function() {
-            let timer = null;
-            document.addEventListener('touchstart', function(e) {
-                const badge = e.target.closest('.sig-badge');
-                if (!badge) return;
-                timer = setTimeout(function() {
-                    const uid = badge.dataset.sigUid;
-                    const reasons = (window._sigReasons || {})[uid] || ['No details available'];
-                    showSignalTip(badge, reasons.map(x => '• ' + x).join('<br>'));
-                }, 400);
-            });
-            document.addEventListener('touchend', function() { if (timer) { clearTimeout(timer); timer = null; } });
-        })();
 
         function getPortfolioSignalBadge(stock) {
             const ticker = stock.ticker || '';
