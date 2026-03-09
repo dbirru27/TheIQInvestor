@@ -2231,23 +2231,70 @@
             return !stock.trailing_pe && !stock.revenue_growth && !stock.peg_ratio;
         }
 
-        function getPortfolioSignalBadge(stock) {
-            const badge = (color, bg, label, tip) =>
-                `<span title="${tip}" style="background:${bg};color:${color};border:1px solid ${color};padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:700;cursor:help;">${label}</span>`;
+        // ===== SIGNAL TOOLTIP POPUP =====
+        let _sigTipTimer = null;
+        function showSignalTip(el, html) {
+            hideSignalTip();
+            const tip = document.createElement('div');
+            tip.id = 'signal-tip';
+            tip.innerHTML = html;
+            Object.assign(tip.style, {
+                position: 'fixed', zIndex: 9999, background: '#1e293b', border: '1px solid #334155',
+                borderRadius: '8px', padding: '10px 14px', maxWidth: '260px', fontSize: '0.78rem',
+                lineHeight: '1.5', color: '#e2e8f0', boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+                pointerEvents: 'auto'
+            });
+            document.body.appendChild(tip);
+            const r = el.getBoundingClientRect();
+            let top = r.bottom + 6, left = r.left;
+            if (top + tip.offsetHeight > window.innerHeight) top = r.top - tip.offsetHeight - 6;
+            if (left + tip.offsetWidth > window.innerWidth) left = window.innerWidth - tip.offsetWidth - 8;
+            tip.style.top = top + 'px'; tip.style.left = Math.max(4, left) + 'px';
+            // dismiss on tap/click anywhere
+            setTimeout(() => document.addEventListener('click', hideSignalTip, { once: true }), 50);
+        }
+        function hideSignalTip() {
+            const t = document.getElementById('signal-tip');
+            if (t) t.remove();
+            if (_sigTipTimer) { clearTimeout(_sigTipTimer); _sigTipTimer = null; }
+        }
+        function sigBadge(color, bg, label, reasons, ticker) {
+            const id = 'sig-' + (ticker || Math.random().toString(36).slice(2,8));
+            const reasonsJson = JSON.stringify(reasons).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+            return `<span id="${id}" data-reasons="${reasonsJson}"
+                ontouchstart="_sigTipTimer=setTimeout(()=>{ const el=document.getElementById('${id}'); const r=JSON.parse(el.dataset.reasons); showSignalTip(el, r.map(x=>'• '+x).join('<br>')); },400)"
+                ontouchend="if(_sigTipTimer){clearTimeout(_sigTipTimer);_sigTipTimer=null;}"
+                onclick="(function(){ const el=document.getElementById('${id}'); const r=JSON.parse(el.dataset.reasons); showSignalTip(el, r.map(x=>'• '+x).join('<br>')); })()"
+                style="background:${bg};color:${color};border:1px solid ${color};padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:700;cursor:pointer;user-select:none;"
+                title="${reasons.join(' | ')}">${label}</span>`;
+        }
 
+        function getPortfolioSignalBadge(stock) {
+            const ticker = stock.ticker || '';
             if (isEtf(stock)) {
-                // ETF: signal based on technical score only (max 53)
                 const tech = stock.technical_score || 0;
                 const pct = tech / 53 * 100;
-                if (pct >= 65) return badge('#10b981', 'rgba(16,185,129,0.15)', '🟢 HOLD', `Technical: ${tech}/53`);
-                if (pct >= 40) return badge('#eab308', 'rgba(234,179,8,0.15)', '🟡 WATCH', `Technical: ${tech}/53 — momentum weakening`);
-                return badge('#ef4444', 'rgba(239,68,68,0.15)', '🔴 EXIT', `Technical: ${tech}/53 — trend breakdown`);
+                const reasons = [`Technical Score: ${tech}/53`];
+                if (pct >= 65) { reasons.push('Trend intact — above key moving averages'); return sigBadge('#10b981', 'rgba(16,185,129,0.15)', '🟢 HOLD', reasons, ticker); }
+                if (pct >= 40) { reasons.push('Momentum weakening — watch for breakdown'); return sigBadge('#eab308', 'rgba(234,179,8,0.15)', '🟡 WATCH', reasons, ticker); }
+                reasons.push('Trend broken — consider reducing'); return sigBadge('#ef4444', 'rgba(239,68,68,0.15)', '🔴 EXIT', reasons, ticker);
             } else {
-                // Stock: signal based on rotation score
-                const rot = stock.ewros_score || 0;
-                if (rot >= 60) return badge('#10b981', 'rgba(16,185,129,0.15)', '🟢 HOLD', `EWROS: ${rot.toFixed(1)} — thesis intact`);
-                if (rot >= 40) return badge('#eab308', 'rgba(234,179,8,0.15)', '🟡 WATCH', `EWROS: ${rot.toFixed(1)} — weakening`);
-                return badge('#ef4444', 'rgba(239,68,68,0.15)', '🔴 EXIT', `EWROS: ${rot.toFixed(1)} — thesis broken`);
+                const ewros = stock.ewros_score || 0;
+                const iq = stock.iq_edge || 0;
+                const reasons = [`EWROS: ${ewros.toFixed ? ewros.toFixed(0) : ewros} (relative momentum vs SPY)`];
+                if (iq) reasons.push(`IQ Edge: ${iq} (breakout probability)`);
+                if (ewros >= 60) {
+                    reasons.push('Strong relative outperformance — hold');
+                    return sigBadge('#10b981', 'rgba(16,185,129,0.15)', '🟢 HOLD', reasons, ticker);
+                }
+                if (ewros >= 40) {
+                    reasons.push('Momentum fading — monitor for exit triggers');
+                    if (ewros < 50) reasons.push('⚠️ Below 50 threshold — exit if held 10+ days');
+                    return sigBadge('#eab308', 'rgba(234,179,8,0.15)', '🟡 WATCH', reasons, ticker);
+                }
+                reasons.push('Momentum collapsed — underperforming SPY');
+                reasons.push('Exit: below 50d MA or EWROS < 50');
+                return sigBadge('#ef4444', 'rgba(239,68,68,0.15)', '🔴 EXIT', reasons, ticker);
             }
         }
 
@@ -3976,8 +4023,11 @@
                 'WATCH': { color: '#eab308', bg: 'rgba(234,179,8,0.15)',  label: '🟡 WATCH' },
                 'HOLD':  { color: '#10b981', bg: 'rgba(16,185,129,0.15)', label: '🟢 HOLD'  }
             }[s.tier] || { color: 'var(--text-dim)', bg: 'transparent', label: s.tier };
-            const tooltip = s.reasons && s.reasons.length ? s.reasons.join(' | ') : 'Thesis intact';
-            return `<span title="${tooltip}" style="background:${cfg.bg}; color:${cfg.color}; border:1px solid ${cfg.color}; padding:2px 8px; border-radius:4px; font-size:0.75rem; font-weight:700; cursor:help;">${cfg.label}</span>`;
+            const reasons = s.reasons && s.reasons.length ? [...s.reasons] : ['Thesis intact — EWROS strong, above 50d MA'];
+            if (s.ewros_score != null) reasons.unshift(`EWROS: ${s.ewros_score.toFixed ? s.ewros_score.toFixed(0) : s.ewros_score}`);
+            if (s.pct_from_entry != null) reasons.push(`P&L: ${s.pct_from_entry >= 0 ? '+' : ''}${s.pct_from_entry.toFixed(1)}% from entry`);
+            if (s.days_held != null) reasons.push(`Held: ${s.days_held} days`);
+            return sigBadge(cfg.color, cfg.bg, cfg.label, reasons, 'wl-' + ticker);
         }
 
         function renderWL() {
