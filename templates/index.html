@@ -2259,15 +2259,36 @@
             if (_sigTipTimer) { clearTimeout(_sigTipTimer); _sigTipTimer = null; }
         }
         function sigBadge(color, bg, label, reasons, ticker) {
-            const id = 'sig-' + (ticker || Math.random().toString(36).slice(2,8));
-            const reasonsJson = JSON.stringify(reasons).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-            return `<span id="${id}" data-reasons="${reasonsJson}"
-                ontouchstart="_sigTipTimer=setTimeout(()=>{ const el=document.getElementById('${id}'); const r=JSON.parse(el.dataset.reasons); showSignalTip(el, r.map(x=>'• '+x).join('<br>')); },400)"
-                ontouchend="if(_sigTipTimer){clearTimeout(_sigTipTimer);_sigTipTimer=null;}"
-                onclick="(function(){ const el=document.getElementById('${id}'); const r=JSON.parse(el.dataset.reasons); showSignalTip(el, r.map(x=>'• '+x).join('<br>')); })()"
+            const uid = 'sig-' + (ticker || '') + '-' + Math.random().toString(36).slice(2,6);
+            // Store reasons globally keyed by uid
+            window._sigReasons = window._sigReasons || {};
+            window._sigReasons[uid] = reasons;
+            return `<span class="sig-badge" data-sig-uid="${uid}"
                 style="background:${bg};color:${color};border:1px solid ${color};padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:700;cursor:pointer;user-select:none;"
                 title="${reasons.join(' | ')}">${label}</span>`;
         }
+        // Delegate click/long-press for all signal badges
+        document.addEventListener('click', function(e) {
+            const badge = e.target.closest('.sig-badge');
+            if (!badge) return;
+            e.stopPropagation();
+            const uid = badge.dataset.sigUid;
+            const reasons = (window._sigReasons || {})[uid] || ['No details available'];
+            showSignalTip(badge, reasons.map(x => '• ' + x).join('<br>'));
+        });
+        (function() {
+            let timer = null;
+            document.addEventListener('touchstart', function(e) {
+                const badge = e.target.closest('.sig-badge');
+                if (!badge) return;
+                timer = setTimeout(function() {
+                    const uid = badge.dataset.sigUid;
+                    const reasons = (window._sigReasons || {})[uid] || ['No details available'];
+                    showSignalTip(badge, reasons.map(x => '• ' + x).join('<br>'));
+                }, 400);
+            });
+            document.addEventListener('touchend', function() { if (timer) { clearTimeout(timer); timer = null; } });
+        })();
 
         function getPortfolioSignalBadge(stock) {
             const ticker = stock.ticker || '';
