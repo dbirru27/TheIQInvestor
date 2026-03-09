@@ -148,9 +148,8 @@ def build_stock_entry(ticker, basket_name, db, live_prices, names_cache):
         "quality_score": stock.get('quality_score', 0),
         "context_score": stock.get('context_score', 0),
         "moonshot_score": stock.get('moonshot_score', 0),
-        # Rotation Catcher scores (from DB)
-        "rotation_score": stock.get('rotation_score', 0),
-        "rotation_signal": stock.get('rotation_signal', 'N/A'),
+        # EWROS score
+        "ewros_score": stock.get('ewros_score', 0),
         # Analyst data
         "recommendation": stock.get('recommendation'),
         "target_mean": round(stock['target_mean'], 2) if stock.get('target_mean') else None,

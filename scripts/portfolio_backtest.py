@@ -47,8 +47,8 @@ plt.rcParams.update({
 })
 
 STARTING_CAPITAL = 10_000
-MAX_POSITIONS = 20
-POSITION_SIZE = STARTING_CAPITAL / MAX_POSITIONS  # $500 per slot
+MAX_POSITIONS = 10
+POSITION_SIZE = STARTING_CAPITAL / MAX_POSITIONS  # $1000 per slot
 STOP_LOSS = -0.08
 MAX_HOLD_DAYS = 126
 EWROS_LOOKBACK = 63
@@ -398,7 +398,7 @@ def print_results(s):
 
 def strat_iq_top20(idx, ewros, iq_edge, close, volume):
     if not iq_edge: return []
-    top = sorted(iq_edge.items(), key=lambda x: -x[1]['pctile'])[:20]
+    top = sorted(iq_edge.items(), key=lambda x: -x[1]['pctile'])[:MAX_POSITIONS]
     return [(t, d['pctile'], ewros.get(t, 50)) for t, d in top if is_trend_aligned(close, t, idx)]
 
 def strat_iq_ewros(idx, ewros, iq_edge, close, volume):
@@ -413,8 +413,142 @@ def strat_iq_ewros(idx, ewros, iq_edge, close, volume):
 
 def strat_ewros_top20(idx, ewros, iq_edge, close, volume):
     if not ewros: return []
-    top = sorted(ewros.items(), key=lambda x: -x[1])[:20]
+    top = sorted(ewros.items(), key=lambda x: -x[1])[:MAX_POSITIONS]
     return [(t, s, s) for t, s in top if is_trend_aligned(close, t, idx)]
+
+
+def _is_volume_breakout(volume, ticker, idx, mult=1.5):
+    """Volume today > mult × 50d avg volume"""
+    if idx < 50: return False
+    vols = volume[ticker].values[max(0,idx-50):idx]
+    vols = vols[~np.isnan(vols)]
+    if len(vols) < 30: return False
+    today_vol = volume[ticker].values[idx]
+    if np.isnan(today_vol): return False
+    return today_vol > mult * np.mean(vols)
+
+
+def _is_near_52w_high(close, ticker, idx, threshold=0.90):
+    """Price within threshold of 52-week high"""
+    prices = close[ticker].values[max(0,idx-252):idx+1]
+    prices = prices[~np.isnan(prices)]
+    if len(prices) < 60: return False
+    return prices[-1] >= threshold * np.max(prices)
+
+
+def _has_tight_base(close, ticker, idx, lookback=40, max_range=0.15):
+    """Price consolidated in tight range (base) before breakout"""
+    prices = close[ticker].values[max(0,idx-lookback):idx]
+    prices = prices[~np.isnan(prices)]
+    if len(prices) < 20: return False
+    price_range = (np.max(prices) - np.min(prices)) / np.mean(prices)
+    return price_range <= max_range
+
+
+def strat_ewros_breakout(idx, ewros, iq_edge, close, volume):
+    """
+    EWROS + rules-based breakout: no ML needed, runs full 5 years.
+    Requires:
+      1. EWROS ≥ 80 (strong momentum)
+      2. Trend aligned (price > 50d > 200d)
+      3. Volume breakout (today's vol > 1.5x 50d avg)
+      4. Near 52-week high (within 10%)
+    """
+    if not ewros: return []
+    cands = []
+    for ticker, score in ewros.items():
+        if score < 80: continue
+        if not is_trend_aligned(close, ticker, idx): continue
+        if not _is_volume_breakout(volume, ticker, idx): continue
+        if not _is_near_52w_high(close, ticker, idx): continue
+        cands.append((ticker, score, score))
+    cands.sort(key=lambda x: -x[1])
+    return cands[:MAX_POSITIONS]
+
+
+def strat_ewros_breakout_base(idx, ewros, iq_edge, close, volume):
+    """
+    Strictest: EWROS ≥ 80 + volume breakout + near 52w high + tight base.
+    Classic cup-and-handle / flat base breakout.
+    """
+    if not ewros: return []
+    cands = []
+    for ticker, score in ewros.items():
+        if score < 80: continue
+        if not is_trend_aligned(close, ticker, idx): continue
+        if not _is_volume_breakout(volume, ticker, idx): continue
+        if not _is_near_52w_high(close, ticker, idx): continue
+        if not _has_tight_base(close, ticker, idx): continue
+        cands.append((ticker, score, score))
+    cands.sort(key=lambda x: -x[1])
+    return cands[:MAX_POSITIONS]
+
+
+# Load sector map (static — industry classification doesn't change, not look-ahead bias)
+_SECTOR_MAP = {}
+_sector_file = os.path.join(DATA_DIR, 'ticker_sectors.json')
+if os.path.exists(_sector_file):
+    with open(_sector_file) as _f:
+        _SECTOR_MAP = json.load(_f)
+
+def _get_sector(ticker):
+    return _SECTOR_MAP.get(ticker, {}).get('sector', 'Unknown')
+
+def _get_industry(ticker):
+    return _SECTOR_MAP.get(ticker, {}).get('industry', 'Unknown')
+
+
+def strat_industry_diversified(idx, ewros, iq_edge, close, volume):
+    """
+    Industry-diversified combo strategy:
+    1. Compute sector strength = avg EWROS of all stocks in each sector
+    2. Pick top 5-6 strongest sectors
+    3. From each strong sector, pick best 2 stocks by IQ+EWROS combined score
+    4. Requires IQ Edge ≥ 70 + EWROS ≥ 70 + trend aligned (slightly looser to get diversity)
+    5. Max 2 stocks per sector → forces diversification
+    """
+    if not iq_edge or not ewros:
+        return []
+    
+    # Step 1: Compute sector strength (avg EWROS of sector members)
+    sector_scores = defaultdict(list)
+    for ticker, score in ewros.items():
+        sector = _get_sector(ticker)
+        if sector != 'Unknown':
+            sector_scores[sector].append(score)
+    
+    sector_avg = {s: np.mean(scores) for s, scores in sector_scores.items() if len(scores) >= 3}
+    top_sectors = sorted(sector_avg.items(), key=lambda x: -x[1])
+    strong_sectors = set(s for s, avg in top_sectors if avg >= 50)  # Above-median sectors
+    
+    # Step 2: Get qualifying stocks (IQ ≥ 70, EWROS ≥ 70, trend aligned, in strong sector)
+    candidates_by_sector = defaultdict(list)
+    for ticker, data in iq_edge.items():
+        if data['pctile'] < 70:
+            continue
+        if ewros.get(ticker, 0) < 70:
+            continue
+        sector = _get_sector(ticker)
+        if sector not in strong_sectors:
+            continue
+        if not is_trend_aligned(close, ticker, idx):
+            continue
+        combined = (data['pctile'] + ewros[ticker]) / 2
+        candidates_by_sector[sector].append((ticker, combined, ewros[ticker]))
+    
+    # Step 3: Sort each sector's candidates, pick top 2 per sector
+    MAX_PER_SECTOR = 2
+    result = []
+    # Iterate sectors by strength
+    for sector, _ in top_sectors:
+        if sector not in candidates_by_sector:
+            continue
+        sector_cands = sorted(candidates_by_sector[sector], key=lambda x: -x[1])
+        result.extend(sector_cands[:MAX_PER_SECTOR])
+        if len(result) >= MAX_POSITIONS:
+            break
+    
+    return result[:MAX_POSITIONS]
 
 
 def main():
@@ -451,9 +585,9 @@ def main():
     print(f'\n📈 SPY Buy & Hold: ${STARTING_CAPITAL:,.0f} → ${spy_final:,.0f} ({spy_return:+.1f}%)')
     
     strategies = [
-        ('IQ Edge Top 20 + Trend', strat_iq_top20),
-        ('IQ Edge + EWROS ≥80', strat_iq_ewros),
-        ('EWROS Top 20 + Trend', strat_ewros_top20),
+        ('IQ+EWROS ≥80 (no diversify)', strat_iq_ewros),
+        ('Industry Diversified', strat_industry_diversified),
+        (f'EWROS Top {MAX_POSITIONS} + Trend', strat_ewros_top20),
     ]
     
     all_results = []

@@ -478,7 +478,7 @@
         <div class="top-nav-item" data-tab="portfolio" onclick="navTo('portfolio')">Portfolio</div>
         <div class="top-nav-item" data-tab="watchlist" onclick="navTo('watchlist')">Watchlist</div>
         <div class="top-nav-item" data-tab="hunter" onclick="navTo('hunter')">Hunter</div>
-        <div class="top-nav-item" data-tab="rotation" onclick="navTo('rotation')">Rotation</div>
+        <div class="top-nav-item" data-tab="rotation" onclick="navTo('rotation')">EWROS</div>
         <div class="top-nav-item" data-tab="ewros" onclick="navTo('ewros')">EWROS</div>
         <div class="top-nav-item" data-tab="calendar" onclick="navTo('calendar')">Calendar</div>
         <div class="top-nav-item" data-tab="screener" onclick="navTo('screener')">Screener</div>
@@ -495,7 +495,7 @@
             <div class="nav-item" onclick="showWatchlist(); toggleMenu();">Portfolio</div>
             <div class="nav-item" onclick="showWatchlistEntries(); toggleMenu();">Watchlist</div>
             <div class="nav-item" onclick="navTo('hunter'); toggleMenu();">Hunter</div>
-            <div class="nav-item" onclick="showRotation(); toggleMenu();">Rotation Scan</div>
+            <div class="nav-item" onclick="showRotation(); toggleMenu();">Sector EWROS</div>
             <div class="nav-item" onclick="navTo('ewros'); toggleMenu();">EWROS Leaders</div>
             <div class="nav-item" onclick="showCalendar(); toggleMenu();">Calendar</div>
             <div class="nav-item" onclick="showScreener(); toggleMenu();">Screener</div>
@@ -651,7 +651,7 @@
                             <th onclick="sortTable('sector')">Industry</th>
                             <th onclick="sortTable('score')">Score</th>
                             <th onclick="sortTable('grade')">Grade</th>
-                            <th onclick="sortTable('rotation_score')">Rotation</th>
+                            <th onclick="sortTable('ewros_score')">EWROS</th>
                             <th onclick="sortTable('ewros_score')">EWROS</th>
                             <th onclick="sortTable('iq_edge')">IQ Edge</th>
                             <th onclick="sortTable('ins_score')">Insider</th>
@@ -715,9 +715,9 @@
                             <div class="text-xl lg:text-2xl font-bold text-amber-400" id="moonshot-score">0%</div>
                         </div>
                         <div class="card p-4 lg:p-6 bg-gradient-to-br from-slate-800 to-cyan-900/20 border border-cyan-500/30">
-                            <div class="text-xs text-cyan-500 uppercase font-bold tracking-wider mb-2">Rotation</div>
-                            <div class="text-xl lg:text-2xl font-bold" id="rotation-score">0</div>
-                            <div class="text-xs mt-1" id="rotation-signal" style="color: var(--text-dim);">—</div>
+                            <div class="text-xs text-cyan-500 uppercase font-bold tracking-wider mb-2">EWROS</div>
+                            <div class="text-xl lg:text-2xl font-bold" id="ewros-score">0</div>
+                            <div class="text-xs mt-1" id="ewros-signal" style="color: var(--text-dim);">—</div>
                         </div>
                         <div id="insider-score-card" class="card p-4 lg:p-6 cursor-pointer" onclick="toggleInsiderDetails()" style="border:1px solid #333;">
                             <div class="text-xs uppercase font-bold tracking-wider mb-2" id="insider-card-label" style="color:#666;">Insider</div>
@@ -844,7 +844,7 @@
                             <th onclick="sortWatchlist('peg_ratio')">PEG</th>
                             <th onclick="sortWatchlist('score')">Score</th>
                             <th onclick="sortWatchlist('moonshot_score')">Moonshot</th>
-                            <th onclick="sortWatchlist('rotation_score')">Rotation</th>
+                            <th onclick="sortWatchlist('ewros_score')">EWROS</th>
                             <th onclick="sortWatchlist('ewros_score')">EWROS</th>
                             <th onclick="sortWatchlist('grade')">Grade</th>
                             <th>Signal</th>
@@ -866,7 +866,7 @@
                     Back to Dashboard
                 </button>
             </div>
-            <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 4px;">🔄 Rotation Scan</h2>
+            <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 4px;">🔄 Sector Rotation</h2>
             <p style="color: var(--text-dim); font-size: 0.8rem; margin-bottom: 24px;">Last scan: <span id="rotation-last-scan">—</span></p>
             <!-- Summary Cards -->
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px;" id="rotation-summary"></div>
@@ -880,7 +880,7 @@
             <!-- Main Table (collapsible) -->
             <div style="margin-bottom: 24px;">
                 <div id="rotation-table-toggle" onclick="document.getElementById('rotation-table-body').style.display = document.getElementById('rotation-table-body').style.display === 'none' ? 'block' : 'none'; this.querySelector('.toggle-arrow').textContent = document.getElementById('rotation-table-body').style.display === 'none' ? '▶' : '▼';" style="cursor:pointer;padding:12px 16px;background:#1e293b;border-radius:8px 8px 0 0;display:flex;justify-content:space-between;align-items:center;">
-                    <span style="font-weight:700;font-size:0.9rem;" id="rotation-table-title">👀 ROTATION WATCH — Loading...</span>
+                    <span style="font-weight:700;font-size:0.9rem;" id="rotation-table-title">👀 EWROS WATCH — Loading...</span>
                     <span class="toggle-arrow" style="color:var(--text-dim);">▼</span>
                 </div>
                 <div id="rotation-table-body">
@@ -890,7 +890,7 @@
                                 <tr id="rotation-thead"></tr>
                             </thead>
                             <tbody id="rotation-tbody">
-                                <tr><td colspan="8" style="text-align: center; padding: 40px; color: var(--text-dim);">Loading rotation data...</td></tr>
+                                <tr><td colspan="8" style="text-align: center; padding: 40px; color: var(--text-dim);">Loading EWROS data...</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -932,7 +932,7 @@
                             <th>P/L %</th>
                             <th>Score</th>
                             <th>Grade</th>
-                            <th>Rotation</th>
+                            <th>EWROS</th>
                             <th>Insider</th>
                             <th>Signal</th>
                             <th>Action</th>
@@ -1068,7 +1068,7 @@
                 <div style="background: #0a0f1d; border-radius: 8px; padding: 14px; margin-bottom: 16px;">
                     <div style="font-weight: 700; font-size: 0.85rem; margin-bottom: 10px; color: var(--accent);">Pre-Trade Checklist</div>
                     <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 0.85rem; cursor: pointer;">
-                        <input type="checkbox" id="chk-rotation" style="accent-color: var(--accent);"> Rotation score ≥ 60
+                        <input type="checkbox" id="chk-ewros" style="accent-color: var(--accent);"> EWROS score ≥ 60
                     </label>
                     <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 0.85rem; cursor: pointer;">
                         <input type="checkbox" id="chk-distribution" style="accent-color: var(--accent);"> Distribution signals < 2
@@ -1362,11 +1362,11 @@
                         <input type="number" id="scr-vol-min" placeholder="e.g. 500000" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
                     </div>
                     <div>
-                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">Rotation Min</label>
+                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">EWROS Min</label>
                         <input type="number" id="scr-rot-min" placeholder="e.g. 60" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
                     </div>
                     <div>
-                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">Rotation Max</label>
+                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">EWROS Max</label>
                         <input type="number" id="scr-rot-max" placeholder="e.g. 100" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
                     </div>
                     <div>
@@ -1426,7 +1426,7 @@
                             <th onclick="sortScreener('current_price')">Price</th>
                             <th onclick="sortScreener('avg_volume')">Avg Vol</th>
                             <th onclick="sortScreener('sector')">Sector</th>
-                            <th onclick="sortScreener('rotation_score')">Rotation</th>
+                            <th onclick="sortScreener('ewros_score')">EWROS</th>
                             <th onclick="sortScreener('ewros_score')">EWROS</th>
                             <th onclick="sortScreener('iq_edge')">IQ Edge</th>
                             <th onclick="sortScreener('score')">Score</th>
@@ -1482,8 +1482,8 @@
                         <select id="alert-type" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
                             <option value="price_above">Price Above</option>
                             <option value="price_below">Price Below</option>
-                            <option value="rotation_above">Rotation Above</option>
-                            <option value="rotation_below">Rotation Below</option>
+                            <option value="ewros_above">EWROS Above</option>
+                            <option value="ewros_below">EWROS Below</option>
                             <option value="ins_above">INS Score Above</option>
                             <option value="ins_below">INS Score Below</option>
                         </select>
@@ -1561,10 +1561,10 @@
         // ═══ Hero Section ═══
         async function loadHeroData() {
             // Top pick from stocksData
-            const sorted = [...stocksData].sort((a, b) => (b.rotation_score || 0) - (a.rotation_score || 0));
+            const sorted = [...stocksData].sort((a, b) => (b.ewros_score || 0) - (a.ewros_score || 0));
             if (sorted.length > 0) {
                 document.getElementById('hero-top-ticker').textContent = sorted[0].ticker;
-                document.getElementById('hero-top-sub').textContent = `${sorted[0].name} · Rot ${(sorted[0].rotation_score || 0).toFixed(1)}`;
+                document.getElementById('hero-top-sub').textContent = `${sorted[0].name} · Rot ${(sorted[0].ewros_score || 0).toFixed(1)}`;
             }
 
             // Portfolio health (% with HOLD signal) — try loading
@@ -1577,7 +1577,7 @@
                         for (const t of (basket.tickers || [])) {
                             totalCount++;
                             const stockData = stocksData.find(s => s.ticker === t.ticker);
-                            const rotSig = stockData?.rotation_signal || '';
+                            const rotSig = stockData?.ewros_signal || '';
                             if (rotSig.toLowerCase().includes('hold') || rotSig.toLowerCase().includes('buy') || rotSig.toLowerCase().includes('accumulate')) holdCount++;
                         }
                     }
@@ -1624,12 +1624,12 @@
 
         // ═══ Top 5 Cards ═══
         function renderTop5Cards() {
-            const sorted = [...stocksData].sort((a, b) => (b.rotation_score || 0) - (a.rotation_score || 0));
+            const sorted = [...stocksData].sort((a, b) => (b.ewros_score || 0) - (a.ewros_score || 0));
             const top5 = sorted.slice(0, 5);
             const container = document.getElementById('top5-cards');
             container.innerHTML = top5.map(s => {
-                const rotScore = (s.rotation_score || 0).toFixed(1);
-                const scoreColor = s.rotation_score >= 80 ? '#10b981' : s.rotation_score >= 60 ? '#eab308' : '#94a3b8';
+                const rotScore = (s.ewros_score || 0).toFixed(1);
+                const scoreColor = s.ewros_score >= 80 ? '#10b981' : s.ewros_score >= 60 ? '#eab308' : '#94a3b8';
                 const gradeBadge = {'A':'badge-green','B':'badge-blue','C':'badge-yellow','D':'badge-purple','F':'badge-red'}[s.grade] || 'badge-gray';
                 return `
                     <div class="top5-card" onclick="viewStock('${s.ticker}')">
@@ -1735,7 +1735,7 @@
             
             tbody.innerHTML = filtered.map((stock, idx) => {
                 const scoreColor = stock.score >= 80 ? '#38bdf8' : stock.score >= 70 ? '#10b981' : stock.score >= 55 ? '#f59e0b' : '#94a3b8';
-                const rotationScore = stock.rotation_score || 0;
+                const rotationScore = stock.ewros_score || 0;
                 const rotBadge = rotationScore >= 80 ? 'badge-green' : rotationScore >= 60 ? 'badge-yellow' : rotationScore >= 40 ? 'badge-gray' : 'badge-gray';
                 const gradeBadge = {'A':'badge-green','B':'badge-blue','C':'badge-yellow','D':'badge-purple','F':'badge-red'}[stock.grade] || 'badge-gray';
                 return `
@@ -2070,7 +2070,7 @@
                                 growth_score: scores.growth_score || 0,
                                 quality_score: scores.quality_score || 0,
                                 context_score: scores.context_score || 0,
-                                rotation_score: scores.rotation_score || 0,
+                                ewros_score: scores.ewros_score || 0,
                                 moonshot_score: scores.moonshot_score || 0,
                                 forward_pe: scores.forward_pe || null,
                                 trailing_pe: scores.trailing_pe || null,
@@ -2208,7 +2208,7 @@
                         <div class="score-breakdown">T:${stock.technical_score || 0} G:${stock.growth_score || 0} Q:${stock.quality_score || 0} C:${stock.context_score || 0}</div>
                     </td>
                     <td class="text-center font-bold text-amber-400">${stock.moonshot_score || 0}%</td>
-                    <td class="text-center" style="color: ${getRotationColor(stock.rotation_score || 0)}; font-weight: ${getRotationWeight(stock.rotation_score || 0)};">${(stock.rotation_score || 0).toFixed(1)}</td>
+                    <td class="text-center" style="color: ${getEwrosColor(stock.ewros_score || 0)}; font-weight: ${getEwrosWeight(stock.ewros_score || 0)};">${(stock.ewros_score || 0).toFixed(1)}</td>
                     <td class="text-center">${renderEwros(stock.ewros_score, stock.ewros_trend, stock.ticker)}</td>
                     <td><span class="grade-badge grade-${stock.grade}">${stock.grade}</span></td>
                     <td>${getPortfolioSignalBadge(stock)}</td>
@@ -2244,10 +2244,10 @@
                 return badge('#ef4444', 'rgba(239,68,68,0.15)', '🔴 EXIT', `Technical: ${tech}/53 — trend breakdown`);
             } else {
                 // Stock: signal based on rotation score
-                const rot = stock.rotation_score || 0;
-                if (rot >= 60) return badge('#10b981', 'rgba(16,185,129,0.15)', '🟢 HOLD', `Rotation: ${rot.toFixed(1)} — thesis intact`);
-                if (rot >= 35) return badge('#eab308', 'rgba(234,179,8,0.15)', '🟡 WATCH', `Rotation: ${rot.toFixed(1)} — weakening`);
-                return badge('#ef4444', 'rgba(239,68,68,0.15)', '🔴 EXIT', `Rotation: ${rot.toFixed(1)} — thesis broken`);
+                const rot = stock.ewros_score || 0;
+                if (rot >= 60) return badge('#10b981', 'rgba(16,185,129,0.15)', '🟢 HOLD', `EWROS: ${rot.toFixed(1)} — thesis intact`);
+                if (rot >= 40) return badge('#eab308', 'rgba(234,179,8,0.15)', '🟡 WATCH', `EWROS: ${rot.toFixed(1)} — weakening`);
+                return badge('#ef4444', 'rgba(239,68,68,0.15)', '🔴 EXIT', `EWROS: ${rot.toFixed(1)} — thesis broken`);
             }
         }
 
@@ -2373,14 +2373,14 @@
             document.body.appendChild(popup);
         }
 
-        function getRotationColor(score) {
+        function getEwrosColor(score) {
             if (score >= 80) return '#10b981';
             if (score >= 60) return '#eab308';
             if (score >= 40) return '#94a3b8';
             return '#64748b';
         }
         
-        function getRotationWeight(score) {
+        function getEwrosWeight(score) {
             if (score >= 80) return '700';
             if (score >= 60) return '600';
             return '400';
@@ -3172,17 +3172,17 @@
             // Power Matrix — 4 quadrants
             const EWROS_THRESH = 70;
             const ROT_THRESH = 60;
-            const powerZone = all.filter(s => (s.ewros_score||0) >= EWROS_THRESH && (s.rotation_score||0) >= ROT_THRESH)
-                .sort((a,b) => ((b.ewros_score||0) + (b.rotation_score||0)) - ((a.ewros_score||0) + (a.rotation_score||0)));
-            const earlySignal = all.filter(s => (s.ewros_score||0) < EWROS_THRESH && (s.rotation_score||0) >= ROT_THRESH)
-                .sort((a,b) => (b.rotation_score||0) - (a.rotation_score||0));
-            const extended = all.filter(s => (s.ewros_score||0) >= EWROS_THRESH && (s.rotation_score||0) < ROT_THRESH)
+            const powerZone = all.filter(s => (s.ewros_score||0) >= EWROS_THRESH && (s.ewros_score||0) >= ROT_THRESH)
+                .sort((a,b) => ((b.ewros_score||0) + (b.ewros_score||0)) - ((a.ewros_score||0) + (a.ewros_score||0)));
+            const earlySignal = all.filter(s => (s.ewros_score||0) < EWROS_THRESH && (s.ewros_score||0) >= ROT_THRESH)
                 .sort((a,b) => (b.ewros_score||0) - (a.ewros_score||0));
-            const avoid = all.filter(s => (s.ewros_score||0) < EWROS_THRESH && (s.rotation_score||0) < ROT_THRESH).length;
+            const extended = all.filter(s => (s.ewros_score||0) >= EWROS_THRESH && (s.ewros_score||0) < ROT_THRESH)
+                .sort((a,b) => (b.ewros_score||0) - (a.ewros_score||0));
+            const avoid = all.filter(s => (s.ewros_score||0) < EWROS_THRESH && (s.ewros_score||0) < ROT_THRESH).length;
 
             function matrixCard(stock) {
                 const e = stock.ewros_score || 0;
-                const r = (stock.rotation_score || 0).toFixed(1);
+                const r = (stock.ewros_score || 0).toFixed(1);
                 const t = stock.ewros_trend || 0;
                 const tArrow = t > 0 ? '▲' : t < 0 ? '▼' : '';
                 const tColor = t > 0 ? '#10b981' : t < 0 ? '#ef4444' : '#94a3b8';
@@ -3292,7 +3292,7 @@
                 { key: 'iq_edge', label: 'IQ Edge' },
                 { key: 'score', label: 'Quality' },
                 { key: 'grade', label: 'Grade' },
-                { key: 'rotation_score', label: 'Rotation' },
+                { key: 'ewros_score', label: 'EWROS' },
                 { key: 'sector', label: 'Sector' },
                 { key: 'current_price', label: 'Price' }
             ];
@@ -3318,7 +3318,7 @@
                 const tColor = t > 0 ? '#10b981' : t < 0 ? '#ef4444' : '#94a3b8';
                 const tArrow = t > 0 ? '▲' : t < 0 ? '▼' : '';
                 const gradeColor = s.grade === 'A' ? '#10b981' : s.grade === 'B' ? '#38bdf8' : '#94a3b8';
-                const rotColor = (s.rotation_score||0) >= 60 ? '#10b981' : (s.rotation_score||0) >= 40 ? '#eab308' : '#94a3b8';
+                const rotColor = (s.ewros_score||0) >= 60 ? '#10b981' : (s.ewros_score||0) >= 40 ? '#eab308' : '#94a3b8';
                 return `<tr>
                     <td><a href="#" onclick="viewStock('${s.ticker}'); return false;" style="color:var(--accent); font-weight:700; text-decoration:none;">${s.ticker}</a></td>
                     <td style="font-weight:700; color:${scColor}; cursor:pointer;" onclick="showEwrosPopup('${s.ticker}')">${sc}</td>
@@ -3326,7 +3326,7 @@
                     <td style="font-weight:700; color:${(s.iq_edge||0) >= 90 ? '#a855f7' : (s.iq_edge||0) >= 70 ? '#10b981' : (s.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${s.iq_edge || '—'}</td>
                     <td>${s.score || '—'}</td>
                     <td style="color:${gradeColor}; font-weight:700;">${s.grade || '—'}</td>
-                    <td style="color:${rotColor};">${s.rotation_score ? s.rotation_score.toFixed(1) : '—'}</td>
+                    <td style="color:${rotColor};">${s.ewros_score ? s.ewros_score.toFixed(1) : '—'}</td>
                     <td style="font-size:0.75rem; color:var(--text-dim);">${s.sector || '—'}</td>
                     <td>$${s.current_price ? s.current_price.toFixed(2) : '—'}</td>
                 </tr>`;
@@ -3431,15 +3431,15 @@
 
                 // Power Zone stocks
                 const EWROS_T = 70, ROT_T = 60;
-                const powerZone = stocks.filter(s => (s.ewros_score||0) >= EWROS_T && (s.rotation_score||0) >= ROT_T)
-                    .sort((a,b) => ((b.ewros_score||0) + (b.rotation_score||0)) - ((a.ewros_score||0) + (a.rotation_score||0)))
+                const powerZone = stocks.filter(s => (s.ewros_score||0) >= EWROS_T && (s.ewros_score||0) >= ROT_T)
+                    .sort((a,b) => ((b.ewros_score||0) + (b.ewros_score||0)) - ((a.ewros_score||0) + (a.ewros_score||0)))
                     .slice(0, 8);
 
                 const pzEl = document.getElementById('landing-power-stocks');
                 if (powerZone.length > 0) {
                     pzEl.innerHTML = powerZone.map(s => {
                         const e = s.ewros_score || 0;
-                        const r = (s.rotation_score || 0).toFixed(1);
+                        const r = (s.ewros_score || 0).toFixed(1);
                         const t = s.ewros_trend || 0;
                         const tArrow = t > 0 ? '▲' : t < 0 ? '▼' : '';
                         const tColor = t > 0 ? '#10b981' : t < 0 ? '#ef4444' : '#94a3b8';
@@ -3460,7 +3460,7 @@
                                     <div style="font-size:1.3rem; font-weight:800; color:${eColor};">${e}</div>
                                 </div>
                                 <div style="flex:1; text-align:center; background:#161b2a; border-radius:6px; padding:8px;">
-                                    <div style="font-size:0.5rem; text-transform:uppercase; color:var(--text-dim);">Rotation</div>
+                                    <div style="font-size:0.5rem; text-transform:uppercase; color:var(--text-dim);">EWROS</div>
                                     <div style="font-size:1.3rem; font-weight:800;">${r}</div>
                                 </div>
                                 <div style="flex:1; text-align:center; background:#161b2a; border-radius:6px; padding:8px;">
@@ -3613,11 +3613,11 @@
                 document.getElementById('context-score').innerText = data.context_score || 0;
                 document.getElementById('moonshot-score').innerText = (data.moonshot_score || 0) + '%';
                 
-                const rotScore = data.rotation_score || 0;
-                const rotSignal = data.rotation_signal || 'N/A';
-                document.getElementById('rotation-score').innerText = rotScore.toFixed ? rotScore.toFixed(1) : rotScore;
-                document.getElementById('rotation-signal').innerText = rotSignal;
-                const rotEl = document.getElementById('rotation-score');
+                const rotScore = data.ewros_score || 0;
+                const rotSignal = data.ewros_signal || 'N/A';
+                document.getElementById('ewros-score').innerText = rotScore.toFixed ? rotScore.toFixed(1) : rotScore;
+                document.getElementById('ewros-signal').innerText = rotSignal;
+                const rotEl = document.getElementById('ewros-score');
                 rotEl.style.color = rotScore >= 80 ? '#10b981' : rotScore >= 60 ? '#eab308' : rotScore >= 40 ? '#94a3b8' : '#64748b';
 
                 // Insider score card
@@ -3762,7 +3762,7 @@
         }
         // ===== ROTATION SCAN =====
         let rotationData = null;
-        let rotationSort = { column: 'rotation_score', direction: 'desc' };
+        let rotationSort = { column: 'ewros_score', direction: 'desc' };
 
         async function showRotation() {
             if (location.hash !== '#rotation') history.pushState(null, '', '#rotation');
@@ -3788,11 +3788,11 @@
             document.getElementById('rotation-last-scan').textContent = d.last_scan || '—';
 
             const allStocks = [...d.strong_buys, ...d.watch];
-            const dreamSetups = allStocks.filter(s => s.rotation_score >= 60 && s.grade === 'A');
+            const dreamSetups = allStocks.filter(s => s.ewros_score >= 60 && s.grade === 'A');
             const industryCount = Object.keys(d.industry_breakdown).length;
 
             // Update collapsible table title
-            document.getElementById('rotation-table-title').textContent = `👀 ROTATION WATCH — ${allStocks.length} stocks`;
+            document.getElementById('rotation-table-title').textContent = `👀 EWROS WATCH — ${allStocks.length} stocks`;
 
             // Summary cards
             document.getElementById('rotation-summary').innerHTML = [
@@ -3816,7 +3816,7 @@
                             </div>
                             <div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:6px;">${s.name}</div>
                             <div style="display:flex;justify-content:space-between;font-size:0.8rem;">
-                                <span>Rotation: <b style="color:#10b981;">${s.rotation_score}</b></span>
+                                <span>EWROS: <b style="color:#10b981;">${s.ewros_score}</b></span>
                                 <span>Quality: <b>${s.score}</b></span>
                             </div>
                             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
@@ -3832,8 +3832,8 @@
             // Table header
             const cols = [
                 { key: 'ticker', label: 'Ticker' },
-                { key: 'rotation_score', label: 'Rotation' },
-                { key: 'rotation_convergence', label: 'Conv.' },
+                { key: 'ewros_score', label: 'EWROS' },
+                { key: 'ewros_convergence', label: 'IQ Edge' },
                 { key: 'ewros_score', label: 'EWROS' },
                 { key: 'iq_edge', label: 'IQ Edge' },
                 { key: 'score', label: 'Quality' },
@@ -3865,8 +3865,8 @@
                 const gradeColor = s.grade === 'A' ? '#10b981' : s.grade === 'B' ? '#38bdf8' : s.grade === 'C' ? '#f59e0b' : '#ef4444';
                 return `<tr style="border-bottom:1px solid rgba(255,255,255,0.03);">
                     <td style="padding:8px;"><a href="#" onclick="viewStock('${s.ticker}'); return false;" class="text-sky-400 hover:text-sky-300 font-bold">${s.ticker}</a></td>
-                    <td style="padding:8px;font-weight:700;color:#10b981;">${s.rotation_score}</td>
-                    <td style="padding:8px;">${s.rotation_convergence}</td>
+                    <td style="padding:8px;font-weight:700;color:#10b981;">${s.ewros_score}</td>
+                    <td style="padding:8px;">${s.ewros_convergence}</td>
                     <td style="padding:8px;font-weight:600;color:${(s.ewros_score||0) >= 80 ? '#10b981' : (s.ewros_score||0) >= 50 ? '#eab308' : '#64748b'};">${s.ewros_score || '—'}</td>
                     <td style="padding:8px;font-weight:700;color:${(s.iq_edge||0) >= 90 ? '#a855f7' : (s.iq_edge||0) >= 70 ? '#10b981' : (s.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${s.iq_edge || '—'}</td>
                     <td style="padding:8px;">${s.score}</td>
@@ -4028,7 +4028,7 @@
                             <td style="color:${plColor}; font-weight:700;">${plText}</td>
                             <td>${item.score || '—'}</td>
                             <td style="color:${gradeColor}; font-weight:700;">${item.grade || '—'}</td>
-                            <td>${item.rotation_score ? item.rotation_score.toFixed(1) : '—'}</td>
+                            <td>${item.ewros_score ? item.ewros_score.toFixed(1) : '—'}</td>
                             <td>${renderInsiderBadge(wlLivePrices[item.ticker]?.ins_score ?? item.ins_score, wlLivePrices[item.ticker]?.insider_signal ?? item.insider_signal, true)}</td>
                             <td>${getSellSignalBadge(item.ticker)}</td>
                             <td><button onclick="removeWLItem(${item.id || 0}, '${item.ticker}', '${name}')" style="background:transparent; border:1px solid #374151; color:#ef4444; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem;">✕</button></td>
@@ -4120,7 +4120,7 @@
                 const s = pendingSnapshot;
                 document.getElementById('wl-stock-name').textContent = data.name || ticker;
                 document.getElementById('wl-stock-details').innerHTML =
-                    `Score: ${s.score || 'N/A'} | Grade: ${s.grade || 'N/A'} | Rotation: ${s.rotation_score ? Number(s.rotation_score).toFixed(1) : 'N/A'}`;
+                    `Score: ${s.score || 'N/A'} | Grade: ${s.grade || 'N/A'} | Rotation: ${s.ewros_score ? Number(s.ewros_score).toFixed(1) : 'N/A'}`;
                 document.getElementById('wl-ticker-info').style.display = 'block';
             } catch(e) {}
         }
@@ -4147,7 +4147,7 @@
             document.getElementById('rr-display').textContent = 'R/R Ratio: —';
             document.getElementById('rr-display').style.borderColor = '#374151';
             // Reset checklist
-            ['chk-rotation','chk-distribution','chk-market','chk-rr','chk-position','chk-earnings','chk-thesis'].forEach(id => {
+            ['chk-ewros','chk-distribution','chk-market','chk-rr','chk-position','chk-earnings','chk-thesis'].forEach(id => {
                 document.getElementById(id).checked = false;
             });
             document.getElementById('checklist-score').textContent = '0/7 checks passed';
@@ -4196,7 +4196,7 @@
             const stopLoss = parseFloat(document.getElementById('thesis-stop-loss').value);
 
             // Count checklist
-            const checks = ['chk-rotation','chk-distribution','chk-market','chk-rr','chk-position','chk-earnings','chk-thesis'];
+            const checks = ['chk-ewros','chk-distribution','chk-market','chk-rr','chk-position','chk-earnings','chk-thesis'];
             const checklist = {};
             let passed = 0;
             checks.forEach(id => {
@@ -4617,7 +4617,7 @@
 
         // ===== SCREENER =====
         let screenerData = [];
-        let screenerSort = { column: 'rotation_score', direction: 'desc' };
+        let screenerSort = { column: 'ewros_score', direction: 'desc' };
 
         async function showScreener() {
             if (location.hash !== '#screener') history.pushState(null, '', '#screener');
@@ -4694,7 +4694,7 @@
                 return;
             }
             tbody.innerHTML = screenerData.map(s => {
-                const rotColor = (s.rotation_score||0) >= 80 ? '#10b981' : (s.rotation_score||0) >= 60 ? '#eab308' : '#64748b';
+                const rotColor = (s.ewros_score||0) >= 80 ? '#10b981' : (s.ewros_score||0) >= 60 ? '#eab308' : '#64748b';
                 const rsColor = (s.ewros_score||0) >= 80 ? '#10b981' : (s.ewros_score||0) >= 50 ? '#eab308' : '#64748b';
                 const gradeColor = s.grade === 'A' ? '#10b981' : s.grade === 'B' ? '#38bdf8' : s.grade === 'C' ? '#f59e0b' : '#ef4444';
                 const fmtVol = (v) => { if (!v) return '—'; if (v >= 1e6) return (v/1e6).toFixed(1)+'M'; if (v >= 1e3) return (v/1e3).toFixed(0)+'K'; return v.toFixed(0); };
@@ -4704,7 +4704,7 @@
                     <td style="font-weight:600;">$${(s.current_price||0).toFixed(2)}</td>
                     <td style="font-size:0.85rem; color:var(--text-dim);">${fmtVol(s.avg_volume)}</td>
                     <td style="font-size:0.8rem; color:var(--text-dim);">${s.sector || '—'}</td>
-                    <td style="font-weight:700; color:${rotColor};">${(s.rotation_score||0).toFixed(1)}</td>
+                    <td style="font-weight:700; color:${rotColor};">${(s.ewros_score||0).toFixed(1)}</td>
                     <td style="font-weight:600; color:${rsColor};">${s.ewros_score || '—'}</td>
                     <td style="font-weight:700; color:${(s.iq_edge||0) >= 90 ? '#a855f7' : (s.iq_edge||0) >= 70 ? '#10b981' : (s.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${s.iq_edge || '—'}</td>
                     <td>${s.score || 0}</td>
@@ -4746,7 +4746,7 @@
 
                 const gradeColors = {A:'#059669',B:'#0284c7',C:'#d97706',D:'#7c3aed',F:'#dc2626'};
                 const gc = gradeColors[s.grade] || '#64748b';
-                const rotColor = (s.rotation_score||0) >= 80 ? '#10b981' : (s.rotation_score||0) >= 60 ? '#eab308' : '#64748b';
+                const rotColor = (s.ewros_score||0) >= 80 ? '#10b981' : (s.ewros_score||0) >= 60 ? '#eab308' : '#64748b';
                 const rsColor = (s.ewros_score||0) >= 80 ? '#10b981' : (s.ewros_score||0) >= 50 ? '#eab308' : '#64748b';
                 let insColor, insEmoji, insText;
                 if ((s.ins_score||0) <= -3) { insColor = '#ef4444'; insEmoji = '🔴'; insText = 'Dumping'; }
@@ -4768,8 +4768,8 @@
                             <div style="font-size:1.6rem; font-weight:800; color:${gc};">${s.score || 0}/100</div>
                         </div>
                         <div class="card" style="text-align:center; padding:14px;">
-                            <div style="font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">Rotation</div>
-                            <div style="font-size:1.6rem; font-weight:800; color:${rotColor};">${(s.rotation_score||0).toFixed(1)}</div>
+                            <div style="font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">EWROS</div>
+                            <div style="font-size:1.6rem; font-weight:800; color:${rotColor};">${(s.ewros_score||0).toFixed(1)}</div>
                         </div>
                         <div class="card" style="text-align:center; padding:14px;">
                             <div style="font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">EWROS</div>
@@ -4894,8 +4894,8 @@
             const labels = {
                 'price_above': 'Price >=',
                 'price_below': 'Price <=',
-                'rotation_above': 'Rotation >=',
-                'rotation_below': 'Rotation <=',
+                'ewros_above': 'Rotation >=',
+                'ewros_below': 'Rotation <=',
                 'ins_above': 'INS >=',
                 'ins_below': 'INS <='
             };
@@ -4938,7 +4938,7 @@
         // ===== CHECKLIST COUNTER =====
         document.addEventListener('change', function(e) {
             if (e.target.id && e.target.id.startsWith('chk-')) {
-                const checks = ['chk-rotation','chk-distribution','chk-market','chk-rr','chk-position','chk-earnings','chk-thesis'];
+                const checks = ['chk-ewros','chk-distribution','chk-market','chk-rr','chk-position','chk-earnings','chk-thesis'];
                 const passed = checks.filter(id => document.getElementById(id)?.checked).length;
                 const el = document.getElementById('checklist-score');
                 if (el) {

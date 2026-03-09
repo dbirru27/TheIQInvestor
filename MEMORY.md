@@ -12,7 +12,7 @@
   - Quality: 18 pts max (ROE, Margin, PEG, FCF)
   - Context: 10 pts max (Sector, RS, Size penalty)
 - **Tech Stack:** Python (rater.py), Flask (app.py), SQLite (market_data.db)
-- **Web App:** https://qortexai.com (GitHub Pages, reads from cached JSON)
+- **Web App:** https://theiqinvestor.com (GitHub Pages, reads from cached JSON)
 - **Data Files:**
   - `top_stocks.json` — Top 100 filtered stocks (displayed on site)
   - `all_stocks.json` — All 1,012 stocks with full criteria breakdown
@@ -67,6 +67,7 @@
 ## Critical Rules (learned the hard way)
 - **Frontend = templates/index.html** (Flask serves this, NOT root index.html)
 - **Portfolio source of truth = Supabase** (never local JSON/memory)
+- **NEVER hardcode tickers** — always fetch from Supabase. Dan's portfolio changes. Hardcoded tickers in cron jobs caused 3+ weeks of stale reports (Mar 2026).
 - **Never skip baskets** — show everything exactly as Supabase returns
 - **Realtime = realtime** — use range=1d&interval=1m for intraday prices
 - **ETFs = technical signals only** (no fundamentals available)
@@ -84,6 +85,20 @@
 ## Build Roadmap (Dan approved Mar 4)
 - Phase 2: Thesis Journal, Trade Journal + P&L Attribution
 - Phase 3: R/R Calculator, Insider Transactions (SEC Form 4), Correlation Dashboard, Pre-Trade Checklist
+
+## SEC EDGAR Fundamentals (Mar 9, 2026)
+- **Downloaded**: 987 tickers, 38K revenue + 58K EPS quarterly filings, back to 2008+
+- **File**: `data/sec_fundamentals.json` (7.6 MB), commit `29dacf8`
+- **Filing dates included** — no look-ahead bias
+- **Revenue filters ALL HURT backtest**: Rev>0% → +107% (vs baseline +280%), consistent 2Q → +97%, accelerating → +35%
+- **Key finding**: Best winners (SNDK, LITE) had negative revenue at entry — trough recovery plays. EWROS detects recovery 2-3 quarters before SEC filings confirm it.
+- **Decision**: Revenue growth filters are counterproductive for momentum/breakout strategies. Earnings beat remains the only useful fundamental filter.
+
+## Rotation Score (rotation_catcher.py)
+- 6 signals: RS divergence (22%), earnings revisions (17%), valuation gap (17%), stage breakout (22%), volume accumulation (11%), sector momentum (11%)
+- ~83% backtestable (price/volume + SEC data), 17% not (analyst estimates/revisions)
+- EWROS already captures the backtestable portion more cleanly
+- Website sell signal still uses old rotation thresholds + -8% hard stop — needs updating to match backtest-proven EWROS exits
 
 ## Model Preference
 - **Always use anthropic/claude-opus-4-6** — Dan's explicit preference (Mar 4, 2026)

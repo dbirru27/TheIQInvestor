@@ -2,10 +2,15 @@
 """
 Sell Signal Check — runs nightly after market close.
 
-Evaluates all watchlist tickers against 3-tier sell signal framework:
-  🔴 SELL  — hard stop (-8% from entry) OR rotation score < 35
-  🟡 WATCH — rotation dropped 15+ pts from entry OR 3+ distribution signals OR price < 50d MA
+Evaluates all watchlist tickers against backtest-proven sell signal framework:
+  🔴 SELL  — EWROS < 30 (collapsed momentum)
+  🟡 WATCH — price < 50d MA OR EWROS dropped 20+ pts from entry OR EWROS < 50
   🟢 HOLD  — thesis intact
+
+Exit rules match backtest-proven config:
+  - Below 50d MA (after 5 days held)
+  - EWROS drops below 50 (after 10 days held)
+  - NO hard stop loss (proven to hurt performance)
 
 Saves daily snapshots to data/rotation_snapshots.json
 Sends Telegram alerts for SELL and new WATCH signals.
@@ -18,7 +23,6 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 SUPABASE_URL = 'https://jvgxgfbthfsdqtvzeuqz.supabase.co'
 SNAPSHOT_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', 'rotation_snapshots.json')
-DIST_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', 'distribution_signals.json')
 
 
 def get_supabase_key():
@@ -80,26 +84,14 @@ def get_50d_ma(ticker):
     return None
 
 
-def get_rotation_score(ticker):
-    """Get current rotation score from all_stocks.json cache (updated by daily scan)."""
+def get_ewros_score(ticker):
+    """Get current EWROS score from all_stocks.json cache (updated by daily EWROS scan)."""
     try:
         ws_dir = os.path.dirname(os.path.dirname(__file__))
         with open(os.path.join(ws_dir, 'data', 'all_stocks.json')) as f:
             data = json.load(f)
         stocks = data.get('stocks', data)
-        return stocks.get(ticker, {}).get('rotation_score', 0) or 0
-    except Exception:
-        pass
-    return 0
-
-
-def get_distribution_count(ticker):
-    """Get recent distribution signal count from distribution_signals.json or all_stocks."""
-    try:
-        if os.path.exists(DIST_FILE):
-            with open(DIST_FILE) as f:
-                dist_data = json.load(f)
-            return dist_data.get(ticker, {}).get('signal_count', 0)
+        return stocks.get(ticker, {}).get('ewros_score', 0) or 0
     except Exception:
         pass
     return 0
@@ -119,9 +111,16 @@ def save_snapshots(snapshots):
         json.dump(snapshots, f, indent=2)
 
 
-def evaluate_sell_signal(ticker, entry_price, current_price, rotation_score,
-                          entry_rotation, ma50, dist_count):
-    """Evaluate sell signal tier."""
+def evaluate_sell_signal(ticker, entry_price, current_price, ewros_score,
+                          entry_ewros, ma50, days_held):
+    """
+    Evaluate sell signal tier using backtest-proven rules.
+    
+    Exit rules (proven in 5yr OOS backtest, $10K → $38K):
+      - Below 50d MA (after 5 days held)
+      - EWROS drops below 50 (after 10 days held)
+      - NO hard stop loss
+    """
     reasons = []
     tier = 'HOLD'
 
@@ -131,32 +130,37 @@ def evaluate_sell_signal(ticker, entry_price, current_price, rotation_score,
     pct_from_entry = (current_price - entry_price) / entry_price * 100
 
     # --- Tier 1: SELL signals (hard) ---
-    if pct_from_entry <= -8.0:
+    if ewros_score < 30:
         tier = 'SELL'
-        reasons.append(f'Hard stop: {pct_from_entry:.1f}% from entry')
+        reasons.append(f'EWROS collapsed: {ewros_score:.0f} (momentum gone)')
 
-    if rotation_score < 35:
+    if days_held >= 5 and ma50 and current_price < ma50:
         tier = 'SELL'
-        reasons.append(f'Rotation collapsed: {rotation_score:.1f} (buy threshold was ≥60)')
+        reasons.append(f'Price ${current_price:.2f} below 50d MA ${ma50:.2f} (held {days_held}d)')
+
+    if days_held >= 10 and ewros_score < 50:
+        if tier != 'SELL':
+            tier = 'SELL'
+        reasons.append(f'EWROS {ewros_score:.0f} < 50 after {days_held}d hold')
 
     # --- Tier 2: WATCH signals ---
     if tier == 'HOLD':
-        rotation_drop = (entry_rotation or 0) - rotation_score
-        if rotation_drop >= 15:
+        ewros_drop = (entry_ewros or 0) - ewros_score
+        if ewros_drop >= 20:
             tier = 'WATCH'
-            reasons.append(f'Rotation dropped {rotation_drop:.1f} pts (entry: {entry_rotation:.1f} → now: {rotation_score:.1f})')
+            reasons.append(f'EWROS dropped {ewros_drop:.0f} pts (entry: {entry_ewros:.0f} → now: {ewros_score:.0f})')
 
-        if dist_count >= 3:
+        if ma50 and current_price < ma50 and days_held < 5:
             tier = 'WATCH'
-            reasons.append(f'{dist_count} distribution signals in last 25 days')
+            reasons.append(f'Price ${current_price:.2f} below 50d MA ${ma50:.2f} (held {days_held}d, exit at 5d)')
 
-        if ma50 and current_price < ma50:
+        if ewros_score < 50 and days_held < 10:
             tier = 'WATCH'
-            reasons.append(f'Price ${current_price:.2f} below 50-day MA ${ma50:.2f}')
+            reasons.append(f'EWROS {ewros_score:.0f} < 50 (held {days_held}d, exit at 10d)')
 
-        if pct_from_entry <= -5.0:
+        if pct_from_entry <= -10.0:
             tier = 'WATCH'
-            reasons.append(f'Down {pct_from_entry:.1f}% from entry (approaching stop)')
+            reasons.append(f'Down {pct_from_entry:.1f}% from entry')
 
     return tier, reasons
 
@@ -200,17 +204,18 @@ def main():
             continue
 
         entry_snapshot = item.get('snapshot') or {}
-        entry_rotation = entry_snapshot.get('rotation_score', 0) or 0
+        entry_ewros = entry_snapshot.get('ewros_score', 0) or 0
+        added_date = item.get('added_date', today)
+        days_held = (date.fromisoformat(today) - date.fromisoformat(added_date[:10])).days if added_date else 0
 
         print(f'Checking {ticker}...')
         current_price, prev_close = get_current_price(ticker)
-        rotation_score = get_rotation_score(ticker)
+        ewros_score = get_ewros_score(ticker)
         ma50 = get_50d_ma(ticker)
-        dist_count = get_distribution_count(ticker)
 
         tier, reasons = evaluate_sell_signal(
-            ticker, entry_price, current_price, rotation_score,
-            entry_rotation, ma50, dist_count
+            ticker, entry_price, current_price, ewros_score,
+            entry_ewros, ma50, days_held
         )
 
         pct = ((current_price - entry_price) / entry_price * 100) if current_price else None
@@ -222,10 +227,10 @@ def main():
             'current_price': round(current_price, 2) if current_price else None,
             'entry_price': entry_price,
             'pct_from_entry': round(pct, 2) if pct is not None else None,
-            'rotation_score': round(rotation_score, 1),
-            'entry_rotation': round(entry_rotation, 1),
+            'ewros_score': round(ewros_score, 1),
+            'entry_ewros': round(entry_ewros, 1),
             'ma50': round(ma50, 2) if ma50 else None,
-            'dist_count': dist_count,
+            'days_held': days_held,
             'date': today
         }
         results.append(result)
@@ -235,7 +240,7 @@ def main():
             snapshots[ticker] = {}
         snapshots[ticker][today] = {
             'price': current_price,
-            'rotation_score': rotation_score,
+            'ewros_score': ewros_score,
             'tier': tier
         }
 
@@ -245,7 +250,7 @@ def main():
         if len(dates) >= 2:
             prev_tier = snapshots[ticker][dates[-2]].get('tier')
 
-        print(f'  {tier:5s} | Price ${current_price:.2f} ({pct:+.1f}%) | Rot {rotation_score:.1f} | {", ".join(reasons) if reasons else "thesis intact"}')
+        print(f'  {tier:5s} | Price ${current_price:.2f} ({pct:+.1f}%) | EWROS {ewros_score:.0f} | {", ".join(reasons) if reasons else "thesis intact"}')
 
         if tier == 'SELL':
             alerts_sell.append(result)
@@ -262,7 +267,7 @@ def main():
 
     # --- Send Telegram alerts ---
     if alerts_sell or alerts_watch:
-        lines = ['🚨 *InvestIQ Sell Signal Alert*\n']
+        lines = ['🚨 *IQ Investor Sell Signal Alert*\n']
 
         if alerts_sell:
             lines.append('🔴 *SELL SIGNALS:*')

@@ -322,7 +322,7 @@ def watchlist():
                     'quality_score': scores.get('quality_score', 0),
                     'context_score': scores.get('context_score', 0),
                     'moonshot_score': scores.get('moonshot_score', 0),
-                    'rotation_score': scores.get('rotation_score', 0),
+                    'ewros_score': scores.get('ewros_score', 0),
                     'trailing_pe': scores.get('trailing_pe'),
                     'forward_pe': scores.get('forward_pe'),
                     'peg_ratio': scores.get('peg_ratio'),
@@ -401,7 +401,7 @@ def watchlist_live():
 
 @app.route('/api/rotation')
 def rotation_scan():
-    """Serve rotation scan data from all_stocks.json"""
+    """Serve sector rotation data powered by EWROS (replaced old rotation_catcher)."""
     try:
         with open('data/all_stocks.json', 'r') as f:
             data = json.load(f)
@@ -425,29 +425,26 @@ def rotation_scan():
             industry_totals[ind] = industry_totals.get(ind, 0) + 1
 
         for ticker, s in stocks.items():
-            rot = s.get('rotation_score', 0) or 0
-            if rot < 60:
+            ewros = s.get('ewros_score', 0) or 0
+            if ewros < 60:
                 continue
 
             ins = ins_lookup.get(ticker, {})
             obj = {
                 'ticker': s.get('ticker', ticker),
                 'name': s.get('name', ticker),
-                'rotation_score': rot,
-                'rotation_signal': s.get('rotation_signal', 'NEUTRAL'),
-                'rotation_convergence': s.get('rotation_convergence', 0),
-                'ewros_score': s.get('ewros_score', 0),
+                'ewros_score': ewros,
                 'score': s.get('score', 0),
                 'grade': s.get('grade', '?'),
                 'sector': s.get('sector', 'Unknown'),
                 'industry': s.get('industry', 'Unknown'),
                 'current_price': s.get('current_price', 0),
+                'iq_edge': s.get('iq_edge', 0),
                 'ins_score': ins.get('ins_score', s.get('ins_score', 0)),
                 'insider_signal': ins.get('insider_signal', s.get('insider_signal', 'neutral'))
             }
 
-            sig = (s.get('rotation_signal') or '').upper()
-            if 'BUY' in sig:
+            if ewros >= 80:
                 strong_buys.append(obj)
             else:
                 watch.append(obj)
@@ -455,33 +452,33 @@ def rotation_scan():
             # Industry breakdown
             ind = obj['industry']
             if ind not in industry_breakdown:
-                industry_breakdown[ind] = {'count': 0, 'total_rot': 0, 'tickers': []}
+                industry_breakdown[ind] = {'count': 0, 'total_ewros': 0, 'tickers': []}
             industry_breakdown[ind]['count'] += 1
-            industry_breakdown[ind]['total_rot'] += rot
+            industry_breakdown[ind]['total_ewros'] += ewros
             industry_breakdown[ind]['tickers'].append(obj['ticker'])
 
             # Sector breakdown
             sec = obj['sector']
             if sec not in sector_breakdown:
-                sector_breakdown[sec] = {'count': 0, 'total_rot': 0, 'tickers': []}
+                sector_breakdown[sec] = {'count': 0, 'total_ewros': 0, 'tickers': []}
             sector_breakdown[sec]['count'] += 1
-            sector_breakdown[sec]['total_rot'] += rot
+            sector_breakdown[sec]['total_ewros'] += ewros
             sector_breakdown[sec]['tickers'].append(obj['ticker'])
 
         # Compute averages and penetration %
         for k, v in industry_breakdown.items():
-            v['avg_rotation'] = round(v['total_rot'] / v['count'], 1) if v['count'] else 0
+            v['avg_ewros'] = round(v['total_ewros'] / v['count'], 1) if v['count'] else 0
             v['total'] = industry_totals.get(k, v['count'])
             v['pct'] = round(v['count'] / v['total'] * 100, 1) if v['total'] else 0
-            del v['total_rot']
+            del v['total_ewros']
         for k, v in sector_breakdown.items():
-            v['avg_rotation'] = round(v['total_rot'] / v['count'], 1) if v['count'] else 0
+            v['avg_ewros'] = round(v['total_ewros'] / v['count'], 1) if v['count'] else 0
             v['total'] = sector_totals.get(k, v['count'])
             v['pct'] = round(v['count'] / v['total'] * 100, 1) if v['total'] else 0
-            del v['total_rot']
+            del v['total_ewros']
 
-        strong_buys.sort(key=lambda x: x['rotation_score'], reverse=True)
-        watch.sort(key=lambda x: x['rotation_score'], reverse=True)
+        strong_buys.sort(key=lambda x: x['ewros_score'], reverse=True)
+        watch.sort(key=lambda x: x['ewros_score'], reverse=True)
 
         return jsonify({
             'last_scan': last_scan,
@@ -665,7 +662,7 @@ def get_watchlists():
                     "snapshot": item.get("snapshot", {}),
                     "score": scores.get("score", 0),
                     "grade": scores.get("grade", "N/A"),
-                    "rotation_score": scores.get("rotation_score", 0),
+                    "ewros_score": scores.get("ewros_score", 0),
                     "sector": scores.get("sector", ""),
                     "name": scores.get("name", item["ticker"])
                 })
@@ -843,7 +840,7 @@ def get_stock_price(ticker):
                     "sector": stock_data.get('sector', ''),
                     "score": stock_data.get('score', 0),
                     "grade": stock_data.get('grade', 'N/A'),
-                    "rotation_score": stock_data.get('rotation_score', 0),
+                    "ewros_score": stock_data.get('ewros_score', 0),
                     "ins_score": ins.get('ins_score', stock_data.get('ins_score', 0)),
                     "insider_signal": ins.get('insider_signal', stock_data.get('insider_signal', 'neutral')),
                 }
@@ -1443,9 +1440,9 @@ def screener():
         if vol_min is not None:
             results = [s for s in results if (s.get('avg_volume') or 0) >= vol_min]
         if rot_min is not None:
-            results = [s for s in results if (s.get('rotation_score') or 0) >= rot_min]
+            results = [s for s in results if (s.get('ewros_score') or 0) >= rot_min]
         if rot_max is not None:
-            results = [s for s in results if (s.get('rotation_score') or 0) <= rot_max]
+            results = [s for s in results if (s.get('ewros_score') or 0) <= rot_max]
         if ins_min is not None:
             results = [s for s in results if (s.get('ins_score') or 0) >= ins_min]
         if ins_max is not None:
@@ -1465,7 +1462,7 @@ def screener():
             results = [s for s in results if s.get('peg_ratio') is not None and s['peg_ratio'] <= peg_max]
 
         # Sort
-        sort_key = request.args.get('sort', 'rotation_score')
+        sort_key = request.args.get('sort', 'ewros_score')
         sort_order = request.args.get('order', 'desc')
         results.sort(
             key=lambda x: x.get(sort_key) if x.get(sort_key) is not None else -9999,

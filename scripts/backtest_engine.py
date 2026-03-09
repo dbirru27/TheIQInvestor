@@ -1,21 +1,25 @@
 #!/usr/bin/env python3
 """
-Walk-Forward Backtest Engine — Proper out-of-sample testing.
+Event-Driven Walk-Forward Backtest — Proper entry/exit signals.
 
-For each rebalance date (monthly):
-  1. Compute scores using ONLY data available up to that date
-  2. Rank stocks, form portfolios
-  3. Measure FORWARD returns (next 1/3/6 months)
-  4. Aggregate across all periods
+Signals tested (all price/volume based — no fundamentals):
+  1. EWROS Top 20 with breakout entry + conditional exits
+  2. EWROS + Trend Alignment (Price > 50d > 200d)
+  3. Volume Breakout (1.5x+ volume surge above base ceiling)
+  4. Combined: EWROS ≥ 80 + Breakout + Trend
 
-No look-ahead bias. No circular reasoning.
+Entry Rules:
+  - Signal-specific (see each strategy)
+  - Max 20 positions at any time
+  - Equal weight per position
 
-Signals tested:
-  1. Quality Score (simplified: trend + MA + revenue proxy)
-  2. EWROS (recomputed monthly with trailing 63 days)
-  3. Rotation Score (proxy: volume + trend + momentum signals)
-  4. IQ Edge (XGBoost model applied at each rebalance)
-  5. Power Matrix (EWROS × Rotation combined)
+Exit Rules (whichever triggers first):
+  - Stop loss: -8% from entry price
+  - EWROS drops below 50 (for EWROS strategies)
+  - Price closes below 50-day MA
+  - Max hold: 126 trading days (~6 months)
+
+Metrics: Win rate, avg win, avg loss, profit factor, max drawdown
 
 Usage:
     python3 scripts/backtest_engine.py
@@ -26,11 +30,11 @@ import sys
 import warnings
 import pickle
 from datetime import datetime, timedelta
+from collections import defaultdict
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.ticker as mticker
 import numpy as np
 import pandas as pd
 from scipy.stats import rankdata
@@ -41,41 +45,30 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(ROOT, 'data')
 CHARTS_DIR = os.path.join(ROOT, 'reports', 'charts')
 OHLCV_FILE = os.path.join(DATA_DIR, 'historical_ohlcv.parquet')
-MODEL_FILE = os.path.join(ROOT, 'models', 'breakout_xgb_double.pkl')
 OUTPUT_FILE = os.path.join(DATA_DIR, 'backtest_results.json')
 
 os.makedirs(CHARTS_DIR, exist_ok=True)
 
-# Print-friendly chart styling
 plt.rcParams.update({
-    'figure.facecolor': 'white',
-    'axes.facecolor': 'white',
-    'axes.edgecolor': '#cbd5e1',
-    'axes.labelcolor': '#1a1a1a',
-    'text.color': '#1a1a1a',
-    'xtick.color': '#333333',
-    'ytick.color': '#333333',
-    'grid.color': '#e2e8f0',
-    'grid.alpha': 0.7,
-    'font.family': 'sans-serif',
-    'font.size': 10,
+    'figure.facecolor': 'white', 'axes.facecolor': 'white',
+    'axes.edgecolor': '#cbd5e1', 'axes.labelcolor': '#1a1a1a',
+    'text.color': '#1a1a1a', 'xtick.color': '#333333', 'ytick.color': '#333333',
+    'grid.color': '#e2e8f0', 'grid.alpha': 0.7, 'font.family': 'sans-serif', 'font.size': 10,
 })
 
-# EWROS params
+# Parameters
 EWROS_LOOKBACK = 63
 EWROS_LAMBDA = 0.03
-
-# IQ Edge features (must match iq_edge_predict.py)
-FEATURE_COLS = [
-    'close_to_ma20', 'close_to_ma50', 'close_to_ma200',
-    'trend_aligned', 'atr_14', 'vol_dryup_ratio', 'vol_compression',
-    'proximity_52w', 'return_3mo', 'up_days_pct',
-    'vol_trend_in_base', 'base_length', 'base_range', 'breakout_vol_ratio'
-]
+MAX_POSITIONS = 20
+STOP_LOSS = -0.08         # -8%
+EWROS_EXIT_THRESHOLD = 50  # Exit when EWROS drops below this
+MAX_HOLD_DAYS = 126        # ~6 months
+BREAKOUT_VOL_MULT = 1.5    # Volume must be 1.5x 50d avg
+BASE_MIN_DAYS = 20
+BASE_MAX_DRIFT = 0.10      # 10% max range for base detection
 
 
 def load_data():
-    """Load OHLCV and pivot to price/volume matrices."""
     print('📊 Loading 5-year OHLCV data...')
     ohlcv = pd.read_parquet(OHLCV_FILE)
     ohlcv['date'] = pd.to_datetime(ohlcv['date'])
@@ -85,9 +78,8 @@ def load_data():
     high = ohlcv.pivot_table(index='date', columns='ticker', values='high')
     low = ohlcv.pivot_table(index='date', columns='ticker', values='low')
     
-    # Need SPY as benchmark
     if 'SPY' not in close.columns:
-        print('⚠️  SPY not in data — downloading...')
+        print('   Downloading SPY...')
         import yfinance as yf
         spy = yf.download('SPY', start=close.index[0], end=close.index[-1] + timedelta(days=1), progress=False)
         close['SPY'] = spy['Close']
@@ -97,9 +89,8 @@ def load_data():
     return close, volume, high, low
 
 
-def compute_ewros_at_date(close, date, spy_col='SPY', lookback=EWROS_LOOKBACK, lam=EWROS_LAMBDA):
-    """Compute EWROS for all stocks using only data up to `date`."""
-    idx = close.index.get_indexer([date], method='ffill')[0]
+def compute_ewros_all(close, idx, lookback=EWROS_LOOKBACK, lam=EWROS_LAMBDA):
+    """Compute EWROS for all stocks at index position idx."""
     if idx < lookback:
         return {}
     
@@ -113,7 +104,7 @@ def compute_ewros_at_date(close, date, spy_col='SPY', lookback=EWROS_LOOKBACK, l
     days_ago = np.arange(len(spy_ret) - 1, -1, -1)
     weights = np.exp(-lam * days_ago)
     
-    scores = {}
+    raw_scores = {}
     for ticker in stock_rets.columns:
         if ticker == 'SPY':
             continue
@@ -123,654 +114,638 @@ def compute_ewros_at_date(close, date, spy_col='SPY', lookback=EWROS_LOOKBACK, l
         if mask.sum() < lookback * 0.5:
             continue
         alpha = (sr[mask] - spy_r[mask]) * weights[mask]
-        scores[ticker] = alpha.sum()
+        raw_scores[ticker] = alpha.sum()
     
-    if not scores:
+    if not raw_scores:
         return {}
     
-    # Rank to percentile
-    tickers = list(scores.keys())
-    raw = np.array([scores[t] for t in tickers])
+    tickers = list(raw_scores.keys())
+    raw = np.array([raw_scores[t] for t in tickers])
     pctiles = rankdata(raw, method='average') / len(raw) * 99
     return {t: round(p, 1) for t, p in zip(tickers, pctiles)}
 
 
-def compute_quality_proxy_at_date(close, volume, date, lookback=200):
-    """
-    Compute a quality proxy score using only price/volume data up to `date`.
+def detect_base_ceiling(prices, idx, min_days=BASE_MIN_DAYS, max_drift=BASE_MAX_DRIFT):
+    """Detect if stock has formed a flat base — return ceiling price or None."""
+    if idx < min_days + 10:
+        return None
     
-    Components (all observable from price/volume):
-      - Trend alignment: price > MA50 > MA200 (0 or 1)
-      - Proximity to 52W high (0-1)
-      - 6-month return vs SPY (relative momentum)
-      - Volume trend (recent vs older — accumulation signal)
-      - Base tightness (low volatility in recent 20 days)
-    """
-    idx = close.index.get_indexer([date], method='ffill')[0]
-    if idx < lookback:
-        return {}
-    
-    window = close.iloc[max(0, idx - 252):idx + 1]
-    vol_window = volume.iloc[max(0, idx - 252):idx + 1]
-    
-    spy_ret_6m = 0
-    if 'SPY' in window.columns and len(window) > 126:
-        spy_6m = window['SPY'].iloc[-126:]
-        spy_ret_6m = (spy_6m.iloc[-1] / spy_6m.iloc[0]) - 1
-    
-    scores = {}
-    for ticker in close.columns:
-        if ticker == 'SPY':
+    # Look at last 20-60 days for base
+    for base_len in [60, 40, 30, 20]:
+        if idx < base_len:
             continue
-        prices = window[ticker].dropna()
-        if len(prices) < 60:
+        base = prices[idx - base_len:idx]
+        valid = base[~np.isnan(base)]
+        if len(valid) < min_days:
             continue
         
-        current = prices.iloc[-1]
+        ceiling = np.max(valid)
+        floor = np.min(valid)
+        if ceiling <= 0:
+            continue
         
-        # Trend alignment
-        ma50 = prices.iloc[-50:].mean() if len(prices) >= 50 else current
-        ma200 = prices.iloc[-200:].mean() if len(prices) >= 200 else prices.mean()
-        trend = 1.0 if (current > ma50 > ma200) else 0.0
-        
-        # 52W proximity
-        high_52w = prices.max()
-        prox = current / high_52w if high_52w > 0 else 0
-        
-        # 6-month relative return
-        if len(prices) > 126:
-            ret_6m = (current / prices.iloc[-126]) - 1
-            rel_return = ret_6m - spy_ret_6m
-        else:
-            rel_return = 0
-        
-        # Volume accumulation (recent 20d vs prior 40d)
-        vols = vol_window[ticker].dropna()
-        if len(vols) > 60:
-            recent_vol = vols.iloc[-20:].mean()
-            prior_vol = vols.iloc[-60:-20].mean()
-            vol_ratio = recent_vol / prior_vol if prior_vol > 0 else 1
-        else:
-            vol_ratio = 1
-        
-        # Base tightness (lower ATR = tighter base = better)
-        if len(prices) >= 20:
-            daily_range = prices.iloc[-20:].pct_change().std()
-            tightness = max(0, 1 - daily_range * 15)  # Normalize
-        else:
-            tightness = 0.5
-        
-        # Composite score: 0-100
-        score = (
-            trend * 25 +              # Trend alignment
-            prox * 25 +               # Near highs
-            min(max(rel_return * 50 + 25, 0), 25) +  # Relative momentum
-            min(max(vol_ratio - 0.5, 0), 1) * 15 +   # Volume accumulation
-            tightness * 10            # Base tightness
-        )
-        scores[ticker] = round(min(max(score, 0), 100), 1)
+        drift = (ceiling - floor) / ceiling
+        if drift <= max_drift:
+            return ceiling
     
-    return scores
+    return None
 
 
-def compute_rotation_proxy_at_date(close, volume, date):
-    """
-    Compute rotation score proxy using only price/volume up to `date`.
-    
-    Signals:
-      - RS divergence: stock up while SPY down in recent 10 days
-      - Stage breakout: price breaks above 50d high
-      - Volume surge: recent 5d volume vs 50d average
-      - Short-term momentum: 1-month return
-      - Trend change: crossing above MA50
-    """
-    idx = close.index.get_indexer([date], method='ffill')[0]
+def is_breakout(close_prices, volume_series, idx, ticker):
+    """Check if today is a volume breakout above base ceiling."""
     if idx < 60:
-        return {}
+        return False, 0
     
-    scores = {}
-    spy_prices = close['SPY'].iloc[max(0, idx - 60):idx + 1] if 'SPY' in close.columns else None
+    prices = close_prices[ticker].values
+    vols = volume_series[ticker].values
+    
+    current_price = prices[idx]
+    current_vol = vols[idx]
+    
+    if np.isnan(current_price) or np.isnan(current_vol) or current_price <= 0:
+        return False, 0
+    
+    # Check for base ceiling
+    ceiling = detect_base_ceiling(prices, idx)
+    if ceiling is None:
+        return False, 0
+    
+    # Price must close above ceiling
+    if current_price <= ceiling:
+        return False, 0
+    
+    # Volume must be 1.5x+ the 50-day average
+    vol_window = vols[max(0, idx-50):idx]
+    valid_vols = vol_window[~np.isnan(vol_window)]
+    if len(valid_vols) < 20:
+        return False, 0
+    avg_vol = np.mean(valid_vols)
+    if avg_vol <= 0:
+        return False, 0
+    
+    vol_ratio = current_vol / avg_vol
+    if vol_ratio < BREAKOUT_VOL_MULT:
+        return False, 0
+    
+    return True, vol_ratio
+
+
+def is_trend_aligned(close_prices, ticker, idx):
+    """Check Price > 50d MA > 200d MA."""
+    prices = close_prices[ticker].values
+    current = prices[idx]
+    if np.isnan(current) or idx < 200:
+        return False
+    
+    p50 = prices[max(0,idx-49):idx+1]
+    p200 = prices[max(0,idx-199):idx+1]
+    ma50 = np.nanmean(p50)
+    ma200 = np.nanmean(p200)
+    
+    return current > ma50 > ma200
+
+
+def get_ma50(close_prices, ticker, idx):
+    """Get 50-day MA value."""
+    if idx < 50:
+        return None
+    prices = close_prices[ticker].values[idx-49:idx+1]
+    valid = prices[~np.isnan(prices)]
+    return np.mean(valid) if len(valid) >= 30 else None
+
+
+class Trade:
+    def __init__(self, ticker, entry_date, entry_price, entry_idx, vol_ratio=0, ewros_at_entry=0):
+        self.ticker = ticker
+        self.entry_date = entry_date
+        self.entry_price = entry_price
+        self.entry_idx = entry_idx
+        self.vol_ratio = vol_ratio
+        self.ewros_at_entry = ewros_at_entry
+        self.exit_date = None
+        self.exit_price = None
+        self.exit_reason = None
+        self.pnl_pct = None
+        self.hold_days = 0
+
+
+def run_strategy(close, volume, high, low, name, entry_fn, use_ewros_exit=True):
+    """
+    Run event-driven backtest with given entry function.
+    
+    entry_fn(idx, ewros, close, volume) -> list of (ticker, vol_ratio, ewros_score)
+    """
+    print(f'\n🔬 Strategy: {name}')
+    print(f'   Max positions: {MAX_POSITIONS}, Stop: {STOP_LOSS*100}%, Max hold: {MAX_HOLD_DAYS}d')
+    
+    open_trades = []
+    closed_trades = []
+    
+    # Daily scan starting from day 200 (need enough history)
+    start_idx = 200
+    dates = close.index
+    
+    # Pre-compute EWROS weekly (every 5 days) to save time
+    ewros_cache = {}
+    print(f'   Pre-computing EWROS...', end=' ', flush=True)
+    for idx in range(start_idx, len(dates), 5):
+        ewros_cache[idx] = compute_ewros_all(close, idx)
+    print(f'{len(ewros_cache)} snapshots')
+    
+    def get_ewros(idx):
+        """Get nearest pre-computed EWROS."""
+        nearest = max(k for k in ewros_cache if k <= idx)
+        return ewros_cache.get(nearest, {})
+    
+    equity = [100.0]
+    equity_dates = [dates[start_idx]]
+    
+    for idx in range(start_idx, len(dates)):
+        current_date = dates[idx]
+        
+        # ---- CHECK EXITS ----
+        still_open = []
+        for trade in open_trades:
+            current_price = close[trade.ticker].iloc[idx]
+            days_held = idx - trade.entry_idx
+            
+            if np.isnan(current_price):
+                still_open.append(trade)
+                continue
+            
+            pnl = (current_price / trade.entry_price) - 1
+            exit_reason = None
+            
+            # Stop loss
+            if pnl <= STOP_LOSS:
+                exit_reason = 'stop_loss'
+            
+            # Max hold
+            elif days_held >= MAX_HOLD_DAYS:
+                exit_reason = 'max_hold'
+            
+            # Price below 50d MA
+            elif days_held >= 5:  # Give at least 5 days before MA exit
+                ma50 = get_ma50(close, trade.ticker, idx)
+                if ma50 is not None and current_price < ma50:
+                    exit_reason = 'below_ma50'
+            
+            # EWROS exit
+            if use_ewros_exit and exit_reason is None and days_held >= 10:
+                ewros = get_ewros(idx)
+                ticker_ewros = ewros.get(trade.ticker, 50)
+                if ticker_ewros < EWROS_EXIT_THRESHOLD:
+                    exit_reason = 'ewros_drop'
+            
+            if exit_reason:
+                trade.exit_date = current_date
+                trade.exit_price = current_price
+                trade.exit_reason = exit_reason
+                trade.pnl_pct = round(pnl * 100, 2)
+                trade.hold_days = days_held
+                closed_trades.append(trade)
+            else:
+                still_open.append(trade)
+        
+        open_trades = still_open
+        
+        # ---- CHECK ENTRIES (only check every trading day) ----
+        if len(open_trades) < MAX_POSITIONS:
+            ewros = get_ewros(idx)
+            candidates = entry_fn(idx, ewros, close, volume)
+            
+            # Filter out already-held tickers
+            held_tickers = {t.ticker for t in open_trades}
+            candidates = [(t, vr, es) for t, vr, es in candidates if t not in held_tickers]
+            
+            # Take up to remaining capacity
+            slots = MAX_POSITIONS - len(open_trades)
+            for ticker, vol_ratio, ewros_score in candidates[:slots]:
+                price = close[ticker].iloc[idx]
+                if not np.isnan(price) and price > 0:
+                    trade = Trade(ticker, current_date, price, idx, vol_ratio, ewros_score)
+                    open_trades.append(trade)
+        
+        # Track equity (simplified: equal weight, mark to market)
+        if closed_trades or open_trades:
+            # Rough equity tracking
+            total_pnl = 0
+            n_trades = 0
+            for t in open_trades:
+                cp = close[t.ticker].iloc[idx]
+                if not np.isnan(cp):
+                    total_pnl += (cp / t.entry_price - 1)
+                    n_trades += 1
+            if n_trades > 0:
+                avg_pnl = total_pnl / max(n_trades, 1)
+                equity.append(equity[-1] * (1 + avg_pnl / MAX_POSITIONS))
+            else:
+                equity.append(equity[-1])
+            equity_dates.append(current_date)
+    
+    # Close any remaining open trades at last price
+    for trade in open_trades:
+        last_price = close[trade.ticker].iloc[-1]
+        if not np.isnan(last_price):
+            trade.exit_date = dates[-1]
+            trade.exit_price = last_price
+            trade.exit_reason = 'end_of_data'
+            trade.pnl_pct = round((last_price / trade.entry_price - 1) * 100, 2)
+            trade.hold_days = len(dates) - 1 - trade.entry_idx
+            closed_trades.append(trade)
+    
+    return closed_trades, equity, equity_dates
+
+
+def analyze_trades(trades, name):
+    """Compute trade statistics."""
+    if not trades:
+        return {'name': name, 'total_trades': 0}
+    
+    pnls = [t.pnl_pct for t in trades]
+    wins = [p for p in pnls if p > 0]
+    losses = [p for p in pnls if p <= 0]
+    hold_days = [t.hold_days for t in trades]
+    
+    # Exit reason breakdown
+    reasons = defaultdict(int)
+    for t in trades:
+        reasons[t.exit_reason] += 1
+    
+    # Profit factor
+    gross_profit = sum(wins) if wins else 0
+    gross_loss = abs(sum(losses)) if losses else 1
+    profit_factor = gross_profit / gross_loss if gross_loss > 0 else float('inf')
+    
+    # Win streaks
+    streak = 0
+    max_win_streak = 0
+    max_lose_streak = 0
+    lose_streak = 0
+    for p in pnls:
+        if p > 0:
+            streak += 1
+            lose_streak = 0
+            max_win_streak = max(max_win_streak, streak)
+        else:
+            lose_streak += 1
+            streak = 0
+            max_lose_streak = max(max_lose_streak, lose_streak)
+    
+    # Expectancy
+    win_rate = len(wins) / len(pnls) if pnls else 0
+    avg_win = np.mean(wins) if wins else 0
+    avg_loss = np.mean(losses) if losses else 0
+    expectancy = (win_rate * avg_win) + ((1 - win_rate) * avg_loss)
+    
+    stats = {
+        'name': name,
+        'total_trades': len(trades),
+        'winners': len(wins),
+        'losers': len(losses),
+        'win_rate': round(win_rate * 100, 1),
+        'avg_gain': round(np.mean(pnls), 2),
+        'median_gain': round(np.median(pnls), 2),
+        'avg_win': round(avg_win, 2),
+        'avg_loss': round(avg_loss, 2),
+        'best_trade': round(max(pnls), 2),
+        'worst_trade': round(min(pnls), 2),
+        'profit_factor': round(profit_factor, 2),
+        'expectancy_per_trade': round(expectancy, 2),
+        'total_return': round(sum(pnls), 1),
+        'avg_hold_days': round(np.mean(hold_days), 1),
+        'median_hold_days': round(np.median(hold_days), 1),
+        'max_win_streak': max_win_streak,
+        'max_lose_streak': max_lose_streak,
+        'exit_reasons': dict(reasons),
+    }
+    
+    return stats
+
+
+def print_stats(stats):
+    """Pretty-print strategy stats."""
+    if stats['total_trades'] == 0:
+        print('   No trades generated.')
+        return
+    
+    print(f'   Trades: {stats["total_trades"]} ({stats["winners"]}W / {stats["losers"]}L)')
+    print(f'   Win Rate: {stats["win_rate"]}%')
+    print(f'   Avg Gain: {stats["avg_gain"]}% | Median: {stats["median_gain"]}%')
+    print(f'   Avg Win: +{stats["avg_win"]}% | Avg Loss: {stats["avg_loss"]}%')
+    print(f'   Best: +{stats["best_trade"]}% | Worst: {stats["worst_trade"]}%')
+    print(f'   Profit Factor: {stats["profit_factor"]}')
+    print(f'   Expectancy: {stats["expectancy_per_trade"]}% per trade')
+    print(f'   Avg Hold: {stats["avg_hold_days"]}d | Median: {stats["median_hold_days"]}d')
+    print(f'   Exit Reasons: {stats["exit_reasons"]}')
+
+
+# ===== STRATEGY DEFINITIONS =====
+
+def strategy_ewros_breakout(idx, ewros, close, volume):
+    """EWROS ≥ 80 + volume breakout above base + trend aligned."""
+    if not ewros:
+        return []
+    
+    # Get top 20 EWROS stocks
+    top = sorted(ewros.items(), key=lambda x: -x[1])[:40]  # Check top 40 for breakout
+    candidates = []
+    
+    for ticker, score in top:
+        if score < 80:
+            continue
+        if not is_trend_aligned(close, ticker, idx):
+            continue
+        
+        broke_out, vol_ratio = is_breakout(close, volume, idx, ticker)
+        if broke_out:
+            candidates.append((ticker, vol_ratio, score))
+    
+    # Sort by EWROS score, take top 20
+    candidates.sort(key=lambda x: -x[2])
+    return candidates[:MAX_POSITIONS]
+
+
+def strategy_ewros_trend(idx, ewros, close, volume):
+    """EWROS ≥ 80 + trend aligned (no breakout required)."""
+    if not ewros:
+        return []
+    
+    top = sorted(ewros.items(), key=lambda x: -x[1])[:30]
+    candidates = []
+    
+    for ticker, score in top:
+        if score < 80:
+            continue
+        if not is_trend_aligned(close, ticker, idx):
+            continue
+        candidates.append((ticker, 0, score))
+    
+    candidates.sort(key=lambda x: -x[2])
+    return candidates[:MAX_POSITIONS]
+
+
+def strategy_volume_breakout(idx, ewros, close, volume):
+    """Pure volume breakout: 1.5x+ volume above base ceiling, trend aligned."""
+    candidates = []
     
     for ticker in close.columns:
         if ticker == 'SPY':
             continue
-        prices = close[ticker].iloc[max(0, idx - 60):idx + 1].dropna()
-        vols = volume[ticker].iloc[max(0, idx - 60):idx + 1].dropna()
-        if len(prices) < 30 or len(vols) < 30:
+        if not is_trend_aligned(close, ticker, idx):
             continue
-        
-        current = prices.iloc[-1]
-        
-        # RS divergence (stock up while SPY down over last 10 days)
-        rs_div = 0
-        if spy_prices is not None and len(spy_prices) >= 10:
-            stock_10d = (current / prices.iloc[-10]) - 1
-            spy_10d = (spy_prices.iloc[-1] / spy_prices.iloc[-10]) - 1
-            if stock_10d > 0 and spy_10d < 0:
-                rs_div = 1
-            elif stock_10d > spy_10d:
-                rs_div = 0.5
-        
-        # Stage breakout: price above 50d high
-        if len(prices) >= 50:
-            high_50d = prices.iloc[-50:-1].max()
-            breakout = 1.0 if current > high_50d else 0.0
-        else:
-            breakout = 0
-        
-        # Volume surge
-        if len(vols) >= 50:
-            recent_vol = vols.iloc[-5:].mean()
-            avg_vol = vols.iloc[-50:].mean()
-            vol_surge = min(recent_vol / avg_vol, 3) / 3 if avg_vol > 0 else 0
-        else:
-            vol_surge = 0
-        
-        # 1-month momentum
-        if len(prices) >= 21:
-            mom = (current / prices.iloc[-21]) - 1
-            mom_score = min(max(mom * 5 + 0.5, 0), 1)
-        else:
-            mom_score = 0.5
-        
-        # MA50 cross
-        if len(prices) >= 50:
-            ma50 = prices.iloc[-50:].mean()
-            ma_cross = 1 if current > ma50 else 0
-        else:
-            ma_cross = 0
-        
-        # Composite: 0-100
-        score = (rs_div * 25 + breakout * 25 + vol_surge * 20 + mom_score * 15 + ma_cross * 15)
-        scores[ticker] = round(min(max(score, 0), 100), 1)
+        broke_out, vol_ratio = is_breakout(close, volume, idx, ticker)
+        if broke_out:
+            candidates.append((ticker, vol_ratio, ewros.get(ticker, 50)))
     
-    return scores
+    # Sort by volume ratio (strongest breakouts first)
+    candidates.sort(key=lambda x: -x[1])
+    return candidates[:MAX_POSITIONS]
 
 
-def compute_iq_edge_at_date(close, volume, high, low, date, model):
-    """Compute IQ Edge features for all stocks at `date` and predict with XGBoost."""
-    idx = close.index.get_indexer([date], method='ffill')[0]
-    if idx < 200:
-        return {}
+def strategy_combined(idx, ewros, close, volume):
+    """EWROS ≥ 80 + volume breakout + trend aligned (strictest filter)."""
+    return strategy_ewros_breakout(idx, ewros, close, volume)  # Same logic
+
+
+def strategy_ewros_top20(idx, ewros, close, volume):
+    """Simple: buy top 20 EWROS stocks (with trend filter). No breakout required.
+    Re-enter only when a slot opens (not monthly dump-and-rebuy)."""
+    if not ewros:
+        return []
     
-    scores = {}
-    for ticker in close.columns:
-        if ticker == 'SPY':
+    top = sorted(ewros.items(), key=lambda x: -x[1])[:20]
+    candidates = []
+    
+    for ticker, score in top:
+        if not is_trend_aligned(close, ticker, idx):
             continue
-        
-        prices = close[ticker].iloc[max(0, idx - 252):idx + 1].dropna()
-        vols = volume[ticker].iloc[max(0, idx - 252):idx + 1].dropna()
-        highs = high[ticker].iloc[max(0, idx - 252):idx + 1].dropna()
-        lows = low[ticker].iloc[max(0, idx - 252):idx + 1].dropna()
-        
-        if len(prices) < 60:
-            continue
-        
-        try:
-            current = prices.iloc[-1]
-            
-            # MAs
-            ma20 = prices.iloc[-20:].mean() if len(prices) >= 20 else current
-            ma50 = prices.iloc[-50:].mean() if len(prices) >= 50 else current
-            ma200 = prices.iloc[-200:].mean() if len(prices) >= 200 else prices.mean()
-            
-            close_to_ma20 = current / ma20 - 1 if ma20 > 0 else 0
-            close_to_ma50 = current / ma50 - 1 if ma50 > 0 else 0
-            close_to_ma200 = current / ma200 - 1 if ma200 > 0 else 0
-            trend_aligned = 1.0 if (current > ma50 > ma200) else 0.0
-            
-            # ATR 14
-            if len(highs) >= 15 and len(lows) >= 15 and len(prices) >= 15:
-                tr = np.maximum(
-                    highs.iloc[-15:].values - lows.iloc[-15:].values,
-                    np.maximum(
-                        abs(highs.iloc[-15:].values - prices.iloc[-16:-1].values),
-                        abs(lows.iloc[-15:].values - prices.iloc[-16:-1].values)
-                    )
-                )
-                atr_14 = np.mean(tr[-14:]) / current if current > 0 else 0
-            else:
-                atr_14 = 0.02
-            
-            # Volume features
-            if len(vols) >= 50:
-                recent_vol = vols.iloc[-10:].mean()
-                base_vol = vols.iloc[-50:-10].mean()
-                vol_dryup = recent_vol / base_vol if base_vol > 0 else 1
-                breakout_vol = vols.iloc[-1] / vols.iloc[-50:].mean() if vols.iloc[-50:].mean() > 0 else 1
-            else:
-                vol_dryup = 1
-                breakout_vol = 1
-            
-            # Volatility compression
-            if len(prices) >= 40:
-                recent_std = prices.iloc[-10:].pct_change().std()
-                longer_std = prices.iloc[-40:].pct_change().std()
-                vol_compression = recent_std / longer_std if longer_std > 0 else 1
-            else:
-                vol_compression = 1
-            
-            # 52W proximity
-            high_52w = prices.max()
-            proximity_52w = current / high_52w if high_52w > 0 else 0
-            
-            # 3-month return
-            if len(prices) >= 63:
-                return_3mo = (current / prices.iloc[-63]) - 1
-            else:
-                return_3mo = 0
-            
-            # Up days
-            changes = prices.pct_change().dropna()
-            up_days_pct = (changes > 0).mean() if len(changes) > 0 else 0.5
-            
-            # Base features (last 40 days as proxy)
-            base_prices = prices.iloc[-40:]
-            base_length = len(base_prices) / 120  # Normalized
-            base_range = (base_prices.max() - base_prices.min()) / base_prices.mean() if base_prices.mean() > 0 else 0
-            
-            # Volume trend in base
-            if len(vols) >= 40:
-                first_half = vols.iloc[-40:-20].mean()
-                second_half = vols.iloc[-20:].mean()
-                vol_trend = second_half / first_half - 1 if first_half > 0 else 0
-            else:
-                vol_trend = 0
-            
-            features = np.array([[
-                close_to_ma20, close_to_ma50, close_to_ma200,
-                trend_aligned, atr_14, vol_dryup, vol_compression,
-                proximity_52w, return_3mo, up_days_pct,
-                vol_trend, base_length, base_range, breakout_vol
-            ]])
-            
-            prob = model.predict_proba(features)[0][1]
-            scores[ticker] = prob
-            
-        except Exception:
-            continue
+        candidates.append((ticker, 0, score))
     
-    if not scores:
-        return {}
-    
-    # Convert to percentiles
-    tickers = list(scores.keys())
-    raw = np.array([scores[t] for t in tickers])
-    pctiles = rankdata(raw, method='average') / len(raw) * 99
-    return {t: {'pctile': round(p, 1), 'prob': round(scores[t], 4)} for t, p in zip(tickers, pctiles)}
+    return candidates[:MAX_POSITIONS]
 
 
-def get_rebalance_dates(close, start_year=2022):
-    """Get month-end trading dates for rebalancing."""
-    dates = close.index[close.index.year >= start_year]
-    # Group by year-month, take last trading day
-    monthly = dates.to_series().groupby([dates.year, dates.month]).last()
-    # Drop last month (need forward returns)
-    return monthly.values[:-1]
-
-
-def measure_forward_returns(close, date, tickers, periods=[21, 63, 126]):
-    """Measure forward returns from date for each ticker."""
-    idx = close.index.get_indexer([date], method='ffill')[0]
-    results = {}
-    for days in periods:
-        end_idx = min(idx + days, len(close) - 1)
-        if end_idx <= idx:
-            continue
-        rets = []
-        for t in tickers:
-            if t in close.columns:
-                start_price = close[t].iloc[idx]
-                end_price = close[t].iloc[end_idx]
-                if pd.notna(start_price) and pd.notna(end_price) and start_price > 0:
-                    rets.append((end_price / start_price) - 1)
-        if rets:
-            results[f'{days}d'] = {
-                'mean': round(np.mean(rets) * 100, 2),
-                'median': round(np.median(rets) * 100, 2),
-                'win_rate': round((np.array(rets) > 0).mean() * 100, 1),
-                'n': len(rets)
-            }
-    return results
-
-
-def run_walk_forward(close, volume, high, low):
-    """Main walk-forward backtest loop."""
+def plot_results(all_results, all_equity, all_equity_dates):
+    """Generate charts."""
     
-    # Load IQ Edge model
-    model = None
-    if os.path.exists(MODEL_FILE):
-        with open(MODEL_FILE, 'rb') as f:
-            model = pickle.load(f)
-        print(f'   Loaded IQ Edge model from {MODEL_FILE}')
+    # 1. Win rate + profit factor comparison
+    fig, axes = plt.subplots(1, 3, figsize=(14, 4.5))
     
-    rebal_dates = get_rebalance_dates(close, start_year=2022)
-    print(f'   {len(rebal_dates)} rebalance dates ({rebal_dates[0].astype("datetime64[D]")} to {rebal_dates[-1].astype("datetime64[D]")})')
+    names = [r['name'] for r in all_results if r['total_trades'] > 0]
+    win_rates = [r['win_rate'] for r in all_results if r['total_trades'] > 0]
+    profit_factors = [r['profit_factor'] for r in all_results if r['total_trades'] > 0]
+    expectancies = [r['expectancy_per_trade'] for r in all_results if r['total_trades'] > 0]
+    total_trades = [r['total_trades'] for r in all_results if r['total_trades'] > 0]
     
-    # Storage for all periods
-    ewros_results = {'top': [], 'bottom': [], 'spy': []}
-    quality_results = {'top': [], 'bottom': []}
-    rotation_results = {'high': [], 'low': []}
-    iq_edge_results = {'top': [], 'bottom': []}
-    power_zone_results = {'power': [], 'avoid': []}
+    # Short names for display
+    short_names = [n.replace('EWROS ', '').replace('Volume ', 'Vol ') for n in names]
     
-    # For cumulative equity curves
-    equity_curves = {
-        'ewros_top': [], 'ewros_bottom': [], 'spy': [],
-        'quality_top': [], 'quality_bottom': [],
-        'power_zone': [], 'avoid_zone': [],
-        'iq_edge_top': [], 'iq_edge_bottom': [],
-        'dates': []
-    }
+    colors_list = ['#0ea5e9', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444']
     
-    for i, date in enumerate(rebal_dates):
-        date_str = str(date.astype('datetime64[D]'))
-        pdate = pd.Timestamp(date)
-        print(f'\r   Rebalancing {i+1}/{len(rebal_dates)}: {date_str}', end='', flush=True)
-        
-        # Compute all scores at this date
-        ewros = compute_ewros_at_date(close, pdate)
-        quality = compute_quality_proxy_at_date(close, volume, pdate)
-        rotation = compute_rotation_proxy_at_date(close, volume, pdate)
-        iq_edge = compute_iq_edge_at_date(close, volume, high, low, pdate, model) if model else {}
-        
-        if not ewros:
-            continue
-        
-        # ---- EWROS portfolios ----
-        sorted_ewros = sorted(ewros.items(), key=lambda x: -x[1])
-        n = len(sorted_ewros)
-        top_tickers = [t for t, _ in sorted_ewros[:n//10]]
-        bottom_tickers = [t for t, _ in sorted_ewros[-n//10:]]
-        
-        top_fwd = measure_forward_returns(close, pdate, top_tickers)
-        bottom_fwd = measure_forward_returns(close, pdate, bottom_tickers)
-        spy_fwd = measure_forward_returns(close, pdate, ['SPY'])
-        
-        if '21d' in top_fwd:
-            ewros_results['top'].append(top_fwd['21d']['mean'])
-            ewros_results['bottom'].append(bottom_fwd.get('21d', {}).get('mean', 0))
-            ewros_results['spy'].append(spy_fwd.get('21d', {}).get('mean', 0))
-            equity_curves['ewros_top'].append(top_fwd['21d']['mean'])
-            equity_curves['ewros_bottom'].append(bottom_fwd.get('21d', {}).get('mean', 0))
-            equity_curves['spy'].append(spy_fwd.get('21d', {}).get('mean', 0))
-            equity_curves['dates'].append(date_str)
-        
-        # ---- Quality portfolios ----
-        if quality:
-            sorted_quality = sorted(quality.items(), key=lambda x: -x[1])
-            nq = len(sorted_quality)
-            qtop = [t for t, _ in sorted_quality[:nq//10]]
-            qbottom = [t for t, _ in sorted_quality[-nq//10:]]
-            qtop_fwd = measure_forward_returns(close, pdate, qtop)
-            qbottom_fwd = measure_forward_returns(close, pdate, qbottom)
-            if '21d' in qtop_fwd:
-                quality_results['top'].append(qtop_fwd['21d']['mean'])
-                quality_results['bottom'].append(qbottom_fwd.get('21d', {}).get('mean', 0))
-                equity_curves['quality_top'].append(qtop_fwd['21d']['mean'])
-                equity_curves['quality_bottom'].append(qbottom_fwd.get('21d', {}).get('mean', 0))
-        
-        # ---- Rotation portfolios ----
-        if rotation:
-            high_rot = [t for t, s in rotation.items() if s >= 60]
-            low_rot = [t for t, s in rotation.items() if s < 30]
-            if high_rot and low_rot:
-                hfwd = measure_forward_returns(close, pdate, high_rot)
-                lfwd = measure_forward_returns(close, pdate, low_rot)
-                if '21d' in hfwd:
-                    rotation_results['high'].append(hfwd['21d']['mean'])
-                    rotation_results['low'].append(lfwd.get('21d', {}).get('mean', 0))
-        
-        # ---- IQ Edge portfolios ----
-        if iq_edge:
-            sorted_iq = sorted(iq_edge.items(), key=lambda x: -x[1]['pctile'])
-            ni = len(sorted_iq)
-            itop = [t for t, _ in sorted_iq[:ni//10]]
-            ibottom = [t for t, _ in sorted_iq[-ni//10:]]
-            itop_fwd = measure_forward_returns(close, pdate, itop)
-            ibottom_fwd = measure_forward_returns(close, pdate, ibottom)
-            if '21d' in itop_fwd:
-                iq_edge_results['top'].append(itop_fwd['21d']['mean'])
-                iq_edge_results['bottom'].append(ibottom_fwd.get('21d', {}).get('mean', 0))
-                equity_curves['iq_edge_top'].append(itop_fwd['21d']['mean'])
-                equity_curves['iq_edge_bottom'].append(ibottom_fwd.get('21d', {}).get('mean', 0))
-        
-        # ---- Power Matrix ----
-        if ewros and rotation:
-            power = [t for t in ewros if ewros.get(t, 0) >= 70 and rotation.get(t, 0) >= 60]
-            avoid = [t for t in ewros if ewros.get(t, 0) < 30 and rotation.get(t, 0) < 30]
-            if power and avoid:
-                pfwd = measure_forward_returns(close, pdate, power)
-                afwd = measure_forward_returns(close, pdate, avoid)
-                if '21d' in pfwd:
-                    power_zone_results['power'].append(pfwd['21d']['mean'])
-                    power_zone_results['avoid'].append(afwd.get('21d', {}).get('mean', 0))
-                    equity_curves['power_zone'].append(pfwd['21d']['mean'])
-                    equity_curves['avoid_zone'].append(afwd.get('21d', {}).get('mean', 0))
+    # Win rate
+    x = np.arange(len(short_names))
+    bars = axes[0].bar(x, win_rates, color=colors_list[:len(short_names)], alpha=0.85)
+    axes[0].set_ylabel('Win Rate (%)')
+    axes[0].set_title('Win Rate', fontweight='bold')
+    axes[0].set_xticks(x)
+    axes[0].set_xticklabels(short_names, fontsize=7, rotation=15)
+    axes[0].axhline(y=50, color='#94a3b8', linestyle='--', linewidth=0.8)
+    for i, (bar, wr, nt) in enumerate(zip(bars, win_rates, total_trades)):
+        axes[0].text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5,
+                     f'{wr}%\n({nt})', ha='center', fontsize=7)
+    axes[0].grid(True, axis='y')
     
-    print('\n')
-    return ewros_results, quality_results, rotation_results, iq_edge_results, power_zone_results, equity_curves
-
-
-def compute_stats(returns_list, label):
-    """Compute aggregate stats from a list of period returns."""
-    if not returns_list:
-        return {'avg': 0, 'median': 0, 'win_rate': 0, 'n': 0, 'total': 0}
-    arr = np.array(returns_list)
-    return {
-        'avg_monthly': round(np.mean(arr), 2),
-        'median_monthly': round(np.median(arr), 2),
-        'win_rate': round((arr > 0).mean() * 100, 1),
-        'n_periods': len(arr),
-        'cumulative': round(np.prod(1 + arr/100) * 100 - 100, 1),  # Compounded
-        'best_month': round(np.max(arr), 2),
-        'worst_month': round(np.min(arr), 2),
-        'std': round(np.std(arr), 2),
-    }
-
-
-def plot_equity_curves(equity_curves):
-    """Plot cumulative equity curves for main strategies."""
-    fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+    # Profit factor
+    bars = axes[1].bar(x, profit_factors, color=colors_list[:len(short_names)], alpha=0.85)
+    axes[1].set_ylabel('Profit Factor')
+    axes[1].set_title('Profit Factor (>1 = profitable)', fontweight='bold')
+    axes[1].set_xticks(x)
+    axes[1].set_xticklabels(short_names, fontsize=7, rotation=15)
+    axes[1].axhline(y=1.0, color='#ef4444', linestyle='--', linewidth=0.8)
+    for bar, pf in zip(bars, profit_factors):
+        axes[1].text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.02,
+                     f'{pf}', ha='center', fontsize=8, fontweight='bold')
+    axes[1].grid(True, axis='y')
     
-    strategies = [
-        ('EWROS: Top 10% vs Bottom 10% vs SPY', 
-         [('ewros_top', 'Top 10%', '#0ea5e9'), ('ewros_bottom', 'Bottom 10%', '#ef4444'), ('spy', 'SPY', '#94a3b8')]),
-        ('Quality: Top 10% vs Bottom 10%',
-         [('quality_top', 'Top 10%', '#0ea5e9'), ('quality_bottom', 'Bottom 10%', '#ef4444')]),
-        ('IQ Edge: Top 10% vs Bottom 10%',
-         [('iq_edge_top', 'Top 10%', '#8b5cf6'), ('iq_edge_bottom', 'Bottom 10%', '#ef4444')]),
-        ('Power Zone vs Avoid Zone',
-         [('power_zone', 'Power Zone', '#10b981'), ('avoid_zone', 'Avoid', '#ef4444')]),
-    ]
+    # Expectancy
+    bar_colors = ['#10b981' if e > 0 else '#ef4444' for e in expectancies]
+    bars = axes[2].bar(x, expectancies, color=bar_colors, alpha=0.85)
+    axes[2].set_ylabel('Expectancy (% per trade)')
+    axes[2].set_title('Expectancy Per Trade', fontweight='bold')
+    axes[2].set_xticks(x)
+    axes[2].set_xticklabels(short_names, fontsize=7, rotation=15)
+    axes[2].axhline(y=0, color='#94a3b8', linestyle='--', linewidth=0.8)
+    for bar, e in zip(bars, expectancies):
+        axes[2].text(bar.get_x() + bar.get_width()/2, 
+                     bar.get_height() + (0.1 if e >= 0 else -0.3),
+                     f'{e}%', ha='center', fontsize=8, fontweight='bold')
+    axes[2].grid(True, axis='y')
     
-    for ax, (title, series_list) in zip(axes.flat, strategies):
-        for key, label, color in series_list:
-            data = equity_curves.get(key, [])
-            if data:
-                cumulative = np.cumprod(1 + np.array(data) / 100) * 100
-                ax.plot(range(len(cumulative)), cumulative, label=label, color=color, linewidth=1.5)
-        
-        ax.set_title(title, fontweight='bold', fontsize=10)
-        ax.set_ylabel('Growth of $100')
-        ax.set_xlabel('Months')
-        ax.legend(fontsize=8)
-        ax.grid(True)
-        ax.axhline(y=100, color='#94a3b8', linewidth=0.5, linestyle='--')
-    
-    plt.suptitle('Walk-Forward Backtest: Monthly Rebalanced Portfolios (2022-2026)', 
-                 fontweight='bold', fontsize=13, y=1.02)
     plt.tight_layout()
-    plt.savefig(os.path.join(CHARTS_DIR, 'walk_forward_equity.png'), dpi=150, bbox_inches='tight')
+    plt.savefig(os.path.join(CHARTS_DIR, 'strategy_comparison.png'), dpi=150)
     plt.close()
-
-
-def plot_monthly_spreads(ewros_results, quality_results, iq_edge_results, power_zone_results):
-    """Plot the monthly return spread (top minus bottom)."""
+    
+    # 2. Equity curves
     fig, ax = plt.subplots(figsize=(10, 5))
+    for i, (name, eq, eq_dates) in enumerate(zip(names, all_equity, all_equity_dates)):
+        if eq and eq_dates:
+            ax.plot(eq_dates, eq, label=name, color=colors_list[i % len(colors_list)], linewidth=1.5)
     
-    strategies = [
-        ('EWROS', ewros_results['top'], ewros_results['bottom'], '#0ea5e9'),
-        ('Quality', quality_results['top'], quality_results['bottom'], '#10b981'),
-        ('IQ Edge', iq_edge_results['top'], iq_edge_results['bottom'], '#8b5cf6'),
-        ('Power Matrix', power_zone_results['power'], power_zone_results['avoid'], '#f59e0b'),
-    ]
-    
-    spread_data = []
-    labels = []
-    colors_list = []
-    
-    for name, top, bottom, color in strategies:
-        if top and bottom:
-            min_len = min(len(top), len(bottom))
-            spreads = [t - b for t, b in zip(top[:min_len], bottom[:min_len])]
-            spread_data.append(spreads)
-            labels.append(f'{name}\n(avg: {np.mean(spreads):.1f}%)')
-            colors_list.append(color)
-    
-    bp = ax.boxplot(spread_data, labels=labels, patch_artist=True, widths=0.6)
-    for patch, color in zip(bp['boxes'], colors_list):
-        patch.set_facecolor(color)
-        patch.set_alpha(0.3)
-        patch.set_edgecolor(color)
-    for median in bp['medians']:
-        median.set_color('#1a1a1a')
-        median.set_linewidth(2)
-    
-    ax.axhline(y=0, color='#ef4444', linewidth=1, linestyle='--', alpha=0.7)
-    ax.set_ylabel('Monthly Spread: Top - Bottom (%)')
-    ax.set_title('Signal Spread Distribution (Monthly, Walk-Forward)', fontweight='bold', fontsize=12)
-    ax.grid(True, axis='y')
+    # Add SPY
+    # We'll compute SPY equity from the data
+    ax.axhline(y=100, color='#94a3b8', linestyle='--', linewidth=0.5)
+    ax.set_title('Equity Curves (Growth of $100)', fontweight='bold', fontsize=12)
+    ax.set_ylabel('Portfolio Value ($)')
+    ax.legend(fontsize=8)
+    ax.grid(True)
     plt.tight_layout()
-    plt.savefig(os.path.join(CHARTS_DIR, 'signal_spreads.png'), dpi=150)
+    plt.savefig(os.path.join(CHARTS_DIR, 'equity_curves.png'), dpi=150)
     plt.close()
-
-
-def plot_signal_summary(all_stats):
-    """Bar chart of average monthly returns by strategy group."""
+    
+    # 3. Exit reason breakdown
+    fig, axes = plt.subplots(1, len(all_results), figsize=(3.5*len(all_results), 4))
+    if len(all_results) == 1:
+        axes = [axes]
+    
+    for ax, result in zip(axes, all_results):
+        if result['total_trades'] == 0:
+            continue
+        reasons = result['exit_reasons']
+        labels = list(reasons.keys())
+        sizes = list(reasons.values())
+        reason_colors = {
+            'stop_loss': '#ef4444', 'below_ma50': '#f59e0b', 'ewros_drop': '#8b5cf6',
+            'max_hold': '#0ea5e9', 'end_of_data': '#94a3b8'
+        }
+        colors_pie = [reason_colors.get(l, '#64748b') for l in labels]
+        ax.pie(sizes, labels=[f'{l}\n({s})' for l, s in zip(labels, sizes)],
+               colors=colors_pie, autopct='%1.0f%%', textprops={'fontsize': 7})
+        ax.set_title(result['name'].replace('EWROS ', '').replace('Volume ', 'Vol '), fontsize=9, fontweight='bold')
+    
+    plt.suptitle('Exit Reason Breakdown', fontweight='bold', fontsize=12)
+    plt.tight_layout()
+    plt.savefig(os.path.join(CHARTS_DIR, 'exit_reasons.png'), dpi=150)
+    plt.close()
+    
+    # 4. Trade P&L distribution
+    fig, axes = plt.subplots(1, len(all_results), figsize=(3.5*len(all_results), 4))
+    if len(all_results) == 1:
+        axes = [axes]
+    
+    for ax, (result, trades) in zip(axes, [(r, t) for r, t in zip(all_results, all_trades_list)]):
+        if not trades:
+            continue
+        pnls = [t.pnl_pct for t in trades]
+        colors_hist = ['#10b981' if p > 0 else '#ef4444' for p in pnls]
+        ax.hist(pnls, bins=30, color='#0ea5e9', alpha=0.7, edgecolor='#1e3a5f')
+        ax.axvline(x=0, color='#ef4444', linestyle='--', linewidth=1)
+        ax.axvline(x=np.mean(pnls), color='#10b981', linestyle='-', linewidth=1.5, label=f'Avg: {np.mean(pnls):.1f}%')
+        ax.set_title(result['name'].replace('EWROS ', '').replace('Volume ', 'Vol '), fontsize=9, fontweight='bold')
+        ax.set_xlabel('P&L (%)')
+        ax.legend(fontsize=7)
+    
+    plt.suptitle('Trade P&L Distribution', fontweight='bold', fontsize=12)
+    plt.tight_layout()
+    plt.savefig(os.path.join(CHARTS_DIR, 'pnl_distribution.png'), dpi=150)
+    plt.close()
+    
+    # 5. Summary bar chart
     fig, ax = plt.subplots(figsize=(10, 5))
+    x = np.arange(len(names))
+    width = 0.25
     
-    groups = []
-    top_vals = []
-    bottom_vals = []
-    spy_vals = []
+    avg_wins = [r['avg_win'] for r in all_results if r['total_trades'] > 0]
+    avg_losses = [abs(r['avg_loss']) for r in all_results if r['total_trades'] > 0]
     
-    for name, stats in all_stats.items():
-        if 'top' in stats and 'bottom' in stats:
-            groups.append(name)
-            top_vals.append(stats['top']['avg_monthly'])
-            bottom_vals.append(stats['bottom']['avg_monthly'])
+    ax.bar(x - width/2, avg_wins, width, label='Avg Win (%)', color='#10b981', alpha=0.85)
+    ax.bar(x + width/2, avg_losses, width, label='Avg Loss (%)', color='#ef4444', alpha=0.85)
     
-    x = np.arange(len(groups))
-    width = 0.35
+    for i, (w, l) in enumerate(zip(avg_wins, avg_losses)):
+        ax.text(i - width/2, w + 0.2, f'+{w}%', ha='center', fontsize=8)
+        ax.text(i + width/2, l + 0.2, f'-{l}%', ha='center', fontsize=8)
     
-    ax.bar(x - width/2, top_vals, width, label='Top Decile / Power Zone', color='#0ea5e9', alpha=0.85)
-    ax.bar(x + width/2, bottom_vals, width, label='Bottom Decile / Avoid', color='#ef4444', alpha=0.85)
-    
-    ax.set_ylabel('Avg Monthly Forward Return (%)')
-    ax.set_title('Walk-Forward Results: Average Monthly Returns by Signal', fontweight='bold', fontsize=12)
+    ax.set_title('Average Win vs Average Loss by Strategy', fontweight='bold', fontsize=12)
+    ax.set_ylabel('Percentage')
     ax.set_xticks(x)
-    ax.set_xticklabels(groups)
+    ax.set_xticklabels(short_names, fontsize=8)
     ax.legend()
     ax.grid(True, axis='y')
-    ax.axhline(y=0, color='#94a3b8', linewidth=0.5)
-    
-    # Add value labels
-    for i, (t, b) in enumerate(zip(top_vals, bottom_vals)):
-        ax.text(i - width/2, t + 0.1, f'{t:.1f}%', ha='center', fontsize=8, fontweight='bold')
-        ax.text(i + width/2, b - 0.3 if b < 0 else b + 0.1, f'{b:.1f}%', ha='center', fontsize=8, fontweight='bold')
-    
     plt.tight_layout()
-    plt.savefig(os.path.join(CHARTS_DIR, 'signal_summary.png'), dpi=150)
+    plt.savefig(os.path.join(CHARTS_DIR, 'win_vs_loss.png'), dpi=150)
     plt.close()
 
 
 def main():
-    print('🚀 IQ Investor Walk-Forward Backtest')
+    print('🚀 IQ Investor Event-Driven Backtest')
     print(f'   {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
-    print(f'   Method: Monthly rebalance, compute scores at each date, measure FORWARD returns\n')
+    print(f'   Entry/exit signals, max {MAX_POSITIONS} positions, -8% stop, 50d MA exit, 6mo max hold\n')
     
     close, volume, high, low = load_data()
     
-    ewros_res, quality_res, rotation_res, iq_edge_res, power_res, equity_curves = run_walk_forward(close, volume, high, low)
+    strategies = [
+        ('EWROS Top 20 + Trend', strategy_ewros_top20, True),
+        ('EWROS ≥80 + Trend', strategy_ewros_trend, True),
+        ('EWROS + Breakout', strategy_ewros_breakout, True),
+        ('Volume Breakout', strategy_volume_breakout, False),
+    ]
     
-    # Compute stats
-    all_stats = {}
+    global all_trades_list
+    all_results = []
+    all_equity = []
+    all_equity_dates = []
+    all_trades_list = []
     
-    print('📈 EWROS Walk-Forward Results:')
-    ewros_stats = {
-        'top': compute_stats(ewros_res['top'], 'EWROS Top 10%'),
-        'bottom': compute_stats(ewros_res['bottom'], 'EWROS Bottom 10%'),
-        'spy': compute_stats(ewros_res['spy'], 'SPY'),
-    }
-    all_stats['EWROS'] = ewros_stats
-    for k, v in ewros_stats.items():
-        print(f'   {k}: avg={v["avg_monthly"]}%/mo, cumulative={v.get("cumulative", 0)}%, win={v["win_rate"]}%, n={v["n_periods"]}')
-    
-    print('\n📊 Quality Score Walk-Forward Results:')
-    quality_stats = {
-        'top': compute_stats(quality_res['top'], 'Quality Top 10%'),
-        'bottom': compute_stats(quality_res['bottom'], 'Quality Bottom 10%'),
-    }
-    all_stats['Quality'] = quality_stats
-    for k, v in quality_stats.items():
-        print(f'   {k}: avg={v["avg_monthly"]}%/mo, cumulative={v.get("cumulative", 0)}%, win={v["win_rate"]}%')
-    
-    print('\n🔄 Rotation Walk-Forward Results:')
-    rotation_stats = {
-        'high': compute_stats(rotation_res['high'], 'High Rotation'),
-        'low': compute_stats(rotation_res['low'], 'Low Rotation'),
-    }
-    all_stats['Rotation'] = {'top': rotation_stats['high'], 'bottom': rotation_stats['low']}
-    for k, v in rotation_stats.items():
-        print(f'   {k}: avg={v["avg_monthly"]}%/mo, cumulative={v.get("cumulative", 0)}%, win={v["win_rate"]}%')
-    
-    print('\n🧠 IQ Edge Walk-Forward Results:')
-    iq_stats = {
-        'top': compute_stats(iq_edge_res['top'], 'IQ Edge Top 10%'),
-        'bottom': compute_stats(iq_edge_res['bottom'], 'IQ Edge Bottom 10%'),
-    }
-    all_stats['IQ Edge'] = iq_stats
-    for k, v in iq_stats.items():
-        print(f'   {k}: avg={v["avg_monthly"]}%/mo, cumulative={v.get("cumulative", 0)}%, win={v["win_rate"]}%')
-    
-    print('\n🎯 Power Matrix Walk-Forward Results:')
-    power_stats = {
-        'top': compute_stats(power_res['power'], 'Power Zone'),
-        'bottom': compute_stats(power_res['avoid'], 'Avoid Zone'),
-    }
-    all_stats['Power Matrix'] = power_stats
-    for k, v in power_stats.items():
-        print(f'   {k}: avg={v["avg_monthly"]}%/mo, cumulative={v.get("cumulative", 0)}%, win={v["win_rate"]}%')
+    for name, entry_fn, use_ewros_exit in strategies:
+        trades, equity, eq_dates = run_strategy(close, volume, high, low, name, entry_fn, use_ewros_exit)
+        stats = analyze_trades(trades, name)
+        print_stats(stats)
+        all_results.append(stats)
+        all_equity.append(equity)
+        all_equity_dates.append(eq_dates)
+        all_trades_list.append(trades)
+        
+        # Print some sample trades
+        if trades:
+            winners = sorted([t for t in trades if t.pnl_pct > 0], key=lambda x: -x.pnl_pct)
+            losers = sorted([t for t in trades if t.pnl_pct <= 0], key=lambda x: x.pnl_pct)
+            print(f'   Top 5 winners:')
+            for t in winners[:5]:
+                print(f'      {t.ticker}: +{t.pnl_pct}% ({t.entry_date.strftime("%Y-%m-%d")} → {t.exit_date.strftime("%Y-%m-%d")}, {t.hold_days}d, exit: {t.exit_reason})')
+            print(f'   Top 5 losers:')
+            for t in losers[:5]:
+                print(f'      {t.ticker}: {t.pnl_pct}% ({t.entry_date.strftime("%Y-%m-%d")} → {t.exit_date.strftime("%Y-%m-%d")}, {t.hold_days}d, exit: {t.exit_reason})')
     
     # Generate charts
     print('\n📊 Generating charts...')
-    plot_equity_curves(equity_curves)
-    plot_monthly_spreads(ewros_res, quality_res, iq_edge_res, power_res)
-    plot_signal_summary(all_stats)
+    plot_results(all_results, all_equity, all_equity_dates)
     
     # Save results
     output = {
         'generated_at': datetime.now().isoformat(),
-        'method': 'Walk-forward: monthly rebalance, scores computed at each date using only prior data, forward returns measured',
+        'method': 'Event-driven: daily scan for entry signals, conditional exits (stop loss, MA50, EWROS drop, max hold)',
         'data_range': f'{close.index[0].date()} to {close.index[-1].date()}',
-        'backtest_range': f'{equity_curves["dates"][0] if equity_curves["dates"] else "N/A"} to {equity_curves["dates"][-1] if equity_curves["dates"] else "N/A"}',
-        'rebalance_periods': len(equity_curves['dates']),
-        'total_stocks': len(close.columns),
-        'stats': {},
+        'parameters': {
+            'max_positions': MAX_POSITIONS,
+            'stop_loss': f'{STOP_LOSS*100}%',
+            'ewros_exit_threshold': EWROS_EXIT_THRESHOLD,
+            'max_hold_days': MAX_HOLD_DAYS,
+            'breakout_volume_multiplier': BREAKOUT_VOL_MULT,
+            'base_max_drift': f'{BASE_MAX_DRIFT*100}%',
+            'ewros_lookback': EWROS_LOOKBACK,
+            'ewros_lambda': EWROS_LAMBDA,
+        },
+        'strategies': {r['name']: r for r in all_results},
     }
-    
-    for name, stats in all_stats.items():
-        output['stats'][name] = stats
-    
-    output['equity_curves'] = equity_curves
     
     with open(OUTPUT_FILE, 'w') as f:
         json.dump(output, f, indent=2, default=str)
     
-    print(f'\n✅ Walk-forward backtest complete!')
+    print(f'\n✅ Backtest complete!')
     print(f'   Results: {OUTPUT_FILE}')
     print(f'   Charts: {CHARTS_DIR}/')
+    for f_name in sorted(os.listdir(CHARTS_DIR)):
+        if f_name.endswith('.png'):
+            print(f'      {f_name}')
 
 
 if __name__ == '__main__':

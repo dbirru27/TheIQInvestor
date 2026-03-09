@@ -108,17 +108,17 @@ def main():
 
         elif atype == 'rotation_above':
             stock = all_stocks.get(ticker, {})
-            rot = stock.get('rotation_score', 0)
-            if rot >= threshold:
+            ewros = stock.get('ewros_score', 0)
+            if ewros >= threshold:
                 triggered = True
-                alert['current_value'] = rot
+                alert['current_value'] = ewros
 
         elif atype == 'rotation_below':
             stock = all_stocks.get(ticker, {})
-            rot = stock.get('rotation_score', 0)
-            if rot <= threshold:
+            ewros = stock.get('ewros_score', 0)
+            if ewros <= threshold:
                 triggered = True
-                alert['current_value'] = rot
+                alert['current_value'] = ewros
 
         elif atype == 'ins_above':
             stock = all_stocks.get(ticker, {})
