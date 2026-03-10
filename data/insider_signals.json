@@ -1,5 +1,5 @@
 {
-  "scan_date": "2026-03-09 18:04:47",
+  "scan_date": "2026-03-10 18:09:41",
   "lookback_days": 90,
   "tickers_scanned": 32,
   "signals": {
@@ -1303,79 +1303,26 @@
       "details": []
     },
     "VRT": {
-      "ins_score": -13,
-      "signal": "dumping",
-      "signal_emoji": "\ud83d\udd34",
-      "transactions": 52,
+      "ins_score": 0,
+      "signal": "neutral",
+      "signal_emoji": "\u26aa",
+      "transactions": 0,
       "buys": 0,
-      "sells": 52,
+      "sells": 0,
       "total_buy_value": 0,
-      "total_sell_value": 104381431.0,
-      "reasons": [
-        "Cluster sell: 5 insiders",
-        "C-suite sell: COTE DAVID M ($10,211,593)",
-        "Heavy sell: REINEMUND STEVEN dumped 41%",
-        "Heavy sell: FRADIN ROGER dumped 99%",
-        "Heavy sell: DOKKUM JAN VAN dumped 38%",
-        "All sells, zero buys in period"
-      ],
-      "details": [
-        {
-          "date": "2026-02-26",
-          "owner": "FRADIN ROGER",
-          "title": null,
-          "type": "SELL",
-          "shares": 27354,
-          "price": 252.61,
-          "value": 6909894.0
-        },
-        {
-          "date": "2026-02-26",
-          "owner": "DOKKUM JAN VAN",
-          "title": null,
-          "type": "SELL",
-          "shares": 22989,
-          "price": 254.49,
-          "value": 5850471.0
-        },
-        {
-          "date": "2026-02-27",
-          "owner": "FRADIN ROGER",
-          "title": null,
-          "type": "SELL",
-          "shares": 20909,
-          "price": 251.62,
-          "value": 5261123.0
-        },
-        {
-          "date": "2026-02-27",
-          "owner": "FRADIN ROGER",
-          "title": null,
-          "type": "SELL",
-          "shares": 20808,
-          "price": 251.61,
-          "value": 5235501.0
-        },
-        {
-          "date": "2026-02-26",
-          "owner": "REINEMUND STEVEN",
-          "title": null,
-          "type": "SELL",
-          "shares": 19206,
-          "price": 250.14,
-          "value": 4804401.0
-        }
-      ]
+      "total_sell_value": 0,
+      "reasons": [],
+      "details": []
     },
     "WDC": {
       "ins_score": -9,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 33,
+      "transactions": 34,
       "buys": 0,
-      "sells": 33,
+      "sells": 34,
       "total_buy_value": 0,
-      "total_sell_value": 9850987.0,
+      "total_sell_value": 12025845.0,
       "reasons": [
         "Cluster sell: 4 insiders",
         "All sells, zero buys in period"
@@ -1389,6 +1336,15 @@
           "shares": 8547,
           "price": 269.22,
           "value": 2300986.0
+        },
+        {
+          "date": "2026-03-06",
+          "owner": "Gubbi Vidyadhara K",
+          "title": "Chief of Global Operations",
+          "type": "SELL",
+          "shares": 8518,
+          "price": 255.32,
+          "value": 2174858.0
         },
         {
           "date": "2026-03-04",
@@ -1416,15 +1372,6 @@
           "shares": 2129,
           "price": 277.37,
           "value": 590512.0
-        },
-        {
-          "date": "2026-03-02",
-          "owner": "Cole Martin I",
-          "title": "",
-          "type": "SELL",
-          "shares": 1400,
-          "price": 271.68,
-          "value": 380353.0
         }
       ]
     }
