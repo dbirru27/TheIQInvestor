@@ -150,6 +150,9 @@ def build_stock_entry(ticker, basket_name, db, live_prices, names_cache):
         "moonshot_score": stock.get('moonshot_score', 0),
         # EWROS score
         "ewros_score": stock.get('ewros_score', 0),
+        # IQ Edge
+        "iq_edge": stock.get('iq_edge', 0),
+        "iq_edge_raw": stock.get('iq_edge_raw', 0),
         # Analyst data
         "recommendation": stock.get('recommendation'),
         "target_mean": round(stock['target_mean'], 2) if stock.get('target_mean') else None,
@@ -179,8 +182,21 @@ def generate_watchlist():
     logger.info(f"Got live prices for {len(live_prices)} tickers, {len(names_cache)} names")
 
     # Build watchlist
+    # Read score timestamps from all_stocks.json
+    score_ts = ''
+    iq_edge_ts = ''
+    try:
+        with open('data/all_stocks.json', 'r') as f:
+            meta = json.load(f)
+            score_ts = meta.get('last_scan', '')
+            iq_edge_ts = meta.get('iq_edge_updated', '')
+    except Exception:
+        pass
+
     watchlist_data = {
         "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M EST"),
+        "score_timestamp": score_ts,
+        "iq_edge_timestamp": iq_edge_ts,
         "baskets": {},
         "all": []
     }

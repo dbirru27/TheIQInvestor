@@ -686,8 +686,19 @@
                             <div>
                                 <h1 id="detail-name" class="text-3xl font-bold">---</h1>
                                 <div id="detail-ticker-sector" class="text-slate-400 mt-1">---</div>
+                                <div id="detail-score-ts" style="font-size:0.7rem; color:#64748b; margin-top:4px;">—</div>
                             </div>
-                            <div id="detail-grade" class="grade-badge text-xl px-6 py-2">---</div>
+                            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
+                                <div style="display:flex; gap:8px; align-items:center;">
+                                    <div id="detail-ewros-badge" style="padding:4px 12px; border-radius:20px; font-weight:700; font-size:0.8rem; background:rgba(51,65,85,0.5); color:#64748b;">RS —</div>
+                                    <div id="detail-grade" class="grade-badge text-xl px-6 py-2">---</div>
+                                </div>
+                                <div id="detail-nav-bar" style="display:flex; gap:6px; align-items:center; visibility:hidden;">
+                                    <button onclick="navDetail(-1)" style="padding:3px 10px; background:#1e293b; border:1px solid #374151; border-radius:6px; color:#94a3b8; cursor:pointer; font-size:0.8rem;" title="Previous stock">◀</button>
+                                    <span id="detail-nav-pos" style="font-size:0.72rem; color:#64748b; min-width:52px; text-align:center;">—</span>
+                                    <button onclick="navDetail(+1)" style="padding:3px 10px; background:#1e293b; border:1px solid #374151; border-radius:6px; color:#94a3b8; cursor:pointer; font-size:0.8rem;" title="Next stock">▶</button>
+                                </div>
+                            </div>
                         </div>
                         
                         <div style="height: 300px; background: #0a0f1d; border-radius: 8px;" id="tv-chart" class="lg:h-[400px]"></div>
@@ -813,6 +824,7 @@
                 <div>
                     <h2 class="text-2xl font-bold mb-2">📊 My Portfolio</h2>
                     <span style="font-size: 0.8rem; color: var(--text-dim);">Last Updated: <strong id="watchlist-updated" style="color: var(--accent);">Loading...</strong></span>
+                    <div style="font-size:0.72rem; color:#64748b; margin-top:3px;">Scores calculated: <span id="wl-score-ts">—</span></div>
                 </div>
                 <button id="edit-portfolio-btn" onclick="toggleEditMode()" style="background: #1e293b; border: 1px solid #2d3748; padding: 8px 16px; border-radius: 8px; color: var(--accent); font-weight: 600; cursor: pointer; transition: 0.2s;">
                     ✏️ Edit
@@ -845,7 +857,7 @@
                             <th onclick="sortWatchlist('score')">Score</th>
                             <th onclick="sortWatchlist('moonshot_score')">Moonshot</th>
                             <th onclick="sortWatchlist('ewros_score')">EWROS</th>
-                            <th onclick="sortWatchlist('ewros_score')">EWROS</th>
+                            <th onclick="sortWatchlist('iq_edge')">IQ Edge</th>
                             <th onclick="sortWatchlist('grade')">Grade</th>
                             <th>Signal</th>
                             <th>Insider</th>
@@ -1739,7 +1751,7 @@
                 const rotBadge = rotationScore >= 80 ? 'badge-green' : rotationScore >= 60 ? 'badge-yellow' : rotationScore >= 40 ? 'badge-gray' : 'badge-gray';
                 const gradeBadge = {'A':'badge-green','B':'badge-blue','C':'badge-yellow','D':'badge-purple','F':'badge-red'}[stock.grade] || 'badge-gray';
                 return `
-                    <tr data-sector="${stock.sector}" onclick="viewStock('${stock.ticker}')" style="cursor:pointer;">
+                    <tr data-sector="${stock.sector}" data-ticker="${stock.ticker}" onclick="viewStock('${stock.ticker}')" style="cursor:pointer;">
                         <td class="text-sm" style="color: var(--text-dim);">${idx + 1}</td>
                         <td style="text-align:left; font-weight:700; color:#38bdf8;">${stock.ticker}</td>
                         <td class="text-sm">${stock.name}</td>
@@ -2050,6 +2062,8 @@
                         if (allRes.ok) {
                             const allData = await allRes.json();
                             allStocks = allData.stocks || {};
+                            const scoreTs = allData.last_scan || allData.iq_edge_updated || '';
+                            if (scoreTs) document.getElementById('wl-score-ts').textContent = scoreTs;
                         }
                     } catch(e) {}
                     
@@ -2087,6 +2101,8 @@
                                 ewros_trend: scores.ewros_trend || 0,
                                 ewros_prior: scores.ewros_prior || 0,
                                 ewros_stats: scores.ewros_stats || {},
+                                iq_edge: scores.iq_edge || 0,
+                                iq_edge_raw: scores.iq_edge_raw || 0,
                                 basket_metadata: { icon: basket.icon, weight: basket.weight }
                             };
                             watchlistData.baskets[name].push(stock);
@@ -2208,8 +2224,8 @@
                         <div class="score-breakdown">T:${stock.technical_score || 0} G:${stock.growth_score || 0} Q:${stock.quality_score || 0} C:${stock.context_score || 0}</div>
                     </td>
                     <td class="text-center font-bold text-amber-400">${stock.moonshot_score || 0}%</td>
-                    <td class="text-center" style="color: ${getEwrosColor(stock.ewros_score || 0)}; font-weight: ${getEwrosWeight(stock.ewros_score || 0)};">${(stock.ewros_score || 0).toFixed(1)}</td>
                     <td class="text-center">${renderEwros(stock.ewros_score, stock.ewros_trend, stock.ticker)}</td>
+                    <td class="text-center" style="font-weight:700; color:${(stock.iq_edge||0) >= 90 ? '#a855f7' : (stock.iq_edge||0) >= 70 ? '#10b981' : (stock.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${stock.iq_edge != null && stock.iq_edge > 0 ? stock.iq_edge : '—'}</td>
                     <td><span class="grade-badge grade-${stock.grade}">${stock.grade}</span></td>
                     <td>${getPortfolioSignalBadge(stock)}</td>
                     <td>${renderInsiderBadge(stock.ins_score, stock.insider_signal, true)}</td>
@@ -3619,6 +3635,16 @@
             document.getElementById('detail-ticker').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') viewStock(this.value);
             });
+
+            // Keyboard nav for detail view (arrow keys)
+            document.addEventListener('keydown', function(e) {
+                const detailVisible = document.getElementById('detail-view') &&
+                    document.getElementById('detail-view').style.display !== 'none';
+                if (!detailVisible) return;
+                if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) return;
+                if (e.key === 'ArrowLeft')  { e.preventDefault(); navDetail(-1); }
+                if (e.key === 'ArrowRight') { e.preventDefault(); navDetail(+1); }
+            });
         });
 
         // Global cache for all stocks data
@@ -3646,8 +3672,26 @@
             return allStocksLoading;
         }
 
+        // Navigation context: set from visible list before entering detail view
+        let detailNavContext = [];
+        let detailNavIndex = -1;
+
+        function navDetail(dir) {
+            if (!detailNavContext || detailNavContext.length === 0) return;
+            detailNavIndex = (detailNavIndex + dir + detailNavContext.length) % detailNavContext.length;
+            viewStock(detailNavContext[detailNavIndex]);
+        }
+
         async function viewStock(ticker) {
             if (location.hash !== `#stock/${ticker}`) history.pushState(null, '', `#stock/${ticker}`);
+
+            // Capture nav context from currently visible list rows (before hideAllViews)
+            const visibleRows = [...document.querySelectorAll('tr[data-ticker]')]
+                .filter(r => r.offsetParent !== null && r.dataset.ticker);
+            if (visibleRows.length > 1) {
+                detailNavContext = visibleRows.map(r => r.dataset.ticker);
+            }
+
             hideAllViews();
             document.getElementById('detail-view').style.display = 'block';
             
@@ -3665,7 +3709,29 @@
                 document.getElementById('detail-ticker-sector').innerText = `${data.ticker} • ${data.sector}${data.industry ? ' • ' + data.industry : ''}`;
                 document.getElementById('detail-grade').innerText = data.grade;
                 document.getElementById('detail-grade').className = `grade-badge text-xl px-6 py-2 grade-${data.grade}`;
-                
+
+                // EWROS badge in chart header
+                const hdrEwros = data.ewros_score || 0;
+                const ewrosBadge = document.getElementById('detail-ewros-badge');
+                ewrosBadge.textContent = `RS ${hdrEwros}`;
+                ewrosBadge.style.background = hdrEwros >= 80 ? 'rgba(16,185,129,0.18)' : hdrEwros >= 60 ? 'rgba(234,179,8,0.15)' : hdrEwros >= 40 ? 'rgba(100,116,139,0.15)' : 'rgba(51,65,85,0.4)';
+                ewrosBadge.style.color = hdrEwros >= 80 ? '#10b981' : hdrEwros >= 60 ? '#eab308' : hdrEwros >= 40 ? '#94a3b8' : '#64748b';
+
+                // Score timestamp
+                const scoreTs = (allStocksCache && (allStocksCache.last_scan || allStocksCache.iq_edge_updated)) || '';
+                document.getElementById('detail-score-ts').textContent = scoreTs ? `Scores as of ${scoreTs}` : '';
+
+                // Navigation bar
+                const navIdx = detailNavContext.indexOf(ticker.toUpperCase());
+                const navBar = document.getElementById('detail-nav-bar');
+                if (detailNavContext.length > 1 && navIdx >= 0) {
+                    detailNavIndex = navIdx;
+                    navBar.style.visibility = 'visible';
+                    document.getElementById('detail-nav-pos').textContent = `${navIdx + 1} / ${detailNavContext.length}`;
+                } else {
+                    navBar.style.visibility = 'hidden';
+                }
+
                 document.getElementById('tech-score').innerText = data.technical_score || 0;
                 document.getElementById('growth-score').innerText = data.growth_score || 0;
                 document.getElementById('quality-score').innerText = data.quality_score || 0;
@@ -4760,7 +4826,7 @@
                 const rsColor = (s.ewros_score||0) >= 80 ? '#10b981' : (s.ewros_score||0) >= 50 ? '#eab308' : '#64748b';
                 const gradeColor = s.grade === 'A' ? '#10b981' : s.grade === 'B' ? '#38bdf8' : s.grade === 'C' ? '#f59e0b' : '#ef4444';
                 const fmtVol = (v) => { if (!v) return '—'; if (v >= 1e6) return (v/1e6).toFixed(1)+'M'; if (v >= 1e3) return (v/1e3).toFixed(0)+'K'; return v.toFixed(0); };
-                return `<tr>
+                return `<tr data-ticker="${s.ticker}">
                     <td><a href="#" onclick="viewStock('${s.ticker}'); return false;" class="text-sky-400 hover:text-sky-300 font-bold">${s.ticker}</a></td>
                     <td style="font-size:0.85rem; color:var(--text-dim);">${(s.name||'').substring(0, 25)}</td>
                     <td style="font-weight:600;">$${(s.current_price||0).toFixed(2)}</td>
