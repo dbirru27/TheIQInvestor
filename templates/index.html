@@ -138,29 +138,93 @@
 
         .grade-badge { padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; }
 
-        /* Chart fullscreen overlay */
+        /* Chart fullscreen overlay — TradingView color scheme */
         #chart-fullscreen-overlay {
             display: none;
             position: fixed; inset: 0; z-index: 9000;
-            background: #060b14;
+            background: #131722;
             flex-direction: column;
+            font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', sans-serif;
         }
         #chart-fullscreen-overlay.active { display: flex; }
         #chart-fullscreen-header {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 10px 16px; background: #0a0f1d;
-            border-bottom: 1px solid #1e293b; flex-shrink: 0;
+            padding: 0 12px; height: 46px;
+            background: #1e222d;
+            border-bottom: 1px solid #2a2e39;
+            flex-shrink: 0; gap: 8px;
         }
-        #chart-fullscreen-body { flex: 1; min-height: 0; }
+        #chart-fullscreen-body { flex: 1; min-height: 0; background: #131722; }
+
+        /* TV-style ticker label */
+        #fs-ticker {
+            font-size: 1rem; font-weight: 700; color: #d1d4dc;
+            letter-spacing: 0.03em;
+        }
+        #fs-name { font-size: 0.78rem; color: #787b86; }
+
+        /* TV-style badge pills */
+        #fs-ewros-badge, #fs-grade-badge {
+            font-size: 0.75rem; font-weight: 600;
+            padding: 2px 8px; border-radius: 3px;
+            letter-spacing: 0.02em;
+        }
+
+        /* Ticker input — TV style */
+        #fs-ticker-input {
+            background: #2a2e39 !important; border: 1px solid #363a45 !important;
+            border-radius: 4px; color: #d1d4dc !important;
+            padding: 5px 10px; font-size: 0.85rem; font-weight: 600;
+            width: 100px; letter-spacing: 0.05em; outline: none;
+        }
+        #fs-ticker-input:focus { border-color: #2962ff !important; box-shadow: 0 0 0 2px rgba(41,98,255,0.2); }
+        #fs-ticker-input::placeholder { color: #4c525e; }
+
+        /* TV-style Go button */
+        #fs-go-btn {
+            background: #2962ff; border: none; color: #fff;
+            padding: 5px 12px; border-radius: 4px;
+            cursor: pointer; font-size: 0.8rem; font-weight: 600;
+            transition: background 0.15s;
+        }
+        #fs-go-btn:hover { background: #1e53e5; }
+
+        /* TV-style nav buttons */
+        .fs-nav-btn {
+            background: #2a2e39; border: 1px solid #363a45; color: #787b86;
+            border-radius: 4px; padding: 4px 10px; cursor: pointer;
+            font-size: 0.8rem; transition: all 0.15s;
+        }
+        .fs-nav-btn:hover { background: #363a45; color: #d1d4dc; }
+
+        #fs-nav-pos { font-size: 0.72rem; color: #4c525e; min-width: 48px; text-align: center; }
+
+        /* TV-style close button */
+        #fs-close-btn {
+            background: transparent; border: 1px solid #363a45; color: #787b86;
+            border-radius: 4px; padding: 4px 12px; cursor: pointer;
+            font-size: 0.8rem; font-weight: 600; transition: all 0.15s;
+        }
+        #fs-close-btn:hover { background: #363a45; color: #d1d4dc; border-color: #4c525e; }
+
+        /* Expand button on small chart */
         #tv-chart-expand-btn {
             position: absolute; bottom: 10px; right: 10px;
-            background: rgba(15,23,42,0.85); border: 1px solid #334155;
-            color: #94a3b8; border-radius: 6px; padding: 5px 10px;
-            cursor: pointer; font-size: 0.75rem; z-index: 10;
-            backdrop-filter: blur(4px); transition: color 0.15s;
+            background: rgba(30,34,45,0.9); border: 1px solid #2a2e39;
+            color: #787b86; border-radius: 4px; padding: 4px 10px;
+            cursor: pointer; font-size: 0.72rem; z-index: 10;
+            backdrop-filter: blur(4px); transition: all 0.15s;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        #tv-chart-expand-btn:hover { color: #fff; border-color: #64748b; }
+        #tv-chart-expand-btn:hover { color: #d1d4dc; border-color: #4c525e; background: rgba(42,46,57,0.95); }
         #tv-chart-wrapper { position: relative; }
+
+        /* Kbd hint */
+        #fs-kbd-hint { font-size: 0.68rem; color: #4c525e; white-space: nowrap; }
+        #fs-kbd-hint kbd {
+            background: #2a2e39; border: 1px solid #363a45; border-radius: 3px;
+            padding: 1px 4px; font-size: 0.68rem; color: #787b86;
+        }
         
         .grade-A { background: #059669; color: white; }
         .grade-B { background: #0284c7; color: white; }
@@ -3760,17 +3824,25 @@
 
             const ewrosBadge = document.getElementById('fs-ewros-badge');
             ewrosBadge.textContent = `RS ${ewros}`;
-            ewrosBadge.style.background = ewros >= 80 ? 'rgba(16,185,129,0.18)' : ewros >= 60 ? 'rgba(234,179,8,0.15)' : ewros >= 40 ? 'rgba(100,116,139,0.15)' : 'rgba(51,65,85,0.4)';
-            ewrosBadge.style.color = ewros >= 80 ? '#10b981' : ewros >= 60 ? '#eab308' : ewros >= 40 ? '#94a3b8' : '#64748b';
+            // TV-style: muted bg, colored text
+            ewrosBadge.style.background = ewros >= 80 ? 'rgba(38,166,154,0.15)' : ewros >= 60 ? 'rgba(246,187,77,0.12)' : ewros >= 40 ? 'rgba(120,123,134,0.15)' : 'rgba(42,46,57,0.8)';
+            ewrosBadge.style.color = ewros >= 80 ? '#26a69a' : ewros >= 60 ? '#f6bb4d' : ewros >= 40 ? '#787b86' : '#4c525e';
+            ewrosBadge.style.border = `1px solid ${ewros >= 80 ? 'rgba(38,166,154,0.3)' : ewros >= 60 ? 'rgba(246,187,77,0.25)' : '#2a2e39'}`;
 
             const gradeBadge = document.getElementById('fs-grade-badge');
+            // TV-style grade: clean colored badge
+            const tvGradeColors = {A:['#26a69a','rgba(38,166,154,0.15)'], B:['#2962ff','rgba(41,98,255,0.15)'], C:['#f6bb4d','rgba(246,187,77,0.12)'], D:['#f7525f','rgba(247,82,95,0.12)'], F:['#f7525f','rgba(247,82,95,0.18)']};
             if (grade === 'ETF') {
-                gradeBadge.textContent = 'ETF'; gradeBadge.style.background = '#1e3a5f'; gradeBadge.style.color = '#38bdf8';
+                gradeBadge.textContent = 'ETF';
+                gradeBadge.style.background = 'rgba(41,98,255,0.12)';
+                gradeBadge.style.color = '#2962ff';
+                gradeBadge.style.border = '1px solid rgba(41,98,255,0.25)';
             } else {
-                const gradeColors = {A:'#059669',B:'#0284c7',C:'#d97706',D:'#7c3aed',F:'#dc2626'};
+                const [gc, gb] = tvGradeColors[grade] || ['#787b86','rgba(120,123,134,0.15)'];
                 gradeBadge.textContent = grade;
-                gradeBadge.style.background = (gradeColors[grade] || '#475569') + '33';
-                gradeBadge.style.color = gradeColors[grade] || '#94a3b8';
+                gradeBadge.style.background = gb;
+                gradeBadge.style.color = gc;
+                gradeBadge.style.border = `1px solid ${gc}44`;
             }
 
             // Nav bar
@@ -5268,29 +5340,30 @@
     <!-- Chart Fullscreen Overlay -->
     <div id="chart-fullscreen-overlay">
         <div id="chart-fullscreen-header">
-            <div style="display:flex; align-items:center; gap:12px; flex:1; min-width:0;">
-                <span id="fs-ticker" style="font-weight:800; font-size:1.1rem; color:#fff; white-space:nowrap;"></span>
-                <span id="fs-name" style="font-size:0.85rem; color:#94a3b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:200px;"></span>
-                <span id="fs-ewros-badge" style="padding:3px 12px; border-radius:20px; font-weight:700; font-size:0.9rem; white-space:nowrap;"></span>
-                <span id="fs-grade-badge" style="padding:3px 12px; border-radius:20px; font-weight:700; font-size:0.9rem; white-space:nowrap;"></span>
+            <!-- Left: symbol info -->
+            <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0; overflow:hidden;">
+                <span id="fs-ticker"></span>
+                <span style="width:1px; height:18px; background:#2a2e39; flex-shrink:0;"></span>
+                <span id="fs-name" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:220px;"></span>
+                <span id="fs-ewros-badge"></span>
+                <span id="fs-grade-badge"></span>
             </div>
-            <div style="display:flex; gap:8px; align-items:center; flex-shrink:0;">
+            <!-- Right: controls -->
+            <div style="display:flex; gap:6px; align-items:center; flex-shrink:0;">
                 <!-- Ticker search -->
-                <div style="display:flex; align-items:center; background:#1e293b; border:1px solid #334155; border-radius:8px; overflow:hidden;">
-                    <input id="fs-ticker-input" type="text" placeholder="Ticker…" list="ticker-list"
-                        style="background:transparent; border:none; outline:none; color:#fff; padding:6px 10px; font-size:0.9rem; font-weight:600; width:110px; letter-spacing:0.05em;"
-                        onkeydown="if(event.key==='Enter') fsLoadTicker(this.value)"
-                        oninput="this.value=this.value.toUpperCase()">
-                    <button onclick="fsLoadTicker(document.getElementById('fs-ticker-input').value)"
-                        style="background:#2563eb; border:none; color:#fff; padding:6px 12px; cursor:pointer; font-size:0.8rem; font-weight:700; height:100%;">Go</button>
-                </div>
-                <!-- List nav arrows -->
+                <input id="fs-ticker-input" type="text" placeholder="Symbol…" list="ticker-list"
+                    onkeydown="if(event.key==='Enter'){fsLoadTicker(this.value);}"
+                    oninput="this.value=this.value.toUpperCase()">
+                <button id="fs-go-btn" onclick="fsLoadTicker(document.getElementById('fs-ticker-input').value)">Go</button>
+                <!-- List nav -->
                 <div id="fs-nav-bar" style="display:flex; gap:4px; align-items:center; visibility:hidden;">
-                    <button onclick="fsNavDetail(-1)" style="padding:5px 10px; background:#1e293b; border:1px solid #374151; border-radius:6px; color:#94a3b8; cursor:pointer; font-size:0.85rem;" title="Previous (←)">◀</button>
-                    <span id="fs-nav-pos" style="font-size:0.72rem; color:#64748b; min-width:52px; text-align:center;">—</span>
-                    <button onclick="fsNavDetail(+1)" style="padding:5px 10px; background:#1e293b; border:1px solid #374151; border-radius:6px; color:#94a3b8; cursor:pointer; font-size:0.85rem;" title="Next (→)">▶</button>
+                    <button class="fs-nav-btn" onclick="fsNavDetail(-1)" title="Previous (←)">◀</button>
+                    <span id="fs-nav-pos"></span>
+                    <button class="fs-nav-btn" onclick="fsNavDetail(+1)" title="Next (→)">▶</button>
                 </div>
-                <button onclick="closeChartFullscreen()" style="background:#1e293b; border:1px solid #374151; color:#94a3b8; border-radius:6px; padding:6px 14px; cursor:pointer; font-size:0.85rem; font-weight:600;" title="Close (Esc)">✕</button>
+                <!-- Kbd hint -->
+                <span id="fs-kbd-hint"><kbd>Esc</kbd> close &nbsp;<kbd>←</kbd><kbd>→</kbd> nav</span>
+                <button id="fs-close-btn" onclick="closeChartFullscreen()">✕ Close</button>
             </div>
         </div>
         <div id="chart-fullscreen-body">
