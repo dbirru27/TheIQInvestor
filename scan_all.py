@@ -67,11 +67,31 @@ def run_scan(limit=None):
     
     logger.info(f"Initialized BreakoutRater")
     
+    # Pre-load quoteTypes to skip ETFs/funds from the rater
+    etf_types = {'ETF', 'MUTUALFUND', 'MONEYMARKET'}
+    quote_types = {}
+    try:
+        for row in conn.execute('SELECT symbol, data FROM fundamentals'):
+            try:
+                info = json.loads(row[1])
+                qt = info.get('quoteType', '')
+                if qt in etf_types:
+                    quote_types[row[0]] = qt
+            except Exception:
+                pass
+        logger.info(f"Detected {len(quote_types)} ETF/fund tickers to handle as stubs")
+    except Exception as e:
+        logger.warning(f"Could not pre-load quoteTypes: {e}")
+
     results = []
     errors = 0
-    
+
     for i, ticker in enumerate(tickers, 1):
         try:
+            # Skip ETFs — they get stub entries after the main loop
+            if ticker in quote_types:
+                continue
+
             data = rater.rate_stock_from_db(ticker, conn)
             if data is None:
                 continue
@@ -87,11 +107,82 @@ def run_scan(limit=None):
         if i % 100 == 0:
             logger.info(f"  Processed {i}/{len(tickers)} ({len(results)} scored, {errors} errors)...")
     
+    # ── ETF stub entries ────────────────────────────────────────────────────
+    # Portfolio ETFs don't have fundamental data, so rater returns None for them.
+    # Create minimal "ETF mode" entries so they appear in all_stocks.json,
+    # get EWROS scores, and the detail view can show their chart.
+    conn_etf = sqlite3.connect(config.DB_PATH)
+    # Build ETF stub entries for ALL ETFs in the DB (not just portfolio)
+    # — covers portfolio ETFs + any other ETFs that happen to be in the DB
+    etf_candidates = set(quote_types.keys()) | {t for t in config.ALL_HOLDINGS if t not in {r['ticker'] for r in results}}
+    scored_tickers = {r['ticker'] for r in results}
+    etf_stubs = []
+    for ticker in etf_candidates:
+        if ticker in scored_tickers:
+            continue
+        try:
+            c_etf = conn_etf.cursor()
+            c_etf.execute('SELECT data FROM fundamentals WHERE symbol=?', (ticker,))
+            row = c_etf.fetchone()
+            if not row:
+                continue
+            info = json.loads(row[0])
+            # Only include if genuinely ETF/fund
+            if info.get('quoteType') not in etf_types and info.get('sector') not in (None, 'N/A', ''):
+                continue
+            # Need enough price rows for EWROS
+            c_etf.execute('SELECT COUNT(*) FROM prices WHERE symbol=?', (ticker,))
+            n_rows = c_etf.fetchone()[0]
+            if n_rows < 63:
+                continue
+            stub = {
+                "ticker": ticker,
+                "name": info.get('longName') or info.get('shortName', ticker),
+                "sector": "ETF",
+                "industry": info.get('category') or info.get('quoteType', 'ETF'),
+                "score": None,
+                "grade": "ETF",
+                "max_score": None,
+                "technical_score": None,
+                "growth_score": None,
+                "quality_score": None,
+                "context_score": None,
+                "moonshot_score": None,
+                "criteria": [],
+                "market_cap": info.get('totalAssets'),
+                "revenue_growth": None,
+                "earnings_growth": None,
+                "forward_pe": None,
+                "trailing_pe": None,
+                "peg_ratio": None,
+                "recommendation": None,
+                "target_mean": None,
+                "analyst_count": None,
+                "current_price": info.get('regularMarketPrice') or info.get('navPrice'),
+                "ewros_score": ewros_scores.get(ticker, 0),
+                "ewros_raw": 0,
+                "ewros_trend": 0,
+                "ewros_prior": 0,
+                "ewros_stats": {},
+                "iq_edge": None,
+                "iq_edge_raw": None,
+            }
+            etf_stubs.append(stub)
+            logger.info(f"  ETF stub: {ticker} ({stub['name']})")
+        except Exception as e:
+            logger.warning(f"ETF stub failed for {ticker}: {e}")
+    conn_etf.close()
+
+    if etf_stubs:
+        logger.info(f"Added {len(etf_stubs)} ETF stub entries")
+        results.extend(etf_stubs)
+    # ────────────────────────────────────────────────────────────────────────
+
     conn.close()
-    
-    # Filter & sort
-    filtered = [r for r in results if r['score'] >= 55]
-    results.sort(key=lambda x: x['score'], reverse=True)
+
+    # Filter & sort (ETFs with score=None are excluded from top_stocks but kept in all_stocks)
+    filtered = [r for r in results if r.get('score') is not None and r['score'] >= 55]
+    results.sort(key=lambda x: (x.get('score') is None, -(x.get('score') or 0)))
     filtered.sort(key=lambda x: x['score'], reverse=True)
     
     # top_stocks.json — filtered, top 100, list format
@@ -115,7 +206,8 @@ def run_scan(limit=None):
     
     all_stocks_slim = {}
     for s in results:
-        if s['ticker'] in keep_criteria:
+        is_etf = s.get('grade') == 'ETF'
+        if s['ticker'] in keep_criteria or is_etf:
             all_stocks_slim[s['ticker']] = s
         else:
             slim = {k: v for k, v in s.items() if k != 'criteria'}

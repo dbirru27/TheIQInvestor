@@ -3703,12 +3703,38 @@
                 const allData = await loadAllStocks();
                 const data = allData.stocks[ticker.toUpperCase()];
                 
-                if (!data) throw new Error(`${ticker} not found in cache`);
+                // Graceful fallback for ETFs / unknown tickers not in all_stocks.json
+                const isEtfMode = !data || data.grade === 'ETF';
+                if (!data) {
+                    // Try fetching basic info from stock_price API
+                    let name = ticker.toUpperCase();
+                    try {
+                        const pr = await fetch(`/api/stock_price/${ticker}`);
+                        if (pr.ok) { const pj = await pr.json(); name = pj.name || name; }
+                    } catch(e) {}
+                    data = {
+                        ticker: ticker.toUpperCase(), name, sector: 'ETF', industry: 'Exchange Traded Fund',
+                        grade: 'ETF', score: null, ewros_score: 0, iq_edge: null,
+                        technical_score: null, growth_score: null, quality_score: null,
+                        context_score: null, moonshot_score: null, criteria: [],
+                        forward_pe: null, trailing_pe: null, peg_ratio: null,
+                        recommendation: null, target_mean: null, analyst_count: null,
+                    };
+                }
 
                 document.getElementById('detail-name').innerText = data.name;
                 document.getElementById('detail-ticker-sector').innerText = `${data.ticker} • ${data.sector}${data.industry ? ' • ' + data.industry : ''}`;
-                document.getElementById('detail-grade').innerText = data.grade;
-                document.getElementById('detail-grade').className = `grade-badge text-xl px-6 py-2 grade-${data.grade}`;
+                document.getElementById('detail-grade').innerText = isEtfMode ? 'ETF' : data.grade;
+                document.getElementById('detail-grade').className = isEtfMode
+                    ? 'grade-badge text-xl px-6 py-2' + ' ' + 'grade-D'
+                    : `grade-badge text-xl px-6 py-2 grade-${data.grade}`;
+                if (isEtfMode) {
+                    document.getElementById('detail-grade').style.background = '#1e3a5f';
+                    document.getElementById('detail-grade').style.color = '#38bdf8';
+                } else {
+                    document.getElementById('detail-grade').style.background = '';
+                    document.getElementById('detail-grade').style.color = '';
+                }
 
                 // EWROS badge in chart header
                 const hdrEwros = data.ewros_score || 0;
@@ -3732,11 +3758,28 @@
                     navBar.style.visibility = 'hidden';
                 }
 
-                document.getElementById('tech-score').innerText = data.technical_score || 0;
-                document.getElementById('growth-score').innerText = data.growth_score || 0;
-                document.getElementById('quality-score').innerText = data.quality_score || 0;
-                document.getElementById('context-score').innerText = data.context_score || 0;
-                document.getElementById('moonshot-score').innerText = (data.moonshot_score || 0) + '%';
+                if (isEtfMode) {
+                    // ETFs: hide sub-scores, show N/A
+                    ['tech-score','growth-score','quality-score','context-score'].forEach(id => {
+                        const el = document.getElementById(id);
+                        el.innerText = '—'; el.style.color = '#475569';
+                    });
+                    document.getElementById('moonshot-score').innerText = '—';
+                    document.getElementById('moonshot-score').style.color = '#475569';
+                    document.getElementById('criteria-list').innerHTML =
+                        '<div class="card py-6 text-center" style="color:#64748b;">' +
+                        '<div style="font-size:1.5rem; margin-bottom:8px;">📦</div>' +
+                        '<div style="font-weight:600; margin-bottom:4px;">ETF — Technical Signals Only</div>' +
+                        '<div style="font-size:0.8rem;">Fundamental scoring not applicable for ETFs.<br>Use EWROS momentum and chart for analysis.</div>' +
+                        '</div>';
+                } else {
+                    document.getElementById('tech-score').innerText = data.technical_score || 0;
+                    document.getElementById('growth-score').innerText = data.growth_score || 0;
+                    document.getElementById('quality-score').innerText = data.quality_score || 0;
+                    document.getElementById('context-score').innerText = data.context_score || 0;
+                    document.getElementById('moonshot-score').innerText = (data.moonshot_score || 0) + '%';
+                    document.getElementById('moonshot-score').style.color = '';
+                }
                 
                 const rotScore = data.ewros_score || 0;
                 const rotSignal = data.ewros_signal || 'N/A';
@@ -3810,16 +3853,17 @@
                 document.getElementById('insider-details-panel').style.display = 'none';
 
                 // Analyst data from cache
-                document.getElementById('rec-key').innerText = data.recommendation ? data.recommendation.toUpperCase() : 'N/A';
-                document.getElementById('target-price').innerText = data.target_mean ? `$${data.target_mean.toFixed(2)}` : 'N/A';
-                document.getElementById('analyst-count').innerText = data.analyst_count || '0';
+                const na = isEtfMode ? '—' : 'N/A';
+                document.getElementById('rec-key').innerText = data.recommendation ? data.recommendation.toUpperCase() : na;
+                document.getElementById('target-price').innerText = data.target_mean ? `$${data.target_mean.toFixed(2)}` : na;
+                document.getElementById('analyst-count').innerText = isEtfMode ? '—' : (data.analyst_count || '0');
 
                 // Valuation data from cache
-                document.getElementById('forward-pe').innerText = data.forward_pe ? data.forward_pe.toFixed(2) : 'N/A';
-                document.getElementById('trailing-pe').innerText = data.trailing_pe ? data.trailing_pe.toFixed(2) : 'N/A';
-                document.getElementById('peg-ratio').innerText = data.peg_ratio ? data.peg_ratio.toFixed(2) : 'N/A';
+                document.getElementById('forward-pe').innerText = data.forward_pe ? data.forward_pe.toFixed(2) : na;
+                document.getElementById('trailing-pe').innerText = data.trailing_pe ? data.trailing_pe.toFixed(2) : na;
+                document.getElementById('peg-ratio').innerText = data.peg_ratio ? data.peg_ratio.toFixed(2) : na;
 
-                document.getElementById('criteria-list').innerHTML = (data.criteria || []).length > 0 ? data.criteria.map(r => `
+                if (!isEtfMode) document.getElementById('criteria-list').innerHTML = (data.criteria || []).length > 0 ? data.criteria.map(r => `
                     <div class="card flex justify-between items-center py-4">
                         <div>
                             <div class="font-bold text-sm">${r.name}</div>
