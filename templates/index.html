@@ -792,7 +792,7 @@
                         </div>
                         
                         <div id="tv-chart-wrapper" style="position:relative;">
-                            <div style="height: 480px; background: #0a0f1d; border-radius: 8px;" id="tv-chart" class="lg:h-[620px]"></div>
+                            <div style="height: 500px; background: #0a0f1d; border-radius: 8px;" id="tv-chart"></div>
                             <button id="tv-chart-expand-btn" onclick="openChartFullscreen()" title="Expand chart">⤢ Expand</button>
                         </div>
                     </div>
@@ -2585,6 +2585,7 @@
                 }
                 html += stocks.map(renderStockRow).join('');
                 tbody.innerHTML = html;
+                setNavContext(stocks.map(s => s.ticker));
                 return;
             }
             
@@ -2657,6 +2658,15 @@
             }
             
             tbody.innerHTML = html;
+            // Set nav context to all visible holdings across all baskets
+            const allTickers = [];
+            for (const basket of allBaskets) {
+                const stocks = dataSource.baskets[basket];
+                if (stocks && !collapsedBaskets.has(basket)) {
+                    stocks.forEach(s => allTickers.push(s.ticker));
+                }
+            }
+            setNavContext(allTickers);
         }
 
         function filterWatchlist(basket) {
@@ -3781,9 +3791,13 @@
             return allStocksLoading;
         }
 
-        // Navigation context: set from visible list before entering detail view
+        // Navigation context: explicitly set by each list renderer
         let detailNavContext = [];
         let detailNavIndex = -1;
+
+        function setNavContext(tickers) {
+            if (tickers && tickers.length > 1) detailNavContext = tickers;
+        }
 
         function navDetail(dir) {
             if (!detailNavContext || detailNavContext.length === 0) return;
@@ -3795,18 +3809,28 @@
 
         function _fsSpawnChart(ticker) {
             if (fsTvWidget) { try { fsTvWidget.remove(); } catch(e) {} fsTvWidget = null; }
-            document.getElementById('tv-chart-fs').innerHTML = '';
+            const fsBody = document.getElementById('tv-chart-fs');
+            fsBody.innerHTML = '';
             const savedSettings = JSON.parse(localStorage.getItem('tv_chart_settings') || '{}');
+            // Measure available height for fullscreen body
+            const fsBodyEl = fsBody.parentElement;
+            const h = fsBodyEl ? fsBodyEl.offsetHeight || window.innerHeight - 90 : window.innerHeight - 90;
             fsTvWidget = new TradingView.widget({
-                "width": "100%", "height": "100%",
+                "width": "100%", "height": h,
                 "symbol": ticker,
                 "interval": savedSettings.interval || "D",
-                "timezone": "Etc/UTC", "theme": "dark", "style": "1", "locale": "en",
-                "toolbar_bg": "#f1f3f6", "enable_publishing": false,
-                "hide_top_toolbar": false, "save_image": false,
+                "timezone": "Etc/UTC",
+                "theme": "light",
+                "style": "1",
+                "locale": "en",
+                "enable_publishing": false,
+                "hide_top_toolbar": false,
+                "save_image": false,
                 "container_id": "tv-chart-fs",
-                "hide_side_toolbar": false, "allow_symbol_change": true,
-                "hideideas": true, "hide_legend": false, "autosize": true
+                "hide_side_toolbar": false,
+                "allow_symbol_change": true,
+                "hideideas": true,
+                "hide_legend": false
             });
         }
 
@@ -3919,14 +3943,6 @@
 
         async function viewStock(ticker) {
             if (location.hash !== `#stock/${ticker}`) history.pushState(null, '', `#stock/${ticker}`);
-
-            // Capture nav context from currently visible list rows (before hideAllViews)
-            const visibleRows = [...document.querySelectorAll('tr[data-ticker]')]
-                .filter(r => r.offsetParent !== null && r.dataset.ticker);
-            if (visibleRows.length > 1) {
-                detailNavContext = visibleRows.map(r => r.dataset.ticker);
-            }
-
             hideAllViews();
             document.getElementById('detail-view').style.display = 'block';
             
@@ -4140,13 +4156,15 @@
                 const chartInterval = savedSettings.interval || "D";
                 window.currentTicker = data.ticker;
                 
+                const tvChartEl = document.getElementById('tv-chart');
+                const tvH = tvChartEl ? tvChartEl.offsetHeight || 620 : 620;
                 window.tvWidget = new TradingView.widget({
-                    "width": "100%", "height": "100%", "symbol": data.ticker, "interval": chartInterval,
+                    "width": "100%", "height": tvH, "symbol": data.ticker, "interval": chartInterval,
                     "timezone": "Etc/UTC", "theme": "dark", "style": "1", "locale": "en",
                     "toolbar_bg": "#f1f3f6", "enable_publishing": false, "hide_top_toolbar": false,
                     "save_image": false, "container_id": "tv-chart",
                     "hide_side_toolbar": false, "allow_symbol_change": false, "hideideas": true,
-                    "hide_legend": false, "autosize": true
+                    "hide_legend": false
                 });
                 
                 window.tvCheckInterval = setInterval(() => {
@@ -5128,6 +5146,7 @@
                     </td>
                 </tr>`;
             }).join('');
+            setNavContext(screenerData.map(s => s.ticker));
         }
 
         function sortScreener(col) {
