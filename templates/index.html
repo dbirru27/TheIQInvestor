@@ -2243,18 +2243,21 @@
                     <td style="color: ${earnGrowthColor};">${stock.earnings_growth !== null ? stock.earnings_growth.toFixed(1) + '%' : na}</td>
                     <td style="color: ${pegColor}; font-weight: 600;">${stock.peg_ratio !== null ? stock.peg_ratio.toFixed(2) : na}</td>
                     <td>
+                        ${stock.score == null ? `<span style="color:var(--text-dim); font-size:0.8rem;">ETF</span>` : `
                         <div class="score-container">
                             <div class="score-bar-bg">
                                 <div class="score-bar-fill" style="width: ${scorePercent}%; background: ${scoreColor};"></div>
                             </div>
                             <span class="score-text">${stock.score}/100</span>
                         </div>
-                        <div class="score-breakdown">T:${stock.technical_score || 0} G:${stock.growth_score || 0} Q:${stock.quality_score || 0} C:${stock.context_score || 0}</div>
+                        <div class="score-breakdown">T:${stock.technical_score || 0} G:${stock.growth_score || 0} Q:${stock.quality_score || 0} C:${stock.context_score || 0}</div>`}
                     </td>
-                    <td class="text-center font-bold text-amber-400">${stock.moonshot_score || 0}%</td>
+                    <td class="text-center font-bold text-amber-400">${stock.score == null ? '—' : (stock.moonshot_score || 0) + '%'}</td>
                     <td class="text-center">${renderEwros(stock.ewros_score, stock.ewros_trend, stock.ticker)}</td>
                     <td class="text-center" style="font-weight:700; color:${(stock.iq_edge||0) >= 90 ? '#a855f7' : (stock.iq_edge||0) >= 70 ? '#10b981' : (stock.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${stock.iq_edge != null && stock.iq_edge > 0 ? stock.iq_edge : '—'}</td>
-                    <td><span class="grade-badge grade-${stock.grade}">${stock.grade}</span></td>
+                    <td>${stock.grade === 'ETF'
+                        ? `<span class="grade-badge" style="background:#1e3a5f;color:#38bdf8;">ETF</span>`
+                        : `<span class="grade-badge grade-${stock.grade}">${stock.grade}</span>`}</td>
                     <td>${getPortfolioSignalBadge(stock)}</td>
                     <td>${renderInsiderBadge(stock.ins_score, stock.insider_signal, true)}</td>
                 </tr>
@@ -2328,12 +2331,13 @@
         function getPortfolioSignalBadge(stock) {
             const ticker = stock.ticker || '';
             if (isEtf(stock)) {
-                const tech = stock.technical_score || 0;
-                const pct = tech / 53 * 100;
-                const reasons = [`Technical Score: ${tech}/53`];
-                if (pct >= 65) { reasons.push('Trend intact — above key moving averages'); return sigBadge('#10b981', 'rgba(16,185,129,0.15)', '🟢 HOLD', reasons, ticker); }
-                if (pct >= 40) { reasons.push('Momentum weakening — watch for breakdown'); return sigBadge('#eab308', 'rgba(234,179,8,0.15)', '🟡 WATCH', reasons, ticker); }
-                reasons.push('Trend broken — consider reducing'); return sigBadge('#ef4444', 'rgba(239,68,68,0.15)', '🔴 EXIT', reasons, ticker);
+                // ETFs: use EWROS for signal (no fundamental/technical score available)
+                const ewros = stock.ewros_score || 0;
+                const reasons = [`EWROS: ${ewros} (momentum vs SPY)`];
+                if (ewros >= 65) { reasons.push('Trend intact — outperforming SPY'); return sigBadge('#10b981', 'rgba(16,185,129,0.15)', '🟢 HOLD', reasons, ticker); }
+                if (ewros >= 40) { reasons.push('Momentum weakening — monitor'); return sigBadge('#eab308', 'rgba(234,179,8,0.15)', '🟡 WATCH', reasons, ticker); }
+                if (ewros === 0) { reasons.push('Score pending — awaiting EWROS data'); return sigBadge('#475569', 'rgba(71,85,105,0.15)', '⚪ N/A', reasons, ticker); }
+                reasons.push('Underperforming SPY — consider reducing'); return sigBadge('#ef4444', 'rgba(239,68,68,0.15)', '🔴 EXIT', reasons, ticker);
             } else {
                 const ewros = stock.ewros_score || 0;
                 const iq = stock.iq_edge || 0;
