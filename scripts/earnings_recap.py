@@ -23,6 +23,17 @@ EMAIL_TO = 'dbirru@gmail.com'
 LOOKBACK_DAYS = 2  # Catch after-close + pre-market reports
 
 sys.path.insert(0, WORKSPACE)
+
+# Load .env if present
+_env_file = os.path.join(WORKSPACE, '.env')
+if os.path.exists(_env_file):
+    with open(_env_file) as _f:
+        for _line in _f:
+            _line = _line.strip()
+            if _line and not _line.startswith('#') and '=' in _line:
+                _k, _v = _line.split('=', 1)
+                os.environ.setdefault(_k.strip(), _v.strip())
+
 try:
     from config import SUPABASE_URL, SUPABASE_KEY
 except ImportError:
