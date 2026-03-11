@@ -1,5 +1,5 @@
 {
-  "scan_date": "2026-03-10 18:09:41",
+  "scan_date": "2026-03-11 18:04:35",
   "lookback_days": 90,
   "tickers_scanned": 32,
   "signals": {
@@ -600,19 +600,29 @@
       ]
     },
     "HALO": {
-      "ins_score": -5,
+      "ins_score": -7,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 15,
+      "transactions": 17,
       "buys": 0,
-      "sells": 15,
+      "sells": 17,
       "total_buy_value": 0,
-      "total_sell_value": 7470160.0,
+      "total_sell_value": 9284819.0,
       "reasons": [
         "C-suite sell: Torley Helen ($7,329,660)",
+        "Heavy sell: Caudill Cortney dumped 56%",
         "All sells, zero buys in period"
       ],
       "details": [
+        {
+          "date": "2026-03-09",
+          "owner": "Caudill Cortney",
+          "title": "SVP, CHIEF OPERATING OFFICER",
+          "type": "SELL",
+          "shares": 17900,
+          "price": 67.75,
+          "value": 1212743.0
+        },
         {
           "date": "2026-03-02",
           "owner": "Torley Helen",
@@ -648,15 +658,6 @@
           "shares": 9900,
           "price": 76.94,
           "value": 761666.0
-        },
-        {
-          "date": "2026-02-03",
-          "owner": "Torley Helen",
-          "title": "PRESIDENT AND CEO",
-          "type": "SELL",
-          "shares": 9659,
-          "price": 75.94,
-          "value": 733543.0
         }
       ]
     },
@@ -1226,41 +1227,21 @@
       ]
     },
     "STX": {
-      "ins_score": -15,
+      "ins_score": -13,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 56,
+      "transactions": 42,
       "buys": 0,
-      "sells": 56,
+      "sells": 42,
       "total_buy_value": 0,
-      "total_sell_value": 34824018.0,
+      "total_sell_value": 19523376.0,
       "reasons": [
-        "Cluster sell: 7 insiders",
-        "C-suite sell: MOSLEY WILLIAM D ($21,991,867)",
+        "Cluster sell: 5 insiders",
+        "C-suite sell: MOSLEY WILLIAM D ($16,280,621)",
         "Heavy sell: Geldmacher Jay L dumped 81%",
-        "Heavy sell: Teh Ban Seng dumped 75%",
-        "Heavy sell: Lee James CI dumped 72%",
         "All sells, zero buys in period"
       ],
       "details": [
-        {
-          "date": "2026-01-29",
-          "owner": "Teh Ban Seng",
-          "title": "EVP & Chief Commercial Officer",
-          "type": "SELL",
-          "shares": 9433,
-          "price": 444.59,
-          "value": 4193817.0
-        },
-        {
-          "date": "2026-01-29",
-          "owner": "Teh Ban Seng",
-          "title": "EVP & Chief Commercial Officer",
-          "type": "SELL",
-          "shares": 9414,
-          "price": 440.24,
-          "value": 4144392.0
-        },
         {
           "date": "2026-02-23",
           "owner": "Chong Kian Fatt",
@@ -1287,6 +1268,24 @@
           "shares": 3725,
           "price": 431.27,
           "value": 1606492.0
+        },
+        {
+          "date": "2026-03-02",
+          "owner": "MOSLEY WILLIAM D",
+          "title": "CEO",
+          "type": "SELL",
+          "shares": 3500,
+          "price": 382.41,
+          "value": 1338437.0
+        },
+        {
+          "date": "2026-03-02",
+          "owner": "MOSLEY WILLIAM D",
+          "title": "CEO",
+          "type": "SELL",
+          "shares": 2700,
+          "price": 384.51,
+          "value": 1038175.0
         }
       ]
     },
