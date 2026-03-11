@@ -3668,13 +3668,25 @@
                 if (e.key === 'Enter') viewStock(this.value);
             });
 
-            // Keyboard nav for detail view (arrow keys) + Esc to close fullscreen
+            // Keyboard nav: arrows in detail/fullscreen, Esc to close fullscreen, Enter in fs input
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') { closeChartFullscreen(); return; }
+                const fsActive = document.getElementById('chart-fullscreen-overlay').classList.contains('active');
+
+                if (e.key === 'Escape') { if (fsActive) { closeChartFullscreen(); } return; }
+
+                const activeEl = document.activeElement;
+                const inInput = activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA');
+
+                if (fsActive) {
+                    if (activeEl && activeEl.id === 'fs-ticker-input') return; // let input handle its own keys
+                    if (e.key === 'ArrowLeft')  { e.preventDefault(); fsNavDetail(-1); }
+                    if (e.key === 'ArrowRight') { e.preventDefault(); fsNavDetail(+1); }
+                    return;
+                }
+
                 const detailVisible = document.getElementById('detail-view') &&
                     document.getElementById('detail-view').style.display !== 'none';
-                if (!detailVisible) return;
-                if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) return;
+                if (!detailVisible || inInput) return;
                 if (e.key === 'ArrowLeft')  { e.preventDefault(); navDetail(-1); }
                 if (e.key === 'ArrowRight') { e.preventDefault(); navDetail(+1); }
             });
@@ -3717,34 +3729,9 @@
 
         let fsTvWidget = null;
 
-        function openChartFullscreen() {
-            const overlay = document.getElementById('chart-fullscreen-overlay');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-
-            // Copy header info from detail view
-            const ticker = window.currentTicker || '';
-            document.getElementById('fs-ticker').textContent = ticker;
-            document.getElementById('fs-name').textContent = document.getElementById('detail-name').innerText;
-
-            const ewrosBadge = document.getElementById('detail-ewros-badge');
-            const fsEwros = document.getElementById('fs-ewros-badge');
-            fsEwros.textContent = ewrosBadge.textContent;
-            fsEwros.style.background = ewrosBadge.style.background;
-            fsEwros.style.color = ewrosBadge.style.color;
-
-            const grade = document.getElementById('detail-grade');
-            const fsGrade = document.getElementById('fs-grade-badge');
-            fsGrade.textContent = grade.innerText;
-            fsGrade.className = grade.className.replace('text-xl px-6 py-2', '');
-            fsGrade.style.background = grade.style.background || '';
-            fsGrade.style.color = grade.style.color || '';
-
-            // Destroy old fullscreen widget if any
+        function _fsSpawnChart(ticker) {
             if (fsTvWidget) { try { fsTvWidget.remove(); } catch(e) {} fsTvWidget = null; }
             document.getElementById('tv-chart-fs').innerHTML = '';
-
-            // Spawn a fresh TradingView widget in the fullscreen container
             const savedSettings = JSON.parse(localStorage.getItem('tv_chart_settings') || '{}');
             fsTvWidget = new TradingView.widget({
                 "width": "100%", "height": "100%",
@@ -3757,6 +3744,73 @@
                 "hide_side_toolbar": false, "allow_symbol_change": true,
                 "hideideas": true, "hide_legend": false, "autosize": true
             });
+        }
+
+        function _fsUpdateHeader(ticker) {
+            // Try to pull info from all_stocks cache or watchlist
+            const allData = allStocksCache;
+            const stock = allData && allData.stocks ? allData.stocks[ticker.toUpperCase()] : null;
+            const name = stock ? stock.name : ticker;
+            const ewros = stock ? (stock.ewros_score || 0) : 0;
+            const grade = stock ? (stock.grade || '—') : '—';
+
+            document.getElementById('fs-ticker').textContent = ticker.toUpperCase();
+            document.getElementById('fs-name').textContent = name;
+            document.getElementById('fs-ticker-input').value = ticker.toUpperCase();
+
+            const ewrosBadge = document.getElementById('fs-ewros-badge');
+            ewrosBadge.textContent = `RS ${ewros}`;
+            ewrosBadge.style.background = ewros >= 80 ? 'rgba(16,185,129,0.18)' : ewros >= 60 ? 'rgba(234,179,8,0.15)' : ewros >= 40 ? 'rgba(100,116,139,0.15)' : 'rgba(51,65,85,0.4)';
+            ewrosBadge.style.color = ewros >= 80 ? '#10b981' : ewros >= 60 ? '#eab308' : ewros >= 40 ? '#94a3b8' : '#64748b';
+
+            const gradeBadge = document.getElementById('fs-grade-badge');
+            if (grade === 'ETF') {
+                gradeBadge.textContent = 'ETF'; gradeBadge.style.background = '#1e3a5f'; gradeBadge.style.color = '#38bdf8';
+            } else {
+                const gradeColors = {A:'#059669',B:'#0284c7',C:'#d97706',D:'#7c3aed',F:'#dc2626'};
+                gradeBadge.textContent = grade;
+                gradeBadge.style.background = (gradeColors[grade] || '#475569') + '33';
+                gradeBadge.style.color = gradeColors[grade] || '#94a3b8';
+            }
+
+            // Nav bar
+            const navIdx = detailNavContext.indexOf(ticker.toUpperCase());
+            const fsNavBar = document.getElementById('fs-nav-bar');
+            if (detailNavContext.length > 1 && navIdx >= 0) {
+                detailNavIndex = navIdx;
+                fsNavBar.style.visibility = 'visible';
+                document.getElementById('fs-nav-pos').textContent = `${navIdx + 1} / ${detailNavContext.length}`;
+            } else {
+                fsNavBar.style.visibility = 'hidden';
+            }
+        }
+
+        function openChartFullscreen() {
+            const overlay = document.getElementById('chart-fullscreen-overlay');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            const ticker = window.currentTicker || '';
+            _fsUpdateHeader(ticker);
+            _fsSpawnChart(ticker);
+            // Focus input for immediate typing
+            setTimeout(() => document.getElementById('fs-ticker-input').select(), 200);
+        }
+
+        function fsLoadTicker(raw) {
+            const ticker = (raw || '').trim().toUpperCase();
+            if (!ticker) return;
+            window.currentTicker = ticker;
+            _fsUpdateHeader(ticker);
+            _fsSpawnChart(ticker);
+            document.getElementById('fs-ticker-input').blur();
+        }
+
+        function fsNavDetail(dir) {
+            if (!detailNavContext || detailNavContext.length === 0) return;
+            detailNavIndex = (detailNavIndex + dir + detailNavContext.length) % detailNavContext.length;
+            const ticker = detailNavContext[detailNavIndex];
+            _fsUpdateHeader(ticker);
+            _fsSpawnChart(ticker);
         }
 
         function closeChartFullscreen() {
@@ -5214,15 +5268,29 @@
     <!-- Chart Fullscreen Overlay -->
     <div id="chart-fullscreen-overlay">
         <div id="chart-fullscreen-header">
-            <div style="display:flex; align-items:center; gap:12px;">
-                <span id="fs-ticker" style="font-weight:800; font-size:1.1rem; color:#fff;"></span>
-                <span id="fs-name" style="font-size:0.85rem; color:#94a3b8;"></span>
-                <span id="fs-ewros-badge" style="padding:3px 12px; border-radius:20px; font-weight:700; font-size:0.9rem;"></span>
-                <span id="fs-grade-badge" style="padding:3px 12px; border-radius:20px; font-weight:700; font-size:0.9rem;"></span>
+            <div style="display:flex; align-items:center; gap:12px; flex:1; min-width:0;">
+                <span id="fs-ticker" style="font-weight:800; font-size:1.1rem; color:#fff; white-space:nowrap;"></span>
+                <span id="fs-name" style="font-size:0.85rem; color:#94a3b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:200px;"></span>
+                <span id="fs-ewros-badge" style="padding:3px 12px; border-radius:20px; font-weight:700; font-size:0.9rem; white-space:nowrap;"></span>
+                <span id="fs-grade-badge" style="padding:3px 12px; border-radius:20px; font-weight:700; font-size:0.9rem; white-space:nowrap;"></span>
             </div>
-            <div style="display:flex; gap:8px; align-items:center;">
-                <span style="font-size:0.72rem; color:#475569;">Press <kbd style="background:#1e293b;border:1px solid #374151;border-radius:3px;padding:1px 5px;">Esc</kbd> to close</span>
-                <button onclick="closeChartFullscreen()" style="background:#1e293b; border:1px solid #374151; color:#94a3b8; border-radius:6px; padding:6px 14px; cursor:pointer; font-size:0.85rem; font-weight:600;">✕ Close</button>
+            <div style="display:flex; gap:8px; align-items:center; flex-shrink:0;">
+                <!-- Ticker search -->
+                <div style="display:flex; align-items:center; background:#1e293b; border:1px solid #334155; border-radius:8px; overflow:hidden;">
+                    <input id="fs-ticker-input" type="text" placeholder="Ticker…" list="ticker-list"
+                        style="background:transparent; border:none; outline:none; color:#fff; padding:6px 10px; font-size:0.9rem; font-weight:600; width:110px; letter-spacing:0.05em;"
+                        onkeydown="if(event.key==='Enter') fsLoadTicker(this.value)"
+                        oninput="this.value=this.value.toUpperCase()">
+                    <button onclick="fsLoadTicker(document.getElementById('fs-ticker-input').value)"
+                        style="background:#2563eb; border:none; color:#fff; padding:6px 12px; cursor:pointer; font-size:0.8rem; font-weight:700; height:100%;">Go</button>
+                </div>
+                <!-- List nav arrows -->
+                <div id="fs-nav-bar" style="display:flex; gap:4px; align-items:center; visibility:hidden;">
+                    <button onclick="fsNavDetail(-1)" style="padding:5px 10px; background:#1e293b; border:1px solid #374151; border-radius:6px; color:#94a3b8; cursor:pointer; font-size:0.85rem;" title="Previous (←)">◀</button>
+                    <span id="fs-nav-pos" style="font-size:0.72rem; color:#64748b; min-width:52px; text-align:center;">—</span>
+                    <button onclick="fsNavDetail(+1)" style="padding:5px 10px; background:#1e293b; border:1px solid #374151; border-radius:6px; color:#94a3b8; cursor:pointer; font-size:0.85rem;" title="Next (→)">▶</button>
+                </div>
+                <button onclick="closeChartFullscreen()" style="background:#1e293b; border:1px solid #374151; color:#94a3b8; border-radius:6px; padding:6px 14px; cursor:pointer; font-size:0.85rem; font-weight:600;" title="Close (Esc)">✕</button>
             </div>
         </div>
         <div id="chart-fullscreen-body">
