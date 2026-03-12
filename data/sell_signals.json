@@ -1,102 +1,103 @@
 {
-  "date": "2026-03-10",
+  "date": "2026-03-11",
   "signals": [
     {
       "ticker": "GTES",
       "tier": "SELL",
       "reasons": [
-        "Price $24.27 below 50d MA $24.60 (held 8d)"
+        "Price $23.87 below 50d MA $24.64 (held 9d)"
       ],
-      "current_price": 24.27,
+      "current_price": 23.87,
       "entry_price": 27.6,
-      "pct_from_entry": -12.07,
-      "ewros_score": 58,
+      "pct_from_entry": -13.51,
+      "ewros_score": 52,
       "entry_ewros": 0,
-      "ma50": 24.6,
-      "days_held": 8,
-      "date": "2026-03-10"
+      "ma50": 24.64,
+      "days_held": 9,
+      "date": "2026-03-11"
     },
     {
       "ticker": "NVT",
       "tier": "SELL",
       "reasons": [
-        "Price $109.13 below 50d MA $111.62 (held 8d)"
+        "Price $111.09 below 50d MA $111.76 (held 9d)"
       ],
-      "current_price": 109.13,
+      "current_price": 111.09,
       "entry_price": 120.23,
-      "pct_from_entry": -9.23,
-      "ewros_score": 52,
+      "pct_from_entry": -7.6,
+      "ewros_score": 61,
       "entry_ewros": 0,
-      "ma50": 111.62,
-      "days_held": 8,
-      "date": "2026-03-10"
+      "ma50": 111.76,
+      "days_held": 9,
+      "date": "2026-03-11"
     },
     {
       "ticker": "JHG",
       "tier": "HOLD",
       "reasons": [],
-      "current_price": 50.87,
+      "current_price": 50.56,
       "entry_price": 52.09,
-      "pct_from_entry": -2.34,
-      "ewros_score": 77,
+      "pct_from_entry": -2.94,
+      "ewros_score": 76,
       "entry_ewros": 0,
-      "ma50": 48.9,
-      "days_held": 8,
-      "date": "2026-03-10"
+      "ma50": 48.96,
+      "days_held": 9,
+      "date": "2026-03-11"
     },
     {
       "ticker": "PCG",
       "tier": "HOLD",
       "reasons": [],
-      "current_price": 18.22,
+      "current_price": 18.14,
       "entry_price": 19.09,
-      "pct_from_entry": -4.56,
-      "ewros_score": 88,
+      "pct_from_entry": -4.98,
+      "ewros_score": 87,
       "entry_ewros": 0,
-      "ma50": 16.71,
-      "days_held": 8,
-      "date": "2026-03-10"
+      "ma50": 16.75,
+      "days_held": 9,
+      "date": "2026-03-11"
     },
     {
       "ticker": "THC",
       "tier": "HOLD",
       "reasons": [],
-      "current_price": 237.42,
+      "current_price": 234.58,
       "entry_price": 235.21,
-      "pct_from_entry": 0.94,
-      "ewros_score": 91,
+      "pct_from_entry": -0.27,
+      "ewros_score": 90,
       "entry_ewros": 0,
-      "ma50": 211.2,
-      "days_held": 8,
-      "date": "2026-03-10"
+      "ma50": 211.88,
+      "days_held": 9,
+      "date": "2026-03-11"
     },
     {
       "ticker": "MPC",
       "tier": "HOLD",
       "reasons": [],
-      "current_price": 215.23,
+      "current_price": 226.74,
       "entry_price": 211.98,
-      "pct_from_entry": 1.53,
-      "ewros_score": 92,
+      "pct_from_entry": 6.96,
+      "ewros_score": 95,
       "entry_ewros": 0,
-      "ma50": 188.27,
-      "days_held": 7,
-      "date": "2026-03-10"
+      "ma50": 189.53,
+      "days_held": 8,
+      "date": "2026-03-11"
     },
     {
       "ticker": "NRG",
       "tier": "SELL",
       "reasons": [
-        "Price $155.15 below 50d MA $159.55 (held 7d)"
+        "EWROS collapsed: 28 (momentum gone)",
+        "Price $148.63 below 50d MA $159.31 (held 8d)"
       ],
-      "current_price": 155.15,
+      "current_price": 148.63,
       "entry_price": 162.06,
-      "pct_from_entry": -4.26,
-      "ewros_score": 43,
+      "pct_from_entry": -8.29,
+      "ewros_score": 28,
       "entry_ewros": 0,
-      "ma50": 159.55,
-      "days_held": 7,
-      "date": "2026-03-10"
+      "ma50": 159.31,
+      "days_held": 8,
+      "date": "2026-03-11"
     }
   ]
 }
