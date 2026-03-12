@@ -1,5 +1,5 @@
 {
-  "scan_date": "2026-03-11 18:04:35",
+  "scan_date": "2026-03-12 18:07:15",
   "lookback_days": 90,
   "tickers_scanned": 32,
   "signals": {
@@ -1073,28 +1073,28 @@
       ]
     },
     "NVDA": {
-      "ins_score": -10,
+      "ins_score": -9,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 54,
+      "transactions": 50,
       "buys": 0,
-      "sells": 54,
+      "sells": 50,
       "total_buy_value": 0,
-      "total_sell_value": 150452442.0,
+      "total_sell_value": 160695379.0,
       "reasons": [
-        "Cluster sell: 4 insiders",
+        "Cluster sell: 3 insiders",
         "C-suite sell: Kress Colette ($17,180,815)",
         "All sells, zero buys in period"
       ],
       "details": [
         {
-          "date": "2025-12-19",
-          "owner": "STEVENS MARK A",
-          "title": null,
+          "date": "2026-03-10",
+          "owner": "Puri Ajay K",
+          "title": "EVP, Worldwide Field Ops",
           "type": "SELL",
-          "shares": 222500,
-          "price": 180.17,
-          "value": 40087380.0
+          "shares": 275060,
+          "price": 182.47,
+          "value": 50189180.0
         },
         {
           "date": "2026-01-21",
@@ -1227,48 +1227,20 @@
       ]
     },
     "STX": {
-      "ins_score": -13,
+      "ins_score": -9,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 42,
+      "transactions": 24,
       "buys": 0,
-      "sells": 42,
+      "sells": 24,
       "total_buy_value": 0,
-      "total_sell_value": 19523376.0,
+      "total_sell_value": 8088854.0,
       "reasons": [
-        "Cluster sell: 5 insiders",
-        "C-suite sell: MOSLEY WILLIAM D ($16,280,621)",
-        "Heavy sell: Geldmacher Jay L dumped 81%",
+        "Cluster sell: 3 insiders",
+        "C-suite sell: MOSLEY WILLIAM D ($7,695,262)",
         "All sells, zero buys in period"
       ],
       "details": [
-        {
-          "date": "2026-02-23",
-          "owner": "Chong Kian Fatt",
-          "title": "EVP Global Operations",
-          "type": "SELL",
-          "shares": 5846,
-          "price": 416.48,
-          "value": 2434740.0
-        },
-        {
-          "date": "2026-02-02",
-          "owner": "MOSLEY WILLIAM D",
-          "title": "CEO",
-          "type": "SELL",
-          "shares": 3875,
-          "price": 432.19,
-          "value": 1674730.0
-        },
-        {
-          "date": "2026-02-02",
-          "owner": "MOSLEY WILLIAM D",
-          "title": "CEO",
-          "type": "SELL",
-          "shares": 3725,
-          "price": 431.27,
-          "value": 1606492.0
-        },
         {
           "date": "2026-03-02",
           "owner": "MOSLEY WILLIAM D",
@@ -1286,6 +1258,33 @@
           "shares": 2700,
           "price": 384.51,
           "value": 1038175.0
+        },
+        {
+          "date": "2026-03-02",
+          "owner": "MOSLEY WILLIAM D",
+          "title": "CEO",
+          "type": "SELL",
+          "shares": 2700,
+          "price": 383.49,
+          "value": 1035423.0
+        },
+        {
+          "date": "2026-03-02",
+          "owner": "MOSLEY WILLIAM D",
+          "title": "CEO",
+          "type": "SELL",
+          "shares": 1740,
+          "price": 379.23,
+          "value": 659862.0
+        },
+        {
+          "date": "2026-03-02",
+          "owner": "MOSLEY WILLIAM D",
+          "title": "CEO",
+          "type": "SELL",
+          "shares": 1260,
+          "price": 380.42,
+          "value": 479331.0
         }
       ]
     },
