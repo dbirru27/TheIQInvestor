@@ -1703,7 +1703,7 @@
                                 <button onclick="downloadReport()" style="background:#334155;border:1px solid #475569;color:var(--text);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:0.8rem;">Download</button>
                             </div>
                         </div>
-                        <div id="research-report-body" style="line-height:1.7;font-size:0.92rem;"></div>
+                        <div id="research-report-body" style="line-height:1.5;font-size:0.9rem;"></div>
                     </div>
 
                     <!-- Risk Flags -->
@@ -5848,10 +5848,10 @@
                 // Code blocks
                 .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre style="background:#0f172a;padding:12px;border-radius:8px;overflow-x:auto;font-size:0.85rem;border:1px solid #2d3748;"><code>$2</code></pre>')
                 // Headers
-                .replace(/^#### (.+)$/gm, '<h4 style="font-weight:700;font-size:0.95rem;margin:16px 0 8px;color:var(--text);">$1</h4>')
-                .replace(/^### (.+)$/gm, '<h3 style="font-weight:700;font-size:1.05rem;margin:20px 0 10px;color:var(--text);">$1</h3>')
-                .replace(/^## (.+)$/gm, '<h2 style="font-weight:700;font-size:1.2rem;margin:24px 0 12px;color:var(--accent);">$1</h2>')
-                .replace(/^# (.+)$/gm, '<h1 style="font-weight:800;font-size:1.4rem;margin:0 0 16px;color:var(--text);">$1</h1>')
+                .replace(/^#### (.+)$/gm, '<h4 style="font-weight:700;font-size:0.9rem;margin:10px 0 4px;color:var(--text);">$1</h4>')
+                .replace(/^### (.+)$/gm, '<h3 style="font-weight:700;font-size:1rem;margin:14px 0 6px;color:var(--text);">$1</h3>')
+                .replace(/^## (.+)$/gm, '<h2 style="font-weight:700;font-size:1.1rem;margin:18px 0 6px;color:var(--accent);">$1</h2>')
+                .replace(/^# (.+)$/gm, '<h1 style="font-weight:800;font-size:1.25rem;margin:0 0 10px;color:var(--text);">$1</h1>')
                 // Bold & italic
                 .replace(/\*\*\[HIGH\]\*\*/g, '<span style="color:#ef4444;font-weight:700;">[HIGH]</span>')
                 .replace(/\*\*\[MEDIUM\]\*\*/g, '<span style="color:#eab308;font-weight:700;">[MEDIUM]</span>')
@@ -5861,16 +5861,16 @@
                 // Inline code
                 .replace(/`([^`]+)`/g, '<code style="background:#0f172a;padding:2px 6px;border-radius:4px;font-size:0.85rem;">$1</code>')
                 // Unordered lists
-                .replace(/^[-*] (.+)$/gm, '<li style="margin-left:20px;margin-bottom:4px;">$1</li>')
+                .replace(/^[-*] (.+)$/gm, '<li style="margin-left:20px;margin-bottom:2px;">$1</li>')
                 // Ordered lists
-                .replace(/^\d+\. (.+)$/gm, '<li style="margin-left:20px;margin-bottom:4px;list-style-type:decimal;">$1</li>')
+                .replace(/^\d+\. (.+)$/gm, '<li style="margin-left:20px;margin-bottom:2px;list-style-type:decimal;">$1</li>')
                 // Horizontal rule
-                .replace(/^---$/gm, '<hr style="border:none;border-top:1px solid #2d3748;margin:20px 0;">')
+                .replace(/^---$/gm, '<hr style="border:none;border-top:1px solid #2d3748;margin:12px 0;">')
                 // Paragraphs (double newlines)
-                .replace(/\n\n/g, '</p><p style="margin-bottom:12px;">')
+                .replace(/\n\n/g, '</p><p style="margin-bottom:6px;">')
                 // Single newlines within paragraphs
                 .replace(/\n/g, '<br>');
-            return '<p style="margin-bottom:12px;">' + html + '</p>';
+            return '<p style="margin-bottom:6px;">' + html + '</p>';
         }
 
         // Add fadeIn animation
