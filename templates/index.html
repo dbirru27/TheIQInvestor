@@ -590,6 +590,7 @@
         <div class="top-nav-item" data-tab="calendar" onclick="navTo('calendar')">Calendar</div>
         <div class="top-nav-item" data-tab="screener" onclick="navTo('screener')">Screener</div>
         <div class="top-nav-item" data-tab="alerts" onclick="navTo('alerts')">Alerts</div>
+        <div class="top-nav-item" data-tab="research" onclick="navTo('research')">Research</div>
     </nav>
 
     <!-- Keep sidebar for backwards compat but hidden by default -->
@@ -607,6 +608,7 @@
             <div class="nav-item" onclick="showCalendar(); toggleMenu();">Calendar</div>
             <div class="nav-item" onclick="showScreener(); toggleMenu();">Screener</div>
             <div class="nav-item" onclick="showAlerts(); toggleMenu();">Alerts</div>
+            <div class="nav-item" onclick="navTo('research'); toggleMenu();">🔬 Research</div>
             <div class="nav-item" onclick="showJournal(); toggleMenu();">Trade Journal</div>
             <div class="nav-item" onclick="showRiskDashboard(); toggleMenu();">Risk Dashboard</div>
         </nav>
@@ -1659,6 +1661,76 @@
             </div>
         </div>
 
+        <!-- RESEARCH VIEW -->
+        <div id="research-view" style="display: none;">
+            <h2 class="text-2xl font-bold mb-4" style="display:flex;align-items:center;gap:10px;">🔬 Deep Research</h2>
+            <p style="color:var(--text-dim);margin-bottom:20px;font-size:0.9rem;">Multi-agent AI research pipeline — analyzes fundamentals, technicals, InvestIQ scores, insider signals & more.</p>
+
+            <!-- Search Input -->
+            <div class="card" style="display:flex;gap:12px;align-items:center;padding:16px 20px;">
+                <input id="research-query" type="text" placeholder="e.g. 'Is NVDA a buy right now?' or 'Compare AAPL vs MSFT outlook'"
+                    style="flex:1;background:#0f172a;border:1px solid #2d3748;color:white;padding:12px 16px;border-radius:8px;font-size:0.95rem;"
+                    onkeydown="if(event.key==='Enter')startResearch()">
+                <button onclick="startResearch()" id="research-btn"
+                    style="background:var(--accent);color:#000;border:none;padding:12px 28px;border-radius:8px;font-weight:700;cursor:pointer;white-space:nowrap;font-size:0.95rem;">
+                    Research
+                </button>
+            </div>
+
+            <div style="display:flex;gap:20px;margin-top:8px;">
+                <!-- Main Content -->
+                <div style="flex:1;min-width:0;">
+                    <!-- Agent Progress Panel -->
+                    <div id="research-progress" class="card" style="display:none;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                            <h3 style="font-weight:700;font-size:1rem;margin:0;">Agent Pipeline</h3>
+                            <span id="research-progress-pct" style="font-size:0.85rem;color:var(--accent);font-weight:600;">0%</span>
+                        </div>
+                        <div style="width:100%;height:6px;background:#334155;border-radius:3px;margin-bottom:16px;overflow:hidden;">
+                            <div id="research-progress-bar" style="height:100%;background:var(--accent);border-radius:3px;transition:width 0.5s ease;width:0%;"></div>
+                        </div>
+                        <div id="research-agents" style="display:flex;flex-direction:column;gap:8px;"></div>
+                        <div id="research-substeps" style="margin-top:12px;font-size:0.8rem;color:var(--text-dim);"></div>
+                    </div>
+
+                    <!-- Report Output -->
+                    <div id="research-report" class="card" style="display:none;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+                            <h3 style="font-weight:700;font-size:1.1rem;margin:0;">Research Report</h3>
+                            <div style="display:flex;gap:8px;">
+                                <button onclick="rerunResearch()" style="background:#334155;border:1px solid #475569;color:var(--text);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:0.8rem;">Re-run</button>
+                                <button onclick="copyReport()" style="background:#334155;border:1px solid #475569;color:var(--text);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:0.8rem;">Copy</button>
+                                <button onclick="downloadReport()" style="background:#334155;border:1px solid #475569;color:var(--text);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:0.8rem;">Download</button>
+                            </div>
+                        </div>
+                        <div id="research-report-body" style="line-height:1.7;font-size:0.92rem;"></div>
+                    </div>
+
+                    <!-- Risk Flags -->
+                    <div id="research-risk" class="card" style="display:none;background:rgba(220,38,38,0.08);border-color:rgba(220,38,38,0.3);">
+                        <h3 style="font-weight:700;font-size:1rem;margin:0 0 12px;color:#f87171;">Risk Assessment</h3>
+                        <div id="research-risk-body" style="line-height:1.7;font-size:0.9rem;"></div>
+                    </div>
+
+                    <!-- Error -->
+                    <div id="research-error" class="card" style="display:none;border-color:#dc2626;">
+                        <h3 style="color:#f87171;margin:0 0 8px;">Error</h3>
+                        <pre id="research-error-msg" style="color:var(--text-dim);white-space:pre-wrap;font-size:0.85rem;"></pre>
+                    </div>
+                </div>
+
+                <!-- Report History Sidebar -->
+                <div style="width:260px;flex-shrink:0;">
+                    <div class="card" style="position:sticky;top:80px;">
+                        <h3 style="font-weight:700;font-size:0.9rem;margin:0 0 12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;">History</h3>
+                        <div id="research-history" style="display:flex;flex-direction:column;gap:6px;max-height:500px;overflow-y:auto;">
+                            <div style="color:var(--text-dim);font-size:0.8rem;padding:8px;">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <script>
@@ -1683,6 +1755,7 @@
                 watchlist: () => showWatchlistEntries(),
                 screener: () => showScreener(),
                 alerts: () => showAlerts(),
+                research: () => showResearch(),
                 calendar: () => showCalendar(),
                 journal: () => showJournal(),
                 risk: () => showRiskDashboard()
@@ -1969,7 +2042,7 @@
         function showAlert(msg) { alert(msg); }
         
         function hideAllViews() {
-            ['landing-view','dashboard-view','hunter-view','detail-view','watchlist-view','rotation-view','ewros-view','watchlist-entries-view','calendar-view','journal-view','risk-view','screener-view','report-view','alerts-view'].forEach(id => {
+            ['landing-view','dashboard-view','hunter-view','detail-view','watchlist-view','rotation-view','ewros-view','watchlist-entries-view','calendar-view','journal-view','risk-view','screener-view','report-view','alerts-view','research-view'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.style.display = 'none';
             });
@@ -3753,6 +3826,7 @@
             else if (hash === 'risk') showRiskDashboard();
             else if (hash === 'screener') showScreener();
             else if (hash === 'alerts') showAlerts();
+            else if (hash === 'research') showResearch();
             else if (hash.startsWith('report/')) showReportCard(hash.split('/')[1]);
             else if (hash.startsWith('stock/')) viewStock(hash.split('/')[1]);
             else showDashboard();
@@ -5529,6 +5603,282 @@
             } catch(e) {
                 alert('Error: ' + e.message);
             }
+        }
+
+        // ═══════════════════════════════════════════════════════════
+        // DEEP RESEARCH TAB
+        // ═══════════════════════════════════════════════════════════
+
+        const RESEARCH_AGENTS = ['Planner', 'Researcher', 'Quant Analyst', 'Qual Analyst', 'Moderator', 'Writer', 'Risk Analyst'];
+        let researchEventSource = null;
+        let lastResearchQuery = '';
+        let lastReportMarkdown = '';
+
+        function showResearch() {
+            if (location.hash !== '#research') history.pushState(null, '', '#research');
+            hideAllViews();
+            document.getElementById('research-view').style.display = 'block';
+            updateActiveNav('research');
+            loadResearchHistory();
+        }
+
+        function startResearch() {
+            const query = document.getElementById('research-query').value.trim();
+            if (!query) return;
+            lastResearchQuery = query;
+
+            // Close any existing SSE connection
+            if (researchEventSource) { researchEventSource.close(); researchEventSource = null; }
+
+            // Reset UI
+            const btn = document.getElementById('research-btn');
+            btn.disabled = true;
+            btn.textContent = 'Researching...';
+            btn.style.opacity = '0.6';
+
+            document.getElementById('research-progress').style.display = 'block';
+            document.getElementById('research-report').style.display = 'none';
+            document.getElementById('research-risk').style.display = 'none';
+            document.getElementById('research-error').style.display = 'none';
+            document.getElementById('research-substeps').innerHTML = '';
+
+            // Initialize agent status display
+            const agentsEl = document.getElementById('research-agents');
+            agentsEl.innerHTML = RESEARCH_AGENTS.map(name => `
+                <div id="ra-${name.replace(/\s/g,'')}" style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#0f172a;border-radius:8px;border:1px solid #2d3748;">
+                    <span class="ra-icon" style="font-size:1.1rem;">⏳</span>
+                    <span style="flex:1;font-weight:600;font-size:0.85rem;">${name}</span>
+                    <span class="ra-status" style="font-size:0.75rem;color:var(--text-dim);">Waiting</span>
+                </div>
+            `).join('');
+
+            updateResearchProgress(0);
+
+            // Start SSE
+            fetch('/api/research/stream', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query })
+            }).then(response => {
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let buffer = '';
+
+                function readStream() {
+                    reader.read().then(({ done, value }) => {
+                        if (done) { finishResearch(); return; }
+                        buffer += decoder.decode(value, { stream: true });
+                        const lines = buffer.split('\n');
+                        buffer = lines.pop();
+                        let eventType = '';
+                        for (const line of lines) {
+                            if (line.startsWith('event: ')) {
+                                eventType = line.slice(7).trim();
+                            } else if (line.startsWith('data: ') && eventType) {
+                                try {
+                                    const data = JSON.parse(line.slice(6));
+                                    handleResearchEvent(eventType, data);
+                                } catch(e) {}
+                                eventType = '';
+                            }
+                        }
+                        readStream();
+                    }).catch(err => {
+                        handleResearchEvent('error', { message: err.message });
+                        finishResearch();
+                    });
+                }
+                readStream();
+            }).catch(err => {
+                handleResearchEvent('error', { message: err.message });
+                finishResearch();
+            });
+        }
+
+        function handleResearchEvent(type, data) {
+            if (type === 'agent_start') {
+                const id = 'ra-' + data.agent.replace(/\s/g, '');
+                const el = document.getElementById(id);
+                if (el) {
+                    el.querySelector('.ra-icon').textContent = '🔄';
+                    el.querySelector('.ra-status').textContent = data.description || 'Running...';
+                    el.querySelector('.ra-status').style.color = 'var(--accent)';
+                    el.style.borderColor = 'var(--accent)';
+                }
+                // Update progress
+                const idx = RESEARCH_AGENTS.indexOf(data.agent);
+                if (idx >= 0) updateResearchProgress(Math.round((idx / RESEARCH_AGENTS.length) * 100));
+            }
+            else if (type === 'agent_done') {
+                const id = 'ra-' + data.agent.replace(/\s/g, '');
+                const el = document.getElementById(id);
+                if (el) {
+                    el.querySelector('.ra-icon').textContent = '✅';
+                    el.querySelector('.ra-status').textContent = 'Done';
+                    el.querySelector('.ra-status').style.color = '#10b981';
+                    el.style.borderColor = '#10b981';
+                }
+                const idx = RESEARCH_AGENTS.indexOf(data.agent);
+                if (idx >= 0) updateResearchProgress(Math.round(((idx + 1) / RESEARCH_AGENTS.length) * 100));
+            }
+            else if (type === 'researcher_step') {
+                const el = document.getElementById('research-substeps');
+                const step = document.createElement('div');
+                step.textContent = '→ ' + data.step;
+                step.style.cssText = 'padding:2px 0;opacity:0;animation:fadeIn 0.3s forwards;';
+                el.appendChild(step);
+                el.scrollTop = el.scrollHeight;
+            }
+            else if (type === 'complete') {
+                lastReportMarkdown = data.report || '';
+                document.getElementById('research-report').style.display = 'block';
+                document.getElementById('research-report-body').innerHTML = renderMarkdown(data.report || '');
+
+                if (data.risk_flags) {
+                    document.getElementById('research-risk').style.display = 'block';
+                    document.getElementById('research-risk-body').innerHTML = renderMarkdown(data.risk_flags);
+                }
+                updateResearchProgress(100);
+                loadResearchHistory();
+            }
+            else if (type === 'error') {
+                document.getElementById('research-error').style.display = 'block';
+                document.getElementById('research-error-msg').textContent = data.message || 'Unknown error';
+            }
+        }
+
+        function finishResearch() {
+            const btn = document.getElementById('research-btn');
+            btn.disabled = false;
+            btn.textContent = 'Research';
+            btn.style.opacity = '1';
+        }
+
+        function updateResearchProgress(pct) {
+            document.getElementById('research-progress-bar').style.width = pct + '%';
+            document.getElementById('research-progress-pct').textContent = pct + '%';
+        }
+
+        function rerunResearch() {
+            if (lastResearchQuery) {
+                document.getElementById('research-query').value = lastResearchQuery;
+                startResearch();
+            }
+        }
+
+        function copyReport() {
+            if (lastReportMarkdown) {
+                navigator.clipboard.writeText(lastReportMarkdown).then(() => {
+                    const btn = event.target;
+                    btn.textContent = 'Copied!';
+                    setTimeout(() => btn.textContent = 'Copy', 1500);
+                });
+            }
+        }
+
+        function downloadReport() {
+            if (!lastReportMarkdown) return;
+            const blob = new Blob([lastReportMarkdown], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `research_${lastResearchQuery.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 40)}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        async function loadResearchHistory() {
+            const el = document.getElementById('research-history');
+            try {
+                const res = await fetch('/api/reports');
+                const data = await res.json();
+                const reports = data.reports || [];
+                if (reports.length === 0) {
+                    el.innerHTML = '<div style="color:var(--text-dim);font-size:0.8rem;padding:8px;">No reports yet.</div>';
+                    return;
+                }
+                el.innerHTML = reports.map(r => `
+                    <div onclick="loadReport('${r.id}')" style="padding:10px 12px;background:#0f172a;border-radius:8px;cursor:pointer;border:1px solid #2d3748;transition:border-color 0.2s;"
+                         onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='#2d3748'">
+                        <div style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(r.query)}</div>
+                        <div style="font-size:0.7rem;color:var(--text-dim);">${r.tickers ? r.tickers.join(', ') : ''} · ${new Date(r.created_at).toLocaleDateString()}</div>
+                    </div>
+                `).join('');
+            } catch(e) {
+                el.innerHTML = '<div style="color:var(--text-dim);font-size:0.8rem;padding:8px;">Could not load history.</div>';
+            }
+        }
+
+        async function loadReport(id) {
+            try {
+                const res = await fetch(`/api/reports/${id}`);
+                const data = await res.json();
+                if (data.error) throw new Error(data.error);
+
+                lastReportMarkdown = data.report || '';
+                lastResearchQuery = data.query || '';
+                document.getElementById('research-query').value = data.query || '';
+
+                document.getElementById('research-progress').style.display = 'none';
+                document.getElementById('research-error').style.display = 'none';
+                document.getElementById('research-report').style.display = 'block';
+                document.getElementById('research-report-body').innerHTML = renderMarkdown(data.report || '');
+
+                if (data.risk_flags) {
+                    document.getElementById('research-risk').style.display = 'block';
+                    document.getElementById('research-risk-body').innerHTML = renderMarkdown(data.risk_flags);
+                } else {
+                    document.getElementById('research-risk').style.display = 'none';
+                }
+            } catch(e) {
+                alert('Error loading report: ' + e.message);
+            }
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function renderMarkdown(md) {
+            if (!md) return '';
+            // Simple markdown → HTML converter
+            let html = md
+                // Code blocks
+                .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre style="background:#0f172a;padding:12px;border-radius:8px;overflow-x:auto;font-size:0.85rem;border:1px solid #2d3748;"><code>$2</code></pre>')
+                // Headers
+                .replace(/^#### (.+)$/gm, '<h4 style="font-weight:700;font-size:0.95rem;margin:16px 0 8px;color:var(--text);">$1</h4>')
+                .replace(/^### (.+)$/gm, '<h3 style="font-weight:700;font-size:1.05rem;margin:20px 0 10px;color:var(--text);">$1</h3>')
+                .replace(/^## (.+)$/gm, '<h2 style="font-weight:700;font-size:1.2rem;margin:24px 0 12px;color:var(--accent);">$1</h2>')
+                .replace(/^# (.+)$/gm, '<h1 style="font-weight:800;font-size:1.4rem;margin:0 0 16px;color:var(--text);">$1</h1>')
+                // Bold & italic
+                .replace(/\*\*\[HIGH\]\*\*/g, '<span style="color:#ef4444;font-weight:700;">[HIGH]</span>')
+                .replace(/\*\*\[MEDIUM\]\*\*/g, '<span style="color:#eab308;font-weight:700;">[MEDIUM]</span>')
+                .replace(/\*\*\[LOW\]\*\*/g, '<span style="color:#10b981;font-weight:700;">[LOW]</span>')
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                // Inline code
+                .replace(/`([^`]+)`/g, '<code style="background:#0f172a;padding:2px 6px;border-radius:4px;font-size:0.85rem;">$1</code>')
+                // Unordered lists
+                .replace(/^[-*] (.+)$/gm, '<li style="margin-left:20px;margin-bottom:4px;">$1</li>')
+                // Ordered lists
+                .replace(/^\d+\. (.+)$/gm, '<li style="margin-left:20px;margin-bottom:4px;list-style-type:decimal;">$1</li>')
+                // Horizontal rule
+                .replace(/^---$/gm, '<hr style="border:none;border-top:1px solid #2d3748;margin:20px 0;">')
+                // Paragraphs (double newlines)
+                .replace(/\n\n/g, '</p><p style="margin-bottom:12px;">')
+                // Single newlines within paragraphs
+                .replace(/\n/g, '<br>');
+            return '<p style="margin-bottom:12px;">' + html + '</p>';
+        }
+
+        // Add fadeIn animation
+        if (!document.getElementById('research-styles')) {
+            const style = document.createElement('style');
+            style.id = 'research-styles';
+            style.textContent = '@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }';
+            document.head.appendChild(style);
         }
 
         // ===== CHECKLIST COUNTER =====

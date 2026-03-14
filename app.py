@@ -1,9 +1,12 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, Response
 import os
 import json
 import traceback
 import sys
+import uuid
 import urllib.request
+import threading
+import queue
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
@@ -1729,6 +1732,151 @@ def dashboard_summary():
         'sectors': {name: {'ticker': etf, **results.get(etf, {'price': 0, 'change_pct': 0, 'prev_close': 0})} for name, etf in sectors.items()},
         'indicators': {t: results.get(t, {'price': 0, 'change_pct': 0, 'prev_close': 0}) for t in indicators}
     })
+
+
+# ═══════════════════════════════════════════════════════════════
+# Deep Research Endpoints
+# ═══════════════════════════════════════════════════════════════
+
+@app.route('/api/research/stream', methods=['POST'])
+def research_stream():
+    """Stream SSE events from the multi-agent research pipeline."""
+    data = request.get_json(force=True)
+    query = data.get('query', '').strip()
+    if not query:
+        return jsonify({'error': 'query is required'}), 400
+
+    event_queue = queue.Queue()
+
+    def emit_callback(event_type, event_data):
+        event_queue.put((event_type, event_data))
+
+    def run_research():
+        try:
+            from agent_committee import research
+            result = research(query, emit=emit_callback)
+            # If no complete event was emitted (e.g. error path), emit one
+            if not result.get('error') and not result.get('final_report'):
+                event_queue.put(('error', {'message': 'Pipeline completed without producing a report'}))
+        except Exception as e:
+            event_queue.put(('error', {'message': str(e), 'traceback': traceback.format_exc()}))
+        finally:
+            event_queue.put(('__done__', None))
+
+    thread = threading.Thread(target=run_research, daemon=True)
+    thread.start()
+
+    def generate():
+        final_data = None
+        while True:
+            try:
+                event_type, event_data = event_queue.get(timeout=300)
+            except queue.Empty:
+                yield f"event: error\ndata: {json.dumps({'message': 'Timeout'})}\n\n"
+                break
+
+            if event_type == '__done__':
+                # Save report to Supabase if we have a complete result
+                if final_data and SUPABASE_KEY:
+                    try:
+                        report_row = {
+                            'id': str(uuid.uuid4()),
+                            'query': query,
+                            'report': final_data.get('report', ''),
+                            'risk_flags': final_data.get('risk_flags', ''),
+                            'tickers': final_data.get('tickers', []),
+                            'intents': final_data.get('intents', []),
+                            'sources': final_data.get('sources', []),
+                            'created_at': datetime.now(timezone.utc).isoformat(),
+                        }
+                        req_body = json.dumps(report_row).encode()
+                        req = urllib.request.Request(
+                            f'{SUPABASE_URL}/rest/v1/research_reports',
+                            data=req_body,
+                            headers={
+                                'apikey': SUPABASE_KEY,
+                                'Authorization': f'Bearer {SUPABASE_KEY}',
+                                'Content-Type': 'application/json',
+                                'Prefer': 'return=representation',
+                            },
+                            method='POST'
+                        )
+                        urllib.request.urlopen(req, timeout=10)
+                    except Exception:
+                        pass  # Non-critical — report is already sent to client
+                break
+
+            if event_type == 'complete':
+                final_data = event_data
+
+            yield f"event: {event_type}\ndata: {json.dumps(event_data, default=str)}\n\n"
+
+    return Response(generate(), mimetype='text/event-stream', headers={
+        'Cache-Control': 'no-cache',
+        'X-Accel-Buffering': 'no',
+        'Connection': 'keep-alive',
+    })
+
+
+@app.route('/api/reports')
+def list_reports():
+    """List saved research reports from Supabase."""
+    if not SUPABASE_KEY:
+        return jsonify({'reports': []})
+    try:
+        req = urllib.request.Request(
+            f'{SUPABASE_URL}/rest/v1/research_reports?select=id,query,tickers,created_at&order=created_at.desc&limit=50',
+            headers={
+                'apikey': SUPABASE_KEY,
+                'Authorization': f'Bearer {SUPABASE_KEY}',
+            }
+        )
+        resp = urllib.request.urlopen(req, timeout=10)
+        reports = json.loads(resp.read())
+        return jsonify({'reports': reports})
+    except Exception as e:
+        return jsonify({'reports': [], 'error': str(e)})
+
+
+@app.route('/api/reports/<report_id>')
+def get_report(report_id):
+    """Get a single research report by ID."""
+    if not SUPABASE_KEY:
+        return jsonify({'error': 'Supabase not configured'}), 500
+    try:
+        req = urllib.request.Request(
+            f'{SUPABASE_URL}/rest/v1/research_reports?id=eq.{report_id}',
+            headers={
+                'apikey': SUPABASE_KEY,
+                'Authorization': f'Bearer {SUPABASE_KEY}',
+                'Accept': 'application/vnd.pgrst.object+json',
+            }
+        )
+        resp = urllib.request.urlopen(req, timeout=10)
+        report = json.loads(resp.read())
+        return jsonify(report)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/reports/<report_id>', methods=['DELETE'])
+def delete_report(report_id):
+    """Delete a research report."""
+    if not SUPABASE_KEY:
+        return jsonify({'error': 'Supabase not configured'}), 500
+    try:
+        req = urllib.request.Request(
+            f'{SUPABASE_URL}/rest/v1/research_reports?id=eq.{report_id}',
+            headers={
+                'apikey': SUPABASE_KEY,
+                'Authorization': f'Bearer {SUPABASE_KEY}',
+            },
+            method='DELETE'
+        )
+        urllib.request.urlopen(req, timeout=10)
+        return jsonify({'ok': True})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':
