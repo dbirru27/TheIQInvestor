@@ -1013,7 +1013,7 @@ def run_writer(client, state):
     """Produce the final markdown research report."""
     _emit(state, "agent_start", {"agent": "Writer", "description": "Writing research report..."})
 
-    system = """You are a financial research writer. Produce a well-structured markdown report based ONLY on the analyses provided.
+    system = """You are a financial research writer. Produce a well-structured HTML report based ONLY on the analyses provided.
 
 CRITICAL RULES:
 - Every number you cite must come from the Quant or Qual analysis. No inventing data.
@@ -1021,30 +1021,21 @@ CRITICAL RULES:
 - Keep it concise — quality over length. Skip empty sections entirely.
 - Use parenthetical citations: (IQ Score: 85), (P/E: 25.3 per yfinance), (EWROS: 72)
 
-Structure (skip sections with no data):
-# [Company/Topic] Research Report
+Output ONLY a <div class="iq-report"> with these sections:
+- Summary (h3 + p)
+- Key Metrics (h3 + table.iq-table with columns: Metric, Value, Signal — include IQ Score, Grade, EWROS, P/E, Revenue Growth YoY, Latest EPS surprise, 52W position)
+- Analysis (h3 + p paragraphs)
+- Catalysts & Risks (h3 + p)
+- Verdict (h3 + p with clear Buy/Hold/Watch/Avoid recommendation)
 
-## Executive Summary
-Key finding in 2-3 sentences.
-
-## Key Metrics
-Table or bullet list of actual numbers from data.
-
-## Analysis
-Combined quant + qual insights. Only data-backed claims.
-
-## Strengths & Weaknesses
-What the data shows is strong vs concerning.
-
-## Risks
-Specific risks identified in the data.
-
-## Verdict
-Clear buy/hold/avoid with conviction level (High/Medium/Low) and the key reason.
+Rules:
+- No markdown, no code fences — output ONLY the HTML div
+- Use <strong> for emphasis
+- Cite sources in parentheses like (IQ Score: 85) or (per yfinance: P/E=25.3)
 
 IMPORTANT: You MUST cover ALL tickers in the plan. If there are 10 tickers, all 10 must appear in the report. Do not skip any.
 
-At the end, self-evaluate: output exactly SELF_EVAL:COMPLETE or SELF_EVAL:WEAK"""
+At the end (outside the div), self-evaluate: output exactly SELF_EVAL:COMPLETE or SELF_EVAL:WEAK"""
 
     portfolio_context = ""
     if state.get("_portfolio_baskets"):
@@ -1294,25 +1285,17 @@ def quick_research(query, emit=None):
         # 5. Single Sonnet call — comprehensive analysis
         system = """You are a senior investment analyst. Given the user's question and ALL the data below, provide a clear, actionable analysis.
 
-Structure your response as markdown:
-# [Topic] Analysis
-
-## Key Metrics
-Bullet list of the most important numbers FROM THE DATA. Cover ALL tickers mentioned.
-
-## The Bull Case
-What looks good, citing specific data points.
-
-## The Concerns
-What's worrying, citing specific data points.
-
-## Verdict
-Clear buy/hold/avoid with key reasoning for EACH ticker analyzed. Include:
-- Conviction level (High/Medium/Low)
-- Fair value estimate if possible (from analyst targets)
-- Key level to watch
+Output ONLY a <div class="iq-report"> with these sections:
+- Summary (h3 + p)
+- Key Metrics (h3 + table.iq-table with columns: Metric, Value, Signal — include IQ Score, Grade, EWROS, P/E, Revenue Growth YoY, Latest EPS surprise, 52W position)
+- Analysis (h3 + p paragraphs)
+- Catalysts & Risks (h3 + p)
+- Verdict (h3 + p with clear Buy/Hold/Watch/Avoid recommendation)
 
 Rules:
+- No markdown, no code fences — output ONLY the HTML div
+- Use <strong> for emphasis
+- Cite sources in parentheses like (IQ Score: 85) or (per yfinance: P/E=25.3)
 - ONLY cite numbers from the provided data
 - Cover ALL tickers in the data — do not skip any
 - Be concise but thorough
