@@ -17,6 +17,7 @@ import yfinance as yf
 
 # ── Constants ──
 MODEL = "claude-opus-4-6"
+MODEL_FAST = "claude-sonnet-4-6"  # For verification passes — fast + cheap
 MAX_RESEARCH_PASSES = 3
 MAX_CYCLES = 5
 
@@ -372,7 +373,7 @@ Rules:
 Respond in JSON only:
 {{"sources": [{{"name": "hunter", "params": {{"limit": 10}}}}], "explicit_tickers": [], "reasoning": "brief explanation", "abort": false, "abort_message": ""}}"""
 
-    result = _call_claude(client, system, processed_query, max_tokens=512)
+    result = _call_claude(client, system, processed_query, max_tokens=512, model=MODEL_FAST)
 
     try:
         start = result.find("{")
@@ -577,8 +578,8 @@ def _fetch_yfinance_data(ticker, data_types):
     return result
 
 
-def _verify_analysis(client, analysis, source_data, analysis_type):
-    """Verify an analysis against source data. Strips unverified claims."""
+def _verify_analysis(client, analysis, source_data, analysis_type, use_fast_model=True):
+    """Verify an analysis against source data. Uses fast model by default."""
     verify_system = f"""You are a fact-checker for {analysis_type} financial analysis. Your job:
 
 1. Read the ANALYSIS and the SOURCE DATA side by side
@@ -605,13 +606,13 @@ SOURCE DATA:
 
 Output the verified analysis. Keep the same format, just remove any claims not supported by the source data."""
 
-    return _call_claude(client, verify_system, verify_prompt, max_tokens=16000)
+    return _call_claude(client, verify_system, verify_prompt, max_tokens=16000, model=MODEL_FAST if use_fast_model else None)
 
 
-def _call_claude(client, system_prompt, user_prompt, max_tokens=16000):
+def _call_claude(client, system_prompt, user_prompt, max_tokens=16000, model=None):
     """Make a single Claude API call."""
     resp = client.messages.create(
-        model=MODEL,
+        model=model or MODEL,
         max_tokens=max_tokens,
         system=system_prompt,
         messages=[{"role": "user", "content": user_prompt}],
@@ -666,7 +667,7 @@ Respond in JSON format only: {{"tickers": [...], "intents": [...], "timeframe": 
     if state.get("_scout_tickers"):
         scout_context = f"\n\nThe Data Scout already identified these tickers from the platform's data: {', '.join(state['_scout_tickers'][:30])}. Use these tickers in your plan."
 
-    result = _call_claude(client, system + scout_context, query_for_planner, max_tokens=1024)
+    result = _call_claude(client, system + scout_context, query_for_planner, max_tokens=1024, model=MODEL_FAST)
 
     try:
         # Extract JSON from response
@@ -885,7 +886,7 @@ Qual Analysis:
 
 Cycle: {cycle}/{MAX_CYCLES}"""
 
-    result = _call_claude(client, system, user_prompt, max_tokens=16000)
+    result = _call_claude(client, system, user_prompt, max_tokens=2000, model=MODEL_FAST)
 
     try:
         start = result.find("{")
@@ -1058,11 +1059,15 @@ def research(query, emit=None):
 
         # Main analysis loop with moderator
         while True:
-            # 3. Quant Analyst
-            state = run_quant_analyst(client, state)
-
-            # 4. Qual Analyst
-            state = run_qual_analyst(client, state)
+            # 3+4. Quant + Qual in PARALLEL (they don't depend on each other)
+            import concurrent.futures
+            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+                quant_future = executor.submit(run_quant_analyst, client, dict(state))
+                qual_future = executor.submit(run_qual_analyst, client, dict(state))
+                quant_state = quant_future.result()
+                qual_state = qual_future.result()
+            state["quant_analysis"] = quant_state["quant_analysis"]
+            state["qual_analysis"] = qual_state["qual_analysis"]
 
             # 5. Moderator
             state = run_moderator(client, state)
