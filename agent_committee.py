@@ -407,9 +407,22 @@ Respond in JSON only:
     fetched_data = {}
     discovered_tickers = list(scout_plan.get("explicit_tickers", []))
 
+    # Basket name detection from query (fallback if LLM doesn't set basket param)
+    KNOWN_BASKETS = ['ai semi', 'biotech', 'defense', 'aerospace', 'grid to chip', 'grid-to-chip',
+                     'ira core', 'trading account', 'themastertest']
+    detected_basket = None
+    q_lower = processed_query.lower()
+    for bname in KNOWN_BASKETS:
+        if bname in q_lower:
+            detected_basket = bname
+            break
+
     for src in scout_plan.get("sources", []):
         src_name = src.get("name", "")
         src_params = src.get("params", {})
+        # Inject detected basket if portfolio source and no basket param set
+        if src_name == "portfolio" and detected_basket and not src_params.get("basket"):
+            src_params["basket"] = detected_basket
         if src_name in DATA_SOURCES:
             _emit(state, "researcher_step", {"step": f"Fetching {src_name} data..."})
             try:

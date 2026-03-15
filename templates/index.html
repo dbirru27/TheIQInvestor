@@ -5698,11 +5698,12 @@
             window._researchSessionId = crypto.randomUUID();
             // Auto-timeout for Hobby plan (60s limit)
             window._researchTimeout = setTimeout(() => {
-                if (window._researchAbort) {
+                const reportVisible = document.getElementById('research-report').style.display === 'block';
+                if (window._researchAbort && !reportVisible) {
                     handleResearchEvent('error', {message: 'Timed out (Vercel 60s limit). Try a simpler query or fewer tickers.'});
                     stopResearch();
                 }
-            }, 55000);
+            }, 58000);
             // Research API — use dedicated server if configured, otherwise local
             const RESEARCH_API = window.RESEARCH_SERVER_URL || '/api/research/stream';
             fetch(RESEARCH_API, {
