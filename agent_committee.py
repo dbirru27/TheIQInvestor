@@ -571,9 +571,51 @@ def _fetch_yfinance_data(ticker, data_types):
 
         if "earnings" in data_types:
             try:
-                earnings = stock.quarterly_earnings
-                if earnings is not None and not earnings.empty:
-                    result[f"{ticker}__earnings"] = earnings.tail(8).to_string()
+                rows = []
+                # EPS actual/estimate/surprise from earnings_dates
+                ed = stock.earnings_dates
+                if ed is not None and not ed.empty:
+                    for dt, row in ed.head(8).iterrows():
+                        actual = row.get('Reported EPS')
+                        estimate = row.get('EPS Estimate')
+                        surprise = row.get('Surprise(%)')
+                        actual = None if actual != actual else actual
+                        estimate = None if estimate != estimate else estimate
+                        surprise = None if surprise != surprise else surprise
+                        rows.append({
+                            'date': dt.strftime('%Y-%m-%d'),
+                            'eps_actual': round(float(actual), 4) if actual is not None else None,
+                            'eps_estimate': round(float(estimate), 4) if estimate is not None else None,
+                            'eps_surprise_pct': round(float(surprise), 2) if surprise is not None else None,
+                        })
+                # Revenue YoY from quarterly income stmt
+                rev_rows = {}
+                try:
+                    inc = stock.quarterly_income_stmt
+                    if inc is not None and not inc.empty:
+                        rev_row = None
+                        for candidate in ['Total Revenue', 'Revenue']:
+                            if candidate in inc.index:
+                                rev_row = inc.loc[candidate]
+                                break
+                        if rev_row is not None:
+                            periods = sorted(rev_row.index)
+                            for i, period in enumerate(periods):
+                                val = rev_row[period]
+                                if val != val: continue
+                                prev = rev_row[periods[i-4]] if i >= 4 else None
+                                yoy = round((val / prev - 1) * 100, 1) if prev and prev > 0 else None
+                                rev_rows[period.strftime('%Y-%m')] = {'revenue': int(val), 'revenue_yoy': yoy}
+                except Exception:
+                    pass
+                # Merge revenue into earnings rows
+                for r in rows:
+                    ym = r['date'][:7]
+                    rev = rev_rows.get(ym) or rev_rows.get(ym[:-1] + str(int(ym[-1])-1).zfill(2) if ym[-1] != '0' else ym)
+                    r['revenue'] = rev['revenue'] if rev else None
+                    r['revenue_yoy'] = rev['revenue_yoy'] if rev else None
+                if rows:
+                    result[f"{ticker}__earnings"] = json.dumps(rows, default=str)
                 else:
                     result[f"{ticker}__earnings"] = "No quarterly earnings data available"
             except Exception as e:
@@ -1195,11 +1237,11 @@ def quick_research(query, emit=None):
         # 2. Planner — same as Deep mode (uses Sonnet, fast)
         state = run_planner(client, state)
 
-        # 3. Data gathering — skip full yfinance if Scout already has data
+        # 3. Data gathering — always emit start/done; fetch earnings for single-ticker queries
         tickers = state["plan"].get("tickers", [])
+        _emit(state, "agent_start", {"agent": "Data Gathering", "description": "Gathering market data..."})
         if state.get("_scout_data") and len(tickers) > 3:
             # Scout already fetched IQ scores — only do yfinance for top 3
-            _emit(state, "agent_start", {"agent": "Data Gathering", "description": "Gathering market data..."})
             iq_data = _load_investiq_data(tickers)
             for t in tickers:
                 if t in iq_data and iq_data[t]:
@@ -1210,7 +1252,16 @@ def quick_research(query, emit=None):
                 state.setdefault("research_data", {}).update(yf_data)
             _emit(state, "agent_done", {"agent": "Data Gathering", "result": {"tickers": len(tickers), "yfinance": min(3, len(tickers))}})
         else:
-            state = run_researcher(client, state)
+            # Single ticker or small set — fetch full data including earnings
+            iq_data = _load_investiq_data(tickers)
+            for t in tickers:
+                if t in iq_data and iq_data[t]:
+                    state.setdefault("research_data", {})[f"{t}__investiq"] = json.dumps(iq_data[t], default=str)
+            for t in tickers:
+                _emit(state, "researcher_step", {"step": f"Fetching live data for {t}..."})
+                yf_data = _fetch_yfinance_data(t, ["stock_info", "price_history", "earnings", "analyst_recommendations"])
+                state.setdefault("research_data", {}).update(yf_data)
+            _emit(state, "agent_done", {"agent": "Data Gathering", "result": {"tickers": len(tickers), "yfinance": len(tickers)}})
 
         # 4. Build context from all gathered data
         data_context = []
