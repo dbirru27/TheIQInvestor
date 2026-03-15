@@ -1144,8 +1144,22 @@ def quick_research(query, emit=None):
         # 2. Planner — same as Deep mode (uses Sonnet, fast)
         state = run_planner(client, state)
 
-        # 3. Researcher — gather yfinance + IQ data
-        state = run_researcher(client, state)
+        # 3. Data gathering — skip full yfinance if Scout already has data
+        tickers = state["plan"].get("tickers", [])
+        if state.get("_scout_data") and len(tickers) > 3:
+            # Scout already fetched IQ scores — only do yfinance for top 3
+            _emit(state, "agent_start", {"agent": "Researcher", "description": "Gathering market data..."})
+            iq_data = _load_investiq_data(tickers)
+            for t in tickers:
+                if t in iq_data and iq_data[t]:
+                    state.setdefault("research_data", {})[f"{t}__investiq"] = json.dumps(iq_data[t], default=str)
+            for t in tickers[:3]:
+                _emit(state, "researcher_step", {"step": f"Fetching live data for {t}..."})
+                yf_data = _fetch_yfinance_data(t, ["stock_info", "price_history"])
+                state.setdefault("research_data", {}).update(yf_data)
+            _emit(state, "agent_done", {"agent": "Researcher", "result": {"tickers": len(tickers), "yfinance": min(3, len(tickers))}})
+        else:
+            state = run_researcher(client, state)
 
         # 4. Build context from all gathered data
         data_context = []
