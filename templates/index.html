@@ -1724,8 +1724,9 @@
 
                     <!-- Error -->
                     <div id="research-error" class="card" style="display:none;border-color:#dc2626;">
-                        <h3 style="color:#f87171;margin:0 0 8px;">Error</h3>
-                        <pre id="research-error-msg" style="color:var(--text-dim);white-space:pre-wrap;font-size:0.85rem;"></pre>
+                        <h3 style="color:#f87171;margin:0 0 8px;">⚠️ Research Interrupted</h3>
+                        <pre id="research-error-msg" style="color:var(--text-dim);white-space:pre-wrap;font-size:0.85rem;margin-bottom:12px;"></pre>
+                        <button onclick="rerunResearch()" style="background:#dc2626;border:none;color:white;padding:8px 18px;border-radius:6px;cursor:pointer;font-size:0.9rem;font-weight:600;">🔄 Re-run Research</button>
                     </div>
                 </div>
 
@@ -5698,14 +5699,37 @@
             // Start SSE
             window._researchAbort = new AbortController();
             window._researchSessionId = crypto.randomUUID();
-            // Auto-timeout (Vercel maxDuration: 300s)
-            window._researchTimeout = setTimeout(() => {
-                const reportVisible = document.getElementById('research-report').style.display === 'block';
-                if (window._researchAbort && !reportVisible) {
-                    handleResearchEvent('error', {message: 'Timed out after 5 minutes. Try a simpler query or fewer tickers.'});
-                    stopResearch();
+            // Auto-timeout (Vercel maxDuration: 300s) — pause while page is hidden
+            window._researchElapsed = 0;
+            window._researchLastVisible = Date.now();
+            window._researchTimeout = setInterval(() => {
+                if (!document.hidden) {
+                    window._researchElapsed += 1000;
                 }
-            }, 290000);
+                if (window._researchElapsed >= 290000) {
+                    clearInterval(window._researchTimeout);
+                    window._researchTimeout = null;
+                    const reportVisible = document.getElementById('research-report').style.display === 'block';
+                    if (window._researchAbort && !reportVisible) {
+                        handleResearchEvent('error', {message: 'Timed out after 5 minutes. Try a simpler query or fewer tickers.'});
+                        stopResearch();
+                    }
+                }
+            }, 1000);
+
+            // Handle tab going to background — detect connection drop on return
+            window._researchVisibilityHandler = function() {
+                if (!document.hidden && window._researchAbort && !window._researchDone) {
+                    // Page just became visible and research is still "running" — stream likely died
+                    setTimeout(() => {
+                        if (window._researchAbort && !window._researchDone) {
+                            handleResearchEvent('error', { message: 'Connection interrupted (tab was backgrounded). Tap Re-run to try again.' });
+                            stopResearch();
+                        }
+                    }, 1500); // small delay to let stream recover if it's still alive
+                }
+            };
+            document.addEventListener('visibilitychange', window._researchVisibilityHandler);
             // Research API — use dedicated server if configured, otherwise local
             const RESEARCH_API = window.RESEARCH_SERVER_URL || '/api/research/stream';
             fetch(RESEARCH_API, {
@@ -5813,8 +5837,13 @@
         }
 
         function finishResearch() {
-            if (window._researchTimeout) { clearTimeout(window._researchTimeout); window._researchTimeout = null; }
+            if (window._researchTimeout) { clearInterval(window._researchTimeout); window._researchTimeout = null; }
+            if (window._researchVisibilityHandler) {
+                document.removeEventListener('visibilitychange', window._researchVisibilityHandler);
+                window._researchVisibilityHandler = null;
+            }
             window._researchAbort = null;
+            window._researchElapsed = 0;
             researchEventSource = null;
             const btn = document.getElementById('research-btn');
             btn.disabled = false;
