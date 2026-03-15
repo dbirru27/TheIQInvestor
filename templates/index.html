@@ -582,6 +582,10 @@
         .iq-report h3:first-child { margin-top: 0; }
         .iq-report p { margin: 0 0 10px; color: #cbd5e1; }
         .iq-report strong { color: white; }
+        .iq-report ul { margin: 0 0 10px 1.2em; padding: 0; list-style: disc; }
+        .iq-report ol { margin: 0 0 10px 1.2em; padding: 0; list-style: decimal; }
+        .iq-report li { margin-bottom: 4px; color: #cbd5e1; }
+        .iq-watch-btn.added { background: #14532d; border-color: #16a34a; color: #4ade80; cursor: default; pointer-events: none; }
         .iq-section { margin-bottom: 16px; }
         .iq-table { width: 100%; border-collapse: collapse; margin: 8px 0 12px; font-size: 0.82rem; }
         .iq-table th { text-align: left; padding: 6px 10px; background: #1e293b; color: #94a3b8; font-weight: 600; border-bottom: 1px solid #334155; }
@@ -5312,10 +5316,21 @@
 
                 modal.style.display = 'none';
                 wlData = null;
+                markTickerAsAdded(ticker);
                 await showWatchlistEntries();
             } catch(e) {
                 alert('Error adding to watchlist: ' + e.message);
             }
+        }
+
+        function markTickerAsAdded(ticker) {
+            window._reportAddedTickers.add(ticker);
+            // Update all +W buttons for this ticker in the report
+            document.querySelectorAll(`.iq-watch-btn[data-ticker="${ticker}"]`).forEach(btn => {
+                btn.classList.add('added');
+                btn.textContent = '✓';
+                btn.removeAttribute('onclick');
+            });
         }
 
         // Remove ticker — prompt to log exit trade
@@ -6419,12 +6434,18 @@ ${body}
             return renderMarkdown(html);
         }
 
+        window._reportAddedTickers = new Set();
+
         function injectWatchButtons(html) {
             const knownTickers = new Set(window._allTickers || []);
             if (!knownTickers.size) return html;
             return html.replace(/(?<![a-zA-Z])([A-Z]{2,5})(?![a-zA-Z])/g, (match, ticker) => {
                 if (!knownTickers.has(ticker)) return match;
-                return `<span class="iq-ticker-ref">${ticker}<button class="iq-watch-btn" onclick="addResearchTickerToWL('${ticker}')">+W</button></span>`;
+                const alreadyAdded = window._reportAddedTickers.has(ticker);
+                const btnClass = alreadyAdded ? 'iq-watch-btn added' : 'iq-watch-btn';
+                const btnLabel = alreadyAdded ? '✓' : '+W';
+                const clickHandler = alreadyAdded ? '' : `onclick="addResearchTickerToWL('${ticker}')"`;
+                return `<span class="iq-ticker-ref">${ticker}<button class="${btnClass}" ${clickHandler} data-ticker="${ticker}">${btnLabel}</button></span>`;
             });
         }
 
