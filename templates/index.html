@@ -5098,7 +5098,7 @@
         }
 
         async function addResearchTickerToWL(ticker) {
-            if (!currentUser) { openAuthModal(); return; }
+            if (!_currentUser) { openAuthModal(); return; }
             // Fetch watchlists
             let lists = [];
             try {
