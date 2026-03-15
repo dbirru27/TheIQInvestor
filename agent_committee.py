@@ -132,10 +132,13 @@ def _fetch_data_source(source, params=None):
                     {
                         "ticker": t, "name": s.get("name", t), "score": s.get("score", 0),
                         "grade": s.get("grade", "?"), "ewros_score": s.get("ewros_score", 0),
-                        "sector": s.get("sector", ""), "current_price": s.get("current_price"),
+                        "sector": s.get("sector", ""), "industry": s.get("industry", ""),
+                        "current_price": s.get("current_price"),
                         "revenue_growth": s.get("revenue_growth"), "earnings_growth": s.get("earnings_growth"),
                         "trailing_pe": s.get("trailing_pe"), "forward_pe": s.get("forward_pe"),
-                        "iq_edge": s.get("iq_edge", 0),
+                        "iq_edge": s.get("iq_edge", 0), "moonshot_score": s.get("moonshot_score", 0),
+                        "technical_score": s.get("technical_score", 0), "growth_score": s.get("growth_score", 0),
+                        "quality_score": s.get("quality_score", 0), "context_score": s.get("context_score", 0),
                     }
                     for t, s in sorted_stocks
                 ]
@@ -532,13 +535,19 @@ def _verify_analysis(client, analysis, source_data, analysis_type):
 
 1. Read the ANALYSIS and the SOURCE DATA side by side
 2. For each specific claim (number, metric, trend, rating), check if it exists in the source data
-3. KEEP claims that are supported by the source data
-4. REMOVE or mark as [UNVERIFIED] any claim that cites a specific number NOT found in the source data
-5. KEEP general inferences clearly labeled as inferences (e.g., "Based on the high P/E...")
+3. KEEP claims that are supported by the source data — this includes data from:
+   - InvestIQ scout data (scores, grades, growth rates, PE ratios, EWROS)
+   - yfinance data (stock_info, earnings, price_history)
+   - SEC fundamentals (revenue, EPS)
+   - Insider signals
+4. REMOVE or mark as [UNVERIFIED] any claim that cites a specific number NOT found in ANY of the source data
+5. KEEP general inferences clearly labeled as inferences
 6. Output the CLEANED analysis — same structure, but with hallucinated specifics removed
+7. PRESERVE ALL tickers — if the analysis covers 10 stocks, the output must still cover 10 stocks. Never drop a stock.
 
 Important: Do NOT add new information. Only remove or flag unsupported claims.
-If the analysis is mostly accurate, return it mostly unchanged. Only strip clear fabrications."""
+If the analysis is mostly accurate, return it mostly unchanged. Only strip clear fabrications.
+Data from InvestIQ (scout data) is TRUSTED — do not strip scores, grades, or growth rates from it."""
 
     verify_prompt = f"""ANALYSIS TO VERIFY:
 {analysis}
