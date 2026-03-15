@@ -256,26 +256,61 @@ def _fetch_data_source(source, params=None):
     return {"source": source, "error": "Unknown source"}
 
 
+def _preprocess_query(query):
+    """Detect references to the website's own pages/tabs and translate them to data source names."""
+    import re
+    q = query
+    # Map website URLs to tab names
+    url_map = {
+        r'(?:qortexai\.com|theiqinvestor\.com|localhost:\d+)/?#?/?hunter': 'hunter tab',
+        r'(?:qortexai\.com|theiqinvestor\.com|localhost:\d+)/?#?/?portfolio': 'portfolio tab',
+        r'(?:qortexai\.com|theiqinvestor\.com|localhost:\d+)/?#?/?ewros': 'ewros tab',
+        r'(?:qortexai\.com|theiqinvestor\.com|localhost:\d+)/?#?/?watchlist': 'watchlist tab',
+        r'(?:qortexai\.com|theiqinvestor\.com|localhost:\d+)/?#?/?screener': 'screener tab',
+        r'(?:qortexai\.com|theiqinvestor\.com|localhost:\d+)/?#?/?calendar': 'calendar tab',
+        r'(?:qortexai\.com|theiqinvestor\.com|localhost:\d+)/?#?/?rotation': 'ewros tab',
+        r'(?:qortexai\.com|theiqinvestor\.com|localhost:\d+)/?#?/?dashboard': 'hunter tab',
+        r'(?:qortexai\.com|theiqinvestor\.com|localhost:\d+)/?$': 'hunter tab',
+    }
+    for pattern, replacement in url_map.items():
+        q = re.sub(r'https?://(?:www\.)?' + pattern, replacement, q, flags=re.IGNORECASE)
+    
+    # Also catch plain references like "this website", "the site", "the app"
+    q = re.sub(r'\b(?:this website|the website|this site|the site|the app|this app)\b', 'the hunter tab', q, flags=re.IGNORECASE)
+    
+    return q
+
+
 def run_data_scout(client, state):
     """Determine which data sources to query and fetch only what's needed."""
     _emit(state, "agent_start", {"agent": "Data Scout", "description": "Identifying relevant data sources..."})
 
+    # Preprocess query to resolve URLs and website references
+    processed_query = _preprocess_query(state["user_query"])
+    state["_processed_query"] = processed_query
+
     sources_desc = "\n".join([f"  - {name}: {desc}" for name, desc in DATA_SOURCES.items()])
 
-    system = f"""You are a data routing agent for an investment research platform. Given a user query, determine which data sources to fetch.
+    system = f"""You are a data routing agent for an investment research platform called "The IQ Investor" (qortexai.com / theiqinvestor.com).
 
-Available data sources:
+The platform has these tabs/data sources:
 {sources_desc}
+
+Given a user query, determine which data sources to fetch.
 
 Rules:
 - Pick ONLY the sources needed (1-3 max). Don't fetch everything.
-- For each source, optionally specify params like limit or sort_by.
-- If the query mentions specific tickers, just return those tickers — no source needed.
+- For each source, optionally specify params like {{limit, sort_by}}.
+- If the query mentions specific tickers, return those in explicit_tickers.
+- If the query references "the hunter tab", "top stocks", "prescreen", "this website" → use the "hunter" source.
+- If the query references "my portfolio", "my positions", "my holdings" → use the "portfolio" source.
+- You MUST pick at least one source if the query is about stocks/market. Never return empty sources unless only explicit tickers are given.
+- If you truly cannot determine what the user wants, set "abort": true with a helpful message.
 
 Respond in JSON only:
-{{"sources": [{{"name": "hunter", "params": {{"limit": 10}}}}], "explicit_tickers": [], "reasoning": "brief explanation"}}"""
+{{"sources": [{{"name": "hunter", "params": {{"limit": 10}}}}], "explicit_tickers": [], "reasoning": "brief explanation", "abort": false, "abort_message": ""}}"""
 
-    result = _call_claude(client, system, state["user_query"], max_tokens=512)
+    result = _call_claude(client, system, processed_query, max_tokens=512)
 
     try:
         start = result.find("{")
@@ -283,6 +318,13 @@ Respond in JSON only:
         scout_plan = json.loads(result[start:end])
     except (json.JSONDecodeError, ValueError):
         scout_plan = {"sources": [], "explicit_tickers": [], "reasoning": "Parse error"}
+
+    # Handle abort
+    if scout_plan.get("abort"):
+        msg = scout_plan.get("abort_message", "I couldn't determine what data you need. Please try rephrasing your question or mention specific tickers.")
+        _emit(state, "error", {"message": msg})
+        state["error"] = msg
+        return state
 
     # Fetch each requested source
     fetched_data = {}
@@ -512,7 +554,15 @@ If there are too many tickers (>15), group your analysis by basket/sector but st
 If no specific ticker is mentioned but a sector/theme is, suggest 2-3 relevant tickers.
 Respond in JSON format only: {{"tickers": [...], "intents": [...], "timeframe": "..."}}{portfolio_context}"""
 
-    result = _call_claude(client, system, state["user_query"], max_tokens=1024)
+    # Use processed query if available (URLs resolved to tab names)
+    query_for_planner = state.get("_processed_query", state["user_query"])
+    
+    # Add scout context so Planner knows what data was fetched
+    scout_context = ""
+    if state.get("_scout_tickers"):
+        scout_context = f"\n\nThe Data Scout already identified these tickers from the platform's data: {', '.join(state['_scout_tickers'][:30])}. Use these tickers in your plan."
+
+    result = _call_claude(client, system + scout_context, query_for_planner, max_tokens=1024)
 
     try:
         # Extract JSON from response
@@ -527,9 +577,7 @@ Respond in JSON format only: {{"tickers": [...], "intents": [...], "timeframe": 
         plan["tickers"] = state["_portfolio_tickers"]
 
     # If Data Scout found tickers, use those (they're pre-filtered and relevant)
-    if state.get("_scout_tickers") and not plan.get("tickers"):
-        plan["tickers"] = state["_scout_tickers"]
-    elif state.get("_scout_tickers") and plan.get("tickers") == ["SPY"]:
+    if state.get("_scout_tickers") and (not plan.get("tickers") or plan.get("tickers") == ["SPY"]):
         plan["tickers"] = state["_scout_tickers"]
 
     if not plan.get("tickers"):
@@ -872,6 +920,8 @@ def research(query, emit=None):
     try:
         # 0. Data Scout — determines which sources to fetch
         state = run_data_scout(client, state)
+        if state.get("error"):
+            return state
 
         # 1. Planner
         state = run_planner(client, state)
