@@ -1861,7 +1861,10 @@
         }
 
         async function authHeadersAsync() {
+            // Use cached token — avoids Supabase round-trip on every poll
+            if (currentToken) return { 'Authorization': 'Bearer ' + currentToken };
             const token = await getAuthToken();
+            if (token) currentToken = token;
             return token ? { 'Authorization': 'Bearer ' + token } : {};
         }
 
