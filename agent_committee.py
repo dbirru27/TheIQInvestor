@@ -48,7 +48,7 @@ def _load_api_key():
     key = os.environ.get("ANTHROPIC_API_KEY", "")
     if not key:
         try:
-            with open(os.path.join(os.path.dirname(__file__), ".env")) as f:
+            with open(_data_path(".env")) as f:
                 for line in f:
                     if line.startswith("ANTHROPIC_API_KEY="):
                         key = line.strip().split("=", 1)[1]
@@ -101,19 +101,30 @@ def _is_portfolio_query(query):
     return any(kw in q for kw in portfolio_keywords)
 
 
+def _data_path(filename):
+    """Resolve data file path — tries script dir first, then cwd."""
+    base = os.path.dirname(os.path.abspath(__file__))
+    p = os.path.join(base, filename)
+    if os.path.exists(p):
+        return p
+    p2 = os.path.join(os.getcwd(), filename)
+    if os.path.exists(p2):
+        return p2
+    return p  # return original, let caller handle FileNotFoundError
+
+
 def _fetch_data_source(source, params=None):
     """Surgically fetch data from a specific InvestIQ source. Returns a compact summary, not raw dumps."""
-    base_dir = os.path.dirname(__file__)
     
     if source == "hunter":
         # Load top stocks, sorted by score
         try:
-            with open(os.path.join(base_dir, "data/all_stocks.json")) as f:
+            with open(_data_path("data/all_stocks.json")) as f:
                 data = json.load(f)
             stocks = data.get("stocks", {})
             # Sort by score descending, return top N
             limit = (params or {}).get("limit", 20)
-            sorted_stocks = sorted(stocks.items(), key=lambda x: x[1].get("score", 0), reverse=True)[:limit]
+            sorted_stocks = sorted(stocks.items(), key=lambda x: x[1].get("score", 0) or 0, reverse=True)[:limit]
             return {
                 "source": "hunter",
                 "count": len(sorted_stocks),
@@ -136,7 +147,7 @@ def _fetch_data_source(source, params=None):
         basket_map, all_tickers = _load_portfolio_tickers()
         # Also load scores for portfolio tickers
         try:
-            with open(os.path.join(base_dir, "data/all_stocks.json")) as f:
+            with open(_data_path("data/all_stocks.json")) as f:
                 all_stocks = json.load(f).get("stocks", {})
         except Exception:
             all_stocks = {}
@@ -156,13 +167,13 @@ def _fetch_data_source(source, params=None):
 
     elif source == "ewros":
         try:
-            with open(os.path.join(base_dir, "data/all_stocks.json")) as f:
+            with open(_data_path("data/all_stocks.json")) as f:
                 data = json.load(f)
             stocks = data.get("stocks", {})
             limit = (params or {}).get("limit", 20)
             ewros_leaders = sorted(
                 [(t, s) for t, s in stocks.items() if (s.get("ewros_score") or 0) >= 60],
-                key=lambda x: x[1].get("ewros_score", 0), reverse=True
+                key=lambda x: x[1].get("ewros_score", 0) or 0, reverse=True
             )[:limit]
             return {
                 "source": "ewros",
@@ -181,14 +192,14 @@ def _fetch_data_source(source, params=None):
 
     elif source == "sell_signals":
         try:
-            with open(os.path.join(base_dir, "data/sell_signals.json")) as f:
+            with open(_data_path("data/sell_signals.json")) as f:
                 return {"source": "sell_signals", "data": json.load(f)}
         except Exception:
             return {"source": "sell_signals", "data": {"signals": []}}
 
     elif source == "calendar":
         try:
-            with open(os.path.join(base_dir, "data/earnings_calendar.json")) as f:
+            with open(_data_path("data/earnings_calendar.json")) as f:
                 cal = json.load(f)
             # Return just upcoming 2 weeks
             return {"source": "calendar", "earnings": cal.get("earnings", [])[:30], "fomc": cal.get("fomc", [])}
@@ -197,7 +208,7 @@ def _fetch_data_source(source, params=None):
 
     elif source == "insider":
         try:
-            with open(os.path.join(base_dir, "data/insider_universe.json")) as f:
+            with open(_data_path("data/insider_universe.json")) as f:
                 data = json.load(f)
             signals = data.get("signals", {})
             # Only return notable signals (score != 0)
@@ -216,7 +227,7 @@ def _fetch_data_source(source, params=None):
         supabase_key = os.environ.get('SUPABASE_KEY', '')
         if not supabase_key:
             try:
-                with open(os.path.join(base_dir, '.env')) as f:
+                with open(_data_path('.env')) as f:
                     for line in f:
                         if line.startswith('SUPABASE_KEY='):
                             supabase_key = line.strip().split('=', 1)[1]
@@ -235,7 +246,7 @@ def _fetch_data_source(source, params=None):
     elif source == "screener":
         # Return top by custom params
         try:
-            with open(os.path.join(base_dir, "data/all_stocks.json")) as f:
+            with open(_data_path("data/all_stocks.json")) as f:
                 data = json.load(f)
             stocks = data.get("stocks", {})
             sort_by = (params or {}).get("sort_by", "score")
@@ -335,15 +346,26 @@ Respond in JSON only:
         src_params = src.get("params", {})
         if src_name in DATA_SOURCES:
             _emit(state, "researcher_step", {"step": f"Fetching {src_name} data..."})
-            data = _fetch_data_source(src_name, src_params)
-            fetched_data[src_name] = data
+            try:
+                data = _fetch_data_source(src_name, src_params)
+                fetched_data[src_name] = data
 
-            # Extract tickers from fetched data for downstream agents
-            if "stocks" in data:
-                discovered_tickers.extend([s["ticker"] for s in data["stocks"]])
-            if "baskets" in data:
-                for basket_tickers in data["baskets"].values():
-                    discovered_tickers.extend([s["ticker"] for s in basket_tickers])
+                # Extract tickers from fetched data for downstream agents
+                if "stocks" in data:
+                    tickers_found = [s["ticker"] for s in data["stocks"]]
+                    discovered_tickers.extend(tickers_found)
+                    _emit(state, "researcher_step", {"step": f"Found {len(tickers_found)} tickers from {src_name}: {', '.join(tickers_found[:10])}"})
+                elif "baskets" in data:
+                    for bname, basket_tickers in data["baskets"].items():
+                        bt = [s["ticker"] for s in basket_tickers]
+                        discovered_tickers.extend(bt)
+                    _emit(state, "researcher_step", {"step": f"Found {len(discovered_tickers)} tickers across {len(data['baskets'])} baskets"})
+                elif "error" in data:
+                    _emit(state, "researcher_step", {"step": f"⚠️ {src_name} error: {data['error']}"})
+                else:
+                    _emit(state, "researcher_step", {"step": f"⚠️ {src_name} returned no stocks or baskets"})
+            except Exception as e:
+                _emit(state, "researcher_step", {"step": f"❌ {src_name} failed: {str(e)}"})
 
     state["_scout_data"] = fetched_data
     state["_scout_tickers"] = list(set(discovered_tickers))
@@ -364,21 +386,21 @@ def _load_investiq_data(tickers):
 
     # all_stocks.json
     try:
-        with open(os.path.join(os.path.dirname(__file__), "data/all_stocks.json")) as f:
+        with open(_data_path("data/all_stocks.json")) as f:
             all_stocks = json.load(f).get("stocks", {})
     except Exception:
         all_stocks = {}
 
     # sec_fundamentals.json
     try:
-        with open(os.path.join(os.path.dirname(__file__), "data/sec_fundamentals.json")) as f:
+        with open(_data_path("data/sec_fundamentals.json")) as f:
             sec_data = json.load(f)
     except Exception:
         sec_data = {}
 
     # insider_universe.json
     try:
-        with open(os.path.join(os.path.dirname(__file__), "data/insider_universe.json")) as f:
+        with open(_data_path("data/insider_universe.json")) as f:
             insider_data = json.load(f).get("signals", {})
     except Exception:
         insider_data = {}
