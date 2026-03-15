@@ -1192,7 +1192,7 @@ Rules:
 
         tickers = state["plan"].get("tickers", [])
         ticker_list = ', '.join(tickers)
-        report = _call_claude(client, system, f"Question: {query}\nTickers: {ticker_list}\n\nData:\n{data_text[:50000]}", max_tokens=16000)
+        report = _call_claude(client, system, f"Question: {query}\nTickers: {ticker_list}\n\nData:\n{data_text[:20000]}", max_tokens=4000, model=MODEL_FAST)
 
         _emit(state, "agent_done", {"agent": "Report", "result": "Complete"})
 
