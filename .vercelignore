@@ -35,6 +35,9 @@ deprecated/
 memory/
 docs/
 
+# DB migrations (run manually in Supabase dashboard)
+supabase/
+
 # Agent config files
 AGENTS.md
 SOUL.md
