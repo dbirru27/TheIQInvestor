@@ -156,6 +156,19 @@ def _fetch_data_source(source, params=None):
         except Exception:
             all_stocks = {}
         
+        # Filter to specific basket if requested
+        basket_filter = (params or {}).get("basket", None)
+        if basket_filter:
+            # Fuzzy match basket name
+            bf = basket_filter.lower().replace("-", " ").replace("_", " ")
+            matched = {}
+            for name, tickers in basket_map.items():
+                if bf in name.lower() or name.lower() in bf:
+                    matched[name] = tickers
+            if matched:
+                basket_map = matched
+                all_tickers = list(set(t for tickers in matched.values() for t in tickers))
+
         baskets = {}
         for name, tickers in basket_map.items():
             baskets[name] = [
@@ -362,7 +375,8 @@ Given a user query, determine which data sources to fetch.
 
 Rules:
 - Pick ONLY the sources needed (1-3 max). Don't fetch everything.
-- For each source, optionally specify params like {{limit, sort_by}}.
+- For each source, optionally specify params like {{limit, sort_by, basket}}.
+- For portfolio, if the user mentions a SPECIFIC BASKET (e.g. "grid to chip", "AI semis", "biotech", "defense"), set params.basket to that basket name. This filters to ONLY that basket instead of returning all 40+ holdings.
 - If the query mentions specific tickers, return those in explicit_tickers.
 - If the query references "the hunter tab", "top stocks", "prescreen", "this website" → use the "hunter" source.
 - If the query references "my portfolio", "my positions", "my holdings" → use the "portfolio" source.
