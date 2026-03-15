@@ -318,7 +318,8 @@ Rules:
 - If the query mentions specific tickers, return those in explicit_tickers.
 - If the query references "the hunter tab", "top stocks", "prescreen", "this website" → use the "hunter" source.
 - If the query references "my portfolio", "my positions", "my holdings" → use the "portfolio" source.
-- You MUST pick at least one source if the query is about stocks/market. Never return empty sources unless only explicit tickers are given.
+- If the query mentions specific tickers (e.g. "is NVDA a buy?", "analyze AAPL"), put those in explicit_tickers and set sources to EMPTY []. Do NOT fetch hunter/screener data for specific ticker queries.
+- Only use sources (hunter, portfolio, ewros, etc.) when the user asks about the PLATFORM'S data (e.g. "top stocks", "my portfolio", "what's rotating")
 - If you truly cannot determine what the user wants, set "abort": true with a helpful message.
 
 Respond in JSON only:
@@ -628,8 +629,9 @@ Respond in JSON format only: {{"tickers": [...], "intents": [...], "timeframe": 
     except (json.JSONDecodeError, ValueError):
         plan = {"tickers": [], "intents": ["general"], "timeframe": "medium-term"}
 
-    # If Data Scout found tickers from a data source, ALWAYS use those — they're real data, not hallucinated
-    if state.get("_scout_tickers"):
+    # If Data Scout fetched from a data source (hunter, portfolio, etc.), use those tickers
+    # But NOT if scout only found explicit_tickers (user mentioned specific tickers)
+    if state.get("_scout_data") and state.get("_scout_tickers"):
         plan["tickers"] = state["_scout_tickers"]
     # For portfolio queries, ensure all tickers are included
     elif state.get("_portfolio_tickers") and len(plan.get("tickers", [])) < len(state["_portfolio_tickers"]):
