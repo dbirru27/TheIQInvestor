@@ -1739,6 +1739,166 @@ def dashboard_summary():
 # ═══════════════════════════════════════════════════════════════
 
 _active_research = {}  # session_id → True, prevents duplicate runs
+_job_store = {}        # job_id → {status, progress, result, error} (in-memory fallback)
+
+
+def _supabase_upsert_job(job_id, payload):
+    """Write job state to Supabase research_jobs table."""
+    if not SUPABASE_KEY:
+        return
+    try:
+        payload['id'] = job_id
+        body = json.dumps(payload).encode()
+        req = urllib.request.Request(
+            f'{SUPABASE_URL}/rest/v1/research_jobs',
+            data=body,
+            headers={
+                'apikey': SUPABASE_KEY,
+                'Authorization': f'Bearer {SUPABASE_KEY}',
+                'Content-Type': 'application/json',
+                'Prefer': 'resolution=merge-duplicates,return=minimal',
+            },
+            method='POST'
+        )
+        urllib.request.urlopen(req, timeout=10)
+    except Exception:
+        pass  # fallback to in-memory
+
+
+def _supabase_get_job(job_id):
+    """Fetch job state from Supabase."""
+    if not SUPABASE_KEY:
+        return None
+    try:
+        req = urllib.request.Request(
+            f'{SUPABASE_URL}/rest/v1/research_jobs?id=eq.{job_id}&select=*',
+            headers={
+                'apikey': SUPABASE_KEY,
+                'Authorization': f'Bearer {SUPABASE_KEY}',
+            }
+        )
+        resp = urllib.request.urlopen(req, timeout=10)
+        rows = json.loads(resp.read())
+        return rows[0] if rows else None
+    except Exception:
+        return None
+
+
+@app.route('/api/research/start', methods=['POST'])
+def research_start():
+    """Start research as a background job. Returns job_id for polling."""
+    data = request.get_json(force=True)
+    query = data.get('query', '').strip()
+    mode = data.get('mode', 'fast')
+
+    if not query:
+        return jsonify({'error': 'query is required'}), 400
+
+    job_id = str(uuid.uuid4())
+    initial = {
+        'id': job_id,
+        'query': query,
+        'mode': mode,
+        'status': 'pending',
+        'progress': [],
+        'result': None,
+        'error': None,
+        'created_at': datetime.now(timezone.utc).isoformat(),
+    }
+    _job_store[job_id] = initial
+    _supabase_upsert_job(job_id, {**initial})
+
+    def run_job():
+        progress_events = []
+
+        def emit_callback(event_type, event_data):
+            event = {'type': event_type, 'data': event_data}
+            progress_events.append(event)
+            # Update Supabase every 3 events or on key milestones
+            if len(progress_events) % 3 == 0 or event_type in ('complete', 'error', 'agent_done'):
+                _job_store[job_id]['progress'] = progress_events
+                _job_store[job_id]['status'] = 'running'
+                _supabase_upsert_job(job_id, {
+                    'id': job_id,
+                    'status': 'running',
+                    'progress': progress_events,
+                })
+
+        try:
+            _job_store[job_id]['status'] = 'running'
+            from agent_committee import research, quick_research
+            if mode == 'fast':
+                result = quick_research(query, emit=emit_callback)
+            else:
+                result = research(query, emit=emit_callback)
+
+            if result.get('error'):
+                raise Exception(result['error'])
+
+            # Save final report to research_reports table too
+            if SUPABASE_KEY:
+                try:
+                    report_row = {
+                        'id': str(uuid.uuid4()),
+                        'query': query,
+                        'report': result.get('final_report', result.get('report', '')),
+                        'risk_flags': result.get('risk_flags', ''),
+                        'tickers': result.get('tickers', []),
+                        'intents': result.get('intents', []),
+                        'sources': result.get('sources', []),
+                        'created_at': datetime.now(timezone.utc).isoformat(),
+                    }
+                    req_body = json.dumps(report_row).encode()
+                    req = urllib.request.Request(
+                        f'{SUPABASE_URL}/rest/v1/research_reports',
+                        data=req_body,
+                        headers={
+                            'apikey': SUPABASE_KEY,
+                            'Authorization': f'Bearer {SUPABASE_KEY}',
+                            'Content-Type': 'application/json',
+                            'Prefer': 'return=minimal',
+                        },
+                        method='POST'
+                    )
+                    urllib.request.urlopen(req, timeout=10)
+                except Exception:
+                    pass
+
+            final_state = {
+                'id': job_id,
+                'status': 'complete',
+                'progress': progress_events,
+                'result': result,
+                'updated_at': datetime.now(timezone.utc).isoformat(),
+            }
+            _job_store[job_id].update(final_state)
+            _supabase_upsert_job(job_id, final_state)
+
+        except Exception as e:
+            err_state = {
+                'id': job_id,
+                'status': 'error',
+                'progress': progress_events,
+                'error': str(e),
+                'updated_at': datetime.now(timezone.utc).isoformat(),
+            }
+            _job_store[job_id].update(err_state)
+            _supabase_upsert_job(job_id, err_state)
+
+    thread = threading.Thread(target=run_job, daemon=True)
+    thread.start()
+
+    return jsonify({'job_id': job_id})
+
+
+@app.route('/api/research/status/<job_id>')
+def research_status(job_id):
+    """Poll job status. Returns progress events + result when complete."""
+    # Try in-memory first (same server instance), fall back to Supabase
+    job = _job_store.get(job_id) or _supabase_get_job(job_id)
+    if not job:
+        return jsonify({'error': 'Job not found'}), 404
+    return jsonify(job)
 
 @app.route('/api/research/stream', methods=['POST'])
 def research_stream():

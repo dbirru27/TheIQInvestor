@@ -5649,6 +5649,7 @@
         function stopResearch() {
             if (researchEventSource) { researchEventSource.close(); researchEventSource = null; }
             if (window._researchAbort) { window._researchAbort.abort(); window._researchAbort = null; }
+            if (window._researchPollTimer) { clearInterval(window._researchPollTimer); window._researchPollTimer = null; }
             const btn = document.getElementById('research-btn');
             btn.disabled = false;
             btn.textContent = '🔬 Research';
@@ -5696,85 +5697,54 @@
 
             updateResearchProgress(0);
 
-            // Start SSE
-            window._researchAbort = new AbortController();
-            window._researchSessionId = crypto.randomUUID();
-            // Auto-timeout (Vercel maxDuration: 300s) — pause while page is hidden
-            window._researchElapsed = 0;
-            window._researchLastVisible = Date.now();
-            window._researchTimeout = setInterval(() => {
-                if (!document.hidden) {
-                    window._researchElapsed += 1000;
-                }
-                if (window._researchElapsed >= 290000) {
-                    clearInterval(window._researchTimeout);
-                    window._researchTimeout = null;
-                    const reportVisible = document.getElementById('research-report').style.display === 'block';
-                    if (window._researchAbort && !reportVisible) {
-                        handleResearchEvent('error', {message: 'Timed out after 5 minutes. Try a simpler query or fewer tickers.'});
-                        stopResearch();
-                    }
-                }
-            }, 1000);
+            // Start background job (polling architecture — survives mobile backgrounding)
+            window._researchJobId = null;
+            window._researchPollOffset = 0;  // track which events we've already rendered
 
-            // Handle tab going to background — detect connection drop on return
-            window._researchVisibilityHandler = function() {
-                if (!document.hidden && window._researchAbort && !window._researchDone) {
-                    // Page just became visible and research is still "running" — stream likely died
-                    setTimeout(() => {
-                        if (window._researchAbort && !window._researchDone) {
-                            handleResearchEvent('error', { message: 'Connection interrupted (tab was backgrounded). Tap Re-run to try again.' });
-                            stopResearch();
-                        }
-                    }, 1500); // small delay to let stream recover if it's still alive
-                }
-            };
-            document.addEventListener('visibilitychange', window._researchVisibilityHandler);
-            // Research API — use dedicated server if configured, otherwise local
-            const RESEARCH_API = window.RESEARCH_SERVER_URL || '/api/research/stream';
-            fetch(RESEARCH_API, {
+            fetch('/api/research/start', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query, session_id: window._researchSessionId, mode: window._researchMode || 'deep' }),
-                signal: window._researchAbort.signal
-            }).then(response => {
-                const reader = response.body.getReader();
-                const decoder = new TextDecoder();
-                let buffer = '';
-
-                function readStream() {
-                    reader.read().then(({ done, value }) => {
-                        if (done) { finishResearch(); return; }
-                        buffer += decoder.decode(value, { stream: true });
-                        const lines = buffer.split('\n');
-                        buffer = lines.pop();
-                        let eventType = '';
-                        for (const line of lines) {
-                            if (line.startsWith('event: ')) {
-                                eventType = line.slice(7).trim();
-                            } else if (line.startsWith('data: ') && eventType) {
-                                try {
-                                    const data = JSON.parse(line.slice(6));
-                                    handleResearchEvent(eventType, data);
-                                } catch(e) {}
-                                eventType = '';
-                            }
-                        }
-                        readStream();
-                    }).catch(err => {
-                        if (!window._researchDone) {
-                            handleResearchEvent('error', { message: err.message });
-                        }
-                        finishResearch();
-                    });
-                }
-                readStream();
+                body: JSON.stringify({ query, mode: window._researchMode || 'fast' })
+            }).then(r => r.json()).then(resp => {
+                if (resp.error) { handleResearchEvent('error', { message: resp.error }); finishResearch(); return; }
+                window._researchJobId = resp.job_id;
+                startPolling(resp.job_id);
             }).catch(err => {
-                if (!window._researchDone) {
-                    handleResearchEvent('error', { message: err.message });
-                }
+                handleResearchEvent('error', { message: 'Failed to start research: ' + err.message });
                 finishResearch();
             });
+
+            function startPolling(jobId) {
+                if (window._researchPollTimer) clearInterval(window._researchPollTimer);
+                window._researchPollTimer = setInterval(() => {
+                    if (window._researchDone) { clearInterval(window._researchPollTimer); return; }
+                    fetch('/api/research/status/' + jobId)
+                        .then(r => r.json())
+                        .then(job => {
+                            // Replay any new progress events
+                            const events = job.progress || [];
+                            for (let i = window._researchPollOffset; i < events.length; i++) {
+                                handleResearchEvent(events[i].type, events[i].data || {});
+                            }
+                            window._researchPollOffset = events.length;
+
+                            if (job.status === 'complete') {
+                                clearInterval(window._researchPollTimer);
+                                const result = job.result || {};
+                                handleResearchEvent('complete', {
+                                    report: result.final_report || result.report || '',
+                                    risk_flags: result.risk_flags || '',
+                                    tickers: result.tickers || [],
+                                    sources: result.sources || [],
+                                });
+                            } else if (job.status === 'error') {
+                                clearInterval(window._researchPollTimer);
+                                handleResearchEvent('error', { message: job.error || 'Research failed' });
+                            }
+                        })
+                        .catch(() => { /* network hiccup — keep polling */ });
+                }, 2000);
+            }
         }
 
         function handleResearchEvent(type, data) {
@@ -5837,13 +5807,10 @@
         }
 
         function finishResearch() {
-            if (window._researchTimeout) { clearInterval(window._researchTimeout); window._researchTimeout = null; }
-            if (window._researchVisibilityHandler) {
-                document.removeEventListener('visibilitychange', window._researchVisibilityHandler);
-                window._researchVisibilityHandler = null;
-            }
+            if (window._researchPollTimer) { clearInterval(window._researchPollTimer); window._researchPollTimer = null; }
             window._researchAbort = null;
-            window._researchElapsed = 0;
+            window._researchJobId = null;
+            window._researchPollOffset = 0;
             researchEventSource = null;
             const btn = document.getElementById('research-btn');
             btn.disabled = false;
