@@ -546,8 +546,20 @@ def _load_investiq_data(tickers):
     return result
 
 
-def _fetch_yfinance_data(ticker, data_types):
-    """Fetch financial data from yfinance for a single ticker."""
+def _fetch_yfinance_data(ticker, data_types, timeout=15):
+    """Fetch financial data from yfinance for a single ticker. Enforces a hard timeout."""
+    import concurrent.futures
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as ex:
+        future = ex.submit(_fetch_yfinance_data_inner, ticker, data_types)
+        try:
+            return future.result(timeout=timeout)
+        except concurrent.futures.TimeoutError:
+            return {f"{ticker}__error": f"yfinance timed out after {timeout}s — Yahoo Finance may be slow"}
+        except Exception as e:
+            return {f"{ticker}__error": str(e)}
+
+def _fetch_yfinance_data_inner(ticker, data_types):
+    """Actual yfinance fetch — runs inside timeout wrapper."""
     result = {}
     try:
         stock = yf.Ticker(ticker)
@@ -1259,7 +1271,7 @@ def quick_research(query, emit=None):
                     state.setdefault("research_data", {})[f"{t}__investiq"] = json.dumps(iq_data[t], default=str)
             for t in tickers:
                 _emit(state, "researcher_step", {"step": f"Fetching live data for {t}..."})
-                yf_data = _fetch_yfinance_data(t, ["stock_info", "price_history", "earnings", "analyst_recommendations"])
+                yf_data = _fetch_yfinance_data(t, ["stock_info", "price_history", "earnings"])
                 state.setdefault("research_data", {}).update(yf_data)
             _emit(state, "agent_done", {"agent": "Data Gathering", "result": {"tickers": len(tickers), "yfinance": len(tickers)}})
 
