@@ -1160,7 +1160,7 @@ def quick_research(query, emit=None):
 
         data_text = "\n\n".join(data_context)
 
-        _emit(state, "agent_start", {"agent": "Analysis", "description": "Generating report..."})
+        _emit(state, "agent_start", {"agent": "Report", "description": "Generating report..."})
 
         # 5. Single Opus call — comprehensive analysis
         system = """You are a senior investment analyst. Given the user's question and ALL the data below, provide a clear, actionable analysis.
@@ -1194,7 +1194,7 @@ Rules:
         ticker_list = ', '.join(tickers)
         report = _call_claude(client, system, f"Question: {query}\nTickers: {ticker_list}\n\nData:\n{data_text[:50000]}", max_tokens=16000)
 
-        _emit(state, "agent_done", {"agent": "Analysis", "result": "Complete"})
+        _emit(state, "agent_done", {"agent": "Report", "result": "Complete"})
 
         state["final_report"] = report
         state["risk_flags"] = ""
