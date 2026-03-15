@@ -43,66 +43,29 @@ TIER_LIMITS = {
 
 # ═══ Auth helpers ═══
 def get_current_user():
-    """Validate JWT and fetch user row in ONE parallel batch.
-    Returns user dict with _row key containing the users table row."""
+    """Validate JWT from Authorization header via Supabase /auth/v1/user endpoint.
+    Returns user dict {id, email, ...} or None."""
     auth_header = request.headers.get('Authorization', '')
     if not auth_header.startswith('Bearer '):
         return None
     token = auth_header[7:]
     if not token:
         return None
-
-    import concurrent.futures
-
-    def fetch_auth():
-        try:
-            req = urllib.request.Request(
-                f'{SUPABASE_URL}/auth/v1/user',
-                headers={
-                    'apikey': SUPABASE_ANON_KEY or SUPABASE_KEY,
-                    'Authorization': f'Bearer {token}',
-                }
-            )
-            resp = urllib.request.urlopen(req, timeout=5)
-            return json.loads(resp.read())
-        except Exception:
-            return None
-
-    def fetch_row_by_token():
-        """Fetch user row using JWT claims to get user_id without waiting for auth result."""
-        try:
-            # Decode JWT payload (no signature check — Supabase already verified it above)
-            import base64
-            payload_b64 = token.split('.')[1]
-            payload_b64 += '=' * (4 - len(payload_b64) % 4)
-            payload = json.loads(base64.urlsafe_b64decode(payload_b64))
-            uid = payload.get('sub')
-            if not uid:
-                return None
-            req = urllib.request.Request(
-                f'{SUPABASE_URL}/rest/v1/users?id=eq.{uid}&select=*',
-                headers={
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': f'Bearer {SUPABASE_KEY}',
-                    'Accept': 'application/vnd.pgrst.object+json',
-                }
-            )
-            resp = urllib.request.urlopen(req, timeout=5)
-            return json.loads(resp.read())
-        except Exception:
-            return None
-
-    # Run both calls in parallel — saves ~300-500ms per request
-    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as ex:
-        f_auth = ex.submit(fetch_auth)
-        f_row = ex.submit(fetch_row_by_token)
-        user = f_auth.result()
-        row = f_row.result()
-
-    if not user or not user.get('id'):
-        return None
-    user['_row'] = row
-    return user
+    try:
+        req = urllib.request.Request(
+            f'{SUPABASE_URL}/auth/v1/user',
+            headers={
+                'apikey': SUPABASE_ANON_KEY or SUPABASE_KEY,
+                'Authorization': f'Bearer {token}',
+            }
+        )
+        resp = urllib.request.urlopen(req, timeout=5)
+        user = json.loads(resp.read())
+        if user.get('id'):
+            return user
+    except Exception:
+        pass
+    return None
 
 def require_auth(f):
     """Decorator: returns 401 if no valid auth token."""
@@ -131,9 +94,9 @@ def get_user_row(user_id):
     except Exception:
         return None
 
-def check_ai_limit(user_id, cached_row=None):
-    """Returns (allowed: bool, user_row: dict|None). Uses cached_row if provided."""
-    row = cached_row or get_user_row(user_id)
+def check_ai_limit(user_id):
+    """Returns (allowed: bool, user_row: dict|None)."""
+    row = get_user_row(user_id)
     if not row:
         return False, None
     tier = row.get('tier', 'registered')
@@ -1981,7 +1944,7 @@ def research_start():
     """Start research as a background job. Returns job_id for polling."""
     # Tier check: enforce AI usage limits
     user = request.user
-    allowed, user_row = check_ai_limit(user['id'], cached_row=user.get('_row'))
+    allowed, user_row = check_ai_limit(user['id'])
     if not allowed:
         tier = user_row.get('tier', 'registered') if user_row else 'registered'
         return jsonify({
