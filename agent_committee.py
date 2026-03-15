@@ -1277,7 +1277,7 @@ def quick_research(query, emit=None):
         data_text = "\n\n".join(data_context)
 
         _emit(state, "agent_start", {"agent": "Researcher", "description": "Generating report..."})
-        _emit(state, "researcher_step", {"step": f"Analyzing {len(tickers)} tickers — this takes more than a few seconds..."})
+        _emit(state, "researcher_step", {"step": f"Analyzing {len(tickers)} tickers with AI — this takes more than a few seconds..."})
 
         # 5. Single Sonnet call — comprehensive analysis
         system = """You are a senior investment analyst. Given the user's question and ALL the data below, provide a clear, actionable analysis.
