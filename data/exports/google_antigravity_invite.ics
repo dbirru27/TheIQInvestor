@@ -1,0 +1,18 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Danswiz//Calendar Invite//EN
+BEGIN:VEVENT
+UID:google-antigravity-experiment-20260210@danswiz.local
+DTSTART;TZID=America/New_York:20260210T140000
+DTEND;TZID=America/New_York:20260210T160000
+SUMMARY:Experiment Google Antigravity
+DESCRIPTION:Time to experiment with Google Antigravity - Google's AI-powered developer platform.\n\nResources:\n- https://antigravity.google\n- Download from antigravity.google/download
+LOCATION:Your Workstation
+STATUS:CONFIRMED
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Experiment Google Antigravity starts in 15 minutes
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+END:VCALENDAR

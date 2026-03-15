@@ -1,0 +1,16 @@
+📊 S&P 500 SECTOR DRIVERS | 2026-02-27 16:30
+-------------------------------------------------------------------------------------
+SECTOR (ETF)           | CHG%     | YTD%     | TOP 3 DRIVERS (GAIN%)
+-------------------------------------------------------------------------------------
+Healthcare (XLV)       |   +1.77% |   +3.02% | MRK (Pharma: +3.8%), GILD (Biotech: +3.6%), VRTX (Biotech: +3.5%)
+Energy (XLE)           |   +1.58% |  +22.50% | OXY (E&P: +3.2%), XOM (Oil Major: +2.7%), COP (E&P: +2.5%)
+Cons. Staples (XLP)    |   +1.29% |  +15.86% | WMT (Retail: +2.8%), MDLZ (Food: +2.7%), COST (Retail: +2.4%)
+Utilities (XLU)        |   +1.17% |  +10.54% | CEG (Electric: +2.0%), NEE (Electric: +1.9%), ED (Electric: +1.6%)
+Communication (XLC)    |   +1.14% |   +0.98% | NFLX (Entertainment: +13.8%), CHTR (Telecom: +2.7%), LYV (Entertainment: +2.7%)
+Materials (XLB)        |   +0.77% |  +15.81% | DOW (Chemicals: +2.8%), CF (Ag Chem: +2.4%), NEM (Mining: +2.0%)
+Real Estate (XLRE)     |   +0.48% |   +8.57% | SBAC (Telecom: +4.7%), AMT (Telecom: +3.7%), CCI (Telecom: +3.6%)
+Industrials (XLI)      |   +0.25% |  +12.13% | WM (Waste: +3.0%), LMT (Defense: +2.6%), RTX (Aerospace: +2.5%)
+Cons. Discretionary (XLY) |   -0.16% |   -1.26% | ORLY (Retail: +2.8%), AZO (Retail: +2.6%), MCD (Restaurants: +2.0%)
+Technology (XLK)       |   -1.60% |   -3.84% | CSCO (Networking: +1.7%), ADBE (Software: +1.3%), ACN (IT Services: +0.6%)
+Financials (XLF)       |   -2.04% |   -6.37% | V (Payments: +1.1%), SPGI (Financial Data: +1.0%), PGR (Insurance: +0.9%)
+

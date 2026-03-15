@@ -24,6 +24,16 @@
       "price": 23.87,
       "ewros_score": 52,
       "tier": "SELL"
+    },
+    "2026-03-12": {
+      "price": 23.17,
+      "ewros_score": 47,
+      "tier": "SELL"
+    },
+    "2026-03-13": {
+      "price": 22.75,
+      "ewros_score": 39,
+      "tier": "SELL"
     }
   },
   "NVT": {
@@ -51,6 +61,16 @@
       "price": 111.09,
       "ewros_score": 61,
       "tier": "SELL"
+    },
+    "2026-03-12": {
+      "price": 107.87,
+      "ewros_score": 56,
+      "tier": "SELL"
+    },
+    "2026-03-13": {
+      "price": 109.93,
+      "ewros_score": 66,
+      "tier": "SELL"
     }
   },
   "JHG": {
@@ -76,6 +96,16 @@
     },
     "2026-03-11": {
       "price": 50.56,
+      "ewros_score": 76,
+      "tier": "HOLD"
+    },
+    "2026-03-12": {
+      "price": 50.39,
+      "ewros_score": 77,
+      "tier": "HOLD"
+    },
+    "2026-03-13": {
+      "price": 50.13,
       "ewros_score": 76,
       "tier": "HOLD"
     }
@@ -105,6 +135,16 @@
       "price": 18.14,
       "ewros_score": 87,
       "tier": "HOLD"
+    },
+    "2026-03-12": {
+      "price": 18.07,
+      "ewros_score": 89,
+      "tier": "HOLD"
+    },
+    "2026-03-13": {
+      "price": 18.14,
+      "ewros_score": 89,
+      "tier": "HOLD"
     }
   },
   "THC": {
@@ -131,6 +171,16 @@
     "2026-03-11": {
       "price": 234.58,
       "ewros_score": 90,
+      "tier": "HOLD"
+    },
+    "2026-03-12": {
+      "price": 224.73,
+      "ewros_score": 83,
+      "tier": "HOLD"
+    },
+    "2026-03-13": {
+      "price": 227.63,
+      "ewros_score": 87,
       "tier": "HOLD"
     }
   },
@@ -159,6 +209,16 @@
       "price": 226.74,
       "ewros_score": 95,
       "tier": "HOLD"
+    },
+    "2026-03-12": {
+      "price": 230.07,
+      "ewros_score": 96,
+      "tier": "HOLD"
+    },
+    "2026-03-13": {
+      "price": 226.18,
+      "ewros_score": 95,
+      "tier": "HOLD"
     }
   },
   "NRG": {
@@ -185,6 +245,16 @@
     "2026-03-11": {
       "price": 148.63,
       "ewros_score": 28,
+      "tier": "SELL"
+    },
+    "2026-03-12": {
+      "price": 152.1,
+      "ewros_score": 43,
+      "tier": "SELL"
+    },
+    "2026-03-13": {
+      "price": 152.87,
+      "ewros_score": 48,
       "tier": "SELL"
     }
   }

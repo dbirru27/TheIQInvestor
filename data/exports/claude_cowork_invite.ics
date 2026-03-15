@@ -1,0 +1,18 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Danswiz//Calendar Invite//EN
+BEGIN:VEVENT
+UID:claude-cowork-experiment-20260209@danswiz.local
+DTSTART;TZID=America/New_York:20260209T140000
+DTEND;TZID=America/New_York:20260209T160000
+SUMMARY:Experiment Claude Cowork
+DESCRIPTION:Time to experiment with Claude Cowork - Anthropic's agentic AI for knowledge work.\n\nResources:\n- https://claude.com/product/cowork\n- Download Claude Desktop for macOS
+LOCATION:Your Workstation
+STATUS:CONFIRMED
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Experiment Claude Cowork starts in 15 minutes
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -1,10 +1,12 @@
 from flask import Flask, render_template, jsonify, request, Response
+from functools import wraps
 import os
 import json
 import traceback
 import sys
 import uuid
 import urllib.request
+import urllib.error
 import threading
 import queue
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -16,15 +18,122 @@ app = Flask(__name__)
 # Supabase Configuration
 SUPABASE_URL = os.environ.get('SUPABASE_URL', 'https://jvgxgfbthfsdqtvzeuqz.supabase.co')
 SUPABASE_KEY = os.environ.get('SUPABASE_KEY', '')
+SUPABASE_ANON_KEY = os.environ.get('SUPABASE_ANON_KEY', '')
 
 # Load from .env file if not set (local dev)
-if not SUPABASE_KEY:
+if not SUPABASE_KEY or not SUPABASE_ANON_KEY:
     try:
         with open('.env') as f:
             for line in f:
-                if line.startswith('SUPABASE_KEY='):
-                    SUPABASE_KEY = line.strip().split('=', 1)[1]
+                line = line.strip()
+                if line.startswith('SUPABASE_KEY=') and not SUPABASE_KEY:
+                    SUPABASE_KEY = line.split('=', 1)[1]
+                elif line.startswith('SUPABASE_ANON_KEY=') and not SUPABASE_ANON_KEY:
+                    SUPABASE_ANON_KEY = line.split('=', 1)[1]
     except FileNotFoundError:
+        pass
+
+# ═══ Tier Limits ═══
+TIER_LIMITS = {
+    'registered': {'baskets': 1, 'holdings': 10, 'watchlist': 20, 'ai_per_day': 1},
+    'pro':        {'baskets': 3, 'holdings': 50, 'watchlist': 100, 'ai_per_day': -1},  # -1 = credit-based
+    'max':        {'baskets': -1, 'holdings': -1, 'watchlist': -1, 'ai_per_day': -1},   # -1 = unlimited
+    'admin':      {'baskets': -1, 'holdings': -1, 'watchlist': -1, 'ai_per_day': -1},
+}
+
+# ═══ Auth helpers ═══
+def get_current_user():
+    """Validate JWT from Authorization header via Supabase /auth/v1/user endpoint.
+    Returns user dict {id, email, ...} or None."""
+    auth_header = request.headers.get('Authorization', '')
+    if not auth_header.startswith('Bearer '):
+        return None
+    token = auth_header[7:]
+    if not token:
+        return None
+    try:
+        req = urllib.request.Request(
+            f'{SUPABASE_URL}/auth/v1/user',
+            headers={
+                'apikey': SUPABASE_ANON_KEY or SUPABASE_KEY,
+                'Authorization': f'Bearer {token}',
+            }
+        )
+        resp = urllib.request.urlopen(req, timeout=8)
+        user = json.loads(resp.read())
+        if user.get('id'):
+            return user
+    except Exception:
+        pass
+    return None
+
+def require_auth(f):
+    """Decorator: returns 401 if no valid auth token."""
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        user = get_current_user()
+        if not user:
+            return jsonify({'error': 'Authentication required', 'auth_required': True}), 401
+        request.user = user
+        return f(*args, **kwargs)
+    return decorated
+
+def get_user_row(user_id):
+    """Fetch the users table row for a given user_id."""
+    try:
+        req = urllib.request.Request(
+            f'{SUPABASE_URL}/rest/v1/users?id=eq.{user_id}&select=*',
+            headers={
+                'apikey': SUPABASE_KEY,
+                'Authorization': f'Bearer {SUPABASE_KEY}',
+                'Accept': 'application/vnd.pgrst.object+json',
+            }
+        )
+        resp = urllib.request.urlopen(req, timeout=8)
+        return json.loads(resp.read())
+    except Exception:
+        return None
+
+def check_ai_limit(user_id):
+    """Returns (allowed: bool, user_row: dict|None)."""
+    row = get_user_row(user_id)
+    if not row:
+        return False, None
+    tier = row.get('tier', 'registered')
+    limits = TIER_LIMITS.get(tier, TIER_LIMITS['registered'])
+    ai_limit = limits['ai_per_day']
+
+    # Unlimited tiers
+    if ai_limit == -1:
+        # For pro tier, check credits
+        if tier == 'pro':
+            return row.get('ai_credits', 0) > 0, row
+        return True, row
+
+    # Daily limit tiers: reset if new day
+    calls_today = row.get('ai_calls_today', 0)
+    last_reset = row.get('last_reset', '')
+    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    if str(last_reset) < today:
+        calls_today = 0
+    return calls_today < ai_limit, row
+
+def increment_ai_calls(user_id):
+    """Call the increment_ai_calls RPC."""
+    try:
+        body = json.dumps({'p_user_id': user_id}).encode()
+        req = urllib.request.Request(
+            f'{SUPABASE_URL}/rest/v1/rpc/increment_ai_calls',
+            data=body,
+            headers={
+                'apikey': SUPABASE_KEY,
+                'Authorization': f'Bearer {SUPABASE_KEY}',
+                'Content-Type': 'application/json',
+            },
+            method='POST'
+        )
+        urllib.request.urlopen(req, timeout=8)
+    except Exception:
         pass
 
 def load_insider_scores():
@@ -86,6 +195,41 @@ def fetch_live_prices_bulk(tickers, batch_size=15):
             pass
     return results
 
+
+@app.route('/api/config')
+def api_config():
+    """Return public Supabase config for the frontend (no secrets)."""
+    return jsonify({
+        'supabase_url': SUPABASE_URL,
+        'supabase_anon_key': SUPABASE_ANON_KEY or '',
+    })
+
+@app.route('/api/auth/me')
+@require_auth
+def auth_me():
+    """Return current user's tier, limits, and usage."""
+    user = request.user
+    row = get_user_row(user['id'])
+    if not row:
+        return jsonify({'error': 'User record not found'}), 404
+    tier = row.get('tier', 'registered')
+    limits = TIER_LIMITS.get(tier, TIER_LIMITS['registered'])
+
+    # Reset counter display if new day
+    calls_today = row.get('ai_calls_today', 0)
+    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    if str(row.get('last_reset', '')) < today:
+        calls_today = 0
+
+    return jsonify({
+        'id': user['id'],
+        'email': user.get('email', row.get('email', '')),
+        'tier': tier,
+        'limits': limits,
+        'ai_calls_today': calls_today,
+        'ai_credits': row.get('ai_credits', 0),
+        'created_at': row.get('created_at'),
+    })
 
 @app.route('/health')
 def health():
@@ -592,7 +736,11 @@ def rotation_scan():
 
 @app.route('/api/portfolio', methods=['GET'])
 def get_portfolio():
-    """Fetch portfolio from Supabase, fall back to portfolio.json"""
+    """Fetch portfolio from Supabase, fall back to portfolio.json.
+    Anonymous users get empty data with requires_auth flag."""
+    user = get_current_user()
+    if not user:
+        return jsonify({"baskets": {}, "requires_auth": True})
     try:
         # Try Supabase first
         url = f'{SUPABASE_URL}/rest/v1/baskets?select=*,holdings(*)&order=sort_order'
@@ -729,7 +877,11 @@ def save_portfolio():
 
 @app.route('/api/watchlists', methods=['GET'])
 def get_watchlists():
-    """Fetch all watchlists with their items from Supabase"""
+    """Fetch all watchlists with their items from Supabase.
+    Anonymous users get empty data with requires_auth flag."""
+    user = get_current_user()
+    if not user:
+        return jsonify({"watchlists": {}, "requires_auth": True})
     try:
         url = f'{SUPABASE_URL}/rest/v1/watchlists?select=*,watchlist_items(*)&order=sort_order'
         req = urllib.request.Request(url, headers={
@@ -1785,14 +1937,30 @@ def _supabase_get_job(job_id):
 
 
 @app.route('/api/research/start', methods=['POST'])
+@require_auth
 def research_start():
     """Start research as a background job. Returns job_id for polling."""
+    # Tier check: enforce AI usage limits
+    user = request.user
+    allowed, user_row = check_ai_limit(user['id'])
+    if not allowed:
+        tier = user_row.get('tier', 'registered') if user_row else 'registered'
+        return jsonify({
+            'error': 'AI research limit reached',
+            'upgrade': True,
+            'tier': tier,
+            'limits': TIER_LIMITS.get(tier, TIER_LIMITS['registered']),
+        }), 429
+
     data = request.get_json(force=True)
     query = data.get('query', '').strip()
     mode = data.get('mode', 'fast')
 
     if not query:
         return jsonify({'error': 'query is required'}), 400
+
+    # Increment usage counter
+    increment_ai_calls(user['id'])
 
     job_id = str(uuid.uuid4())
     initial = {
@@ -1901,6 +2069,7 @@ def research_status(job_id):
     return jsonify(job)
 
 @app.route('/api/research/stream', methods=['POST'])
+@require_auth
 def research_stream():
     """Stream SSE events from the multi-agent research pipeline."""
     data = request.get_json(force=True)

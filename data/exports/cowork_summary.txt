@@ -1,0 +1,24 @@
+Hi Dan,
+
+Here is the summary of Claude Cowork as requested.
+
+### **Overview**
+Claude Cowork is a new agentic feature in the Claude macOS desktop app (currently in research preview) that brings the execution power of Claude Code to general knowledge work. Unlike standard chat, Cowork can actively manage files, use tools, and browse the web to complete tasks rather than just discussing them.
+
+### **Key Capabilities**
+*   **File Management:** Organize, rename, and sort local folders (Downloads, Documents, etc.).
+*   **Data Extraction:** Turn screenshots, receipts, or invoices into formatted spreadsheets.
+*   **Document Creation:** Draft reports, presentations, and branded documents using company templates and source materials.
+*   **Web & Cloud Integration:** Works across the web (via Chrome connector) for research and data entry, and connects to tools like Slack, Notion, and GitHub.
+*   **Proactive Work:** Can generate daily briefings by synthesizing info across multiple platforms.
+
+### **How It Works**
+*   **Agency:** You describe the outcome; Claude breaks it into steps and executes.
+*   **Control:** Runs in an isolated virtual machine (VM). It requires explicit permission for folders/connectors and waits for approval before taking significant actions.
+*   **Local Privacy:** Conversation history is stored locally on your device.
+
+### **Availability & Pricing**
+*   **Platform:** macOS only (Research Preview).
+*   **Plans:** Included in Pro ($20/mo), Max ($100-$200/mo), Team ($20/seat), and Enterprise plans.
+
+**Original Link:** https://claude.com/product/cowork

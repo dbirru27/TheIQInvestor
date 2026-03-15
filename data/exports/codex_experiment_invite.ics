@@ -1,0 +1,17 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Danswiz//Calendar Invite//EN
+BEGIN:VEVENT
+UID:codex-experiment-20260212@danswiz.local
+DTSTART;TZID=America/New_York:20260212T140000
+DTEND;TZID=America/New_York:20260212T160000
+SUMMARY:Experiment with OpenAI Codex
+DESCRIPTION:Time to experiment with OpenAI's Codex - AI coding assistant and agentic coding environment.\n\nResources:\n- https://codex.openai.com\n- https://openai.com/index/introducing-codex/\n- Requires: OpenAI account with Pro subscription or above\n\nGetting Started:\n1. Visit https://codex.openai.com and log in\n2. Grant necessary permissions for your coding environment\n3. Try natural language coding prompts\n4. Experiment with code explanation, debugging, and generation\n\nLocation: Your Workstation
+STATUS:CONFIRMED
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:OpenAI Codex experiment starts in 15 minutes
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+END:VCALENDAR

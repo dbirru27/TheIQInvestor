@@ -10,6 +10,7 @@
     <meta property="og:type" content="website">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://s3.tradingview.com/tv.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #0f172a; --surface: #1e293b; --accent: #38bdf8; --text: #f8fafc; --text-dim: #94a3b8; }
@@ -591,7 +592,51 @@
         <div class="top-nav-item" data-tab="screener" onclick="navTo('screener')">Screener</div>
         <div class="top-nav-item" data-tab="alerts" onclick="navTo('alerts')">Alerts</div>
         <div class="top-nav-item" data-tab="research" onclick="navTo('research')">Research</div>
+        <div style="margin-left:auto; display:flex; align-items:center; gap:10px; flex-shrink:0; padding:0 8px;">
+            <div id="auth-user-info" style="display:none; font-size:0.75rem; color:var(--text-dim); white-space:nowrap;">
+                <span id="auth-user-email"></span>
+                <span id="auth-user-tier" style="background:#059669; color:white; padding:1px 6px; border-radius:10px; font-size:0.65rem; font-weight:700; margin-left:4px;"></span>
+            </div>
+            <button id="auth-signout-btn" onclick="signOut()" style="display:none; background:transparent; border:1px solid #475569; color:#94a3b8; padding:4px 10px; border-radius:6px; font-size:0.72rem; cursor:pointer;">Sign Out</button>
+            <button id="auth-signin-btn" onclick="openAuthModal()" style="background:var(--accent); color:var(--bg); border:none; padding:6px 14px; border-radius:6px; font-size:0.78rem; font-weight:600; cursor:pointer; white-space:nowrap;">Sign In</button>
+        </div>
     </nav>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" style="display:none; position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px); justify-content:center; align-items:center;">
+        <div style="background:#1e293b; border:1px solid #334155; border-radius:16px; padding:32px; width:90%; max-width:380px; position:relative;">
+            <button onclick="closeAuthModal()" style="position:absolute; top:12px; right:16px; background:none; border:none; color:#94a3b8; font-size:1.2rem; cursor:pointer;">&times;</button>
+            <h3 style="margin:0 0 6px; font-size:1.2rem; font-weight:700;">Sign In to IQ Investor</h3>
+            <p style="color:#94a3b8; font-size:0.8rem; margin:0 0 20px;">Access your portfolio, watchlist, and AI research.</p>
+            <div id="auth-error" style="display:none; background:#7f1d1d; border:1px solid #dc2626; border-radius:8px; padding:8px 12px; font-size:0.78rem; margin-bottom:12px; color:#fca5a5;"></div>
+            <input id="auth-email" type="email" placeholder="Email" style="width:100%; padding:10px 14px; background:#0f172a; border:1px solid #334155; border-radius:8px; color:white; font-size:0.85rem; margin-bottom:10px; box-sizing:border-box;" />
+            <input id="auth-password" type="password" placeholder="Password" style="width:100%; padding:10px 14px; background:#0f172a; border:1px solid #334155; border-radius:8px; color:white; font-size:0.85rem; margin-bottom:16px; box-sizing:border-box;" />
+            <button id="auth-submit-btn" onclick="signInWithEmail()" style="width:100%; padding:10px; background:var(--accent); color:var(--bg); border:none; border-radius:8px; font-weight:700; font-size:0.9rem; cursor:pointer; margin-bottom:10px;">Sign In</button>
+            <button onclick="signUpWithEmail()" style="width:100%; padding:10px; background:transparent; border:1px solid #334155; color:var(--text-dim); border-radius:8px; font-size:0.85rem; cursor:pointer;">Create Account</button>
+            <p style="text-align:center; margin:14px 0 0; font-size:0.72rem; color:#64748b;">Free tier: 1 basket, 10 holdings, 1 AI research/day</p>
+        </div>
+    </div>
+
+    <!-- Upgrade Modal -->
+    <div id="upgrade-modal" style="display:none; position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px); justify-content:center; align-items:center;">
+        <div style="background:#1e293b; border:1px solid #334155; border-radius:16px; padding:32px; width:90%; max-width:400px; position:relative; text-align:center;">
+            <button onclick="closeUpgradeModal()" style="position:absolute; top:12px; right:16px; background:none; border:none; color:#94a3b8; font-size:1.2rem; cursor:pointer;">&times;</button>
+            <h3 style="margin:0 0 8px; font-size:1.2rem; font-weight:700;">Upgrade Your Plan</h3>
+            <p style="color:#94a3b8; font-size:0.85rem; margin:0 0 20px;">You've reached your daily AI research limit.</p>
+            <div style="display:grid; gap:12px; text-align:left;">
+                <div style="background:#0f172a; border:1px solid #334155; border-radius:10px; padding:16px;">
+                    <div style="font-weight:700; color:var(--accent);">Pro</div>
+                    <div style="font-size:0.78rem; color:#94a3b8; margin-top:4px;">3 baskets, 50 holdings, 100 watchlist, credit-based AI</div>
+                </div>
+                <div style="background:#0f172a; border:1px solid #eab308; border-radius:10px; padding:16px;">
+                    <div style="font-weight:700; color:#eab308;">Max</div>
+                    <div style="font-size:0.78rem; color:#94a3b8; margin-top:4px;">Unlimited everything</div>
+                </div>
+            </div>
+            <p style="margin:16px 0 0; font-size:0.75rem; color:#64748b;">Contact us to upgrade your account.</p>
+            <button onclick="closeUpgradeModal()" style="margin-top:14px; padding:8px 24px; background:var(--accent); color:var(--bg); border:none; border-radius:8px; font-weight:600; cursor:pointer;">Got it</button>
+        </div>
+    </div>
 
     <!-- Keep sidebar for backwards compat but hidden by default -->
     <div class="overlay" id="overlay" onclick="toggleMenu()" style="display:none;"></div>
@@ -1753,6 +1798,231 @@
     </main>
 
     <script>
+        // ═══ Auth System ═══
+        let _supabaseClient = null;
+        let _currentUser = null;
+        let _userProfile = null;  // {tier, limits, ai_calls_today, ...}
+
+        async function initAuth() {
+            try {
+                const res = await fetch('/api/config');
+                const cfg = await res.json();
+                if (cfg.supabase_url && cfg.supabase_anon_key) {
+                    _supabaseClient = supabase.createClient(cfg.supabase_url, cfg.supabase_anon_key);
+                    // Listen for auth changes
+                    _supabaseClient.auth.onAuthStateChange((event, session) => {
+                        _currentUser = session?.user || null;
+                        updateAuthUI();
+                        if (_currentUser) loadUserProfile();
+                    });
+                    // Check existing session
+                    const { data: { session } } = await _supabaseClient.auth.getSession();
+                    _currentUser = session?.user || null;
+                    updateAuthUI();
+                    if (_currentUser) loadUserProfile();
+                }
+            } catch(e) {
+                console.warn('Auth init failed:', e);
+            }
+        }
+
+        function authHeaders() {
+            const token = _supabaseClient?.realtime?.accessToken
+                || _supabaseClient?.auth?.currentSession?.access_token;
+            // Try to get from session synchronously
+            if (!token) {
+                try {
+                    const key = Object.keys(localStorage).find(k => k.includes('auth-token'));
+                    if (key) {
+                        const data = JSON.parse(localStorage.getItem(key));
+                        if (data?.access_token) return { 'Authorization': 'Bearer ' + data.access_token };
+                    }
+                    // Fallback: look for supabase session storage
+                    for (const k of Object.keys(localStorage)) {
+                        if (k.startsWith('sb-') && k.endsWith('-auth-token')) {
+                            const data = JSON.parse(localStorage.getItem(k));
+                            if (data?.access_token) return { 'Authorization': 'Bearer ' + data.access_token };
+                        }
+                    }
+                } catch(e) {}
+            }
+            return token ? { 'Authorization': 'Bearer ' + token } : {};
+        }
+
+        async function getAuthToken() {
+            if (!_supabaseClient) return null;
+            try {
+                const { data: { session } } = await _supabaseClient.auth.getSession();
+                return session?.access_token || null;
+            } catch(e) { return null; }
+        }
+
+        async function authHeadersAsync() {
+            const token = await getAuthToken();
+            return token ? { 'Authorization': 'Bearer ' + token } : {};
+        }
+
+        async function loadUserProfile() {
+            try {
+                const headers = await authHeadersAsync();
+                if (!headers.Authorization) return;
+                const res = await fetch('/api/auth/me', { headers });
+                if (res.ok) {
+                    _userProfile = await res.json();
+                    updateAuthUI();
+                }
+            } catch(e) {
+                console.warn('Failed to load profile:', e);
+            }
+        }
+
+        function updateAuthUI() {
+            const signInBtn = document.getElementById('auth-signin-btn');
+            const signOutBtn = document.getElementById('auth-signout-btn');
+            const userInfo = document.getElementById('auth-user-info');
+            const emailEl = document.getElementById('auth-user-email');
+            const tierEl = document.getElementById('auth-user-tier');
+
+            if (_currentUser) {
+                signInBtn.style.display = 'none';
+                signOutBtn.style.display = 'inline-block';
+                userInfo.style.display = 'inline-flex';
+                emailEl.textContent = _currentUser.email || '';
+                const tier = _userProfile?.tier || 'registered';
+                tierEl.textContent = tier.toUpperCase();
+                const tierColors = { registered: '#059669', pro: '#2563eb', max: '#eab308', admin: '#dc2626' };
+                tierEl.style.background = tierColors[tier] || '#059669';
+            } else {
+                signInBtn.style.display = 'inline-block';
+                signOutBtn.style.display = 'none';
+                userInfo.style.display = 'none';
+            }
+        }
+
+        async function signInWithEmail() {
+            const email = document.getElementById('auth-email').value.trim();
+            const password = document.getElementById('auth-password').value;
+            const errEl = document.getElementById('auth-error');
+            errEl.style.display = 'none';
+
+            if (!email || !password) {
+                errEl.textContent = 'Please enter email and password.';
+                errEl.style.display = 'block';
+                return;
+            }
+            const btn = document.getElementById('auth-submit-btn');
+            btn.textContent = 'Signing in...';
+            btn.disabled = true;
+
+            try {
+                const { data, error } = await _supabaseClient.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+                _currentUser = data.user;
+                closeAuthModal();
+                updateAuthUI();
+                loadUserProfile();
+                // Reload current view data
+                watchlistData = null;
+                wlData = null;
+            } catch(e) {
+                errEl.textContent = e.message || 'Sign in failed';
+                errEl.style.display = 'block';
+            } finally {
+                btn.textContent = 'Sign In';
+                btn.disabled = false;
+            }
+        }
+
+        async function signUpWithEmail() {
+            const email = document.getElementById('auth-email').value.trim();
+            const password = document.getElementById('auth-password').value;
+            const errEl = document.getElementById('auth-error');
+            errEl.style.display = 'none';
+
+            if (!email || !password) {
+                errEl.textContent = 'Please enter email and password.';
+                errEl.style.display = 'block';
+                return;
+            }
+            if (password.length < 6) {
+                errEl.textContent = 'Password must be at least 6 characters.';
+                errEl.style.display = 'block';
+                return;
+            }
+
+            try {
+                const { data, error } = await _supabaseClient.auth.signUp({ email, password });
+                if (error) throw error;
+                if (data.user && !data.session) {
+                    errEl.style.display = 'block';
+                    errEl.style.background = '#064e3b';
+                    errEl.style.borderColor = '#059669';
+                    errEl.style.color = '#6ee7b7';
+                    errEl.textContent = 'Check your email to confirm your account!';
+                } else {
+                    _currentUser = data.user;
+                    closeAuthModal();
+                    updateAuthUI();
+                    loadUserProfile();
+                }
+            } catch(e) {
+                errEl.textContent = e.message || 'Sign up failed';
+                errEl.style.display = 'block';
+            }
+        }
+
+        async function signOut() {
+            if (_supabaseClient) {
+                await _supabaseClient.auth.signOut();
+            }
+            _currentUser = null;
+            _userProfile = null;
+            updateAuthUI();
+            watchlistData = null;
+            wlData = null;
+        }
+
+        function openAuthModal() {
+            const modal = document.getElementById('auth-modal');
+            modal.style.display = 'flex';
+            document.getElementById('auth-error').style.display = 'none';
+            document.getElementById('auth-email').value = '';
+            document.getElementById('auth-password').value = '';
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').style.display = 'none';
+        }
+
+        function openUpgradeModal() {
+            document.getElementById('upgrade-modal').style.display = 'flex';
+        }
+
+        function closeUpgradeModal() {
+            document.getElementById('upgrade-modal').style.display = 'none';
+        }
+
+        // Handle auth-gated API responses
+        async function authFetch(url, options = {}) {
+            const headers = await authHeadersAsync();
+            options.headers = { ...options.headers, ...headers };
+            const res = await fetch(url, options);
+            if (res.status === 401) {
+                const data = await res.json().catch(() => ({}));
+                if (data.auth_required) openAuthModal();
+                throw new Error('Authentication required');
+            }
+            if (res.status === 429) {
+                const data = await res.json().catch(() => ({}));
+                if (data.upgrade) openUpgradeModal();
+                throw new Error('Limit reached');
+            }
+            return res;
+        }
+
+        // Initialize auth on page load
+        initAuth();
+
         // Stock data from server
         const stocksData = ({{ stocks | tojson }}).map(s => ({ ...s, score: s.score ?? s.total ?? 0 }));
         let currentSort = { column: 'score', direction: 'desc' };
@@ -2269,9 +2539,22 @@
             if (!watchlistData) {
                 try {
                     // Load portfolio structure from Supabase
-                    const portfolioRes = await fetch('/api/portfolio');
+                    const hdrs = await authHeadersAsync();
+                    const portfolioRes = await fetch('/api/portfolio', { headers: hdrs });
                     if (!portfolioRes.ok) throw new Error('Portfolio not available');
                     const portfolio = await portfolioRes.json();
+
+                    // If user is not signed in, show prompt
+                    if (portfolio.requires_auth) {
+                        document.getElementById('watchlist-view').innerHTML = `
+                            <div class="card" style="text-align:center; padding:60px 20px;">
+                                <div style="font-size:2rem; margin-bottom:12px;">🔒</div>
+                                <h3 style="margin:0 0 8px;">Sign in to view your Portfolio</h3>
+                                <p style="color:var(--text-dim); font-size:0.85rem; margin-bottom:20px;">Track your baskets, holdings, and live P&L.</p>
+                                <button onclick="openAuthModal()" style="background:var(--accent); color:var(--bg); border:none; padding:10px 28px; border-radius:8px; font-weight:700; cursor:pointer;">Sign In</button>
+                            </div>`;
+                        return;
+                    }
                     
                     // Load stock scores from all_stocks.json
                     let allStocks = {};
@@ -4609,8 +4892,21 @@
 
             if (!wlData) {
                 try {
-                    const res = await fetch('/api/watchlists');
+                    const hdrs = await authHeadersAsync();
+                    const res = await fetch('/api/watchlists', { headers: hdrs });
                     wlData = await res.json();
+
+                    // If user is not signed in, show prompt
+                    if (wlData.requires_auth) {
+                        document.getElementById('watchlist-entries-view').innerHTML = `
+                            <div class="card" style="text-align:center; padding:60px 20px;">
+                                <div style="font-size:2rem; margin-bottom:12px;">🔒</div>
+                                <h3 style="margin:0 0 8px;">Sign in to view your Watchlist</h3>
+                                <p style="color:var(--text-dim); font-size:0.85rem; margin-bottom:20px;">Track stocks you're watching with entry prices and alerts.</p>
+                                <button onclick="openAuthModal()" style="background:var(--accent); color:var(--bg); border:none; padding:10px 28px; border-radius:8px; font-weight:700; cursor:pointer;">Sign In</button>
+                            </div>`;
+                        return;
+                    }
                 } catch(e) {
                     wlData = { watchlists: {} };
                 }
@@ -5701,7 +5997,7 @@
             window._researchJobId = null;
             window._researchPollOffset = 0;  // track which events we've already rendered
 
-            fetch('/api/research/start', {
+            authFetch('/api/research/start', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query, mode: window._researchMode || 'fast' })
@@ -5710,7 +6006,7 @@
                 window._researchJobId = resp.job_id;
                 startPolling(resp.job_id);
             }).catch(err => {
-                handleResearchEvent('error', { message: 'Failed to start research: ' + err.message });
+                handleResearchEvent('error', { message: err.message === 'Authentication required' ? 'Sign in to use AI Research' : err.message === 'Limit reached' ? 'Daily AI research limit reached. Upgrade for more.' : 'Failed to start research: ' + err.message });
                 finishResearch();
             });
 

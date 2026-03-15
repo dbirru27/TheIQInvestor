@@ -1,0 +1,6 @@
+Cache Refresh Summary (Inferred):
+Process: refresh_cache.py (PID 75296) completed.
+Database: market_data.db
+Tickers processed today: 620 (fundamentals updated)
+Tickers with latest price data: 1026 (last_updated >= 2026-02-20)
+Revenue History updated today: 0
