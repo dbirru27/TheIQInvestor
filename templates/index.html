@@ -5665,6 +5665,7 @@
             if (!query) return;
             lastResearchQuery = query;
 
+            window._researchDone = false;
             // Set agent list based on mode
             RESEARCH_AGENTS = (window._researchMode === 'fast') ? RESEARCH_AGENTS_QUICK : RESEARCH_AGENTS_DEEP;
 
@@ -5736,13 +5737,17 @@
                         }
                         readStream();
                     }).catch(err => {
-                        handleResearchEvent('error', { message: err.message });
+                        if (!window._researchDone) {
+                            handleResearchEvent('error', { message: err.message });
+                        }
                         finishResearch();
                     });
                 }
                 readStream();
             }).catch(err => {
-                handleResearchEvent('error', { message: err.message });
+                if (!window._researchDone) {
+                    handleResearchEvent('error', { message: err.message });
+                }
                 finishResearch();
             });
         }
@@ -5784,6 +5789,7 @@
                 el.scrollTop = el.scrollHeight;
             }
             else if (type === 'complete') {
+                window._researchDone = true;
                 lastReportMarkdown = data.report || '';
                 document.getElementById('research-report').style.display = 'block';
                 document.getElementById("research-timestamp").textContent = new Date().toLocaleString("en-US", {weekday:"short", month:"short", day:"numeric", year:"numeric", hour:"2-digit", minute:"2-digit", timeZoneName:"short"});
@@ -5798,6 +5804,7 @@
                 finishResearch();
             }
             else if (type === 'error') {
+                if (window._researchDone) return;  // Ignore errors after successful completion
                 document.getElementById('research-error').style.display = 'block';
                 document.getElementById('research-error-msg').textContent = data.message || 'Unknown error';
                 finishResearch();

@@ -163,7 +163,8 @@ def _fetch_data_source(source, params=None):
             bf = basket_filter.lower().replace("-", " ").replace("_", " ")
             matched = {}
             for name, tickers in basket_map.items():
-                if bf in name.lower() or name.lower() in bf:
+                nn = name.lower().replace("-", " ").replace("_", " ")
+                if bf in nn or nn in bf:
                     matched[name] = tickers
             if matched:
                 basket_map = matched
