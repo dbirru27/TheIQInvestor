@@ -1271,7 +1271,7 @@ def quick_research(query, emit=None):
                     state.setdefault("research_data", {})[f"{t}__investiq"] = json.dumps(iq_data[t], default=str)
             for t in tickers:
                 _emit(state, "researcher_step", {"step": f"Fetching live data for {t}..."})
-                yf_data = _fetch_yfinance_data(t, ["stock_info", "price_history", "earnings"])
+                yf_data = _fetch_yfinance_data(t, ["stock_info", "price_history", "earnings", "analyst_recommendations"])
                 state.setdefault("research_data", {}).update(yf_data)
             _emit(state, "agent_done", {"agent": "Data Gathering", "result": {"tickers": len(tickers), "yfinance": len(tickers)}})
 
