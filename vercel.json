@@ -1,12 +1,16 @@
 {
   "version": 2,
   "fluid": true,
-  "functions": {
-    "app.py": {
-      "runtime": "@vercel/python",
-      "maxDuration": 300
+  "builds": [
+    {
+      "src": "app.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb",
+        "maxDuration": 300
+      }
     }
-  },
+  ],
   "routes": [
     {
       "src": "/static/(.*)",
