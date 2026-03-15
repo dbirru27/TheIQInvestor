@@ -5106,7 +5106,7 @@
                 const res = await fetch('/api/watchlists', { headers: hdrs });
                 const data = await res.json();
                 if (data.requires_auth) { openAuthModal(); return; }
-                lists = Object.entries(data.watchlists || {}).map(([id, wl]) => ({ id, name: wl.name || wl }));
+                lists = Object.entries(data.watchlists || {}).map(([name, wl]) => ({ id: wl.id, name }));
             } catch(e) {}
 
             if (!lists.length) {
