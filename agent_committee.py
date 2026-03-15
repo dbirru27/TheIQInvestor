@@ -375,14 +375,15 @@ The platform has these tabs/data sources:
 Given a user query, determine which data sources to fetch.
 
 Rules:
-- Pick ONLY the sources needed (1-3 max). Don't fetch everything.
+- Pick ONLY the MINIMUM sources needed. Usually just ONE. Never more than 2.
 - For each source, optionally specify params like {{limit, sort_by, basket}}.
 - For portfolio, if the user mentions a SPECIFIC BASKET (e.g. "grid to chip", "AI semis", "biotech", "defense"), set params.basket to that basket name. This filters to ONLY that basket instead of returning all 40+ holdings.
 - If the query mentions specific tickers, return those in explicit_tickers.
-- If the query references "the hunter tab", "top stocks", "prescreen", "this website" → use the "hunter" source.
-- If the query references "my portfolio", "my positions", "my holdings" → use the "portfolio" source.
+- If the query references "the hunter tab", "top stocks", "prescreen", "this website" → use the "hunter" source ONLY.
+- If the query references "my portfolio", "my positions", "my holdings", or a basket name → use the "portfolio" source ONLY. Do NOT also fetch ewros, hunter, or other sources.
 - If the query mentions specific tickers (e.g. "is NVDA a buy?", "analyze AAPL"), put those in explicit_tickers and set sources to EMPTY []. Do NOT fetch hunter/screener data for specific ticker queries.
 - Only use sources (hunter, portfolio, ewros, etc.) when the user asks about the PLATFORM'S data (e.g. "top stocks", "my portfolio", "what's rotating")
+- Do NOT add extra sources "for context" — only what the user explicitly asked for.
 - If you truly cannot determine what the user wants, set "abort": true with a helpful message.
 
 Respond in JSON only:
