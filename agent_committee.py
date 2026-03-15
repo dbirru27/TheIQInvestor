@@ -660,16 +660,38 @@ def run_planner(client, state):
     """Extract tickers, intents, and timeframe from the user query."""
     _emit(state, "agent_start", {"agent": "Planner", "description": "Analyzing your research query..."})
 
-    # Check if this is a portfolio query — if so, fetch real holdings
+    # Check if this is a portfolio query — if so, use Scout's filtered data or fetch real holdings
     portfolio_context = ""
     if _is_portfolio_query(state["user_query"]):
-        _emit(state, "researcher_step", {"step": "Detected portfolio query — fetching your holdings from Supabase..."})
-        basket_map, all_tickers = _load_portfolio_tickers()
-        if all_tickers:
-            state["_portfolio_baskets"] = basket_map
-            state["_portfolio_tickers"] = all_tickers
-            basket_summary = "\n".join([f"  {name}: {', '.join(tickers)}" for name, tickers in basket_map.items()])
+        # If Scout already fetched filtered portfolio data, use those tickers
+        if state.get("_scout_tickers"):
+            scout_tickers = state["_scout_tickers"]
+            # Reconstruct basket info from scout data if available
+            scout_baskets = {}
+            if state.get("_scout_data", {}).get("portfolio", {}).get("baskets"):
+                for bname, stocks in state["_scout_data"]["portfolio"]["baskets"].items():
+                    scout_baskets[bname] = [s["ticker"] for s in stocks]
+            if scout_baskets:
+                basket_summary = "\n".join([f"  {name}: {', '.join(tickers)}" for name, tickers in scout_baskets.items()])
+            else:
+                basket_summary = f"  Tickers: {', '.join(scout_tickers)}"
+            state["_portfolio_baskets"] = scout_baskets
+            state["_portfolio_tickers"] = scout_tickers
             portfolio_context = f"""
+
+IMPORTANT: The user is asking about THEIR PORTFOLIO. Here are the relevant holdings (filtered by their request):
+{basket_summary}
+
+Total tickers: {len(scout_tickers)}
+You MUST use ONLY these tickers. Do NOT default to SPY."""
+        else:
+            _emit(state, "researcher_step", {"step": "Detected portfolio query — fetching your holdings from Supabase..."})
+            basket_map, all_tickers = _load_portfolio_tickers()
+            if all_tickers:
+                state["_portfolio_baskets"] = basket_map
+                state["_portfolio_tickers"] = all_tickers
+                basket_summary = "\n".join([f"  {name}: {', '.join(tickers)}" for name, tickers in basket_map.items()])
+                portfolio_context = f"""
 
 IMPORTANT: The user is asking about THEIR PORTFOLIO. Here are their actual holdings:
 {basket_summary}
