@@ -548,10 +548,10 @@ SOURCE DATA:
 
 Output the verified analysis. Keep the same format, just remove any claims not supported by the source data."""
 
-    return _call_claude(client, verify_system, verify_prompt, max_tokens=8000)
+    return _call_claude(client, verify_system, verify_prompt, max_tokens=16000)
 
 
-def _call_claude(client, system_prompt, user_prompt, max_tokens=8000):
+def _call_claude(client, system_prompt, user_prompt, max_tokens=16000):
     """Make a single Claude API call."""
     resp = client.messages.create(
         model=MODEL,
@@ -731,7 +731,7 @@ Plan: {json.dumps(plan)}
 Available Data:
 {data_text[:30000]}"""
 
-    raw_analysis = _call_claude(client, system, user_prompt, max_tokens=8000)
+    raw_analysis = _call_claude(client, system, user_prompt, max_tokens=16000)
     
     # VERIFY: Check analysis against actual data
     _emit(state, "researcher_step", {"step": "Verifying quant claims against source data..."})
@@ -783,7 +783,7 @@ Plan: {json.dumps(plan)}
 Available Data:
 {data_text[:30000]}"""
 
-    raw_analysis = _call_claude(client, system, user_prompt, max_tokens=8000)
+    raw_analysis = _call_claude(client, system, user_prompt, max_tokens=16000)
     
     # VERIFY: Check analysis against actual data
     _emit(state, "researcher_step", {"step": "Verifying qualitative claims against source data..."})
@@ -827,7 +827,7 @@ Qual Analysis:
 
 Cycle: {cycle}/{MAX_CYCLES}"""
 
-    result = _call_claude(client, system, user_prompt, max_tokens=8000)
+    result = _call_claude(client, system, user_prompt, max_tokens=16000)
 
     try:
         start = result.find("{")
@@ -906,7 +906,7 @@ Qual Analysis:
 
 Sources: {json.dumps(state.get('sources', []))}"""
 
-    report = _call_claude(client, system, user_prompt, max_tokens=8000)
+    report = _call_claude(client, system, user_prompt, max_tokens=16000)
 
     # Extract self-evaluation
     if "SELF_EVAL:WEAK" in report:
@@ -944,7 +944,7 @@ Report:
 Raw Data Available:
 {json.dumps({k: v[:500] if isinstance(v, str) else v for k, v in state.get('research_data', {}).items()}, default=str)[:10000]}"""
 
-    state["risk_flags"] = _call_claude(client, system, user_prompt, max_tokens=8000)
+    state["risk_flags"] = _call_claude(client, system, user_prompt, max_tokens=16000)
     _emit(state, "agent_done", {"agent": "Risk Analyst", "result": "Risk assessment complete"})
     return state
 
