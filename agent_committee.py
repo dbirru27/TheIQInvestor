@@ -295,6 +295,38 @@ def _preprocess_query(query):
     return q
 
 
+def _extract_tickers_from_query(query):
+    """Hard-coded ticker extraction — catches obvious ticker mentions without LLM."""
+    import re
+    # Common name → ticker map
+    name_map = {
+        'nvidia': 'NVDA', 'apple': 'AAPL', 'microsoft': 'MSFT', 'google': 'GOOGL',
+        'alphabet': 'GOOGL', 'amazon': 'AMZN', 'tesla': 'TSLA', 'meta': 'META',
+        'facebook': 'META', 'netflix': 'NFLX', 'amd': 'AMD', 'intel': 'INTC',
+        'broadcom': 'AVGO', 'palantir': 'PLTR', 'coinbase': 'COIN', 'shopify': 'SHOP',
+    }
+    q = query.lower()
+    
+    # Check for company names
+    found = []
+    for name, ticker in name_map.items():
+        if name in q:
+            found.append(ticker)
+    
+    # Check for uppercase ticker patterns (1-5 uppercase letters)
+    ticker_pattern = re.findall(r'\b([A-Z]{1,5})\b', query)
+    # Filter out common words
+    noise = {'A', 'I', 'AM', 'IS', 'IT', 'AT', 'IN', 'ON', 'OR', 'AN', 'TO', 'DO', 'GO',
+             'NO', 'IF', 'OF', 'UP', 'BY', 'SO', 'AS', 'BE', 'WE', 'HE', 'ME', 'MY',
+             'THE', 'AND', 'FOR', 'ARE', 'BUT', 'NOT', 'YOU', 'ALL', 'CAN', 'HER', 'WAS',
+             'ONE', 'OUR', 'OUT', 'BUY', 'NOW', 'TOP', 'VS', 'ETF', 'IPO'}
+    for t in ticker_pattern:
+        if t not in noise and len(t) >= 2:
+            found.append(t)
+    
+    return list(set(found))
+
+
 def run_data_scout(client, state):
     """Determine which data sources to query and fetch only what's needed."""
     _emit(state, "agent_start", {"agent": "Data Scout", "description": "Identifying relevant data sources..."})
@@ -302,6 +334,21 @@ def run_data_scout(client, state):
     # Preprocess query to resolve URLs and website references
     processed_query = _preprocess_query(state["user_query"])
     state["_processed_query"] = processed_query
+    
+    # FAST PATH: If query has obvious tickers and no platform references, skip the LLM call
+    explicit = _extract_tickers_from_query(state["user_query"])
+    is_platform_query = _is_portfolio_query(state["user_query"]) or any(
+        kw in processed_query.lower() for kw in ['hunter', 'top stocks', 'prescreen', 'ewros', 'rotation',
+            'watchlist', 'screener', 'sell signal', 'calendar', 'insider', 'portfolio', 'my holdings']
+    )
+    
+    if explicit and not is_platform_query:
+        _emit(state, "researcher_step", {"step": f"Direct ticker query: {', '.join(explicit)}"})
+        state["_scout_data"] = {}  # No sources fetched
+        state["_scout_tickers"] = []  # Don't override planner
+        state["_scout_plan"] = {"sources": [], "explicit_tickers": explicit, "reasoning": "Direct ticker query"}
+        _emit(state, "agent_done", {"agent": "Data Scout", "result": {"tickers": explicit, "mode": "direct"}})
+        return state
 
     sources_desc = "\n".join([f"  - {name}: {desc}" for name, desc in DATA_SOURCES.items()])
 
