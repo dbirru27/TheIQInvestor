@@ -1,8 +1,8 @@
 {
   "version": "5.0",
   "max_score": 100,
-  "last_scan": "2026-03-15 11:40 PST",
-  "total_stocks": 139,
+  "last_scan": "2026-03-16 19:21 PST",
+  "total_stocks": 137,
   "stocks": [
     {
       "ticker": "RRC",
@@ -118,7 +118,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Energy (XLE: +30.2% vs SPY)",
+          "value": "Energy (XLE: +29.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -126,7 +126,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+21.5% vs SPY (6mo)",
+          "value": "+20.7% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -142,19 +142,6 @@
       "analyst_count": 24,
       "current_price": 42.880001068115234,
       "ewros_score": 94,
-      "ewros_raw": 1781.79,
-      "ewros_trend": 53,
-      "ewros_prior": 41,
-      "ewros_stats": {
-        "win_days": 38,
-        "total_days": 63,
-        "win_rate": 60.3,
-        "avg_alpha_bps": 37.0,
-        "best_alpha_pct": 6.08,
-        "worst_alpha_pct": -6.94,
-        "stock_return_3mo": 21.2,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 82,
       "iq_edge_raw": 0.686138
     },
@@ -272,7 +259,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Energy (XLE: +30.2% vs SPY)",
+          "value": "Energy (XLE: +29.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -280,7 +267,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+23.0% vs SPY (6mo)",
+          "value": "+22.2% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -296,19 +283,6 @@
       "analyst_count": 27,
       "current_price": 64.63999938964844,
       "ewros_score": 92,
-      "ewros_raw": 1389.25,
-      "ewros_trend": 46,
-      "ewros_prior": 46,
-      "ewros_stats": {
-        "win_days": 36,
-        "total_days": 63,
-        "win_rate": 57.1,
-        "avg_alpha_bps": 28.6,
-        "best_alpha_pct": 5.35,
-        "worst_alpha_pct": -5.66,
-        "stock_return_3mo": 15.1,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 1,
       "iq_edge_raw": 0.023786
     },
@@ -426,7 +400,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Industrials (XLI: +8.4% vs SPY)",
+          "value": "Industrials (XLI: +7.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -434,7 +408,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+8.3% vs SPY (6mo)",
+          "value": "+7.5% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -450,19 +424,6 @@
       "analyst_count": 20,
       "current_price": 355.2300109863281,
       "ewros_score": 66,
-      "ewros_raw": 287.52,
-      "ewros_trend": 35,
-      "ewros_prior": 31,
-      "ewros_stats": {
-        "win_days": 29,
-        "total_days": 63,
-        "win_rate": 46.0,
-        "avg_alpha_bps": 11.0,
-        "best_alpha_pct": 3.43,
-        "worst_alpha_pct": -3.86,
-        "stock_return_3mo": 3.6,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 89,
       "iq_edge_raw": 0.803183
     },
@@ -580,7 +541,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -588,7 +549,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+9.3% vs SPY (6mo)",
+          "value": "+8.4% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -604,19 +565,6 @@
       "analyst_count": 17,
       "current_price": 67.91000366210938,
       "ewros_score": 78,
-      "ewros_raw": 660.13,
-      "ewros_trend": 16,
-      "ewros_prior": 62,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 20.0,
-        "best_alpha_pct": 3.41,
-        "worst_alpha_pct": -3.36,
-        "stock_return_3mo": 10.0,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 51,
       "iq_edge_raw": 0.360445
     },
@@ -734,7 +682,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Energy (XLE: +30.2% vs SPY)",
+          "value": "Energy (XLE: +29.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -742,7 +690,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+7.0% vs SPY (6mo)",
+          "value": "+6.2% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -758,19 +706,6 @@
       "analyst_count": 3,
       "current_price": 93.73999786376953,
       "ewros_score": 90,
-      "ewros_raw": 1194.15,
-      "ewros_trend": 37,
-      "ewros_prior": 53,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 27.0,
-        "best_alpha_pct": 3.3,
-        "worst_alpha_pct": -3.62,
-        "stock_return_3mo": 14.9,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 6,
       "iq_edge_raw": 0.067902
     },
@@ -888,7 +823,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -896,7 +831,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+25.9% vs SPY (6mo)",
+          "value": "+25.1% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -912,19 +847,6 @@
       "analyst_count": 20,
       "current_price": 86.19999694824219,
       "ewros_score": 86,
-      "ewros_raw": 911.85,
-      "ewros_trend": 17,
-      "ewros_prior": 69,
-      "ewros_stats": {
-        "win_days": 33,
-        "total_days": 63,
-        "win_rate": 52.4,
-        "avg_alpha_bps": 24.5,
-        "best_alpha_pct": 3.96,
-        "worst_alpha_pct": -2.07,
-        "stock_return_3mo": 13.2,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 65,
       "iq_edge_raw": 0.479978
     },
@@ -1042,7 +964,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -1050,7 +972,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+11.4% vs SPY (6mo)",
+          "value": "+10.6% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -1066,175 +988,8 @@
       "analyst_count": 19,
       "current_price": 188.44000244140625,
       "ewros_score": 70,
-      "ewros_raw": 394.22,
-      "ewros_trend": 24,
-      "ewros_prior": 46,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 10.0,
-        "best_alpha_pct": 4.17,
-        "worst_alpha_pct": -2.99,
-        "stock_return_3mo": 3.3,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 71,
       "iq_edge_raw": 0.557201
-    },
-    {
-      "ticker": "GLPI",
-      "name": "Gaming and Leisure Properties, ",
-      "sector": "Real Estate",
-      "industry": "REIT - Specialty",
-      "score": 80,
-      "grade": "A",
-      "max_score": 100,
-      "technical_score": 91,
-      "growth_score": 21,
-      "quality_score": 72,
-      "context_score": 60,
-      "moonshot_score": 30,
-      "criteria": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": true,
-          "value": "$48.36 > $46.38 > $45.12",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 8
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": true,
-          "value": "+3.2% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 22
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 18%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "0.8x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 8
-        },
-        {
-          "name": "52W Proximity",
-          "category": "Timing",
-          "passed": true,
-          "value": "96.8%",
-          "threshold": "> 90% of 52W High",
-          "points": 5
-        },
-        {
-          "name": "Volatility Compression",
-          "category": "Timing",
-          "passed": false,
-          "value": "112% of 50d ATR",
-          "threshold": "10d ATR < 75% of 50d ATR",
-          "points": 0
-        },
-        {
-          "name": "Revenue Score",
-          "category": "Growth",
-          "passed": false,
-          "value": "YoY: 3.2%",
-          "threshold": "Magnitude+Consistency+Accel+Beats",
-          "points": 8
-        },
-        {
-          "name": "Earnings Acceleration",
-          "category": "Growth",
-          "passed": false,
-          "value": "No yfinance data",
-          "threshold": "QoQ growth accelerating",
-          "points": 0
-        },
-        {
-          "name": "ROE Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "17.6%",
-          "threshold": "> 15%",
-          "points": 5
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "89.3%",
-          "threshold": "> 10%",
-          "points": 5
-        },
-        {
-          "name": "Valuation Sanity",
-          "category": "Quality",
-          "passed": false,
-          "value": "N/A",
-          "threshold": "PEG < 2.0",
-          "points": 0
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 3
-        },
-        {
-          "name": "Industry Strength",
-          "category": "Context",
-          "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
-          "threshold": "Sector outperforming SPY (3mo)",
-          "points": 5
-        },
-        {
-          "name": "Relative Strength",
-          "category": "Context",
-          "passed": true,
-          "value": "+0.7% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 1
-        }
-      ],
-      "market_cap": 13696609280,
-      "revenue_growth": 3.2,
-      "earnings_growth": 19.2,
-      "forward_pe": 14.588235,
-      "trailing_pe": 16.39322,
-      "peg_ratio": null,
-      "recommendation": "buy",
-      "target_mean": 54.36957,
-      "analyst_count": 23,
-      "current_price": 48.36000061035156,
-      "ewros_score": 76,
-      "ewros_raw": 602.13,
-      "ewros_trend": 28,
-      "ewros_prior": 48,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 25.4,
-        "best_alpha_pct": 4.52,
-        "worst_alpha_pct": -3.65,
-        "stock_return_3mo": 13.7,
-        "spy_return_3mo": -2.8
-      },
-      "iq_edge": 35,
-      "iq_edge_raw": 0.231117
     },
     {
       "ticker": "LAMR",
@@ -1350,7 +1105,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -1358,7 +1113,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+4.8% vs SPY (6mo)",
+          "value": "+4.0% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 1
         }
@@ -1374,19 +1129,6 @@
       "analyst_count": 5,
       "current_price": 133.92999267578125,
       "ewros_score": 68,
-      "ewros_raw": 329.03,
-      "ewros_trend": 25,
-      "ewros_prior": 43,
-      "ewros_stats": {
-        "win_days": 32,
-        "total_days": 63,
-        "win_rate": 50.8,
-        "avg_alpha_bps": 9.8,
-        "best_alpha_pct": 3.45,
-        "worst_alpha_pct": -2.28,
-        "stock_return_3mo": 3.2,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 82,
       "iq_edge_raw": 0.683453
     },
@@ -1504,7 +1246,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Basic Materials (XLB: +13.2% vs SPY)",
+          "value": "Basic Materials (XLB: +11.6% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -1512,7 +1254,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+2.2% vs SPY (6mo)",
+          "value": "+1.4% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 1
         }
@@ -1528,19 +1270,6 @@
       "analyst_count": 26,
       "current_price": 490.4100036621094,
       "ewros_score": 87,
-      "ewros_raw": 994.77,
-      "ewros_trend": 20,
-      "ewros_prior": 67,
-      "ewros_stats": {
-        "win_days": 41,
-        "total_days": 63,
-        "win_rate": 65.1,
-        "avg_alpha_bps": 37.6,
-        "best_alpha_pct": 4.28,
-        "worst_alpha_pct": -4.41,
-        "stock_return_3mo": 22.9,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 24,
       "iq_edge_raw": 0.164245
     },
@@ -1658,7 +1387,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -1666,7 +1395,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+13.1% vs SPY (6mo)",
+          "value": "+12.3% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -1682,19 +1411,6 @@
       "analyst_count": 16,
       "current_price": 48.400001525878906,
       "ewros_score": 82,
-      "ewros_raw": 779.1,
-      "ewros_trend": 23,
-      "ewros_prior": 59,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 20.8,
-        "best_alpha_pct": 7.32,
-        "worst_alpha_pct": -3.77,
-        "stock_return_3mo": 10.3,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 44,
       "iq_edge_raw": 0.293228
     },
@@ -1812,7 +1528,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -1820,7 +1536,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+8.4% vs SPY (6mo)",
+          "value": "+7.6% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -1836,19 +1552,6 @@
       "analyst_count": 18,
       "current_price": 79.19999694824219,
       "ewros_score": 83,
-      "ewros_raw": 811.26,
-      "ewros_trend": 28,
-      "ewros_prior": 55,
-      "ewros_stats": {
-        "win_days": 36,
-        "total_days": 63,
-        "win_rate": 57.1,
-        "avg_alpha_bps": 23.7,
-        "best_alpha_pct": 4.28,
-        "worst_alpha_pct": -3.74,
-        "stock_return_3mo": 12.6,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 25,
       "iq_edge_raw": 0.165963
     },
@@ -1966,7 +1669,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Industrials (XLI: +8.4% vs SPY)",
+          "value": "Industrials (XLI: +7.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -1974,7 +1677,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+9.1% vs SPY (6mo)",
+          "value": "+8.3% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -1990,19 +1693,6 @@
       "analyst_count": 10,
       "current_price": 45.90999984741211,
       "ewros_score": 93,
-      "ewros_raw": 1581.82,
-      "ewros_trend": 51,
-      "ewros_prior": 42,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 51.6,
-        "best_alpha_pct": 14.17,
-        "worst_alpha_pct": -7.22,
-        "stock_return_3mo": 30.7,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 63,
       "iq_edge_raw": 0.456835
     },
@@ -2120,7 +1810,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -2128,7 +1818,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+15.2% vs SPY (6mo)",
+          "value": "+14.4% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -2144,21 +1834,149 @@
       "analyst_count": 13,
       "current_price": 73.20999908447266,
       "ewros_score": 74,
-      "ewros_raw": 544.56,
-      "ewros_trend": 31,
-      "ewros_prior": 43,
-      "ewros_stats": {
-        "win_days": 36,
-        "total_days": 63,
-        "win_rate": 57.1,
-        "avg_alpha_bps": 17.7,
-        "best_alpha_pct": 4.25,
-        "worst_alpha_pct": -2.46,
-        "stock_return_3mo": 8.2,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 52,
       "iq_edge_raw": 0.361536
+    },
+    {
+      "ticker": "GLPI",
+      "name": "Gaming and Leisure Properties, ",
+      "sector": "Real Estate",
+      "industry": "REIT - Specialty",
+      "score": 79,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 91,
+      "growth_score": 21,
+      "quality_score": 72,
+      "context_score": 50,
+      "moonshot_score": 0,
+      "criteria": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": true,
+          "value": "$48.36 > $46.38 > $45.12",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": true,
+          "value": "+3.2% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 18%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "0.8x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": true,
+          "value": "96.8%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "112% of 50d ATR",
+          "threshold": "10d ATR < 75% of 50d ATR",
+          "points": 0
+        },
+        {
+          "name": "Revenue Score",
+          "category": "Growth",
+          "passed": false,
+          "value": "YoY: 3.2%",
+          "threshold": "Magnitude+Consistency+Accel+Beats",
+          "points": 8
+        },
+        {
+          "name": "Earnings Acceleration",
+          "category": "Growth",
+          "passed": false,
+          "value": "No yfinance data",
+          "threshold": "QoQ growth accelerating",
+          "points": 0
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "17.6%",
+          "threshold": "> 15%",
+          "points": 5
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "89.3%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 0
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
+          "threshold": "Sector outperforming SPY (3mo)",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "-0.1% vs SPY (6mo)",
+          "threshold": ">0% outperformance vs SPY",
+          "points": 0
+        }
+      ],
+      "market_cap": 13696609280,
+      "revenue_growth": 3.2,
+      "earnings_growth": 19.2,
+      "forward_pe": 14.588235,
+      "trailing_pe": 16.39322,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 54.36957,
+      "analyst_count": 23,
+      "current_price": 48.36000061035156,
+      "ewros_score": 76,
+      "iq_edge": 35,
+      "iq_edge_raw": 0.231117
     },
     {
       "ticker": "HCA",
@@ -2274,7 +2092,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Healthcare (XLV: +1.6% vs SPY)",
+          "value": "Healthcare (XLV: +0.0% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -2282,7 +2100,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+24.3% vs SPY (6mo)",
+          "value": "+23.5% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -2298,19 +2116,6 @@
       "analyst_count": 21,
       "current_price": 532.5800170898438,
       "ewros_score": 80,
-      "ewros_raw": 723.26,
-      "ewros_trend": 4,
-      "ewros_prior": 76,
-      "ewros_stats": {
-        "win_days": 33,
-        "total_days": 63,
-        "win_rate": 52.4,
-        "avg_alpha_bps": 21.2,
-        "best_alpha_pct": 6.68,
-        "worst_alpha_pct": -4.27,
-        "stock_return_3mo": 10.2,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 81,
       "iq_edge_raw": 0.670571
     },
@@ -2428,7 +2233,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -2436,7 +2241,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": false,
-          "value": "-0.5% vs SPY (6mo)",
+          "value": "-1.3% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 0
         }
@@ -2452,19 +2257,6 @@
       "analyst_count": 18,
       "current_price": 297.739990234375,
       "ewros_score": 65,
-      "ewros_raw": 270.53,
-      "ewros_trend": 8,
-      "ewros_prior": 57,
-      "ewros_stats": {
-        "win_days": 36,
-        "total_days": 63,
-        "win_rate": 57.1,
-        "avg_alpha_bps": 14.3,
-        "best_alpha_pct": 3.69,
-        "worst_alpha_pct": -3.91,
-        "stock_return_3mo": 5.7,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 42,
       "iq_edge_raw": 0.276782
     },
@@ -2582,7 +2374,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -2590,7 +2382,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+11.0% vs SPY (6mo)",
+          "value": "+10.2% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -2606,19 +2398,6 @@
       "analyst_count": 13,
       "current_price": 112.04000091552734,
       "ewros_score": 84,
-      "ewros_raw": 856.19,
-      "ewros_trend": 24,
-      "ewros_prior": 60,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 27.6,
-        "best_alpha_pct": 4.68,
-        "worst_alpha_pct": -2.52,
-        "stock_return_3mo": 15.5,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 31,
       "iq_edge_raw": 0.198848
     },
@@ -2736,7 +2515,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -2744,7 +2523,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+9.5% vs SPY (6mo)",
+          "value": "+8.7% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -2760,19 +2539,6 @@
       "analyst_count": 29,
       "current_price": 180.39999389648438,
       "ewros_score": 88,
-      "ewros_raw": 1029.36,
-      "ewros_trend": 12,
-      "ewros_prior": 76,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 27.5,
-        "best_alpha_pct": 4.83,
-        "worst_alpha_pct": -2.66,
-        "stock_return_3mo": 15.0,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 32,
       "iq_edge_raw": 0.210533
     },
@@ -2890,7 +2656,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -2898,7 +2664,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+27.6% vs SPY (6mo)",
+          "value": "+26.8% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -2914,19 +2680,6 @@
       "analyst_count": 22,
       "current_price": 91.7300033569336,
       "ewros_score": 83,
-      "ewros_raw": 813.03,
-      "ewros_trend": 16,
-      "ewros_prior": 67,
-      "ewros_stats": {
-        "win_days": 36,
-        "total_days": 63,
-        "win_rate": 57.1,
-        "avg_alpha_bps": 26.3,
-        "best_alpha_pct": 3.73,
-        "worst_alpha_pct": -2.98,
-        "stock_return_3mo": 14.4,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 57,
       "iq_edge_raw": 0.396717
     },
@@ -3044,7 +2797,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -3052,7 +2805,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+14.7% vs SPY (6mo)",
+          "value": "+13.9% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -3068,19 +2821,6 @@
       "analyst_count": 13,
       "current_price": 46.689998626708984,
       "ewros_score": 86,
-      "ewros_raw": 896.3,
-      "ewros_trend": 33,
-      "ewros_prior": 53,
-      "ewros_stats": {
-        "win_days": 40,
-        "total_days": 63,
-        "win_rate": 63.5,
-        "avg_alpha_bps": 25.7,
-        "best_alpha_pct": 2.71,
-        "worst_alpha_pct": -3.52,
-        "stock_return_3mo": 14.1,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 25,
       "iq_edge_raw": 0.173526
     },
@@ -3198,7 +2938,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": false,
-          "value": "Consumer Cyclical (XLY: -4.0% vs SPY)",
+          "value": "Consumer Cyclical (XLY: -5.3% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 0
         },
@@ -3206,7 +2946,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+26.9% vs SPY (6mo)",
+          "value": "+26.1% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -3222,19 +2962,6 @@
       "analyst_count": 6,
       "current_price": 41.970001220703125,
       "ewros_score": 64,
-      "ewros_raw": 222.3,
-      "ewros_trend": 20,
-      "ewros_prior": 44,
-      "ewros_stats": {
-        "win_days": 33,
-        "total_days": 63,
-        "win_rate": 52.4,
-        "avg_alpha_bps": 5.0,
-        "best_alpha_pct": 1.92,
-        "worst_alpha_pct": -1.85,
-        "stock_return_3mo": 0.4,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 84,
       "iq_edge_raw": 0.717349
     },
@@ -3352,7 +3079,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -3360,7 +3087,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+20.7% vs SPY (6mo)",
+          "value": "+19.9% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -3376,19 +3103,6 @@
       "analyst_count": 20,
       "current_price": 206.1999969482422,
       "ewros_score": 84,
-      "ewros_raw": 865.96,
-      "ewros_trend": 14,
-      "ewros_prior": 70,
-      "ewros_stats": {
-        "win_days": 36,
-        "total_days": 63,
-        "win_rate": 57.1,
-        "avg_alpha_bps": 24.9,
-        "best_alpha_pct": 4.26,
-        "worst_alpha_pct": -3.7,
-        "stock_return_3mo": 13.3,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 67,
       "iq_edge_raw": 0.507813
     },
@@ -3506,7 +3220,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -3514,7 +3228,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+23.5% vs SPY (6mo)",
+          "value": "+22.7% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -3530,19 +3244,6 @@
       "analyst_count": 19,
       "current_price": 133.61000061035156,
       "ewros_score": 89,
-      "ewros_raw": 1055.81,
-      "ewros_trend": 29,
-      "ewros_prior": 60,
-      "ewros_stats": {
-        "win_days": 39,
-        "total_days": 63,
-        "win_rate": 61.9,
-        "avg_alpha_bps": 30.3,
-        "best_alpha_pct": 4.96,
-        "worst_alpha_pct": -2.78,
-        "stock_return_3mo": 17.4,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 53,
       "iq_edge_raw": 0.368888
     },
@@ -3660,7 +3361,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Energy (XLE: +30.2% vs SPY)",
+          "value": "Energy (XLE: +29.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -3668,7 +3369,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+25.0% vs SPY (6mo)",
+          "value": "+24.2% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -3684,19 +3385,6 @@
       "analyst_count": 22,
       "current_price": 40.9900016784668,
       "ewros_score": 94,
-      "ewros_raw": 1800.85,
-      "ewros_trend": 58,
-      "ewros_prior": 36,
-      "ewros_stats": {
-        "win_days": 33,
-        "total_days": 63,
-        "win_rate": 52.4,
-        "avg_alpha_bps": 29.6,
-        "best_alpha_pct": 7.55,
-        "worst_alpha_pct": -8.11,
-        "stock_return_3mo": 14.7,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 77,
       "iq_edge_raw": 0.633935
     },
@@ -3814,7 +3502,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -3822,7 +3510,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+13.1% vs SPY (6mo)",
+          "value": "+12.3% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -3838,19 +3526,6 @@
       "analyst_count": 10,
       "current_price": 188.5800018310547,
       "ewros_score": 86,
-      "ewros_raw": 934.74,
-      "ewros_trend": 34,
-      "ewros_prior": 52,
-      "ewros_stats": {
-        "win_days": 36,
-        "total_days": 63,
-        "win_rate": 57.1,
-        "avg_alpha_bps": 23.6,
-        "best_alpha_pct": 2.87,
-        "worst_alpha_pct": -2.29,
-        "stock_return_3mo": 12.7,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 2,
       "iq_edge_raw": 0.036423
     },
@@ -3968,7 +3643,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -3976,7 +3651,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+6.5% vs SPY (6mo)",
+          "value": "+5.7% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -3992,19 +3667,6 @@
       "analyst_count": 18,
       "current_price": 29.649999618530273,
       "ewros_score": 87,
-      "ewros_raw": 1011.49,
-      "ewros_trend": 17,
-      "ewros_prior": 70,
-      "ewros_stats": {
-        "win_days": 39,
-        "total_days": 63,
-        "win_rate": 61.9,
-        "avg_alpha_bps": 31.3,
-        "best_alpha_pct": 4.46,
-        "worst_alpha_pct": -2.76,
-        "stock_return_3mo": 18.1,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 47,
       "iq_edge_raw": 0.325182
     },
@@ -4122,7 +3784,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -4130,7 +3792,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+16.5% vs SPY (6mo)",
+          "value": "+15.7% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -4146,19 +3808,6 @@
       "analyst_count": 13,
       "current_price": 50.81999969482422,
       "ewros_score": 88,
-      "ewros_raw": 1026.3,
-      "ewros_trend": 31,
-      "ewros_prior": 57,
-      "ewros_stats": {
-        "win_days": 37,
-        "total_days": 63,
-        "win_rate": 58.7,
-        "avg_alpha_bps": 30.2,
-        "best_alpha_pct": 3.44,
-        "worst_alpha_pct": -2.68,
-        "stock_return_3mo": 17.4,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 42,
       "iq_edge_raw": 0.276394
     },
@@ -4276,7 +3925,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Healthcare (XLV: +1.6% vs SPY)",
+          "value": "Healthcare (XLV: +0.0% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -4284,7 +3933,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+10.0% vs SPY (6mo)",
+          "value": "+9.2% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -4300,19 +3949,6 @@
       "analyst_count": 10,
       "current_price": 75.20999908447266,
       "ewros_score": 64,
-      "ewros_raw": 227.85,
-      "ewros_trend": 27,
-      "ewros_prior": 37,
-      "ewros_stats": {
-        "win_days": 32,
-        "total_days": 63,
-        "win_rate": 50.8,
-        "avg_alpha_bps": 5.1,
-        "best_alpha_pct": 2.21,
-        "worst_alpha_pct": -1.77,
-        "stock_return_3mo": 0.5,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 78,
       "iq_edge_raw": 0.647705
     },
@@ -4430,7 +4066,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -4438,7 +4074,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+13.9% vs SPY (6mo)",
+          "value": "+13.1% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -4454,19 +4090,6 @@
       "analyst_count": 16,
       "current_price": 93.19000244140625,
       "ewros_score": 82,
-      "ewros_raw": 780.24,
-      "ewros_trend": 30,
-      "ewros_prior": 52,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 17.1,
-        "best_alpha_pct": 3.31,
-        "worst_alpha_pct": -3.92,
-        "stock_return_3mo": 7.9,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 55,
       "iq_edge_raw": 0.379845
     },
@@ -4584,7 +4207,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": false,
-          "value": "Consumer Cyclical (XLY: -4.0% vs SPY)",
+          "value": "Consumer Cyclical (XLY: -5.3% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 0
         },
@@ -4592,7 +4215,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+9.9% vs SPY (6mo)",
+          "value": "+9.0% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -4608,19 +4231,6 @@
       "analyst_count": 18,
       "current_price": 155.7899932861328,
       "ewros_score": 63,
-      "ewros_raw": 190.38,
-      "ewros_trend": 21,
-      "ewros_prior": 42,
-      "ewros_stats": {
-        "win_days": 30,
-        "total_days": 63,
-        "win_rate": 47.6,
-        "avg_alpha_bps": 4.7,
-        "best_alpha_pct": 3.82,
-        "worst_alpha_pct": -2.57,
-        "stock_return_3mo": -0.1,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 89,
       "iq_edge_raw": 0.801381
     },
@@ -4738,7 +4348,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": false,
-          "value": "Financial Services (XLF: -7.0% vs SPY)",
+          "value": "Financial Services (XLF: -8.4% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 0
         },
@@ -4746,7 +4356,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+8.0% vs SPY (6mo)",
+          "value": "+7.1% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -4762,19 +4372,6 @@
       "analyst_count": 21,
       "current_price": 302.010009765625,
       "ewros_score": 77,
-      "ewros_raw": 644.72,
-      "ewros_trend": 26,
-      "ewros_prior": 51,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 17.5,
-        "best_alpha_pct": 2.97,
-        "worst_alpha_pct": -3.36,
-        "stock_return_3mo": 8.3,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 2,
       "iq_edge_raw": 0.038739
     },
@@ -4892,7 +4489,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -4900,7 +4497,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+15.9% vs SPY (6mo)",
+          "value": "+15.1% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -4916,19 +4513,6 @@
       "analyst_count": 16,
       "current_price": 44.0099983215332,
       "ewros_score": 88,
-      "ewros_raw": 1038.36,
-      "ewros_trend": 29,
-      "ewros_prior": 59,
-      "ewros_stats": {
-        "win_days": 38,
-        "total_days": 63,
-        "win_rate": 60.3,
-        "avg_alpha_bps": 31.3,
-        "best_alpha_pct": 3.03,
-        "worst_alpha_pct": -2.34,
-        "stock_return_3mo": 18.2,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 27,
       "iq_edge_raw": 0.181039
     },
@@ -5046,7 +4630,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -5054,7 +4638,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+7.3% vs SPY (6mo)",
+          "value": "+6.5% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -5070,19 +4654,6 @@
       "analyst_count": 13,
       "current_price": 147.63999938964844,
       "ewros_score": 86,
-      "ewros_raw": 916.66,
-      "ewros_trend": 32,
-      "ewros_prior": 54,
-      "ewros_stats": {
-        "win_days": 36,
-        "total_days": 63,
-        "win_rate": 57.1,
-        "avg_alpha_bps": 25.5,
-        "best_alpha_pct": 2.91,
-        "worst_alpha_pct": -2.89,
-        "stock_return_3mo": 14.0,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 43,
       "iq_edge_raw": 0.283693
     },
@@ -5200,7 +4771,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Healthcare (XLV: +1.6% vs SPY)",
+          "value": "Healthcare (XLV: +0.0% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -5208,7 +4779,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+1.9% vs SPY (6mo)",
+          "value": "+1.1% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 1
         }
@@ -5224,19 +4795,6 @@
       "analyst_count": 28,
       "current_price": 84.61000061035156,
       "ewros_score": 67,
-      "ewros_raw": 316.59,
-      "ewros_trend": 46,
-      "ewros_prior": 21,
-      "ewros_stats": {
-        "win_days": 31,
-        "total_days": 63,
-        "win_rate": 49.2,
-        "avg_alpha_bps": 4.1,
-        "best_alpha_pct": 4.36,
-        "worst_alpha_pct": -2.91,
-        "stock_return_3mo": -0.9,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 90,
       "iq_edge_raw": 0.816805
     },
@@ -5354,7 +4912,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Healthcare (XLV: +1.6% vs SPY)",
+          "value": "Healthcare (XLV: +0.0% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -5362,7 +4920,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+9.0% vs SPY (6mo)",
+          "value": "+8.2% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -5378,19 +4936,6 @@
       "analyst_count": 26,
       "current_price": 26.860000610351562,
       "ewros_score": 67,
-      "ewros_raw": 323.46,
-      "ewros_trend": 6,
-      "ewros_prior": 61,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 10.4,
-        "best_alpha_pct": 4.4,
-        "worst_alpha_pct": -3.13,
-        "stock_return_3mo": 3.3,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 79,
       "iq_edge_raw": 0.652439
     },
@@ -5508,7 +5053,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Healthcare (XLV: +1.6% vs SPY)",
+          "value": "Healthcare (XLV: +0.0% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -5516,7 +5061,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+30.4% vs SPY (6mo)",
+          "value": "+29.6% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -5532,329 +5077,8 @@
       "analyst_count": 12,
       "current_price": 532.8200073242188,
       "ewros_score": 90,
-      "ewros_raw": 1132.78,
-      "ewros_trend": 54,
-      "ewros_prior": 36,
-      "ewros_stats": {
-        "win_days": 32,
-        "total_days": 63,
-        "win_rate": 50.8,
-        "avg_alpha_bps": 21.2,
-        "best_alpha_pct": 12.18,
-        "worst_alpha_pct": -5.33,
-        "stock_return_3mo": 9.1,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 78,
       "iq_edge_raw": 0.641213
-    },
-    {
-      "ticker": "XEL",
-      "name": "Xcel Energy Inc.",
-      "sector": "Utilities",
-      "industry": "Utilities - Regulated Electric",
-      "score": 76,
-      "grade": "A",
-      "max_score": 100,
-      "technical_score": 91,
-      "growth_score": 21,
-      "quality_score": 28,
-      "context_score": 100,
-      "moonshot_score": 30,
-      "criteria": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": true,
-          "value": "$80.82 > $78.08 > $74.69",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 8
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": true,
-          "value": "+4.0% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 22
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 17%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "0.8x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 8
-        },
-        {
-          "name": "52W Proximity",
-          "category": "Timing",
-          "passed": true,
-          "value": "96.0%",
-          "threshold": "> 90% of 52W High",
-          "points": 5
-        },
-        {
-          "name": "Volatility Compression",
-          "category": "Timing",
-          "passed": false,
-          "value": "100% of 50d ATR",
-          "threshold": "10d ATR < 75% of 50d ATR",
-          "points": 0
-        },
-        {
-          "name": "Revenue Score",
-          "category": "Growth",
-          "passed": false,
-          "value": "YoY: 7.4%",
-          "threshold": "Magnitude+Consistency+Accel+Beats",
-          "points": 8
-        },
-        {
-          "name": "Earnings Acceleration",
-          "category": "Growth",
-          "passed": false,
-          "value": "No yfinance data",
-          "threshold": "QoQ growth accelerating",
-          "points": 0
-        },
-        {
-          "name": "ROE Quality",
-          "category": "Quality",
-          "passed": false,
-          "value": "9.4%",
-          "threshold": "> 15%",
-          "points": 0
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "16.7%",
-          "threshold": "> 10%",
-          "points": 5
-        },
-        {
-          "name": "Valuation Sanity",
-          "category": "Quality",
-          "passed": false,
-          "value": "N/A",
-          "threshold": "PEG < 2.0",
-          "points": 0
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": false,
-          "value": "Negative/NA",
-          "threshold": "FCF > 0",
-          "points": 0
-        },
-        {
-          "name": "Industry Strength",
-          "category": "Context",
-          "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
-          "threshold": "Sector outperforming SPY (3mo)",
-          "points": 5
-        },
-        {
-          "name": "Relative Strength",
-          "category": "Context",
-          "passed": true,
-          "value": "+10.3% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
-        }
-      ],
-      "market_cap": 50421723136,
-      "revenue_growth": 7.4,
-      "earnings_growth": 20.8,
-      "forward_pe": 17.856668,
-      "trailing_pe": 23.631578,
-      "peg_ratio": null,
-      "recommendation": "strong_buy",
-      "target_mean": 89.17647,
-      "analyst_count": 17,
-      "current_price": 80.81999969482422,
-      "ewros_score": 77,
-      "ewros_raw": 642.08,
-      "ewros_trend": 30,
-      "ewros_prior": 47,
-      "ewros_stats": {
-        "win_days": 36,
-        "total_days": 63,
-        "win_rate": 57.1,
-        "avg_alpha_bps": 18.9,
-        "best_alpha_pct": 3.23,
-        "worst_alpha_pct": -2.55,
-        "stock_return_3mo": 9.3,
-        "spy_return_3mo": -2.8
-      },
-      "iq_edge": 46,
-      "iq_edge_raw": 0.31591
-    },
-    {
-      "ticker": "ALL",
-      "name": "Allstate Corporation (The)",
-      "sector": "Financial Services",
-      "industry": "Insurance - Property & Casualt",
-      "score": 75,
-      "grade": "A",
-      "max_score": 100,
-      "technical_score": 91,
-      "growth_score": 21,
-      "quality_score": 72,
-      "context_score": 10,
-      "moonshot_score": 40,
-      "criteria": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": true,
-          "value": "$206.17 > $204.80 > $202.40",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 8
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": true,
-          "value": "+4.9% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 22
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 14%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "0.6x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 8
-        },
-        {
-          "name": "52W Proximity",
-          "category": "Timing",
-          "passed": true,
-          "value": "95.1%",
-          "threshold": "> 90% of 52W High",
-          "points": 5
-        },
-        {
-          "name": "Volatility Compression",
-          "category": "Timing",
-          "passed": false,
-          "value": "89% of 50d ATR",
-          "threshold": "10d ATR < 75% of 50d ATR",
-          "points": 0
-        },
-        {
-          "name": "Revenue Score",
-          "category": "Growth",
-          "passed": false,
-          "value": "YoY: 3.4%",
-          "threshold": "Magnitude+Consistency+Accel+Beats",
-          "points": 8
-        },
-        {
-          "name": "Earnings Acceleration",
-          "category": "Growth",
-          "passed": false,
-          "value": "No yfinance data",
-          "threshold": "QoQ growth accelerating",
-          "points": 0
-        },
-        {
-          "name": "ROE Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "39.5%",
-          "threshold": "> 15%",
-          "points": 5
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "29.0%",
-          "threshold": "> 10%",
-          "points": 5
-        },
-        {
-          "name": "Valuation Sanity",
-          "category": "Quality",
-          "passed": false,
-          "value": "N/A",
-          "threshold": "PEG < 2.0",
-          "points": 0
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 3
-        },
-        {
-          "name": "Industry Strength",
-          "category": "Context",
-          "passed": false,
-          "value": "Financial Services (XLF: -7.0% vs SPY)",
-          "threshold": "Sector outperforming SPY (3mo)",
-          "points": 0
-        },
-        {
-          "name": "Relative Strength",
-          "category": "Context",
-          "passed": true,
-          "value": "+0.8% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 1
-        }
-      ],
-      "market_cap": 53508505600,
-      "revenue_growth": 3.4,
-      "earnings_growth": 103.2,
-      "forward_pe": 8.182853,
-      "trailing_pe": 5.418397,
-      "peg_ratio": null,
-      "recommendation": "buy",
-      "target_mean": 240.5238,
-      "analyst_count": 21,
-      "current_price": 206.1699981689453,
-      "ewros_score": 69,
-      "ewros_raw": 361.76,
-      "ewros_trend": 27,
-      "ewros_prior": 42,
-      "ewros_stats": {
-        "win_days": 38,
-        "total_days": 63,
-        "win_rate": 60.3,
-        "avg_alpha_bps": 6.9,
-        "best_alpha_pct": 5.15,
-        "worst_alpha_pct": -5.47,
-        "stock_return_3mo": 0.9,
-        "spy_return_3mo": -2.8
-      },
-      "iq_edge": 74,
-      "iq_edge_raw": 0.593317
     },
     {
       "ticker": "CMS",
@@ -5970,7 +5194,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -5978,7 +5202,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+8.3% vs SPY (6mo)",
+          "value": "+7.5% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -5994,19 +5218,6 @@
       "analyst_count": 13,
       "current_price": 77.83000183105469,
       "ewros_score": 83,
-      "ewros_raw": 831.43,
-      "ewros_trend": 32,
-      "ewros_prior": 51,
-      "ewros_stats": {
-        "win_days": 33,
-        "total_days": 63,
-        "win_rate": 52.4,
-        "avg_alpha_bps": 22.7,
-        "best_alpha_pct": 3.01,
-        "worst_alpha_pct": -2.65,
-        "stock_return_3mo": 12.0,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 42,
       "iq_edge_raw": 0.275636
     },
@@ -6124,7 +5335,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Consumer Defensive (XLP: +12.0% vs SPY)",
+          "value": "Consumer Defensive (XLP: +9.4% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -6132,7 +5343,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+1.4% vs SPY (6mo)",
+          "value": "+0.6% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 1
         }
@@ -6148,19 +5359,6 @@
       "analyst_count": 32,
       "current_price": 1008.4299926757812,
       "ewros_score": 79,
-      "ewros_raw": 691.43,
-      "ewros_trend": 14,
-      "ewros_prior": 65,
-      "ewros_stats": {
-        "win_days": 33,
-        "total_days": 63,
-        "win_rate": 52.4,
-        "avg_alpha_bps": 24.9,
-        "best_alpha_pct": 3.72,
-        "worst_alpha_pct": -2.55,
-        "stock_return_3mo": 13.3,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 64,
       "iq_edge_raw": 0.475295
     },
@@ -6278,7 +5476,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -6286,7 +5484,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+12.6% vs SPY (6mo)",
+          "value": "+11.8% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -6302,19 +5500,6 @@
       "analyst_count": 11,
       "current_price": 81.73999786376953,
       "ewros_score": 84,
-      "ewros_raw": 844.04,
-      "ewros_trend": 23,
-      "ewros_prior": 61,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 24.8,
-        "best_alpha_pct": 3.33,
-        "worst_alpha_pct": -2.98,
-        "stock_return_3mo": 13.4,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 44,
       "iq_edge_raw": 0.296336
     },
@@ -6432,7 +5617,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -6440,7 +5625,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+12.3% vs SPY (6mo)",
+          "value": "+11.5% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -6456,19 +5641,6 @@
       "analyst_count": 16,
       "current_price": 49.47999954223633,
       "ewros_score": 89,
-      "ewros_raw": 1086.97,
-      "ewros_trend": 25,
-      "ewros_prior": 64,
-      "ewros_stats": {
-        "win_days": 33,
-        "total_days": 63,
-        "win_rate": 52.4,
-        "avg_alpha_bps": 29.0,
-        "best_alpha_pct": 8.52,
-        "worst_alpha_pct": -2.44,
-        "stock_return_3mo": 16.3,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 2,
       "iq_edge_raw": 0.038072
     },
@@ -6586,7 +5758,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -6594,7 +5766,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+11.3% vs SPY (6mo)",
+          "value": "+10.5% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -6610,19 +5782,6 @@
       "analyst_count": 9,
       "current_price": 141.0,
       "ewros_score": 81,
-      "ewros_raw": 768.92,
-      "ewros_trend": 14,
-      "ewros_prior": 67,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 25.1,
-        "best_alpha_pct": 4.22,
-        "worst_alpha_pct": -2.16,
-        "stock_return_3mo": 13.6,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 52,
       "iq_edge_raw": 0.36336
     },
@@ -6740,7 +5899,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -6748,7 +5907,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+9.8% vs SPY (6mo)",
+          "value": "+9.0% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -6764,19 +5923,6 @@
       "analyst_count": 11,
       "current_price": 71.56999969482422,
       "ewros_score": 84,
-      "ewros_raw": 869.82,
-      "ewros_trend": 31,
-      "ewros_prior": 53,
-      "ewros_stats": {
-        "win_days": 32,
-        "total_days": 63,
-        "win_rate": 50.8,
-        "avg_alpha_bps": 23.2,
-        "best_alpha_pct": 3.67,
-        "worst_alpha_pct": -2.71,
-        "stock_return_3mo": 12.4,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 45,
       "iq_edge_raw": 0.303375
     },
@@ -6894,7 +6040,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -6902,7 +6048,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+3.4% vs SPY (6mo)",
+          "value": "+2.6% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 1
         }
@@ -6918,19 +6064,6 @@
       "analyst_count": 20,
       "current_price": 76.55000305175781,
       "ewros_score": 81,
-      "ewros_raw": 757.76,
-      "ewros_trend": 22,
-      "ewros_prior": 59,
-      "ewros_stats": {
-        "win_days": 41,
-        "total_days": 63,
-        "win_rate": 65.1,
-        "avg_alpha_bps": 26.6,
-        "best_alpha_pct": 2.91,
-        "worst_alpha_pct": -2.41,
-        "stock_return_3mo": 14.7,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 77,
       "iq_edge_raw": 0.62757
     },
@@ -7048,7 +6181,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -7056,7 +6189,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+5.8% vs SPY (6mo)",
+          "value": "+5.0% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -7072,21 +6205,149 @@
       "analyst_count": 17,
       "current_price": 115.05000305175781,
       "ewros_score": 83,
-      "ewros_raw": 816.21,
-      "ewros_trend": 30,
-      "ewros_prior": 53,
-      "ewros_stats": {
-        "win_days": 36,
-        "total_days": 63,
-        "win_rate": 57.1,
-        "avg_alpha_bps": 25.1,
-        "best_alpha_pct": 3.06,
-        "worst_alpha_pct": -2.38,
-        "stock_return_3mo": 13.7,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 26,
       "iq_edge_raw": 0.174028
+    },
+    {
+      "ticker": "ALL",
+      "name": "Allstate Corporation (The)",
+      "sector": "Financial Services",
+      "industry": "Insurance - Property & Casualt",
+      "score": 74,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 91,
+      "growth_score": 21,
+      "quality_score": 72,
+      "context_score": 0,
+      "moonshot_score": 10,
+      "criteria": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": true,
+          "value": "$206.17 > $204.80 > $202.40",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": true,
+          "value": "+4.9% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 14%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "0.6x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": true,
+          "value": "95.1%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "89% of 50d ATR",
+          "threshold": "10d ATR < 75% of 50d ATR",
+          "points": 0
+        },
+        {
+          "name": "Revenue Score",
+          "category": "Growth",
+          "passed": false,
+          "value": "YoY: 3.4%",
+          "threshold": "Magnitude+Consistency+Accel+Beats",
+          "points": 8
+        },
+        {
+          "name": "Earnings Acceleration",
+          "category": "Growth",
+          "passed": false,
+          "value": "No yfinance data",
+          "threshold": "QoQ growth accelerating",
+          "points": 0
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "39.5%",
+          "threshold": "> 15%",
+          "points": 5
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "29.0%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 0
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "Financial Services (XLF: -8.4% vs SPY)",
+          "threshold": "Sector outperforming SPY (3mo)",
+          "points": 0
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "-0.1% vs SPY (6mo)",
+          "threshold": ">0% outperformance vs SPY",
+          "points": 0
+        }
+      ],
+      "market_cap": 53508505600,
+      "revenue_growth": 3.4,
+      "earnings_growth": 103.2,
+      "forward_pe": 8.182853,
+      "trailing_pe": 5.418397,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 240.5238,
+      "analyst_count": 21,
+      "current_price": 206.1699981689453,
+      "ewros_score": 69,
+      "iq_edge": 74,
+      "iq_edge_raw": 0.593317
     },
     {
       "ticker": "KIM",
@@ -7202,7 +6463,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -7210,7 +6471,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": false,
-          "value": "-0.5% vs SPY (6mo)",
+          "value": "-1.3% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 0
         }
@@ -7226,19 +6487,6 @@
       "analyst_count": 22,
       "current_price": 22.950000762939453,
       "ewros_score": 86,
-      "ewros_raw": 904.27,
-      "ewros_trend": 21,
-      "ewros_prior": 65,
-      "ewros_stats": {
-        "win_days": 37,
-        "total_days": 63,
-        "win_rate": 58.7,
-        "avg_alpha_bps": 28.2,
-        "best_alpha_pct": 3.4,
-        "worst_alpha_pct": -2.62,
-        "stock_return_3mo": 15.8,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 6,
       "iq_edge_raw": 0.064016
     },
@@ -7356,7 +6604,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Consumer Defensive (XLP: +12.0% vs SPY)",
+          "value": "Consumer Defensive (XLP: +9.4% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -7364,7 +6612,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+2.6% vs SPY (6mo)",
+          "value": "+1.8% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 1
         }
@@ -7380,19 +6628,6 @@
       "analyst_count": 12,
       "current_price": 67.72000122070312,
       "ewros_score": 84,
-      "ewros_raw": 866.25,
-      "ewros_trend": 8,
-      "ewros_prior": 76,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 28.3,
-        "best_alpha_pct": 4.03,
-        "worst_alpha_pct": -5.14,
-        "stock_return_3mo": 15.5,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 56,
       "iq_edge_raw": 0.388889
     },
@@ -7510,7 +6745,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -7518,7 +6753,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+7.9% vs SPY (6mo)",
+          "value": "+7.0% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -7534,19 +6769,6 @@
       "analyst_count": 10,
       "current_price": 47.86000061035156,
       "ewros_score": 85,
-      "ewros_raw": 879.28,
-      "ewros_trend": 29,
-      "ewros_prior": 56,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 24.9,
-        "best_alpha_pct": 3.53,
-        "worst_alpha_pct": -2.39,
-        "stock_return_3mo": 13.5,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 17,
       "iq_edge_raw": 0.126302
     },
@@ -7664,7 +6886,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -7672,7 +6894,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+3.1% vs SPY (6mo)",
+          "value": "+2.2% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 1
         }
@@ -7688,21 +6910,149 @@
       "analyst_count": 17,
       "current_price": 135.0,
       "ewros_score": 78,
-      "ewros_raw": 672.2,
-      "ewros_trend": 33,
-      "ewros_prior": 45,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 19.4,
-        "best_alpha_pct": 2.96,
-        "worst_alpha_pct": -2.41,
-        "stock_return_3mo": 9.5,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 41,
       "iq_edge_raw": 0.268859
+    },
+    {
+      "ticker": "XEL",
+      "name": "Xcel Energy Inc.",
+      "sector": "Utilities",
+      "industry": "Utilities - Regulated Electric",
+      "score": 74,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 91,
+      "growth_score": 21,
+      "quality_score": 28,
+      "context_score": 80,
+      "moonshot_score": 30,
+      "criteria": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": true,
+          "value": "$80.82 > $78.08 > $74.69",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": true,
+          "value": "+4.0% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 17%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "0.8x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": true,
+          "value": "96.0%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "100% of 50d ATR",
+          "threshold": "10d ATR < 75% of 50d ATR",
+          "points": 0
+        },
+        {
+          "name": "Revenue Score",
+          "category": "Growth",
+          "passed": false,
+          "value": "YoY: 7.4%",
+          "threshold": "Magnitude+Consistency+Accel+Beats",
+          "points": 8
+        },
+        {
+          "name": "Earnings Acceleration",
+          "category": "Growth",
+          "passed": false,
+          "value": "No yfinance data",
+          "threshold": "QoQ growth accelerating",
+          "points": 0
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": false,
+          "value": "9.4%",
+          "threshold": "> 15%",
+          "points": 0
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "16.7%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 0
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": false,
+          "value": "Negative/NA",
+          "threshold": "FCF > 0",
+          "points": 0
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Utilities (XLU: +12.7% vs SPY)",
+          "threshold": "Sector outperforming SPY (3mo)",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "+9.5% vs SPY (6mo)",
+          "threshold": ">0% outperformance vs SPY",
+          "points": 3
+        }
+      ],
+      "market_cap": 50421723136,
+      "revenue_growth": 7.4,
+      "earnings_growth": 20.8,
+      "forward_pe": 17.856668,
+      "trailing_pe": 23.631578,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 89.17647,
+      "analyst_count": 17,
+      "current_price": 80.81999969482422,
+      "ewros_score": 77,
+      "iq_edge": 46,
+      "iq_edge_raw": 0.31591
     },
     {
       "ticker": "ADM",
@@ -7818,7 +7168,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Consumer Defensive (XLP: +12.0% vs SPY)",
+          "value": "Consumer Defensive (XLP: +9.4% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -7826,7 +7176,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+13.9% vs SPY (6mo)",
+          "value": "+13.0% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -7842,175 +7192,8 @@
       "analyst_count": 11,
       "current_price": 71.9800033569336,
       "ewros_score": 88,
-      "ewros_raw": 1021.63,
-      "ewros_trend": 12,
-      "ewros_prior": 76,
-      "ewros_stats": {
-        "win_days": 36,
-        "total_days": 63,
-        "win_rate": 57.1,
-        "avg_alpha_bps": 32.2,
-        "best_alpha_pct": 4.57,
-        "worst_alpha_pct": -3.41,
-        "stock_return_3mo": 18.3,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 83,
       "iq_edge_raw": 0.702186
-    },
-    {
-      "ticker": "DINO",
-      "name": "HF Sinclair Corporation",
-      "sector": "Energy",
-      "industry": "Oil & Gas Refining & Marketing",
-      "score": 73,
-      "grade": "A",
-      "max_score": 100,
-      "technical_score": 91,
-      "growth_score": 18,
-      "quality_score": 17,
-      "context_score": 100,
-      "moonshot_score": 30,
-      "criteria": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": true,
-          "value": "$57.29 > $52.25 > $48.52",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 8
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": true,
-          "value": "+3.4% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 22
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 23%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "1.1x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 8
-        },
-        {
-          "name": "52W Proximity",
-          "category": "Timing",
-          "passed": true,
-          "value": "96.6%",
-          "threshold": "> 90% of 52W High",
-          "points": 5
-        },
-        {
-          "name": "Volatility Compression",
-          "category": "Timing",
-          "passed": false,
-          "value": "154% of 50d ATR",
-          "threshold": "10d ATR < 75% of 50d ATR",
-          "points": 0
-        },
-        {
-          "name": "Revenue Score",
-          "category": "Growth",
-          "passed": false,
-          "value": "YoY: 0.6%",
-          "threshold": "Magnitude+Consistency+Accel+Beats",
-          "points": 7
-        },
-        {
-          "name": "Earnings Acceleration",
-          "category": "Growth",
-          "passed": false,
-          "value": "No yfinance data",
-          "threshold": "QoQ growth accelerating",
-          "points": 0
-        },
-        {
-          "name": "ROE Quality",
-          "category": "Quality",
-          "passed": false,
-          "value": "6.3%",
-          "threshold": "> 15%",
-          "points": 0
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": false,
-          "value": "-0.0%",
-          "threshold": "> 10%",
-          "points": 0
-        },
-        {
-          "name": "Valuation Sanity",
-          "category": "Quality",
-          "passed": false,
-          "value": "N/A",
-          "threshold": "PEG < 2.0",
-          "points": 0
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 3
-        },
-        {
-          "name": "Industry Strength",
-          "category": "Context",
-          "passed": true,
-          "value": "Energy (XLE: +30.2% vs SPY)",
-          "threshold": "Sector outperforming SPY (3mo)",
-          "points": 5
-        },
-        {
-          "name": "Relative Strength",
-          "category": "Context",
-          "passed": true,
-          "value": "+10.5% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
-        }
-      ],
-      "market_cap": 10538394624,
-      "revenue_growth": 0.6,
-      "earnings_growth": null,
-      "forward_pe": 11.96828,
-      "trailing_pe": 18.60065,
-      "peg_ratio": null,
-      "recommendation": "buy",
-      "target_mean": 60.4,
-      "analyst_count": 15,
-      "current_price": 57.290000915527344,
-      "ewros_score": 90,
-      "ewros_raw": 1236.69,
-      "ewros_trend": 15,
-      "ewros_prior": 75,
-      "ewros_stats": {
-        "win_days": 37,
-        "total_days": 63,
-        "win_rate": 58.7,
-        "avg_alpha_bps": 30.7,
-        "best_alpha_pct": 7.54,
-        "worst_alpha_pct": -11.36,
-        "stock_return_3mo": 15.2,
-        "spy_return_3mo": -2.8
-      },
-      "iq_edge": 47,
-      "iq_edge_raw": 0.324024
     },
     {
       "ticker": "HR",
@@ -8126,7 +7309,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -8134,7 +7317,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": false,
-          "value": "-0.4% vs SPY (6mo)",
+          "value": "-1.2% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 0
         }
@@ -8150,19 +7333,6 @@
       "analyst_count": 10,
       "current_price": 18.229999542236328,
       "ewros_score": 74,
-      "ewros_raw": 539.88,
-      "ewros_trend": 33,
-      "ewros_prior": 41,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 12.4,
-        "best_alpha_pct": 3.01,
-        "worst_alpha_pct": -3.2,
-        "stock_return_3mo": 4.8,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 51,
       "iq_edge_raw": 0.354199
     },
@@ -8280,7 +7450,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -8288,7 +7458,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+4.1% vs SPY (6mo)",
+          "value": "+3.3% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 1
         }
@@ -8304,19 +7474,6 @@
       "analyst_count": 16,
       "current_price": 44.95000076293945,
       "ewros_score": 84,
-      "ewros_raw": 847.35,
-      "ewros_trend": 28,
-      "ewros_prior": 56,
-      "ewros_stats": {
-        "win_days": 39,
-        "total_days": 63,
-        "win_rate": 61.9,
-        "avg_alpha_bps": 25.9,
-        "best_alpha_pct": 2.91,
-        "worst_alpha_pct": -3.21,
-        "stock_return_3mo": 14.3,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 47,
       "iq_edge_raw": 0.326681
     },
@@ -8434,7 +7591,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -8442,7 +7599,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+4.9% vs SPY (6mo)",
+          "value": "+4.1% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 1
         }
@@ -8458,19 +7615,6 @@
       "analyst_count": 15,
       "current_price": 38.06999969482422,
       "ewros_score": 85,
-      "ewros_raw": 871.51,
-      "ewros_trend": 40,
-      "ewros_prior": 45,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 28.2,
-        "best_alpha_pct": 3.24,
-        "worst_alpha_pct": -2.53,
-        "stock_return_3mo": 15.8,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 37,
       "iq_edge_raw": 0.243325
     },
@@ -8588,7 +7732,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -8596,7 +7740,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+4.8% vs SPY (6mo)",
+          "value": "+4.0% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 1
         }
@@ -8612,19 +7756,6 @@
       "analyst_count": 19,
       "current_price": 97.83999633789062,
       "ewros_score": 88,
-      "ewros_raw": 1036.01,
-      "ewros_trend": 36,
-      "ewros_prior": 52,
-      "ewros_stats": {
-        "win_days": 38,
-        "total_days": 63,
-        "win_rate": 60.3,
-        "avg_alpha_bps": 29.5,
-        "best_alpha_pct": 4.67,
-        "worst_alpha_pct": -3.27,
-        "stock_return_3mo": 16.7,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 22,
       "iq_edge_raw": 0.151499
     },
@@ -8742,7 +7873,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -8750,7 +7881,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+3.6% vs SPY (6mo)",
+          "value": "+2.8% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 1
         }
@@ -8766,19 +7897,6 @@
       "analyst_count": 5,
       "current_price": 41.060001373291016,
       "ewros_score": 80,
-      "ewros_raw": 732.74,
-      "ewros_trend": 42,
-      "ewros_prior": 38,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 18.5,
-        "best_alpha_pct": 4.79,
-        "worst_alpha_pct": -3.12,
-        "stock_return_3mo": 8.7,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 1,
       "iq_edge_raw": 0.023466
     },
@@ -8896,7 +8014,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Basic Materials (XLB: +13.2% vs SPY)",
+          "value": "Basic Materials (XLB: +11.6% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -8904,7 +8022,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": false,
-          "value": "-1.6% vs SPY (6mo)",
+          "value": "-2.4% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 0
         }
@@ -8920,19 +8038,6 @@
       "analyst_count": 22,
       "current_price": 287.9800109863281,
       "ewros_score": 87,
-      "ewros_raw": 1015.69,
-      "ewros_trend": 12,
-      "ewros_prior": 75,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 32.7,
-        "best_alpha_pct": 6.74,
-        "worst_alpha_pct": -4.1,
-        "stock_return_3mo": 18.7,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 28,
       "iq_edge_raw": 0.188828
     },
@@ -9050,7 +8155,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": false,
-          "value": "Technology (XLK: -3.8% vs SPY)",
+          "value": "Technology (XLK: -1.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 0
         },
@@ -9058,7 +8163,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+48.9% vs SPY (6mo)",
+          "value": "+48.1% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -9074,19 +8179,6 @@
       "analyst_count": 19,
       "current_price": 30.670000076293945,
       "ewros_score": 67,
-      "ewros_raw": 298.91,
-      "ewros_trend": 0,
-      "ewros_prior": 67,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 7.4,
-        "best_alpha_pct": 1.74,
-        "worst_alpha_pct": -1.23,
-        "stock_return_3mo": 2.0,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 93,
       "iq_edge_raw": 0.861075
     },
@@ -9204,7 +8296,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Basic Materials (XLB: +13.2% vs SPY)",
+          "value": "Basic Materials (XLB: +11.6% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -9212,7 +8304,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+7.9% vs SPY (6mo)",
+          "value": "+7.1% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -9228,21 +8320,149 @@
       "analyst_count": 21,
       "current_price": 79.75,
       "ewros_score": 88,
-      "ewros_raw": 1016.4,
-      "ewros_trend": 26,
-      "ewros_prior": 62,
-      "ewros_stats": {
-        "win_days": 39,
-        "total_days": 63,
-        "win_rate": 61.9,
-        "avg_alpha_bps": 33.7,
-        "best_alpha_pct": 3.36,
-        "worst_alpha_pct": -2.79,
-        "stock_return_3mo": 19.7,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 12,
       "iq_edge_raw": 0.093112
+    },
+    {
+      "ticker": "DINO",
+      "name": "HF Sinclair Corporation",
+      "sector": "Energy",
+      "industry": "Oil & Gas Refining & Marketing",
+      "score": 71,
+      "grade": "A",
+      "max_score": 100,
+      "technical_score": 91,
+      "growth_score": 18,
+      "quality_score": 17,
+      "context_score": 80,
+      "moonshot_score": 30,
+      "criteria": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": true,
+          "value": "$57.29 > $52.25 > $48.52",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": true,
+          "value": "+3.4% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 23%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "1.1x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": true,
+          "value": "96.6%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "154% of 50d ATR",
+          "threshold": "10d ATR < 75% of 50d ATR",
+          "points": 0
+        },
+        {
+          "name": "Revenue Score",
+          "category": "Growth",
+          "passed": false,
+          "value": "YoY: 0.6%",
+          "threshold": "Magnitude+Consistency+Accel+Beats",
+          "points": 7
+        },
+        {
+          "name": "Earnings Acceleration",
+          "category": "Growth",
+          "passed": false,
+          "value": "No yfinance data",
+          "threshold": "QoQ growth accelerating",
+          "points": 0
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": false,
+          "value": "6.3%",
+          "threshold": "> 15%",
+          "points": 0
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": false,
+          "value": "-0.0%",
+          "threshold": "> 10%",
+          "points": 0
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 0
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Energy (XLE: +29.9% vs SPY)",
+          "threshold": "Sector outperforming SPY (3mo)",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "+9.7% vs SPY (6mo)",
+          "threshold": ">0% outperformance vs SPY",
+          "points": 3
+        }
+      ],
+      "market_cap": 10538394624,
+      "revenue_growth": 0.6,
+      "earnings_growth": null,
+      "forward_pe": 11.96828,
+      "trailing_pe": 18.60065,
+      "peg_ratio": null,
+      "recommendation": "buy",
+      "target_mean": 60.4,
+      "analyst_count": 15,
+      "current_price": 57.290000915527344,
+      "ewros_score": 90,
+      "iq_edge": 47,
+      "iq_edge_raw": 0.324024
     },
     {
       "ticker": "MDU",
@@ -9358,7 +8578,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -9366,7 +8586,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+28.6% vs SPY (6mo)",
+          "value": "+27.8% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -9382,19 +8602,6 @@
       "analyst_count": 6,
       "current_price": 20.899999618530273,
       "ewros_score": 70,
-      "ewros_raw": 412.64,
-      "ewros_trend": 26,
-      "ewros_prior": 44,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 13.5,
-        "best_alpha_pct": 3.5,
-        "worst_alpha_pct": -2.92,
-        "stock_return_3mo": 5.5,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 35,
       "iq_edge_raw": 0.228181
     },
@@ -9512,7 +8719,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": false,
-          "value": "Consumer Cyclical (XLY: -4.0% vs SPY)",
+          "value": "Consumer Cyclical (XLY: -5.3% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 0
         },
@@ -9520,7 +8727,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+13.7% vs SPY (6mo)",
+          "value": "+12.9% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -9536,19 +8743,6 @@
       "analyst_count": 29,
       "current_price": 72.08999633789062,
       "ewros_score": 86,
-      "ewros_raw": 892.65,
-      "ewros_trend": 57,
-      "ewros_prior": 29,
-      "ewros_stats": {
-        "win_days": 30,
-        "total_days": 63,
-        "win_rate": 47.6,
-        "avg_alpha_bps": 14.4,
-        "best_alpha_pct": 4.29,
-        "worst_alpha_pct": -4.61,
-        "stock_return_3mo": 5.8,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 8,
       "iq_edge_raw": 0.07366
     },
@@ -9666,7 +8860,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Basic Materials (XLB: +13.2% vs SPY)",
+          "value": "Basic Materials (XLB: +11.6% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -9674,7 +8868,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+1.1% vs SPY (6mo)",
+          "value": "+0.3% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 1
         }
@@ -9690,175 +8884,8 @@
       "analyst_count": 15,
       "current_price": 26.010000228881836,
       "ewros_score": 84,
-      "ewros_raw": 866.88,
-      "ewros_trend": -7,
-      "ewros_prior": 91,
-      "ewros_stats": {
-        "win_days": 32,
-        "total_days": 63,
-        "win_rate": 50.8,
-        "avg_alpha_bps": 26.5,
-        "best_alpha_pct": 11.43,
-        "worst_alpha_pct": -7.93,
-        "stock_return_3mo": 9.9,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 53,
       "iq_edge_raw": 0.371678
-    },
-    {
-      "ticker": "LNG",
-      "name": "Cheniere Energy, Inc.",
-      "sector": "Energy",
-      "industry": "Oil & Gas Midstream",
-      "score": 68,
-      "grade": "B",
-      "max_score": 100,
-      "technical_score": 64,
-      "growth_score": 26,
-      "quality_score": 72,
-      "context_score": 80,
-      "moonshot_score": 50,
-      "criteria": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": false,
-          "value": "$253.84 > $216.85 > $222.21",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 0
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": true,
-          "value": "+0.8% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 22
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 27%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": false,
-          "value": "1.6x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 0
-        },
-        {
-          "name": "52W Proximity",
-          "category": "Timing",
-          "passed": true,
-          "value": "97.9%",
-          "threshold": "> 90% of 52W High",
-          "points": 5
-        },
-        {
-          "name": "Volatility Compression",
-          "category": "Timing",
-          "passed": false,
-          "value": "141% of 50d ATR",
-          "threshold": "10d ATR < 75% of 50d ATR",
-          "points": 0
-        },
-        {
-          "name": "Revenue Score",
-          "category": "Growth",
-          "passed": false,
-          "value": "YoY: 18.0%",
-          "threshold": "Magnitude+Consistency+Accel+Beats",
-          "points": 10
-        },
-        {
-          "name": "Earnings Acceleration",
-          "category": "Growth",
-          "passed": false,
-          "value": "No yfinance data",
-          "threshold": "QoQ growth accelerating",
-          "points": 0
-        },
-        {
-          "name": "ROE Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "58.7%",
-          "threshold": "> 15%",
-          "points": 5
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "75.8%",
-          "threshold": "> 10%",
-          "points": 5
-        },
-        {
-          "name": "Valuation Sanity",
-          "category": "Quality",
-          "passed": false,
-          "value": "N/A",
-          "threshold": "PEG < 2.0",
-          "points": 0
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 3
-        },
-        {
-          "name": "Industry Strength",
-          "category": "Context",
-          "passed": true,
-          "value": "Energy (XLE: +30.2% vs SPY)",
-          "threshold": "Sector outperforming SPY (3mo)",
-          "points": 5
-        },
-        {
-          "name": "Relative Strength",
-          "category": "Context",
-          "passed": true,
-          "value": "+5.6% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
-        }
-      ],
-      "market_cap": 54635196416,
-      "revenue_growth": 18.0,
-      "earnings_growth": 146.4,
-      "forward_pe": 16.60812,
-      "trailing_pe": 10.519685,
-      "peg_ratio": null,
-      "recommendation": "strong_buy",
-      "target_mean": 272.77274,
-      "analyst_count": 22,
-      "current_price": 253.83999633789062,
-      "ewros_score": 94,
-      "ewros_raw": 1723.38,
-      "ewros_trend": 35,
-      "ewros_prior": 59,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 48.6,
-        "best_alpha_pct": 5.92,
-        "worst_alpha_pct": -2.67,
-        "stock_return_3mo": 31.2,
-        "spy_return_3mo": -2.8
-      },
-      "iq_edge": 86,
-      "iq_edge_raw": 0.749881
     },
     {
       "ticker": "STAG",
@@ -9974,7 +9001,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Real Estate (XLRE: +8.3% vs SPY)",
+          "value": "Real Estate (XLRE: +7.2% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -9982,7 +9009,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+1.6% vs SPY (6mo)",
+          "value": "+0.8% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 1
         }
@@ -9998,19 +9025,6 @@
       "analyst_count": 11,
       "current_price": 38.040000915527344,
       "ewros_score": 67,
-      "ewros_raw": 314.81,
-      "ewros_trend": 35,
-      "ewros_prior": 32,
-      "ewros_stats": {
-        "win_days": 31,
-        "total_days": 63,
-        "win_rate": 49.2,
-        "avg_alpha_bps": 6.5,
-        "best_alpha_pct": 3.51,
-        "worst_alpha_pct": -3.43,
-        "stock_return_3mo": 1.0,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 64,
       "iq_edge_raw": 0.474825
     },
@@ -10128,7 +9142,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -10136,7 +9150,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+8.5% vs SPY (6mo)",
+          "value": "+7.7% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -10152,19 +9166,6 @@
       "analyst_count": 17,
       "current_price": 131.82000732421875,
       "ewros_score": 88,
-      "ewros_raw": 1019.49,
-      "ewros_trend": 33,
-      "ewros_prior": 55,
-      "ewros_stats": {
-        "win_days": 37,
-        "total_days": 63,
-        "win_rate": 58.7,
-        "avg_alpha_bps": 29.2,
-        "best_alpha_pct": 2.9,
-        "worst_alpha_pct": -3.17,
-        "stock_return_3mo": 16.7,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 2,
       "iq_edge_raw": 0.037001
     },
@@ -10282,7 +9283,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Healthcare (XLV: +1.6% vs SPY)",
+          "value": "Healthcare (XLV: +0.0% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -10290,7 +9291,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+89.3% vs SPY (6mo)",
+          "value": "+88.5% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -10306,21 +9307,149 @@
       "analyst_count": 16,
       "current_price": 103.2699966430664,
       "ewros_score": 67,
-      "ewros_raw": 321.43,
-      "ewros_trend": -4,
-      "ewros_prior": 71,
-      "ewros_stats": {
-        "win_days": 32,
-        "total_days": 63,
-        "win_rate": 50.8,
-        "avg_alpha_bps": 8.0,
-        "best_alpha_pct": 1.96,
-        "worst_alpha_pct": -1.41,
-        "stock_return_3mo": 2.3,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 75,
       "iq_edge_raw": 0.608149
+    },
+    {
+      "ticker": "LNG",
+      "name": "Cheniere Energy, Inc.",
+      "sector": "Energy",
+      "industry": "Oil & Gas Midstream",
+      "score": 66,
+      "grade": "B",
+      "max_score": 100,
+      "technical_score": 64,
+      "growth_score": 26,
+      "quality_score": 72,
+      "context_score": 60,
+      "moonshot_score": 50,
+      "criteria": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": false,
+          "value": "$253.84 > $216.85 > $222.21",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 0
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": true,
+          "value": "+0.8% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 27%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": false,
+          "value": "1.6x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 0
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": true,
+          "value": "97.9%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "141% of 50d ATR",
+          "threshold": "10d ATR < 75% of 50d ATR",
+          "points": 0
+        },
+        {
+          "name": "Revenue Score",
+          "category": "Growth",
+          "passed": false,
+          "value": "YoY: 18.0%",
+          "threshold": "Magnitude+Consistency+Accel+Beats",
+          "points": 10
+        },
+        {
+          "name": "Earnings Acceleration",
+          "category": "Growth",
+          "passed": false,
+          "value": "No yfinance data",
+          "threshold": "QoQ growth accelerating",
+          "points": 0
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "58.7%",
+          "threshold": "> 15%",
+          "points": 5
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "75.8%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A",
+          "threshold": "PEG < 2.0",
+          "points": 0
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "Energy (XLE: +29.9% vs SPY)",
+          "threshold": "Sector outperforming SPY (3mo)",
+          "points": 5
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "+4.8% vs SPY (6mo)",
+          "threshold": ">0% outperformance vs SPY",
+          "points": 1
+        }
+      ],
+      "market_cap": 54635196416,
+      "revenue_growth": 18.0,
+      "earnings_growth": 146.4,
+      "forward_pe": 16.60812,
+      "trailing_pe": 10.519685,
+      "peg_ratio": null,
+      "recommendation": "strong_buy",
+      "target_mean": 272.77274,
+      "analyst_count": 22,
+      "current_price": 253.83999633789062,
+      "ewros_score": 94,
+      "iq_edge": 86,
+      "iq_edge_raw": 0.749881
     },
     {
       "ticker": "RSG",
@@ -10436,7 +9565,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Industrials (XLI: +8.4% vs SPY)",
+          "value": "Industrials (XLI: +7.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -10444,7 +9573,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": false,
-          "value": "-3.8% vs SPY (6mo)",
+          "value": "-4.6% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 0
         }
@@ -10460,19 +9589,6 @@
       "analyst_count": 24,
       "current_price": 225.77999877929688,
       "ewros_score": 71,
-      "ewros_raw": 443.91,
-      "ewros_trend": 22,
-      "ewros_prior": 49,
-      "ewros_stats": {
-        "win_days": 33,
-        "total_days": 63,
-        "win_rate": 52.4,
-        "avg_alpha_bps": 14.2,
-        "best_alpha_pct": 2.47,
-        "worst_alpha_pct": -2.71,
-        "stock_return_3mo": 6.1,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 69,
       "iq_edge_raw": 0.532591
     },
@@ -10590,7 +9706,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Communication Services (XLC: +1.9% vs SPY)",
+          "value": "Communication Services (XLC: +0.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -10598,7 +9714,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": false,
-          "value": "-2.4% vs SPY (6mo)",
+          "value": "-3.2% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 0
         }
@@ -10614,19 +9730,6 @@
       "analyst_count": 8,
       "current_price": 24.780000686645508,
       "ewros_score": 96,
-      "ewros_raw": 2039.29,
-      "ewros_trend": 1,
-      "ewros_prior": 95,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 56.7,
-        "best_alpha_pct": 22.83,
-        "worst_alpha_pct": -9.09,
-        "stock_return_3mo": 32.3,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 20,
       "iq_edge_raw": 0.139004
     },
@@ -10744,7 +9847,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -10752,7 +9855,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": false,
-          "value": "-1.6% vs SPY (6mo)",
+          "value": "-2.4% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 0
         }
@@ -10768,19 +9871,6 @@
       "analyst_count": 10,
       "current_price": 139.69000244140625,
       "ewros_score": 82,
-      "ewros_raw": 789.1,
-      "ewros_trend": 46,
-      "ewros_prior": 36,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 15.8,
-        "best_alpha_pct": 5.33,
-        "worst_alpha_pct": -3.39,
-        "stock_return_3mo": 6.8,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 34,
       "iq_edge_raw": 0.220133
     },
@@ -10898,7 +9988,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Industrials (XLI: +8.4% vs SPY)",
+          "value": "Industrials (XLI: +7.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -10906,7 +9996,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+38.7% vs SPY (6mo)",
+          "value": "+37.9% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -10922,19 +10012,6 @@
       "analyst_count": 7,
       "current_price": 680.2899780273438,
       "ewros_score": 83,
-      "ewros_raw": 796.27,
-      "ewros_trend": 6,
-      "ewros_prior": 77,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 34.9,
-        "best_alpha_pct": 7.35,
-        "worst_alpha_pct": -6.9,
-        "stock_return_3mo": 19.2,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 39,
       "iq_edge_raw": 0.254796
     },
@@ -11052,7 +10129,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": false,
-          "value": "Technology (XLK: -3.8% vs SPY)",
+          "value": "Technology (XLK: -1.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 0
         },
@@ -11060,7 +10137,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+4.4% vs SPY (6mo)",
+          "value": "+3.6% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 1
         }
@@ -11076,19 +10153,6 @@
       "analyst_count": 33,
       "current_price": 84.4000015258789,
       "ewros_score": 77,
-      "ewros_raw": 646.76,
-      "ewros_trend": 25,
-      "ewros_prior": 52,
-      "ewros_stats": {
-        "win_days": 30,
-        "total_days": 63,
-        "win_rate": 47.6,
-        "avg_alpha_bps": 10.0,
-        "best_alpha_pct": 5.14,
-        "worst_alpha_pct": -4.68,
-        "stock_return_3mo": 2.3,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 90,
       "iq_edge_raw": 0.82114
     },
@@ -11206,7 +10270,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Industrials (XLI: +8.4% vs SPY)",
+          "value": "Industrials (XLI: +7.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -11214,7 +10278,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+34.3% vs SPY (6mo)",
+          "value": "+33.5% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -11230,19 +10294,6 @@
       "analyst_count": 20,
       "current_price": 243.82000732421875,
       "ewros_score": 82,
-      "ewros_raw": 785.39,
-      "ewros_trend": -5,
-      "ewros_prior": 87,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 38.9,
-        "best_alpha_pct": 7.58,
-        "worst_alpha_pct": -3.77,
-        "stock_return_3mo": 22.8,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 73,
       "iq_edge_raw": 0.577157
     },
@@ -11360,7 +10411,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Consumer Defensive (XLP: +12.0% vs SPY)",
+          "value": "Consumer Defensive (XLP: +9.4% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -11368,7 +10419,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+9.1% vs SPY (6mo)",
+          "value": "+8.3% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -11384,19 +10435,6 @@
       "analyst_count": 22,
       "current_price": 74.95999908447266,
       "ewros_score": 92,
-      "ewros_raw": 1404.45,
-      "ewros_trend": 21,
-      "ewros_prior": 71,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 34.6,
-        "best_alpha_pct": 5.82,
-        "worst_alpha_pct": -3.95,
-        "stock_return_3mo": 19.7,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 66,
       "iq_edge_raw": 0.507171
     },
@@ -11514,7 +10552,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Energy (XLE: +30.2% vs SPY)",
+          "value": "Energy (XLE: +29.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -11522,7 +10560,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+28.4% vs SPY (6mo)",
+          "value": "+27.5% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -11538,19 +10576,6 @@
       "analyst_count": 7,
       "current_price": 23.139999389648438,
       "ewros_score": 93,
-      "ewros_raw": 1556.85,
-      "ewros_trend": 10,
-      "ewros_prior": 83,
-      "ewros_stats": {
-        "win_days": 42,
-        "total_days": 63,
-        "win_rate": 66.7,
-        "avg_alpha_bps": 43.0,
-        "best_alpha_pct": 3.84,
-        "worst_alpha_pct": -3.7,
-        "stock_return_3mo": 27.0,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 28,
       "iq_edge_raw": 0.185236
     },
@@ -11668,7 +10693,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Healthcare (XLV: +1.6% vs SPY)",
+          "value": "Healthcare (XLV: +0.0% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -11676,7 +10701,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+29.9% vs SPY (6mo)",
+          "value": "+29.1% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -11692,19 +10717,6 @@
       "analyst_count": 29,
       "current_price": 366.2099914550781,
       "ewros_score": 77,
-      "ewros_raw": 642.23,
-      "ewros_trend": 11,
-      "ewros_prior": 66,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 29.1,
-        "best_alpha_pct": 8.64,
-        "worst_alpha_pct": -3.36,
-        "stock_return_3mo": 15.7,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 80,
       "iq_edge_raw": 0.666826
     },
@@ -11822,7 +10834,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Industrials (XLI: +8.4% vs SPY)",
+          "value": "Industrials (XLI: +7.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -11830,7 +10842,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+50.0% vs SPY (6mo)",
+          "value": "+49.2% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -11846,19 +10858,6 @@
       "analyst_count": 8,
       "current_price": 377.2099914550781,
       "ewros_score": 81,
-      "ewros_raw": 761.46,
-      "ewros_trend": 3,
-      "ewros_prior": 78,
-      "ewros_stats": {
-        "win_days": 32,
-        "total_days": 63,
-        "win_rate": 50.8,
-        "avg_alpha_bps": 31.8,
-        "best_alpha_pct": 9.71,
-        "worst_alpha_pct": -6.2,
-        "stock_return_3mo": 15.8,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 40,
       "iq_edge_raw": 0.259374
     },
@@ -11976,7 +10975,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Healthcare (XLV: +1.6% vs SPY)",
+          "value": "Healthcare (XLV: +0.0% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -11984,7 +10983,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+25.3% vs SPY (6mo)",
+          "value": "+24.5% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -12000,19 +10999,6 @@
       "analyst_count": 28,
       "current_price": 145.2100067138672,
       "ewros_score": 80,
-      "ewros_raw": 723.08,
-      "ewros_trend": -8,
-      "ewros_prior": 88,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 31.7,
-        "best_alpha_pct": 5.84,
-        "worst_alpha_pct": -3.38,
-        "stock_return_3mo": 17.6,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 58,
       "iq_edge_raw": 0.399768
     },
@@ -12130,7 +11116,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Industrials (XLI: +8.4% vs SPY)",
+          "value": "Industrials (XLI: +7.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -12138,7 +11124,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+13.6% vs SPY (6mo)",
+          "value": "+12.8% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -12154,19 +11140,6 @@
       "analyst_count": 24,
       "current_price": 233.39999389648438,
       "ewros_score": 80,
-      "ewros_raw": 736.47,
-      "ewros_trend": -2,
-      "ewros_prior": 82,
-      "ewros_stats": {
-        "win_days": 43,
-        "total_days": 63,
-        "win_rate": 68.3,
-        "avg_alpha_bps": 36.0,
-        "best_alpha_pct": 5.09,
-        "worst_alpha_pct": -2.53,
-        "stock_return_3mo": 21.3,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 80,
       "iq_edge_raw": 0.669568
     },
@@ -12284,7 +11257,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Healthcare (XLV: +1.6% vs SPY)",
+          "value": "Healthcare (XLV: +0.0% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -12292,7 +11265,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+36.7% vs SPY (6mo)",
+          "value": "+35.9% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -12308,19 +11281,6 @@
       "analyst_count": 27,
       "current_price": 115.91000366210938,
       "ewros_score": 72,
-      "ewros_raw": 486.54,
-      "ewros_trend": -9,
-      "ewros_prior": 81,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 29.6,
-        "best_alpha_pct": 4.27,
-        "worst_alpha_pct": -3.99,
-        "stock_return_3mo": 16.5,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 69,
       "iq_edge_raw": 0.530242
     },
@@ -12438,7 +11398,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Industrials (XLI: +8.4% vs SPY)",
+          "value": "Industrials (XLI: +7.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -12446,7 +11406,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+24.6% vs SPY (6mo)",
+          "value": "+23.8% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -12462,19 +11422,6 @@
       "analyst_count": 21,
       "current_price": 736.2999877929688,
       "ewros_score": 90,
-      "ewros_raw": 1192.45,
-      "ewros_trend": 12,
-      "ewros_prior": 78,
-      "ewros_stats": {
-        "win_days": 33,
-        "total_days": 63,
-        "win_rate": 52.4,
-        "avg_alpha_bps": 49.4,
-        "best_alpha_pct": 5.97,
-        "worst_alpha_pct": -5.18,
-        "stock_return_3mo": 31.2,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 76,
       "iq_edge_raw": 0.619913
     },
@@ -12592,7 +11539,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Communication Services (XLC: +1.9% vs SPY)",
+          "value": "Communication Services (XLC: +0.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -12600,7 +11547,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+30.4% vs SPY (6mo)",
+          "value": "+29.6% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -12616,19 +11563,6 @@
       "analyst_count": 8,
       "current_price": 78.05999755859375,
       "ewros_score": 89,
-      "ewros_raw": 1096.58,
-      "ewros_trend": 32,
-      "ewros_prior": 57,
-      "ewros_stats": {
-        "win_days": 36,
-        "total_days": 63,
-        "win_rate": 57.1,
-        "avg_alpha_bps": 32.2,
-        "best_alpha_pct": 4.37,
-        "worst_alpha_pct": -5.86,
-        "stock_return_3mo": 18.3,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 34,
       "iq_edge_raw": 0.224516
     },
@@ -12746,7 +11680,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Energy (XLE: +30.2% vs SPY)",
+          "value": "Energy (XLE: +29.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -12754,7 +11688,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+17.7% vs SPY (6mo)",
+          "value": "+16.9% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -12770,19 +11704,6 @@
       "analyst_count": 20,
       "current_price": 84.93000030517578,
       "ewros_score": 86,
-      "ewros_raw": 930.99,
-      "ewros_trend": 5,
-      "ewros_prior": 81,
-      "ewros_stats": {
-        "win_days": 36,
-        "total_days": 63,
-        "win_rate": 57.1,
-        "avg_alpha_bps": 29.9,
-        "best_alpha_pct": 4.76,
-        "worst_alpha_pct": -5.81,
-        "stock_return_3mo": 16.2,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 64,
       "iq_edge_raw": 0.474365
     },
@@ -12900,7 +11821,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Healthcare (XLV: +1.6% vs SPY)",
+          "value": "Healthcare (XLV: +0.0% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -12908,7 +11829,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+11.9% vs SPY (6mo)",
+          "value": "+11.1% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -12924,19 +11845,6 @@
       "analyst_count": 21,
       "current_price": 224.72999572753906,
       "ewros_score": 80,
-      "ewros_raw": 749.08,
-      "ewros_trend": -11,
-      "ewros_prior": 91,
-      "ewros_stats": {
-        "win_days": 33,
-        "total_days": 63,
-        "win_rate": 52.4,
-        "avg_alpha_bps": 27.0,
-        "best_alpha_pct": 17.28,
-        "worst_alpha_pct": -4.66,
-        "stock_return_3mo": 12.9,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 61,
       "iq_edge_raw": 0.433038
     },
@@ -13054,7 +11962,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Healthcare (XLV: +1.6% vs SPY)",
+          "value": "Healthcare (XLV: +0.0% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -13062,7 +11970,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+27.0% vs SPY (6mo)",
+          "value": "+26.2% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -13078,19 +11986,6 @@
       "analyst_count": 25,
       "current_price": 59.08000183105469,
       "ewros_score": 77,
-      "ewros_raw": 637.98,
-      "ewros_trend": 1,
-      "ewros_prior": 76,
-      "ewros_stats": {
-        "win_days": 31,
-        "total_days": 63,
-        "win_rate": 49.2,
-        "avg_alpha_bps": 29.7,
-        "best_alpha_pct": 4.55,
-        "worst_alpha_pct": -2.45,
-        "stock_return_3mo": 16.5,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 38,
       "iq_edge_raw": 0.24413
     },
@@ -13208,7 +12103,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Industrials (XLI: +8.4% vs SPY)",
+          "value": "Industrials (XLI: +7.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -13216,7 +12111,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+18.4% vs SPY (6mo)",
+          "value": "+17.5% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -13232,19 +12127,6 @@
       "analyst_count": 24,
       "current_price": 39.220001220703125,
       "ewros_score": 70,
-      "ewros_raw": 401.88,
-      "ewros_trend": -3,
-      "ewros_prior": 73,
-      "ewros_stats": {
-        "win_days": 35,
-        "total_days": 63,
-        "win_rate": 55.6,
-        "avg_alpha_bps": 16.2,
-        "best_alpha_pct": 2.83,
-        "worst_alpha_pct": -3.25,
-        "stock_return_3mo": 7.2,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 8,
       "iq_edge_raw": 0.075445
     },
@@ -13362,7 +12244,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Communication Services (XLC: +1.9% vs SPY)",
+          "value": "Communication Services (XLC: +0.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -13370,7 +12252,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+56.6% vs SPY (6mo)",
+          "value": "+55.8% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -13386,19 +12268,6 @@
       "analyst_count": 8,
       "current_price": 70.94999694824219,
       "ewros_score": 95,
-      "ewros_raw": 1934.03,
-      "ewros_trend": 6,
-      "ewros_prior": 89,
-      "ewros_stats": {
-        "win_days": 39,
-        "total_days": 63,
-        "win_rate": 61.9,
-        "avg_alpha_bps": 64.4,
-        "best_alpha_pct": 6.52,
-        "worst_alpha_pct": -9.27,
-        "stock_return_3mo": 43.0,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 38,
       "iq_edge_raw": 0.246712
     },
@@ -13516,7 +12385,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Communication Services (XLC: +1.9% vs SPY)",
+          "value": "Communication Services (XLC: +0.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -13524,7 +12393,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+15.4% vs SPY (6mo)",
+          "value": "+14.6% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -13540,19 +12409,6 @@
       "analyst_count": 22,
       "current_price": 50.630001068115234,
       "ewros_score": 92,
-      "ewros_raw": 1468.0,
-      "ewros_trend": 1,
-      "ewros_prior": 91,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 44.0,
-        "best_alpha_pct": 12.13,
-        "worst_alpha_pct": -3.6,
-        "stock_return_3mo": 27.1,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 35,
       "iq_edge_raw": 0.228957
     },
@@ -13670,7 +12526,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Energy (XLE: +30.2% vs SPY)",
+          "value": "Energy (XLE: +29.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -13678,7 +12534,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+28.1% vs SPY (6mo)",
+          "value": "+27.3% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -13694,19 +12550,6 @@
       "analyst_count": 14,
       "current_price": 135.63999938964844,
       "ewros_score": 83,
-      "ewros_raw": 819.71,
-      "ewros_trend": 14,
-      "ewros_prior": 69,
-      "ewros_stats": {
-        "win_days": 36,
-        "total_days": 63,
-        "win_rate": 57.1,
-        "avg_alpha_bps": 26.4,
-        "best_alpha_pct": 3.36,
-        "worst_alpha_pct": -2.74,
-        "stock_return_3mo": 14.5,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 48,
       "iq_edge_raw": 0.332023
     },
@@ -13824,7 +12667,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Utilities (XLU: +13.5% vs SPY)",
+          "value": "Utilities (XLU: +12.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -13832,7 +12675,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+31.6% vs SPY (6mo)",
+          "value": "+30.8% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -13848,19 +12691,6 @@
       "analyst_count": 13,
       "current_price": 70.95999908447266,
       "ewros_score": 91,
-      "ewros_raw": 1255.18,
-      "ewros_trend": 8,
-      "ewros_prior": 83,
-      "ewros_stats": {
-        "win_days": 39,
-        "total_days": 63,
-        "win_rate": 61.9,
-        "avg_alpha_bps": 41.8,
-        "best_alpha_pct": 4.56,
-        "worst_alpha_pct": -3.07,
-        "stock_return_3mo": 25.6,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 75,
       "iq_edge_raw": 0.613517
     },
@@ -13978,7 +12808,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Consumer Defensive (XLP: +12.0% vs SPY)",
+          "value": "Consumer Defensive (XLP: +9.4% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -13986,7 +12816,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+6.9% vs SPY (6mo)",
+          "value": "+6.1% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -14002,19 +12832,6 @@
       "analyst_count": 21,
       "current_price": 158.86000061035156,
       "ewros_score": 68,
-      "ewros_raw": 341.09,
-      "ewros_trend": -8,
-      "ewros_prior": 76,
-      "ewros_stats": {
-        "win_days": 33,
-        "total_days": 63,
-        "win_rate": 52.4,
-        "avg_alpha_bps": 14.7,
-        "best_alpha_pct": 5.77,
-        "worst_alpha_pct": -2.84,
-        "stock_return_3mo": 6.2,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 73,
       "iq_edge_raw": 0.57791
     },
@@ -14132,7 +12949,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": false,
-          "value": "Technology (XLK: -3.8% vs SPY)",
+          "value": "Technology (XLK: -1.7% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 0
         },
@@ -14140,7 +12957,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+27.5% vs SPY (6mo)",
+          "value": "+26.7% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -14156,19 +12973,6 @@
       "analyst_count": 2,
       "current_price": 749.8800048828125,
       "ewros_score": 96,
-      "ewros_raw": 2030.89,
-      "ewros_trend": 2,
-      "ewros_prior": 94,
-      "ewros_stats": {
-        "win_days": 31,
-        "total_days": 63,
-        "win_rate": 49.2,
-        "avg_alpha_bps": 53.7,
-        "best_alpha_pct": 13.99,
-        "worst_alpha_pct": -4.44,
-        "stock_return_3mo": 32.3,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 39,
       "iq_edge_raw": 0.252286
     },
@@ -14286,7 +13090,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Industrials (XLI: +8.4% vs SPY)",
+          "value": "Industrials (XLI: +7.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -14294,7 +13098,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+6.6% vs SPY (6mo)",
+          "value": "+5.8% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 3
         }
@@ -14310,19 +13114,6 @@
       "analyst_count": 25,
       "current_price": 238.61000061035156,
       "ewros_score": 76,
-      "ewros_raw": 606.68,
-      "ewros_trend": 20,
-      "ewros_prior": 56,
-      "ewros_stats": {
-        "win_days": 37,
-        "total_days": 63,
-        "win_rate": 58.7,
-        "avg_alpha_bps": 22.5,
-        "best_alpha_pct": 3.45,
-        "worst_alpha_pct": -4.29,
-        "stock_return_3mo": 11.7,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 17,
       "iq_edge_raw": 0.124745
     },
@@ -14440,7 +13231,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Energy (XLE: +30.2% vs SPY)",
+          "value": "Energy (XLE: +29.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -14448,7 +13239,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+28.0% vs SPY (6mo)",
+          "value": "+27.2% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -14464,19 +13255,6 @@
       "analyst_count": 21,
       "current_price": 73.5199966430664,
       "ewros_score": 89,
-      "ewros_raw": 1059.24,
-      "ewros_trend": 8,
-      "ewros_prior": 81,
-      "ewros_stats": {
-        "win_days": 40,
-        "total_days": 63,
-        "win_rate": 63.5,
-        "avg_alpha_bps": 35.0,
-        "best_alpha_pct": 4.1,
-        "worst_alpha_pct": -3.31,
-        "stock_return_3mo": 20.7,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 64,
       "iq_edge_raw": 0.471105
     },
@@ -14594,7 +13372,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Industrials (XLI: +8.4% vs SPY)",
+          "value": "Industrials (XLI: +7.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -14602,7 +13380,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+46.5% vs SPY (6mo)",
+          "value": "+45.7% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -14618,19 +13396,6 @@
       "analyst_count": 8,
       "current_price": 361.7799987792969,
       "ewros_score": 78,
-      "ewros_raw": 673.84,
-      "ewros_trend": -15,
-      "ewros_prior": 93,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 38.8,
-        "best_alpha_pct": 14.27,
-        "worst_alpha_pct": -4.73,
-        "stock_return_3mo": 21.9,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 41,
       "iq_edge_raw": 0.267702
     },
@@ -14748,7 +13513,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Industrials (XLI: +8.4% vs SPY)",
+          "value": "Industrials (XLI: +7.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -14756,7 +13521,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": false,
-          "value": "-1.0% vs SPY (6mo)",
+          "value": "-1.8% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 0
         }
@@ -14772,19 +13537,6 @@
       "analyst_count": 3,
       "current_price": 64.5199966430664,
       "ewros_score": 64,
-      "ewros_raw": 226.85,
-      "ewros_trend": 25,
-      "ewros_prior": 39,
-      "ewros_stats": {
-        "win_days": 32,
-        "total_days": 63,
-        "win_rate": 50.8,
-        "avg_alpha_bps": 5.7,
-        "best_alpha_pct": 2.07,
-        "worst_alpha_pct": -1.89,
-        "stock_return_3mo": 0.9,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 76,
       "iq_edge_raw": 0.617346
     },
@@ -14902,7 +13654,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Energy (XLE: +30.2% vs SPY)",
+          "value": "Energy (XLE: +29.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -14910,7 +13662,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+55.4% vs SPY (6mo)",
+          "value": "+54.6% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -14926,19 +13678,6 @@
       "analyst_count": 28,
       "current_price": 34.470001220703125,
       "ewros_score": 97,
-      "ewros_raw": 2479.21,
-      "ewros_trend": 37,
-      "ewros_prior": 60,
-      "ewros_stats": {
-        "win_days": 34,
-        "total_days": 63,
-        "win_rate": 54.0,
-        "avg_alpha_bps": 54.5,
-        "best_alpha_pct": 8.48,
-        "worst_alpha_pct": -4.91,
-        "stock_return_3mo": 33.9,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 30,
       "iq_edge_raw": 0.19672
     },
@@ -15056,7 +13795,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Consumer Defensive (XLP: +12.0% vs SPY)",
+          "value": "Consumer Defensive (XLP: +9.4% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -15064,7 +13803,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+13.2% vs SPY (6mo)",
+          "value": "+12.4% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -15080,19 +13819,6 @@
       "analyst_count": 23,
       "current_price": 77.61000061035156,
       "ewros_score": 76,
-      "ewros_raw": 603.56,
-      "ewros_trend": 7,
-      "ewros_prior": 69,
-      "ewros_stats": {
-        "win_days": 31,
-        "total_days": 63,
-        "win_rate": 49.2,
-        "avg_alpha_bps": 23.8,
-        "best_alpha_pct": 3.9,
-        "worst_alpha_pct": -2.37,
-        "stock_return_3mo": 12.7,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 81,
       "iq_edge_raw": 0.671084
     },
@@ -15210,7 +13936,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Healthcare (XLV: +1.6% vs SPY)",
+          "value": "Healthcare (XLV: +0.0% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -15218,7 +13944,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+16.6% vs SPY (6mo)",
+          "value": "+15.8% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -15234,19 +13960,6 @@
       "analyst_count": 5,
       "current_price": 175.5,
       "ewros_score": 95,
-      "ewros_raw": 1888.03,
-      "ewros_trend": 67,
-      "ewros_prior": 28,
-      "ewros_stats": {
-        "win_days": 33,
-        "total_days": 63,
-        "win_rate": 52.4,
-        "avg_alpha_bps": 47.7,
-        "best_alpha_pct": 34.06,
-        "worst_alpha_pct": -4.97,
-        "stock_return_3mo": 24.2,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 42,
       "iq_edge_raw": 0.280551
     },
@@ -15364,7 +14077,7 @@
           "name": "Industry Strength",
           "category": "Context",
           "passed": true,
-          "value": "Energy (XLE: +30.2% vs SPY)",
+          "value": "Energy (XLE: +29.9% vs SPY)",
           "threshold": "Sector outperforming SPY (3mo)",
           "points": 5
         },
@@ -15372,7 +14085,7 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+14.9% vs SPY (6mo)",
+          "value": "+14.1% vs SPY (6mo)",
           "threshold": ">0% outperformance vs SPY",
           "points": 5
         }
@@ -15388,19 +14101,6 @@
       "analyst_count": 19,
       "current_price": 56.15999984741211,
       "ewros_score": 95,
-      "ewros_raw": 1990.67,
-      "ewros_trend": 24,
-      "ewros_prior": 71,
-      "ewros_stats": {
-        "win_days": 31,
-        "total_days": 63,
-        "win_rate": 49.2,
-        "avg_alpha_bps": 44.9,
-        "best_alpha_pct": 6.3,
-        "worst_alpha_pct": -5.73,
-        "stock_return_3mo": 26.6,
-        "spy_return_3mo": -2.8
-      },
       "iq_edge": 87,
       "iq_edge_raw": 0.774558
     }
