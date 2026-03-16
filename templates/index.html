@@ -3151,7 +3151,7 @@
                 const tColor = trend > 0 ? '#10b981' : '#ef4444';
                 trendHtml = '<span style="font-size:0.65rem; margin-left:3px; color:' + tColor + ';">' + tArrow + '</span>';
             }
-            const clickAttr = ticker ? ' onclick="showEwrosPopup(\'' + ticker + '\')" style="cursor:pointer;"' : '';
+            const clickAttr = ticker ? ' onclick="event.stopPropagation(); showEwrosPopup(\'' + ticker + '\')" style="cursor:pointer;"' : '';
             return '<span' + clickAttr + ' style="font-weight:600; color:' + color + '; cursor:pointer;">' + score + '</span>' + trendHtml;
         }
 
@@ -4152,7 +4152,7 @@
                 const rotColor = (s.ewros_score||0) >= 60 ? '#10b981' : (s.ewros_score||0) >= 40 ? '#eab308' : '#94a3b8';
                 return `<tr>
                     <td><a href="#" onclick="viewStock('${s.ticker}'); return false;" style="color:var(--accent); font-weight:700; text-decoration:none;">${s.ticker}</a></td>
-                    <td style="font-weight:700; color:${scColor}; cursor:pointer;" onclick="showEwrosPopup('${s.ticker}')">${sc}</td>
+                    <td style="font-weight:700; color:${scColor}; cursor:pointer;" onclick="event.stopPropagation(); showEwrosPopup('${s.ticker}')">${sc}</td>
                     <td style="font-weight:600; color:${tColor};">${tArrow}${t !== 0 ? Math.abs(t) : '—'}</td>
                     <td onclick="event.stopPropagation(); showIqEdgePopup('${s.ticker}')" style="cursor:pointer;font-weight:700; color:${(s.iq_edge||0) >= 90 ? '#a855f7' : (s.iq_edge||0) >= 70 ? '#10b981' : (s.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${s.iq_edge || '—'}</td>
                     <td>${s.score || '—'}</td>
@@ -5246,6 +5246,7 @@
                         const plText = pl !== null ? `${pl > 0 ? '+' : ''}${pl.toFixed(2)}%` : '—';
                         const gradeColor = {'A':'#10b981','B':'#22d3ee','C':'#eab308','D':'#f97316','F':'#ef4444'}[item.grade] || 'var(--text-dim)';
 
+                        const wlIqColor = (item.iq_edge||0) >= 90 ? '#a855f7' : (item.iq_edge||0) >= 70 ? '#10b981' : (item.iq_edge||0) >= 40 ? '#eab308' : '#64748b';
                         html += `<tr>
                             <td class="sticky-col" style="font-weight:700; color:var(--accent); cursor:pointer;" onclick="viewStock('${item.ticker}')">${item.ticker}</td>
                             <td style="color:var(--text-dim); font-size:0.85rem;">${item.name || item.ticker}</td>
@@ -5253,9 +5254,10 @@
                             <td>${ep ? '$' + ep.toFixed(2) : '—'}</td>
                             <td>${currPrice ? '$' + currPrice.toFixed(2) : '—'}</td>
                             <td style="color:${plColor}; font-weight:700;">${plText}</td>
-                            <td>${item.score || '—'}</td>
-                            <td style="color:${gradeColor}; font-weight:700;">${item.grade || '—'}</td>
-                            <td>${item.ewros_score ? item.ewros_score.toFixed(1) : '—'}</td>
+                            <td onclick="event.stopPropagation(); showScorePopup('${item.ticker}')" style="cursor:pointer; font-weight:700;">${item.score || '—'}</td>
+                            <td onclick="event.stopPropagation(); showGradePopup('${item.ticker}')" style="cursor:pointer; color:${gradeColor}; font-weight:700;">${item.grade || '—'}</td>
+                            <td onclick="event.stopPropagation(); showEwrosPopup('${item.ticker}')" style="cursor:pointer; font-weight:700;">${item.ewros_score ? item.ewros_score.toFixed(1) : '—'}</td>
+                            <td onclick="event.stopPropagation(); showIqEdgePopup('${item.ticker}')" style="cursor:pointer; font-weight:700; color:${wlIqColor};">${item.iq_edge || '—'}</td>
                             <td>${renderInsiderBadge(wlLivePrices[item.ticker]?.ins_score ?? item.ins_score, wlLivePrices[item.ticker]?.insider_signal ?? item.insider_signal, true, item.ticker)}</td>
                             <td>${getSellSignalBadge(item.ticker)}</td>
                             <td><button onclick="removeWLItem(${item.id || 0}, '${item.ticker}', '${name}')" style="background:transparent; border:1px solid #374151; color:#ef4444; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem;">✕</button></td>
