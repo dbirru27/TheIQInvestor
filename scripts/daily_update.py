@@ -32,36 +32,16 @@ Usage:
 """
 
 import argparse
-import json
 import os
 import subprocess
 import sys
 import time
-import urllib.request
 from datetime import datetime
 
 WORKSPACE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, WORKSPACE)
 
-TELEGRAM_CHAT_ID = '690660528'
-OPENCLAW_API     = 'http://localhost:18789/api/message/send'
-
-
-def send_telegram(message):
-    """Send a Telegram message via OpenClaw gateway. Silent on failure."""
-    try:
-        payload = json.dumps({
-            'channel': 'telegram',
-            'to': TELEGRAM_CHAT_ID,
-            'message': message
-        }).encode()
-        req = urllib.request.Request(
-            OPENCLAW_API, data=payload,
-            headers={'Content-Type': 'application/json'}
-        )
-        urllib.request.urlopen(req, timeout=5)
-    except Exception as e:
-        print(f'  [telegram] send failed: {e}')
+from scripts.telegram_utils import send_telegram
 
 # ── Color helpers ─────────────────────────────────────────────────────────────
 

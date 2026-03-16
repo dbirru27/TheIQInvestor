@@ -13,44 +13,22 @@ Or standalone:
 """
 
 import argparse
-import json
 import os
 import signal
 import subprocess
 import sys
 import time
-import urllib.request
 from datetime import datetime
 
-WORKSPACE        = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TELEGRAM_CHAT_ID = '690660528'
-OPENCLAW_API     = 'http://localhost:18789/api/message/send'
+WORKSPACE     = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, WORKSPACE)
+from scripts.telegram_utils import send_telegram
 
 # Watchdog tunables
 POLL_INTERVAL    = 60        # seconds between liveness checks
 STALL_TIMEOUT    = 45 * 60  # seconds with no log growth = stall (45 min)
 MAX_RUNTIME      = 3 * 3600 # hard timeout — 3 hours
 MAX_RETRIES      = 1        # auto-restart attempts
-
-
-# ── Telegram ──────────────────────────────────────────────────────────────────
-
-def send_telegram(message):
-    try:
-        payload = json.dumps({
-            'channel': 'telegram',
-            'to': TELEGRAM_CHAT_ID,
-            'message': message
-        }).encode()
-        req = urllib.request.Request(
-            OPENCLAW_API, data=payload,
-            headers={'Content-Type': 'application/json'}
-        )
-        urllib.request.urlopen(req, timeout=5)
-        return True
-    except Exception as e:
-        print(f'  [watchdog] telegram failed: {e}')
-        return False
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
