@@ -623,17 +623,33 @@
     <div id="auth-modal" style="display:none; position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px); justify-content:center; align-items:center;">
         <div style="background:#1e293b; border:1px solid #334155; border-radius:16px; padding:32px; width:90%; max-width:380px; position:relative;">
             <button onclick="closeAuthModal()" style="position:absolute; top:12px; right:16px; background:none; border:none; color:#94a3b8; font-size:1.2rem; cursor:pointer;">&times;</button>
-            <h3 style="margin:0 0 6px; font-size:1.2rem; font-weight:700;">Sign In to IQ Investor</h3>
-            <p style="color:#94a3b8; font-size:0.8rem; margin:0 0 20px;">Access your portfolio, watchlist, and AI research.</p>
-            <div id="auth-error" style="display:none; background:#7f1d1d; border:1px solid #dc2626; border-radius:8px; padding:8px 12px; font-size:0.78rem; margin-bottom:12px; color:#fca5a5;"></div>
-            <input id="auth-email" type="email" placeholder="Email" style="width:100%; padding:10px 14px; background:#0f172a; border:1px solid #334155; border-radius:8px; color:white; font-size:0.85rem; margin-bottom:10px; box-sizing:border-box;" />
-            <input id="auth-password" type="password" placeholder="Password" style="width:100%; padding:10px 14px; background:#0f172a; border:1px solid #334155; border-radius:8px; color:white; font-size:0.85rem; margin-bottom:16px; box-sizing:border-box;" />
-            <button id="auth-submit-btn" onclick="signInWithEmail()" style="width:100%; padding:10px; background:var(--accent); color:var(--bg); border:none; border-radius:8px; font-weight:700; font-size:0.9rem; cursor:pointer; margin-bottom:10px;">Sign In</button>
-            <button onclick="signUpWithEmail()" style="width:100%; padding:10px; background:transparent; border:1px solid #334155; color:var(--text-dim); border-radius:8px; font-size:0.85rem; cursor:pointer; margin-bottom:8px;">Create Account</button>
-            <div style="text-align:center;">
-                <button onclick="sendPasswordReset()" style="background:none; border:none; color:#38bdf8; font-size:0.78rem; cursor:pointer; text-decoration:underline;">Forgot password?</button>
+
+            <!-- Sign In view -->
+            <div id="auth-view-signin">
+                <h3 style="margin:0 0 6px; font-size:1.2rem; font-weight:700;">Sign In to IQ Investor</h3>
+                <p style="color:#94a3b8; font-size:0.8rem; margin:0 0 20px;">Access your portfolio, watchlist, and AI research.</p>
+                <div id="auth-error" style="display:none; background:#7f1d1d; border:1px solid #dc2626; border-radius:8px; padding:8px 12px; font-size:0.78rem; margin-bottom:12px; color:#fca5a5;"></div>
+                <input id="auth-email" type="email" placeholder="Email" style="width:100%; padding:10px 14px; background:#0f172a; border:1px solid #334155; border-radius:8px; color:white; font-size:0.85rem; margin-bottom:10px; box-sizing:border-box;" />
+                <input id="auth-password" type="password" placeholder="Password" style="width:100%; padding:10px 14px; background:#0f172a; border:1px solid #334155; border-radius:8px; color:white; font-size:0.85rem; margin-bottom:16px; box-sizing:border-box;" />
+                <button id="auth-submit-btn" onclick="signInWithEmail()" style="width:100%; padding:10px; background:var(--accent); color:var(--bg); border:none; border-radius:8px; font-weight:700; font-size:0.9rem; cursor:pointer; margin-bottom:10px;">Sign In</button>
+                <button onclick="signUpWithEmail()" style="width:100%; padding:10px; background:transparent; border:1px solid #334155; color:var(--text-dim); border-radius:8px; font-size:0.85rem; cursor:pointer; margin-bottom:8px;">Create Account</button>
+                <div style="text-align:center; margin-top:6px;">
+                    <button onclick="showAuthView('reset')" style="background:none; border:none; color:#38bdf8; font-size:0.78rem; cursor:pointer; text-decoration:underline;">Forgot password?</button>
+                </div>
+                <p style="text-align:center; margin:10px 0 0; font-size:0.72rem; color:#64748b;">Free tier: 1 basket, 10 holdings, 1 AI research/day</p>
             </div>
-            <p style="text-align:center; margin:10px 0 0; font-size:0.72rem; color:#64748b;">Free tier: 1 basket, 10 holdings, 1 AI research/day</p>
+
+            <!-- Forgot Password view -->
+            <div id="auth-view-reset" style="display:none;">
+                <h3 style="margin:0 0 6px; font-size:1.2rem; font-weight:700;">Reset Password</h3>
+                <p style="color:#94a3b8; font-size:0.8rem; margin:0 0 20px;">Enter your email and we'll send a reset link.</p>
+                <div id="auth-reset-msg" style="display:none; border-radius:8px; padding:8px 12px; font-size:0.78rem; margin-bottom:12px;"></div>
+                <input id="auth-reset-email" type="email" placeholder="Email" style="width:100%; padding:10px 14px; background:#0f172a; border:1px solid #334155; border-radius:8px; color:white; font-size:0.85rem; margin-bottom:16px; box-sizing:border-box;" />
+                <button onclick="sendPasswordReset()" style="width:100%; padding:10px; background:var(--accent); color:var(--bg); border:none; border-radius:8px; font-weight:700; font-size:0.9rem; cursor:pointer; margin-bottom:10px;">Send Reset Link</button>
+                <div style="text-align:center;">
+                    <button onclick="showAuthView('signin')" style="background:none; border:none; color:#38bdf8; font-size:0.78rem; cursor:pointer; text-decoration:underline;">← Back to Sign In</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -2006,9 +2022,20 @@
             wlData = null;
         }
 
+        function showAuthView(view) {
+            document.getElementById('auth-view-signin').style.display = view === 'signin' ? 'block' : 'none';
+            document.getElementById('auth-view-reset').style.display = view === 'reset' ? 'block' : 'none';
+            if (view === 'reset') {
+                document.getElementById('auth-reset-msg').style.display = 'none';
+                document.getElementById('auth-reset-email').value = '';
+                setTimeout(() => document.getElementById('auth-reset-email').focus(), 50);
+            }
+        }
+
         function openAuthModal() {
             const modal = document.getElementById('auth-modal');
             modal.style.display = 'flex';
+            showAuthView('signin');
             document.getElementById('auth-error').style.display = 'none';
             document.getElementById('auth-email').value = '';
             document.getElementById('auth-password').value = '';
@@ -2019,32 +2046,38 @@
         }
 
         async function sendPasswordReset() {
-            const email = document.getElementById('auth-email').value.trim();
+            const email = document.getElementById('auth-reset-email').value.trim();
+            const msgEl = document.getElementById('auth-reset-msg');
             if (!email) {
-                const errEl = document.getElementById('auth-error');
-                errEl.textContent = 'Enter your email address above first.';
-                errEl.style.display = 'block';
+                msgEl.style.background = '#7f1d1d';
+                msgEl.style.border = '1px solid #dc2626';
+                msgEl.style.color = '#fca5a5';
+                msgEl.textContent = 'Please enter your email address.';
+                msgEl.style.display = 'block';
                 return;
             }
             try {
                 const { error } = await _supabaseClient.auth.resetPasswordForEmail(email, {
-                    redirectTo: window.location.origin + window.location.pathname
+                    redirectTo: 'https://theiqinvestor.com'
                 });
-                const errEl = document.getElementById('auth-error');
                 if (error) {
-                    errEl.style.background = '#7f1d1d';
-                    errEl.style.borderColor = '#dc2626';
-                    errEl.style.color = '#fca5a5';
-                    errEl.textContent = error.message;
+                    msgEl.style.background = '#7f1d1d';
+                    msgEl.style.border = '1px solid #dc2626';
+                    msgEl.style.color = '#fca5a5';
+                    msgEl.textContent = error.message;
                 } else {
-                    errEl.style.background = '#14532d';
-                    errEl.style.borderColor = '#16a34a';
-                    errEl.style.color = '#4ade80';
-                    errEl.textContent = `Reset link sent to ${email}. Check your inbox.`;
+                    msgEl.style.background = '#14532d';
+                    msgEl.style.border = '1px solid #16a34a';
+                    msgEl.style.color = '#4ade80';
+                    msgEl.textContent = `Reset link sent to ${email}. Check your inbox.`;
                 }
-                errEl.style.display = 'block';
+                msgEl.style.display = 'block';
             } catch(e) {
-                alert('Error: ' + e.message);
+                msgEl.style.background = '#7f1d1d';
+                msgEl.style.border = '1px solid #dc2626';
+                msgEl.style.color = '#fca5a5';
+                msgEl.textContent = 'Error: ' + e.message;
+                msgEl.style.display = 'block';
             }
         }
 
