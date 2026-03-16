@@ -2280,7 +2280,7 @@
         }
 
         // ═══ Shared: Insider Signal Badge ═══
-        function renderInsiderBadge(ins_score, insider_signal, compact=false) {
+        function renderInsiderBadge(ins_score, insider_signal, compact=false, ticker=null) {
             if (ins_score === undefined || ins_score === null) return '';
             let color, emoji, label;
             if (insider_signal === 'dumping' || ins_score <= -3) {
@@ -2290,10 +2290,11 @@
             } else {
                 color = '#666'; emoji = '⚪'; label = 'Neutral';
             }
+            const popupTarget = ticker || insider_signal;
             if (compact) {
-                return `<span title="Insider: ${label} (INS ${ins_score >= 0 ? '+' : ''}${ins_score})" style="font-size:0.7rem;padding:2px 5px;border-radius:4px;background:${color}22;color:${color};border:1px solid ${color}44;cursor:help;">${emoji}${ins_score >= 0 ? '+' : ''}${ins_score}</span>`;
+                return `<span onclick="event.stopPropagation(); showInsiderPopup('${popupTarget}')" title="Insider: ${label} (INS ${ins_score >= 0 ? '+' : ''}${ins_score})" style="font-size:0.7rem;padding:2px 5px;border-radius:4px;background:${color}22;color:${color};border:1px solid ${color}44;cursor:pointer;">${emoji}${ins_score >= 0 ? '+' : ''}${ins_score}</span>`;
             }
-            return `<span style="font-size:0.75rem;padding:3px 8px;border-radius:6px;background:${color}15;color:${color};border:1px solid ${color}33;">${emoji} INS ${ins_score >= 0 ? '+' : ''}${ins_score} · ${label}</span>`;
+            return `<span onclick="event.stopPropagation(); showInsiderPopup('${popupTarget}')" style="font-size:0.75rem;padding:3px 8px;border-radius:6px;background:${color}15;color:${color};border:1px solid ${color}33;cursor:pointer;">${emoji} INS ${ins_score >= 0 ? '+' : ''}${ins_score} · ${label}</span>`;
         }
 
         function renderTable() {
@@ -2341,14 +2342,14 @@
                                 <div class="score-bar-bg">
                                     <div class="score-bar-fill" style="width: ${stock.score}%; background: ${scoreColor};"></div>
                                 </div>
-                                <span class="score-text">${stock.score ?? stock.total ?? 0}</span>
+                                <span class="score-text" onclick="event.stopPropagation(); showScorePopup('${stock.ticker}')" style="cursor:pointer;">${stock.score ?? stock.total ?? 0}</span>
                             </div>
                         </td>
-                        <td><span class="badge ${gradeBadge}">${stock.grade}</span></td>
+                        <td onclick="event.stopPropagation(); showGradePopup('${stock.ticker}')" style="cursor:pointer;"><span class="badge ${gradeBadge}">${stock.grade}</span></td>
                         <td><span class="badge ${rotBadge}">${rotationScore.toFixed(1)}</span></td>
                         <td style="font-weight:700; color:${(stock.ewros_score||0) >= 70 ? '#10b981' : (stock.ewros_score||0) >= 40 ? '#eab308' : '#64748b'};">${stock.ewros_score || '—'}</td>
-                        <td style="font-weight:700; color:${(stock.iq_edge||0) >= 90 ? '#a855f7' : (stock.iq_edge||0) >= 70 ? '#10b981' : (stock.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${stock.iq_edge || '—'}</td>
-                        <td>${renderInsiderBadge(stock.ins_score, stock.insider_signal, true)}</td>
+                        <td onclick="event.stopPropagation(); showIqEdgePopup('${stock.ticker}')" style="cursor:pointer;font-weight:700; color:${(stock.iq_edge||0) >= 90 ? '#a855f7' : (stock.iq_edge||0) >= 70 ? '#10b981' : (stock.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${stock.iq_edge || '—'}</td>
+                        <td>${renderInsiderBadge(stock.ins_score, stock.insider_signal, true, stock.ticker)}</td>
                         <td><button onclick="event.stopPropagation(); viewStock('${stock.ticker}')" class="text-xs bg-slate-700 px-3 py-1 rounded hover:bg-slate-600 transition">Analyze</button></td>
                     </tr>
                 `;
@@ -2809,18 +2810,18 @@
                             <div class="score-bar-bg">
                                 <div class="score-bar-fill" style="width: ${scorePercent}%; background: ${scoreColor};"></div>
                             </div>
-                            <span class="score-text">${stock.score}/100</span>
+                            <span class="score-text" onclick="event.stopPropagation(); showScorePopup('${stock.ticker}')" style="cursor:pointer;">${stock.score}/100</span>
                         </div>
                         <div class="score-breakdown">T:${stock.technical_score || 0} G:${stock.growth_score || 0} Q:${stock.quality_score || 0} C:${stock.context_score || 0}</div>`}
                     </td>
                     <td class="text-center font-bold text-amber-400">${stock.score == null ? '—' : (stock.moonshot_score || 0) + '%'}</td>
                     <td class="text-center">${renderEwros(stock.ewros_score, stock.ewros_trend, stock.ticker)}</td>
-                    <td class="text-center" style="font-weight:700; color:${(stock.iq_edge||0) >= 90 ? '#a855f7' : (stock.iq_edge||0) >= 70 ? '#10b981' : (stock.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${stock.iq_edge != null && stock.iq_edge > 0 ? stock.iq_edge : '—'}</td>
+                    <td class="text-center" onclick="event.stopPropagation(); showIqEdgePopup('${stock.ticker}')" style="cursor:pointer;font-weight:700; color:${(stock.iq_edge||0) >= 90 ? '#a855f7' : (stock.iq_edge||0) >= 70 ? '#10b981' : (stock.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${stock.iq_edge != null && stock.iq_edge > 0 ? stock.iq_edge : '—'}</td>
                     <td>${stock.grade === 'ETF'
                         ? `<span class="grade-badge" style="background:#1e3a5f;color:#38bdf8;">ETF</span>`
-                        : `<span class="grade-badge grade-${stock.grade}">${stock.grade}</span>`}</td>
+                        : `<span class="grade-badge grade-${stock.grade}" onclick="event.stopPropagation(); showGradePopup('${stock.ticker}')" style="cursor:pointer;">${stock.grade}</span>`}</td>
                     <td>${getPortfolioSignalBadge(stock)}</td>
-                    <td>${renderInsiderBadge(stock.ins_score, stock.insider_signal, true)}</td>
+                    <td>${renderInsiderBadge(stock.ins_score, stock.insider_signal, true, stock.ticker)}</td>
                 </tr>
             `;
         }
@@ -2919,6 +2920,211 @@
             }
         }
 
+        // ═══════════════════════════════════════════════════════════════════
+        // UNIFIED COLUMN EXPLAINER POPUP SYSTEM
+        // To change popup format/style → edit buildExplainerPopup only.
+        // All metric popups (Score, Grade, EWROS, IQ Edge, Insider) call it.
+        // ═══════════════════════════════════════════════════════════════════
+
+        function buildExplainerPopup(config) {
+            /* config = {
+                id, ticker, title, subtitle, methodology,
+                statBoxes: [{ label, value, subtext, color }],
+                sections:  [{ title, rows: [{ label, value, valueColor }] }],
+                footer
+            } */
+            const popupId = config.id || 'explainer-popup';
+            const ex = document.getElementById(popupId);
+            if (ex) ex.remove();
+
+            const overlay = document.createElement('div');
+            overlay.id = popupId;
+            overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);';
+            overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+
+            const boxCount = (config.statBoxes || []).length;
+            const statBoxesHtml = boxCount > 0 ? `
+                <div style="display:flex;gap:12px;margin-bottom:16px;">
+                    ${config.statBoxes.map(b => `
+                        <div style="flex:1;text-align:center;background:#161b2a;border-radius:10px;padding:12px 8px;">
+                            <div style="font-size:0.55rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:5px;">${b.label}</div>
+                            <div style="font-size:${boxCount > 2 ? '1.6rem' : '2rem'};font-weight:800;color:${b.color || 'var(--text-main)'};">${b.value}</div>
+                            ${b.subtext ? `<div style="font-size:0.6rem;color:${b.color || 'var(--text-dim)'};">${b.subtext}</div>` : ''}
+                        </div>
+                    `).join('')}
+                </div>` : '';
+
+            const sectionsHtml = (config.sections || []).map(sec => `
+                <div style="background:#161b2a;border-radius:10px;padding:14px;margin-bottom:10px;">
+                    ${sec.title ? `<div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:10px;">${sec.title}</div>` : ''}
+                    ${(sec.rows || []).map((row, i, arr) => `
+                        <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;${i < arr.length-1 ? 'margin-bottom:6px;' : ''}">
+                            <span style="color:var(--text-dim);">${row.label}</span>
+                            <span style="font-weight:700;color:${row.valueColor || 'var(--text-main)'};">${row.value}</span>
+                        </div>`).join('')}
+                </div>`).join('');
+
+            overlay.innerHTML = `
+                <div style="background:#1e293b;border:1px solid #374151;border-radius:16px;padding:24px;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.5);max-height:90vh;overflow-y:auto;">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+                        <div>
+                            ${config.ticker ? `<span style="font-size:1.1rem;font-weight:800;color:var(--accent);">${config.ticker}</span><span style="font-size:0.75rem;color:var(--text-dim);margin-left:8px;">${config.title}</span>` : `<span style="font-size:1.1rem;font-weight:800;color:var(--text-main);">${config.title}</span>`}
+                            ${config.subtitle ? `<div style="font-size:0.7rem;color:var(--text-dim);margin-top:2px;">${config.subtitle}</div>` : ''}
+                        </div>
+                        <span onclick="document.getElementById('${popupId}').remove()" style="cursor:pointer;color:var(--text-dim);font-size:1.2rem;margin-left:12px;flex-shrink:0;">✕</span>
+                    </div>
+                    ${config.methodology ? `<div style="font-size:0.78rem;color:var(--text-dim);margin-bottom:14px;line-height:1.5;">${config.methodology}</div>` : ''}
+                    ${statBoxesHtml}
+                    ${sectionsHtml}
+                    ${config.footer ? `<div style="text-align:center;font-size:0.6rem;color:#475569;margin-top:4px;">${config.footer}</div>` : ''}
+                </div>`;
+            document.body.appendChild(overlay);
+        }
+
+        async function _loadStockData(ticker) {
+            // Shared data loader for all explainer popups — always prefers full all_stocks data
+            let stock = null;
+            try {
+                const fullData = await loadAllStocks();
+                const map = fullData.stocks || fullData;
+                if (map[ticker]) stock = { ticker, ...map[ticker] };
+            } catch(e) {}
+            if (!stock && typeof stocksData !== 'undefined')
+                stock = stocksData.find(s => s.ticker === ticker);
+            if (!stock && typeof watchlistData !== 'undefined' && watchlistData.all)
+                stock = watchlistData.all.find(s => s.ticker === ticker);
+            return stock;
+        }
+
+        async function showScorePopup(ticker) {
+            const stock = await _loadStockData(ticker);
+            if (!stock) return;
+            const score = stock.score || 0;
+            const scoreColor = score >= 80 ? '#38bdf8' : score >= 70 ? '#10b981' : score >= 55 ? '#f59e0b' : '#94a3b8';
+            buildExplainerPopup({
+                id: 'explainer-popup', ticker,
+                title: 'IQ Score', subtitle: 'Composite 14-factor rating',
+                statBoxes: [
+                    { label: 'Score /100', value: score, color: scoreColor },
+                ],
+                sections: [{
+                    title: 'Score Breakdown',
+                    rows: [
+                        { label: 'Technical  (max 53)', value: stock.technical_score ?? '—', valueColor: (stock.technical_score||0) >= 35 ? '#10b981' : '#eab308' },
+                        { label: 'Growth     (max 33)', value: stock.growth_score ?? '—',    valueColor: (stock.growth_score||0) >= 22 ? '#10b981' : '#eab308' },
+                        { label: 'Quality    (max 18)', value: stock.quality_score ?? '—',   valueColor: (stock.quality_score||0) >= 12 ? '#10b981' : '#eab308' },
+                        { label: 'Context    (max 10)', value: stock.context_score ?? '—',   valueColor: (stock.context_score||0) >= 7 ? '#10b981' : '#eab308' },
+                    ]
+                }],
+                footer: 'InvestIQ composite score — 14-factor model across technical, fundamental & market context'
+            });
+        }
+
+        async function showGradePopup(ticker) {
+            const stock = await _loadStockData(ticker);
+            if (!stock) return;
+            const grade = stock.grade || '—';
+            const gradeColors = {'A+':'#10b981','A':'#10b981','A-':'#22d3ee','B+':'#eab308','B':'#eab308','C+':'#f97316','C':'#ef4444','D':'#ef4444','F':'#ef4444'};
+            const gradeDescs = {'A+':'Elite setup — top 10% of all stocks','A':'Strong setup — well above average','A-':'Good setup — above average quality','B+':'Above average — worth watching','B':'Average — no strong edge','C+':'Below average — weak setup','C':'Weak — avoid or exit','D':'Very weak — multiple red flags','F':'Avoid — fails most criteria'};
+            const gradeColor = gradeColors[grade] || '#94a3b8';
+            buildExplainerPopup({
+                id: 'explainer-popup', ticker,
+                title: 'Grade', subtitle: gradeDescs[grade] || '',
+                statBoxes: [
+                    { label: 'Grade', value: grade, color: gradeColor },
+                    { label: 'Score', value: stock.score ?? '—', color: gradeColor },
+                ],
+                sections: [{
+                    title: 'Grade Scale',
+                    rows: [
+                        { label: 'A+  ≥ 90', value: 'Elite',         valueColor: '#10b981' },
+                        { label: 'A   ≥ 80', value: 'Strong',        valueColor: '#10b981' },
+                        { label: 'A-  ≥ 70', value: 'Good',          valueColor: '#22d3ee' },
+                        { label: 'B+  ≥ 60', value: 'Above average', valueColor: '#eab308' },
+                        { label: 'B   ≥ 50', value: 'Average',       valueColor: '#eab308' },
+                        { label: 'C+  ≥ 40', value: 'Below average', valueColor: '#f97316' },
+                        { label: 'C   < 40', value: 'Weak',          valueColor: '#ef4444' },
+                    ]
+                }],
+                footer: 'Grade derived from InvestIQ composite score (0–100)'
+            });
+        }
+
+        async function showIqEdgePopup(ticker) {
+            const stock = await _loadStockData(ticker);
+            if (!stock) return;
+            const iq = stock.iq_edge;
+            const raw = stock.iq_edge_raw;
+            if (iq == null) {
+                buildExplainerPopup({ id: 'explainer-popup', ticker, title: 'IQ Edge Score', subtitle: 'ML Breakout Probability', methodology: 'Score not yet computed. Will populate after next daily pipeline run.', sections: [], footer: 'IQ Edge = XGBoost breakout classifier · trained 2016-2024 · OOS AUC 0.835' });
+                return;
+            }
+            const iqColor = iq >= 90 ? '#a855f7' : iq >= 70 ? '#10b981' : iq >= 40 ? '#eab308' : '#64748b';
+            buildExplainerPopup({
+                id: 'explainer-popup', ticker,
+                title: 'IQ Edge Score', subtitle: 'ML Breakout Probability',
+                methodology: 'XGBoost model predicts breakout probability from 14 price/volume pattern features.',
+                statBoxes: [
+                    { label: 'Percentile', value: iq, color: iqColor },
+                    { label: 'Probability', value: raw != null ? (raw*100).toFixed(1)+'%' : '—', color: iqColor },
+                ],
+                sections: [
+                    { title: 'Score Interpretation', rows: [
+                        { label: '90–99  (Purple)', value: 'Exceptional setup',   valueColor: '#a855f7' },
+                        { label: '70–89  (Green)',  value: 'Strong breakout cue', valueColor: '#10b981' },
+                        { label: '40–69  (Yellow)', value: 'Moderate signal',     valueColor: '#eab308' },
+                        { label: '< 40   (Gray)',   value: 'Weak / no signal',    valueColor: '#64748b' },
+                    ]},
+                    { title: 'Model Details', rows: [
+                        { label: 'Algorithm', value: 'XGBoost classifier',  valueColor: 'var(--text-main)' },
+                        { label: 'Training',  value: '2016 – 2024 (8 yrs)', valueColor: 'var(--text-main)' },
+                        { label: 'OOS AUC',   value: '0.835',               valueColor: '#10b981' },
+                        { label: 'Features',  value: '14 price/volume',     valueColor: 'var(--text-main)' },
+                    ]},
+                ],
+                footer: 'IQ Edge = ML breakout probability · XGBoost · trained 2016-2024 · AUC 0.835'
+            });
+        }
+
+        async function showInsiderPopup(tickerOrSignal) {
+            // Can be called with a ticker string OR with insider_signal when ticker unavailable
+            const stock = await _loadStockData(tickerOrSignal);
+            if (!stock) return;
+            const ins = stock.ins_score;
+            const signal = (stock.insider_signal || 'neutral').toLowerCase();
+            const signalColors = { accumulating:'#10b981', neutral:'#eab308', dumping:'#ef4444' };
+            const signalDescs = { accumulating:'Multiple insiders buying — bullish conviction signal', neutral:'Mixed or minimal insider activity — no clear edge', dumping:'Heavy insider selling — bearish signal' };
+            const insColor = signalColors[signal] || '#94a3b8';
+            const signalLabel = signal.charAt(0).toUpperCase() + signal.slice(1);
+            const insDisplay = ins != null ? (ins >= 0 ? '+' : '') + ins : '—';
+            buildExplainerPopup({
+                id: 'explainer-popup', ticker,
+                title: 'Insider Signal', subtitle: 'SEC Form 4 Analysis',
+                methodology: signalDescs[signal] || '',
+                statBoxes: [
+                    { label: 'INS Score', value: insDisplay, color: insColor },
+                    { label: 'Signal', value: signalLabel, color: insColor },
+                ],
+                sections: [
+                    { title: 'Signal Thresholds', rows: [
+                        { label: 'Accumulating  (INS ≥ +3)', value: '🟢 Bullish', valueColor: '#10b981' },
+                        { label: 'Neutral       (−2 to +2)', value: '⚪ Watch',   valueColor: '#eab308' },
+                        { label: 'Distributing  (INS ≤ −3)', value: '🔴 Bearish', valueColor: '#ef4444' },
+                    ]},
+                    { title: 'Scoring Factors', rows: [
+                        { label: 'Cluster buy (3+ insiders)',  value: '+3', valueColor: '#10b981' },
+                        { label: 'CEO/CFO purchase',           value: '+2', valueColor: '#10b981' },
+                        { label: 'Director/Officer buy',       value: '+1', valueColor: '#10b981' },
+                        { label: 'Buy > $500K bonus',          value: '+1', valueColor: '#10b981' },
+                        { label: 'Cluster sell (3+ insiders)', value: '−3', valueColor: '#ef4444' },
+                        { label: 'CEO/CFO sale',               value: '−2', valueColor: '#ef4444' },
+                        { label: 'Large sell (>25% holdings)', value: '−2', valueColor: '#ef4444' },
+                    ]},
+                ],
+                footer: 'Insider Signal = SEC Form 4 filing analysis · 90-day lookback'
+            });
+        }
+
         function renderEwros(score, trend, ticker) {
             if (!score) return '—';
             const color = score >= 70 ? '#10b981' : score >= 40 ? '#eab308' : '#ef4444';
@@ -2933,120 +3139,42 @@
         }
 
         async function showEwrosPopup(ticker) {
-            // Always load full EWROS data from all_stocks.json (has ewros_stats, ewros_raw, etc.)
-            // Fall back to local stocksData/watchlistData only if API unavailable
-            let stock = null;
-            try {
-                const fullData = await loadAllStocks();
-                const allStocksMap = fullData.stocks || fullData;
-                if (allStocksMap[ticker]) {
-                    stock = { ticker, ...allStocksMap[ticker] };
-                }
-            } catch(e) {}
-
-            // Fallback: local data sources (may lack ewros_stats)
-            if (!stock) {
-                if (typeof stocksData !== 'undefined') {
-                    stock = stocksData.find(s => s.ticker === ticker);
-                }
-            }
-            if (!stock && typeof watchlistData !== 'undefined' && watchlistData.all) {
-                stock = watchlistData.all.find(s => s.ticker === ticker);
-            }
+            const stock = await _loadStockData(ticker);
             if (!stock) return;
-
             const score = stock.ewros_score || 0;
             const trend = stock.ewros_trend || 0;
             const prior = stock.ewros_prior || (score - trend);
             const stats = stock.ewros_stats || {};
-            const raw = stock.ewros_raw || 0;
-
             const scoreColor = score >= 70 ? '#10b981' : score >= 40 ? '#eab308' : '#ef4444';
             const trendArrow = trend > 0 ? '▲' : trend < 0 ? '▼' : '=';
             const trendColor = trend > 0 ? '#10b981' : trend < 0 ? '#ef4444' : '#94a3b8';
             const trendLabel = trend > 0 ? 'Improving' : trend < 0 ? 'Declining' : 'Stable';
-
             const winRate = stats.win_rate || 0;
             const winColor = winRate >= 55 ? '#10b981' : winRate >= 45 ? '#eab308' : '#ef4444';
-
-            const stockRet = stats.stock_return_3mo != null ? stats.stock_return_3mo.toFixed(1) + '%' : '—';
-            const spyRet = stats.spy_return_3mo != null ? stats.spy_return_3mo.toFixed(1) + '%' : '—';
             const stockRetColor = (stats.stock_return_3mo || 0) > 0 ? '#10b981' : '#ef4444';
-            const spyRetColor = (stats.spy_return_3mo || 0) > 0 ? '#10b981' : '#ef4444';
-
-            // Remove existing popup if any
-            const existing = document.getElementById('ewros-popup');
-            if (existing) existing.remove();
-
-            const popup = document.createElement('div');
-            popup.id = 'ewros-popup';
-            popup.style.cssText = 'position:fixed; top:0; left:0; right:0; bottom:0; z-index:10000; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px);';
-            popup.onclick = (e) => { if (e.target === popup) popup.remove(); };
-
-            popup.innerHTML = `
-                <div style="background:#1e293b; border:1px solid #374151; border-radius:16px; padding:28px; max-width:380px; width:90%; box-shadow:0 20px 60px rgba(0,0,0,0.5);">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                        <div>
-                            <span style="font-size:1.2rem; font-weight:800; color:var(--accent);">${ticker}</span>
-                            <span style="font-size:0.8rem; color:var(--text-dim); margin-left:8px;">EWROS</span>
-                        </div>
-                        <span onclick="this.parentElement.parentElement.parentElement.remove()" style="cursor:pointer; color:var(--text-dim); font-size:1.2rem;">✕</span>
-                    </div>
-
-                    <div style="display:flex; gap:16px; margin-bottom:20px;">
-                        <div style="flex:1; text-align:center; background:#161b2a; border-radius:10px; padding:14px;">
-                            <div style="font-size:0.6rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-dim); margin-bottom:6px;">Score</div>
-                            <div style="font-size:2rem; font-weight:800; color:${scoreColor};">${score}</div>
-                        </div>
-                        <div style="flex:1; text-align:center; background:#161b2a; border-radius:10px; padding:14px;">
-                            <div style="font-size:0.6rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-dim); margin-bottom:6px;">1mo Ago</div>
-                            <div style="font-size:2rem; font-weight:800; color:var(--text-dim);">${prior}</div>
-                        </div>
-                        <div style="flex:1; text-align:center; background:#161b2a; border-radius:10px; padding:14px;">
-                            <div style="font-size:0.6rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-dim); margin-bottom:6px;">Trend</div>
-                            <div style="font-size:1.4rem; font-weight:800; color:${trendColor};">${trendArrow}${Math.abs(trend)}</div>
-                            <div style="font-size:0.65rem; color:${trendColor};">${trendLabel}</div>
-                        </div>
-                    </div>
-
-                    <div style="background:#161b2a; border-radius:10px; padding:14px; margin-bottom:12px;">
-                        <div style="font-size:0.65rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-dim); margin-bottom:10px;">3-Month Returns</div>
-                        <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:6px;">
-                            <span>${ticker}</span>
-                            <span style="font-weight:700; color:${stockRetColor};">${stockRet}</span>
-                        </div>
-                        <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
-                            <span>SPY</span>
-                            <span style="font-weight:700; color:${spyRetColor};">${spyRet}</span>
-                        </div>
-                    </div>
-
-                    <div style="background:#161b2a; border-radius:10px; padding:14px; margin-bottom:12px;">
-                        <div style="font-size:0.65rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-dim); margin-bottom:10px;">Daily Alpha vs SPY</div>
-                        <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:6px;">
-                            <span>Beat SPY</span>
-                            <span style="font-weight:700; color:${winColor};">${stats.win_days != null ? stats.win_days + ' of ' + (stats.total_days || 63) + ' days (' + winRate + '%)' : 'N/A (run EWROS refresh)'}</span>
-                        </div>
-                        <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:6px;">
-                            <span>Avg Daily Alpha</span>
-                            <span style="font-weight:700; color:${(stats.avg_alpha_bps||0) >= 0 ? '#10b981' : '#ef4444'};">${(stats.avg_alpha_bps||0) > 0 ? '+' : ''}${stats.avg_alpha_bps || 0} bps</span>
-                        </div>
-                        <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:6px;">
-                            <span>Best Day</span>
-                            <span style="color:#10b981;">+${stats.best_alpha_pct || 0}%</span>
-                        </div>
-                        <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
-                            <span>Worst Day</span>
-                            <span style="color:#ef4444;">${stats.worst_alpha_pct || 0}%</span>
-                        </div>
-                    </div>
-
-                    <div style="text-align:center; font-size:0.65rem; color:var(--text-dim);">
-                        EWROS = Exponential Weighted Relative Outperformance · λ=${0.03} · ${stats.total_days != null ? stats.total_days : '—'}d lookback
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(popup);
+            const spyRetColor   = (stats.spy_return_3mo  || 0) > 0 ? '#10b981' : '#ef4444';
+            buildExplainerPopup({
+                id: 'explainer-popup', ticker,
+                title: 'EWROS', subtitle: 'Relative Outperformance Score',
+                statBoxes: [
+                    { label: 'Score',   value: score, color: scoreColor },
+                    { label: '1mo Ago', value: prior, color: 'var(--text-dim)' },
+                    { label: 'Trend',   value: trendArrow + Math.abs(trend), subtext: trendLabel, color: trendColor },
+                ],
+                sections: [
+                    { title: '3-Month Returns', rows: [
+                        { label: ticker, value: stats.stock_return_3mo != null ? stats.stock_return_3mo.toFixed(1)+'%' : '—', valueColor: stockRetColor },
+                        { label: 'SPY',    value: stats.spy_return_3mo  != null ? stats.spy_return_3mo.toFixed(1)+'%'  : '—', valueColor: spyRetColor },
+                    ]},
+                    { title: 'Daily Alpha vs SPY', rows: [
+                        { label: 'Beat SPY',       value: stats.win_days != null ? stats.win_days+' of '+(stats.total_days||63)+' days ('+winRate+'%)' : 'N/A', valueColor: winColor },
+                        { label: 'Avg Daily Alpha', value: ((stats.avg_alpha_bps||0) > 0 ? '+' : '')+(stats.avg_alpha_bps||0)+' bps', valueColor: (stats.avg_alpha_bps||0) >= 0 ? '#10b981' : '#ef4444' },
+                        { label: 'Best Day',        value: '+'+(stats.best_alpha_pct||0)+'%',  valueColor: '#10b981' },
+                        { label: 'Worst Day',       value: (stats.worst_alpha_pct||0)+'%',     valueColor: '#ef4444' },
+                    ]},
+                ],
+                footer: 'EWROS = Exponential Weighted Relative Outperformance · λ=0.03 · '+(stats.total_days != null ? stats.total_days : '—')+'d lookback'
+            });
         }
 
         function getEwrosColor(score) {
@@ -4009,7 +4137,7 @@
                     <td><a href="#" onclick="viewStock('${s.ticker}'); return false;" style="color:var(--accent); font-weight:700; text-decoration:none;">${s.ticker}</a></td>
                     <td style="font-weight:700; color:${scColor}; cursor:pointer;" onclick="showEwrosPopup('${s.ticker}')">${sc}</td>
                     <td style="font-weight:600; color:${tColor};">${tArrow}${t !== 0 ? Math.abs(t) : '—'}</td>
-                    <td style="font-weight:700; color:${(s.iq_edge||0) >= 90 ? '#a855f7' : (s.iq_edge||0) >= 70 ? '#10b981' : (s.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${s.iq_edge || '—'}</td>
+                    <td onclick="event.stopPropagation(); showIqEdgePopup('${s.ticker}')" style="cursor:pointer;font-weight:700; color:${(s.iq_edge||0) >= 90 ? '#a855f7' : (s.iq_edge||0) >= 70 ? '#10b981' : (s.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${s.iq_edge || '—'}</td>
                     <td>${s.score || '—'}</td>
                     <td style="color:${gradeColor}; font-weight:700;">${s.grade || '—'}</td>
                     <td style="color:${rotColor};">${s.ewros_score ? s.ewros_score.toFixed(1) : '—'}</td>
@@ -4885,7 +5013,7 @@
                             </div>
                             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
                                 <span style="font-size:0.7rem;color:var(--text-dim);">${s.sector}</span>
-                                ${renderInsiderBadge(s.ins_score, s.insider_signal, true)}
+                                ${renderInsiderBadge(s.ins_score, s.insider_signal, true, s.ticker)}
                             </div>
                         </div>`).join('')}
                     </div>`;
@@ -4932,10 +5060,10 @@
                     <td style="padding:8px;font-weight:700;color:#10b981;">${s.ewros_score}</td>
                     <td style="padding:8px;">${s.ewros_convergence}</td>
                     <td style="padding:8px;font-weight:600;color:${(s.ewros_score||0) >= 80 ? '#10b981' : (s.ewros_score||0) >= 50 ? '#eab308' : '#64748b'};">${s.ewros_score || '—'}</td>
-                    <td style="padding:8px;font-weight:700;color:${(s.iq_edge||0) >= 90 ? '#a855f7' : (s.iq_edge||0) >= 70 ? '#10b981' : (s.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${s.iq_edge || '—'}</td>
+                    <td onclick="event.stopPropagation(); showIqEdgePopup('${s.ticker}')" style="cursor:pointer;padding:8px;font-weight:700;color:${(s.iq_edge||0) >= 90 ? '#a855f7' : (s.iq_edge||0) >= 70 ? '#10b981' : (s.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${s.iq_edge || '—'}</td>
                     <td style="padding:8px;">${s.score}</td>
                     <td style="padding:8px;"><span style="color:${gradeColor};font-weight:700;">${s.grade}</span></td>
-                    <td style="padding:8px;">${renderInsiderBadge(s.ins_score, s.insider_signal, true)}</td>
+                    <td style="padding:8px;">${renderInsiderBadge(s.ins_score, s.insider_signal, true, s.ticker)}</td>
                     <td style="padding:8px;font-size:0.75rem;color:var(--text-dim);">${s.sector}</td>
                     <td style="padding:8px;font-size:0.75rem;color:var(--text-dim);">${s.industry}</td>
                     <td style="padding:8px;">$${s.current_price ? s.current_price.toFixed(2) : '—'}</td>
@@ -5109,7 +5237,7 @@
                             <td>${item.score || '—'}</td>
                             <td style="color:${gradeColor}; font-weight:700;">${item.grade || '—'}</td>
                             <td>${item.ewros_score ? item.ewros_score.toFixed(1) : '—'}</td>
-                            <td>${renderInsiderBadge(wlLivePrices[item.ticker]?.ins_score ?? item.ins_score, wlLivePrices[item.ticker]?.insider_signal ?? item.insider_signal, true)}</td>
+                            <td>${renderInsiderBadge(wlLivePrices[item.ticker]?.ins_score ?? item.ins_score, wlLivePrices[item.ticker]?.insider_signal ?? item.insider_signal, true, item.ticker)}</td>
                             <td>${getSellSignalBadge(item.ticker)}</td>
                             <td><button onclick="removeWLItem(${item.id || 0}, '${item.ticker}', '${name}')" style="background:transparent; border:1px solid #374151; color:#ef4444; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem;">✕</button></td>
                         </tr>`;
@@ -5861,10 +5989,10 @@
                     <td style="font-size:0.8rem; color:var(--text-dim);">${s.sector || '—'}</td>
                     <td style="font-weight:700; color:${rotColor};">${(s.ewros_score||0).toFixed(1)}</td>
                     <td style="font-weight:600; color:${rsColor};">${s.ewros_score || '—'}</td>
-                    <td style="font-weight:700; color:${(s.iq_edge||0) >= 90 ? '#a855f7' : (s.iq_edge||0) >= 70 ? '#10b981' : (s.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${s.iq_edge || '—'}</td>
+                    <td onclick="event.stopPropagation(); showIqEdgePopup('${s.ticker}')" style="cursor:pointer;font-weight:700; color:${(s.iq_edge||0) >= 90 ? '#a855f7' : (s.iq_edge||0) >= 70 ? '#10b981' : (s.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${s.iq_edge || '—'}</td>
                     <td>${s.score || 0}</td>
                     <td><span style="color:${gradeColor}; font-weight:700;">${s.grade || '—'}</span></td>
-                    <td>${renderInsiderBadge(s.ins_score, s.insider_signal, true)}</td>
+                    <td>${renderInsiderBadge(s.ins_score, s.insider_signal, true, s.ticker)}</td>
                     <td style="color:${(s.peg_ratio||0) < 1.5 ? '#10b981' : '#eab308'};">${s.peg_ratio ? s.peg_ratio.toFixed(2) : '—'}</td>
                     <td class="text-amber-400 font-bold">${s.moonshot_score || 0}%</td>
                     <td>
