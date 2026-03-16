@@ -650,6 +650,16 @@
                     <button onclick="showAuthView('signin')" style="background:none; border:none; color:#38bdf8; font-size:0.78rem; cursor:pointer; text-decoration:underline;">← Back to Sign In</button>
                 </div>
             </div>
+
+            <!-- Set New Password view (shown after clicking email reset link) -->
+            <div id="auth-view-setpassword" style="display:none;">
+                <h3 style="margin:0 0 6px; font-size:1.2rem; font-weight:700;">Set New Password</h3>
+                <p style="color:#94a3b8; font-size:0.8rem; margin:0 0 20px;">Choose a new password for your account.</p>
+                <div id="auth-setpw-msg" style="display:none; border-radius:8px; padding:8px 12px; font-size:0.78rem; margin-bottom:12px;"></div>
+                <input id="auth-newpassword" type="password" placeholder="New password (min 8 chars)" style="width:100%; padding:10px 14px; background:#0f172a; border:1px solid #334155; border-radius:8px; color:white; font-size:0.85rem; margin-bottom:10px; box-sizing:border-box;" />
+                <input id="auth-newpassword2" type="password" placeholder="Confirm new password" style="width:100%; padding:10px 14px; background:#0f172a; border:1px solid #334155; border-radius:8px; color:white; font-size:0.85rem; margin-bottom:16px; box-sizing:border-box;" />
+                <button onclick="setNewPassword()" style="width:100%; padding:10px; background:var(--accent); color:var(--bg); border:none; border-radius:8px; font-weight:700; font-size:0.9rem; cursor:pointer;">Update Password</button>
+            </div>
         </div>
     </div>
 
@@ -1855,6 +1865,12 @@
                     _supabaseClient = supabase.createClient(cfg.supabase_url, cfg.supabase_anon_key);
                     // Listen for auth changes (fires after initial session check too)
                     _supabaseClient.auth.onAuthStateChange((event, session) => {
+                        if (event === 'PASSWORD_RECOVERY') {
+                            // User clicked the reset link in their email — show set-password form
+                            openAuthModal();
+                            showAuthView('setpassword');
+                            return;
+                        }
                         _currentUser = session?.user || null;
                         updateAuthUI();
                         if (_currentUser) {
@@ -2036,12 +2052,40 @@
         }
 
         function showAuthView(view) {
-            document.getElementById('auth-view-signin').style.display = view === 'signin' ? 'block' : 'none';
-            document.getElementById('auth-view-reset').style.display = view === 'reset' ? 'block' : 'none';
+            document.getElementById('auth-view-signin').style.display    = view === 'signin'      ? 'block' : 'none';
+            document.getElementById('auth-view-reset').style.display     = view === 'reset'       ? 'block' : 'none';
+            document.getElementById('auth-view-setpassword').style.display = view === 'setpassword' ? 'block' : 'none';
             if (view === 'reset') {
                 document.getElementById('auth-reset-msg').style.display = 'none';
                 document.getElementById('auth-reset-email').value = '';
                 setTimeout(() => document.getElementById('auth-reset-email').focus(), 50);
+            }
+            if (view === 'setpassword') {
+                document.getElementById('auth-setpw-msg').style.display = 'none';
+                document.getElementById('auth-newpassword').value = '';
+                document.getElementById('auth-newpassword2').value = '';
+                setTimeout(() => document.getElementById('auth-newpassword').focus(), 50);
+            }
+        }
+
+        async function setNewPassword() {
+            const pw1 = document.getElementById('auth-newpassword').value;
+            const pw2 = document.getElementById('auth-newpassword2').value;
+            const msgEl = document.getElementById('auth-setpw-msg');
+            const showErr = (msg) => {
+                msgEl.style.cssText = 'display:block; background:#7f1d1d; border:1px solid #dc2626; color:#fca5a5; border-radius:8px; padding:8px 12px; font-size:0.78rem; margin-bottom:12px;';
+                msgEl.textContent = msg;
+            };
+            if (!pw1 || pw1.length < 8) { showErr('Password must be at least 8 characters.'); return; }
+            if (pw1 !== pw2) { showErr('Passwords do not match.'); return; }
+            try {
+                const { error } = await _supabaseClient.auth.updateUser({ password: pw1 });
+                if (error) { showErr(error.message); return; }
+                msgEl.style.cssText = 'display:block; background:#14532d; border:1px solid #16a34a; color:#4ade80; border-radius:8px; padding:8px 12px; font-size:0.78rem; margin-bottom:12px;';
+                msgEl.textContent = 'Password updated successfully!';
+                setTimeout(() => closeAuthModal(), 1500);
+            } catch(e) {
+                showErr('Error: ' + e.message);
             }
         }
 
