@@ -37,10 +37,31 @@ import os
 import subprocess
 import sys
 import time
+import urllib.request
 from datetime import datetime
 
 WORKSPACE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, WORKSPACE)
+
+TELEGRAM_CHAT_ID = '690660528'
+OPENCLAW_API     = 'http://localhost:18790/api/message/send'
+
+
+def send_telegram(message):
+    """Send a Telegram message via OpenClaw gateway. Silent on failure."""
+    try:
+        payload = json.dumps({
+            'channel': 'telegram',
+            'to': TELEGRAM_CHAT_ID,
+            'message': message
+        }).encode()
+        req = urllib.request.Request(
+            OPENCLAW_API, data=payload,
+            headers={'Content-Type': 'application/json'}
+        )
+        urllib.request.urlopen(req, timeout=5)
+    except Exception as e:
+        print(f'  [telegram] send failed: {e}')
 
 # ── Color helpers ─────────────────────────────────────────────────────────────
 
@@ -265,10 +286,38 @@ def main():
 
     total = len(steps_to_run) + 1  # +1 for git
     results = {}
+    pipeline_start = time.time()
+
+    # ── Kick-off ping ─────────────────────────────────────────────────────────
+    if not args.dry_run:
+        send_telegram(
+            f'📊 *InvestIQ Daily Pipeline started*\n'
+            f'🕐 {datetime.now().strftime("%I:%M %p ET")}\n'
+            f'Steps: {len(steps_to_run) + 1} tasks queued'
+        )
+
+    # Milestones to ping after (step name → emoji + label)
+    MILESTONES = {
+        'cache':   ('📥', 'Data download complete'),
+        'merge':   ('🧮', 'Scoring + EWROS done'),
+        'sell':    ('🚨', 'Sell signals checked'),
+        'insider': ('🔍', 'Insider scan done'),
+    }
 
     for i, (name, label, fn) in enumerate(steps_to_run, 1):
         hdr(i, total, label)
-        results[name] = run_step(fn, dry_run=args.dry_run)
+        ok_flag = run_step(fn, dry_run=args.dry_run)
+        results[name] = ok_flag
+
+        # Send milestone ping
+        if not args.dry_run and name in MILESTONES:
+            emoji, milestone_label = MILESTONES[name]
+            elapsed = int(time.time() - pipeline_start)
+            status_char = '✅' if ok_flag else '❌'
+            send_telegram(
+                f'{status_char} {emoji} *{milestone_label}*\n'
+                f'⏱ {elapsed // 60}m {elapsed % 60}s elapsed'
+            )
 
     # Git push always last
     hdr(total, total, 'Git commit + push → GitHub Pages')
@@ -277,6 +326,8 @@ def main():
     # Summary
     passed = sum(1 for v in results.values() if v)
     failed = sum(1 for v in results.values() if not v)
+    total_elapsed = int(time.time() - pipeline_start)
+    elapsed_str = f'{total_elapsed // 60}m {total_elapsed % 60}s'
 
     print(f'\n{BOLD}{sep}')
     status = f'{GREEN}{passed} passed{RESET}{BOLD}'
@@ -290,6 +341,24 @@ def main():
         print(f'  {icon}  {label}')
     git_icon = f'{GREEN}✓{RESET}' if git_ok else f'{RED}✗{RESET}'
     print(f'  {git_icon}  Git push')
+
+    # ── Final summary ping ────────────────────────────────────────────────────
+    if not args.dry_run:
+        if failed:
+            failed_names = [label for name, label, _ in steps_to_run if not results.get(name)]
+            send_telegram(
+                f'⚠️ *Daily Pipeline finished with errors*\n'
+                f'✅ {passed} passed  ❌ {failed} failed\n'
+                f'⏱ Total: {elapsed_str}\n\n'
+                f'Failed:\n' + '\n'.join(f'• {l}' for l in failed_names)
+            )
+        else:
+            send_telegram(
+                f'✅ *Daily Pipeline complete*\n'
+                f'📊 All {passed} tasks succeeded\n'
+                f'⏱ Total: {elapsed_str}\n'
+                f'🌐 theiqinvestor.com updated'
+            )
 
     if failed:
         print(f'\n{YELLOW}⚠  Some steps failed — check output above.{RESET}')
