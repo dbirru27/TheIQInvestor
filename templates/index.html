@@ -1866,8 +1866,10 @@
                     // Listen for auth changes (fires after initial session check too)
                     _supabaseClient.auth.onAuthStateChange((event, session) => {
                         if (event === 'PASSWORD_RECOVERY') {
-                            // User clicked the reset link in their email — show set-password form
-                            openAuthModal();
+                            // Fired when Supabase exchanges the recovery token
+                            // DOMContentLoaded already handles the redirect; this is a fallback
+                            const modal = document.getElementById('auth-modal');
+                            modal.style.display = 'flex';
                             showAuthView('setpassword');
                             return;
                         }
@@ -4435,7 +4437,22 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             init();
-            
+
+            // Intercept Supabase password-recovery redirects BEFORE normal routing.
+            // The reset email lands as: theiqinvestor.com/#access_token=...&type=recovery
+            // We must catch this here — by the time onAuthStateChange fires it's too late.
+            const _hash = location.hash;
+            if (_hash.includes('type=recovery') || _hash.includes('type=signup')) {
+                // Strip the token from URL so back/forward history is clean
+                history.replaceState(null, '', location.pathname);
+                // Wait for initAuth to complete, then show password form
+                authReady.then(() => {
+                    openAuthModal();
+                    showAuthView('setpassword');
+                });
+                return; // Skip normal routing entirely
+            }
+
             // Route to correct page based on URL hash
             handleRoute();
             
