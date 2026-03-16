@@ -155,7 +155,8 @@ def step_merge_ewros_into_top():
     with open(top_path) as f:
         top_data = json.load(f)
 
-    fields = ['ewros_score', 'ewros_raw', 'ewros_trend', 'ewros_prior', 'ewros_stats']
+    fields = ['ewros_score', 'ewros_raw', 'ewros_trend', 'ewros_prior', 'ewros_stats',
+              'iq_edge', 'iq_edge_raw']
     updated = 0
     for s in top_data.get('stocks', []):
         ticker = s.get('ticker')
