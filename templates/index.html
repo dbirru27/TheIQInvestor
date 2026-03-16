@@ -1853,7 +1853,13 @@
                     _supabaseClient.auth.onAuthStateChange((event, session) => {
                         _currentUser = session?.user || null;
                         updateAuthUI();
-                        if (_currentUser) loadUserProfile();
+                        if (_currentUser) {
+                            loadUserProfile();
+                            // Clear all tab-level data caches so they re-fetch with auth
+                            watchlistData = null;
+                            wlData = null;
+                            ewrosData = null;
+                        }
                     });
                     // Check existing session
                     const { data: { session } } = await _supabaseClient.auth.getSession();
@@ -2633,8 +2639,9 @@
                     if (!portfolioRes.ok) throw new Error('Portfolio not available');
                     const portfolio = await portfolioRes.json();
 
-                    // If user is not signed in, show prompt
+                    // If user is not signed in, show prompt (don't cache — re-fetch after login)
                     if (portfolio.requires_auth) {
+                        watchlistData = null;
                         document.getElementById('watchlist-view').innerHTML = `
                             <div class="card" style="text-align:center; padding:60px 20px;">
                                 <div style="font-size:2rem; margin-bottom:12px;">🔒</div>
@@ -5120,8 +5127,9 @@
                     const res = await fetch('/api/watchlists', { headers: hdrs });
                     wlData = await res.json();
 
-                    // If user is not signed in, show prompt
+                    // If user is not signed in, show prompt (don't cache — re-fetch after login)
                     if (wlData.requires_auth) {
+                        wlData = null;
                         document.getElementById('watchlist-entries-view').innerHTML = `
                             <div class="card" style="text-align:center; padding:60px 20px;">
                                 <div style="font-size:2rem; margin-bottom:12px;">🔒</div>
