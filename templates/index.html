@@ -2932,18 +2932,26 @@
             return '<span' + clickAttr + ' style="font-weight:600; color:' + color + '; cursor:pointer;">' + score + '</span>' + trendHtml;
         }
 
-        function showEwrosPopup(ticker) {
-            // Find stock data from either stocksData or watchlistData
+        async function showEwrosPopup(ticker) {
+            // Always load full EWROS data from all_stocks.json (has ewros_stats, ewros_raw, etc.)
+            // Fall back to local stocksData/watchlistData only if API unavailable
             let stock = null;
-            if (typeof stocksData !== 'undefined') {
-                stock = stocksData.find(s => s.ticker === ticker);
+            try {
+                const fullData = await loadAllStocks();
+                const allStocksMap = fullData.stocks || fullData;
+                if (allStocksMap[ticker]) {
+                    stock = { ticker, ...allStocksMap[ticker] };
+                }
+            } catch(e) {}
+
+            // Fallback: local data sources (may lack ewros_stats)
+            if (!stock) {
+                if (typeof stocksData !== 'undefined') {
+                    stock = stocksData.find(s => s.ticker === ticker);
+                }
             }
             if (!stock && typeof watchlistData !== 'undefined' && watchlistData.all) {
                 stock = watchlistData.all.find(s => s.ticker === ticker);
-            }
-            // Also check allStocks from rotation
-            if (!stock && typeof allStocks !== 'undefined') {
-                stock = allStocks.find(s => s.ticker === ticker);
             }
             if (!stock) return;
 
