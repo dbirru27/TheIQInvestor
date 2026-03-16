@@ -2305,9 +2305,9 @@
             }
             const popupTarget = ticker || insider_signal;
             if (compact) {
-                return `<span onclick="event.stopPropagation(); showInsiderPopup('${popupTarget}')" title="Insider: ${label} (INS ${ins_score >= 0 ? '+' : ''}${ins_score})" style="font-size:0.7rem;padding:2px 5px;border-radius:4px;background:${color}22;color:${color};border:1px solid ${color}44;cursor:pointer;">${emoji}${ins_score >= 0 ? '+' : ''}${ins_score}</span>`;
+                return `<span data-popup="1" onclick="showInsiderPopup('${popupTarget}')" title="Insider: ${label} (INS ${ins_score >= 0 ? '+' : ''}${ins_score})" style="font-size:0.7rem;padding:2px 5px;border-radius:4px;background:${color}22;color:${color};border:1px solid ${color}44;cursor:pointer;">${emoji}${ins_score >= 0 ? '+' : ''}${ins_score}</span>`;
             }
-            return `<span onclick="event.stopPropagation(); showInsiderPopup('${popupTarget}')" style="font-size:0.75rem;padding:3px 8px;border-radius:6px;background:${color}15;color:${color};border:1px solid ${color}33;cursor:pointer;">${emoji} INS ${ins_score >= 0 ? '+' : ''}${ins_score} · ${label}</span>`;
+            return `<span data-popup="1" onclick="showInsiderPopup('${popupTarget}')" style="font-size:0.75rem;padding:3px 8px;border-radius:6px;background:${color}15;color:${color};border:1px solid ${color}33;cursor:pointer;">${emoji} INS ${ins_score >= 0 ? '+' : ''}${ins_score} · ${label}</span>`;
         }
 
         function renderTable() {
@@ -2341,7 +2341,7 @@
                 const rotBadge = rotationScore >= 80 ? 'badge-green' : rotationScore >= 60 ? 'badge-yellow' : rotationScore >= 40 ? 'badge-gray' : 'badge-gray';
                 const gradeBadge = {'A':'badge-green','B':'badge-blue','C':'badge-yellow','D':'badge-purple','F':'badge-red'}[stock.grade] || 'badge-gray';
                 return `
-                    <tr data-sector="${stock.sector}" data-ticker="${stock.ticker}" onclick="viewStock('${stock.ticker}')" style="cursor:pointer;">
+                    <tr data-sector="${stock.sector}" data-ticker="${stock.ticker}" onclick="rowClick(event,'${stock.ticker}')" style="cursor:pointer;">
                         <td class="text-sm" style="color: var(--text-dim);">${idx + 1}</td>
                         <td style="text-align:left; font-weight:700; color:#38bdf8;">${stock.ticker}</td>
                         <td class="text-sm">${stock.name}</td>
@@ -2355,13 +2355,13 @@
                                 <div class="score-bar-bg">
                                     <div class="score-bar-fill" style="width: ${stock.score}%; background: ${scoreColor};"></div>
                                 </div>
-                                <span class="score-text" onclick="event.stopPropagation(); showScorePopup('${stock.ticker}')" style="cursor:pointer;">${stock.score ?? stock.total ?? 0}</span>
+                                <span class="score-text" data-popup="1" onclick="showScorePopup('${stock.ticker}')" style="cursor:pointer;">${stock.score ?? stock.total ?? 0}</span>
                             </div>
                         </td>
-                        <td onclick="event.stopPropagation(); showGradePopup('${stock.ticker}')" style="cursor:pointer;"><span class="badge ${gradeBadge}">${stock.grade}</span></td>
+                        <td data-popup="1" onclick="showGradePopup('${stock.ticker}')" style="cursor:pointer;"><span class="badge ${gradeBadge}">${stock.grade}</span></td>
                         <td><span class="badge ${rotBadge}">${rotationScore.toFixed(1)}</span></td>
                         <td style="font-weight:700; color:${(stock.ewros_score||0) >= 70 ? '#10b981' : (stock.ewros_score||0) >= 40 ? '#eab308' : '#64748b'};">${stock.ewros_score || '—'}</td>
-                        <td onclick="event.stopPropagation(); showIqEdgePopup('${stock.ticker}')" style="cursor:pointer;font-weight:700; color:${(stock.iq_edge||0) >= 90 ? '#a855f7' : (stock.iq_edge||0) >= 70 ? '#10b981' : (stock.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${stock.iq_edge || '—'}</td>
+                        <td data-popup="1" onclick="showIqEdgePopup('${stock.ticker}')" style="cursor:pointer;font-weight:700; color:${(stock.iq_edge||0) >= 90 ? '#a855f7' : (stock.iq_edge||0) >= 70 ? '#10b981' : (stock.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${stock.iq_edge || '—'}</td>
                         <td>${renderInsiderBadge(stock.ins_score, stock.insider_signal, true, stock.ticker)}</td>
                         <td><button onclick="event.stopPropagation(); viewStock('${stock.ticker}')" class="text-xs bg-slate-700 px-3 py-1 rounded hover:bg-slate-600 transition">Analyze</button></td>
                     </tr>
@@ -2432,6 +2432,18 @@
 
         function showAlert(msg) { alert(msg); }
         
+        /**
+         * rowClick — single row-click handler for all tables.
+         * Navigates to stock detail UNLESS the click landed on a cell
+         * marked data-popup (explainer cells) or an interactive element.
+         * Usage on <tr>: onclick="rowClick(event,'TICKER')"
+         */
+        function rowClick(event, ticker) {
+            if (event.target.closest('[data-popup]')) return;
+            if (event.target.closest('button, a, input, select')) return;
+            viewStock(ticker);
+        }
+
         function hideAllViews() {
             ['landing-view','dashboard-view','hunter-view','detail-view','watchlist-view','rotation-view','ewros-view','watchlist-entries-view','calendar-view','journal-view','risk-view','screener-view','report-view','alerts-view','research-view'].forEach(id => {
                 const el = document.getElementById(id);
@@ -2825,16 +2837,16 @@
                             <div class="score-bar-bg">
                                 <div class="score-bar-fill" style="width: ${scorePercent}%; background: ${scoreColor};"></div>
                             </div>
-                            <span class="score-text" onclick="event.stopPropagation(); showScorePopup('${stock.ticker}')" style="cursor:pointer;">${stock.score}/100</span>
+                            <span class="score-text" data-popup="1" onclick="showScorePopup('${stock.ticker}')" style="cursor:pointer;">${stock.score}/100</span>
                         </div>
                         <div class="score-breakdown">T:${stock.technical_score || 0} G:${stock.growth_score || 0} Q:${stock.quality_score || 0} C:${stock.context_score || 0}</div>`}
                     </td>
                     <td class="text-center font-bold text-amber-400">${stock.score == null ? '—' : (stock.moonshot_score || 0) + '%'}</td>
                     <td class="text-center">${renderEwros(stock.ewros_score, stock.ewros_trend, stock.ticker)}</td>
-                    <td class="text-center" onclick="event.stopPropagation(); showIqEdgePopup('${stock.ticker}')" style="cursor:pointer;font-weight:700; color:${(stock.iq_edge||0) >= 90 ? '#a855f7' : (stock.iq_edge||0) >= 70 ? '#10b981' : (stock.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${stock.iq_edge != null && stock.iq_edge > 0 ? stock.iq_edge : '—'}</td>
+                    <td class="text-center" data-popup="1" onclick="showIqEdgePopup('${stock.ticker}')" style="cursor:pointer;font-weight:700; color:${(stock.iq_edge||0) >= 90 ? '#a855f7' : (stock.iq_edge||0) >= 70 ? '#10b981' : (stock.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${stock.iq_edge != null && stock.iq_edge > 0 ? stock.iq_edge : '—'}</td>
                     <td>${stock.grade === 'ETF'
                         ? `<span class="grade-badge" style="background:#1e3a5f;color:#38bdf8;">ETF</span>`
-                        : `<span class="grade-badge grade-${stock.grade}" onclick="event.stopPropagation(); showGradePopup('${stock.ticker}')" style="cursor:pointer;">${stock.grade}</span>`}</td>
+                        : `<span class="grade-badge grade-${stock.grade}" data-popup="1" onclick="showGradePopup('${stock.ticker}')" style="cursor:pointer;">${stock.grade}</span>`}</td>
                     <td>${getPortfolioSignalBadge(stock)}</td>
                     <td>${renderInsiderBadge(stock.ins_score, stock.insider_signal, true, stock.ticker)}</td>
                 </tr>
@@ -2901,7 +2913,7 @@
         function sigBadge(color, bg, label, reasons, ticker) {
             const tier = label.replace(/[^\w]/g, '').trim();
             const reasonsEsc = reasons.map(r => r.replace(/'/g, "\\&#39;").replace(/"/g, '&quot;')).join('|||');
-            return `<span onclick="showSignalPopup('${ticker}','${tier}','${reasonsEsc}'.split('|||'))"
+            return `<span data-popup="1" onclick="showSignalPopup('${ticker}','${tier}','${reasonsEsc}'.split('|||'))"
                 style="background:${bg};color:${color};border:1px solid ${color};padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:700;cursor:pointer;user-select:none;">${label}</span>`;
         }
 
@@ -3151,7 +3163,7 @@
                 const tColor = trend > 0 ? '#10b981' : '#ef4444';
                 trendHtml = '<span style="font-size:0.65rem; margin-left:3px; color:' + tColor + ';">' + tArrow + '</span>';
             }
-            const clickAttr = ticker ? ' onclick="event.stopPropagation(); showEwrosPopup(\'' + ticker + '\')" style="cursor:pointer;"' : '';
+            const clickAttr = ticker ? ' onclick="showEwrosPopup(\'' + ticker + '\')" style="cursor:pointer;"' : '';
             return '<span' + clickAttr + ' style="font-weight:600; color:' + color + '; cursor:pointer;">' + score + '</span>' + trendHtml;
         }
 
@@ -4152,9 +4164,9 @@
                 const rotColor = (s.ewros_score||0) >= 60 ? '#10b981' : (s.ewros_score||0) >= 40 ? '#eab308' : '#94a3b8';
                 return `<tr>
                     <td><a href="#" onclick="viewStock('${s.ticker}'); return false;" style="color:var(--accent); font-weight:700; text-decoration:none;">${s.ticker}</a></td>
-                    <td style="font-weight:700; color:${scColor}; cursor:pointer;" onclick="event.stopPropagation(); showEwrosPopup('${s.ticker}')">${sc}</td>
+                    <td style="font-weight:700; color:${scColor}; cursor:pointer;" data-popup="1" onclick="showEwrosPopup('${s.ticker}')">${sc}</td>
                     <td style="font-weight:600; color:${tColor};">${tArrow}${t !== 0 ? Math.abs(t) : '—'}</td>
-                    <td onclick="event.stopPropagation(); showIqEdgePopup('${s.ticker}')" style="cursor:pointer;font-weight:700; color:${(s.iq_edge||0) >= 90 ? '#a855f7' : (s.iq_edge||0) >= 70 ? '#10b981' : (s.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${s.iq_edge || '—'}</td>
+                    <td data-popup="1" onclick="showIqEdgePopup('${s.ticker}')" style="cursor:pointer;font-weight:700; color:${(s.iq_edge||0) >= 90 ? '#a855f7' : (s.iq_edge||0) >= 70 ? '#10b981' : (s.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${s.iq_edge || '—'}</td>
                     <td>${s.score || '—'}</td>
                     <td style="color:${gradeColor}; font-weight:700;">${s.grade || '—'}</td>
                     <td style="color:${rotColor};">${s.ewros_score ? s.ewros_score.toFixed(1) : '—'}</td>
@@ -4329,7 +4341,7 @@
                             ${topRated.map((s, i) => {
                                 const eColor = (s.ewros_score||0) >= 70 ? '#10b981' : (s.ewros_score||0) >= 40 ? '#eab308' : '#64748b';
                                 const gradeColor = s.grade === 'A' ? '#10b981' : s.grade === 'B' ? '#38bdf8' : '#94a3b8';
-                                return `<tr style="cursor:pointer;" onclick="viewStock('${s.ticker}')">
+                                return `<tr style="cursor:pointer;" onclick="rowClick(event,'${s.ticker}')">
                                     <td style="color:var(--text-dim);">${i + 1}</td>
                                     <td style="font-weight:700; color:var(--accent);">${s.ticker}</td>
                                     <td style="font-size:0.8rem;">${s.name || ''}</td>
@@ -5077,7 +5089,7 @@
                     <td style="padding:8px;font-weight:700;color:#10b981;">${s.ewros_score}</td>
                     <td style="padding:8px;">${s.ewros_convergence}</td>
                     <td style="padding:8px;font-weight:600;color:${(s.ewros_score||0) >= 80 ? '#10b981' : (s.ewros_score||0) >= 50 ? '#eab308' : '#64748b'};">${s.ewros_score || '—'}</td>
-                    <td onclick="event.stopPropagation(); showIqEdgePopup('${s.ticker}')" style="cursor:pointer;padding:8px;font-weight:700;color:${(s.iq_edge||0) >= 90 ? '#a855f7' : (s.iq_edge||0) >= 70 ? '#10b981' : (s.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${s.iq_edge || '—'}</td>
+                    <td data-popup="1" onclick="showIqEdgePopup('${s.ticker}')" style="cursor:pointer;padding:8px;font-weight:700;color:${(s.iq_edge||0) >= 90 ? '#a855f7' : (s.iq_edge||0) >= 70 ? '#10b981' : (s.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${s.iq_edge || '—'}</td>
                     <td style="padding:8px;">${s.score}</td>
                     <td style="padding:8px;"><span style="color:${gradeColor};font-weight:700;">${s.grade}</span></td>
                     <td style="padding:8px;">${renderInsiderBadge(s.ins_score, s.insider_signal, true, s.ticker)}</td>
@@ -5254,10 +5266,10 @@
                             <td>${ep ? '$' + ep.toFixed(2) : '—'}</td>
                             <td>${currPrice ? '$' + currPrice.toFixed(2) : '—'}</td>
                             <td style="color:${plColor}; font-weight:700;">${plText}</td>
-                            <td onclick="event.stopPropagation(); showScorePopup('${item.ticker}')" style="cursor:pointer; font-weight:700;">${item.score || '—'}</td>
-                            <td onclick="event.stopPropagation(); showGradePopup('${item.ticker}')" style="cursor:pointer; color:${gradeColor}; font-weight:700;">${item.grade || '—'}</td>
-                            <td onclick="event.stopPropagation(); showEwrosPopup('${item.ticker}')" style="cursor:pointer; font-weight:700;">${item.ewros_score ? item.ewros_score.toFixed(1) : '—'}</td>
-                            <td onclick="event.stopPropagation(); showIqEdgePopup('${item.ticker}')" style="cursor:pointer; font-weight:700; color:${wlIqColor};">${item.iq_edge || '—'}</td>
+                            <td data-popup="1" onclick="showScorePopup('${item.ticker}')" style="cursor:pointer; font-weight:700;">${item.score || '—'}</td>
+                            <td data-popup="1" onclick="showGradePopup('${item.ticker}')" style="cursor:pointer; color:${gradeColor}; font-weight:700;">${item.grade || '—'}</td>
+                            <td data-popup="1" onclick="showEwrosPopup('${item.ticker}')" style="cursor:pointer; font-weight:700;">${item.ewros_score ? item.ewros_score.toFixed(1) : '—'}</td>
+                            <td data-popup="1" onclick="showIqEdgePopup('${item.ticker}')" style="cursor:pointer; font-weight:700; color:${wlIqColor};">${item.iq_edge || '—'}</td>
                             <td>${renderInsiderBadge(wlLivePrices[item.ticker]?.ins_score ?? item.ins_score, wlLivePrices[item.ticker]?.insider_signal ?? item.insider_signal, true, item.ticker)}</td>
                             <td>${getSellSignalBadge(item.ticker)}</td>
                             <td><button onclick="removeWLItem(${item.id || 0}, '${item.ticker}', '${name}')" style="background:transparent; border:1px solid #374151; color:#ef4444; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem;">✕</button></td>
@@ -6010,7 +6022,7 @@
                     <td style="font-size:0.8rem; color:var(--text-dim);">${s.sector || '—'}</td>
                     <td style="font-weight:700; color:${rotColor};">${(s.ewros_score||0).toFixed(1)}</td>
                     <td style="font-weight:600; color:${rsColor};">${s.ewros_score || '—'}</td>
-                    <td onclick="event.stopPropagation(); showIqEdgePopup('${s.ticker}')" style="cursor:pointer;font-weight:700; color:${(s.iq_edge||0) >= 90 ? '#a855f7' : (s.iq_edge||0) >= 70 ? '#10b981' : (s.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${s.iq_edge || '—'}</td>
+                    <td data-popup="1" onclick="showIqEdgePopup('${s.ticker}')" style="cursor:pointer;font-weight:700; color:${(s.iq_edge||0) >= 90 ? '#a855f7' : (s.iq_edge||0) >= 70 ? '#10b981' : (s.iq_edge||0) >= 40 ? '#eab308' : '#64748b'};">${s.iq_edge || '—'}</td>
                     <td>${s.score || 0}</td>
                     <td><span style="color:${gradeColor}; font-weight:700;">${s.grade || '—'}</span></td>
                     <td>${renderInsiderBadge(s.ins_score, s.insider_signal, true, s.ticker)}</td>
