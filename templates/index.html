@@ -3017,7 +3017,7 @@
                         <div style="font-size:0.65rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-dim); margin-bottom:10px;">Daily Alpha vs SPY</div>
                         <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:6px;">
                             <span>Beat SPY</span>
-                            <span style="font-weight:700; color:${winColor};">${stats.win_days || 0} of ${stats.total_days || 63} days (${winRate}%)</span>
+                            <span style="font-weight:700; color:${winColor};">${stats.win_days != null ? stats.win_days + ' of ' + (stats.total_days || 63) + ' days (' + winRate + '%)' : 'N/A (run EWROS refresh)'}</span>
                         </div>
                         <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:6px;">
                             <span>Avg Daily Alpha</span>
@@ -3034,7 +3034,7 @@
                     </div>
 
                     <div style="text-align:center; font-size:0.65rem; color:var(--text-dim);">
-                        EWROS = Exponential Weighted Relative Outperformance · λ=${0.03} · ${stats.total_days || 63}d lookback
+                        EWROS = Exponential Weighted Relative Outperformance · λ=${0.03} · ${stats.total_days != null ? stats.total_days : '—'}d lookback
                     </div>
                 </div>
             `;
@@ -3835,7 +3835,7 @@
                                 </div>
                                 <div style="display:flex; justify-content:space-between;">
                                     <span style="color:var(--text-dim);">Beat SPY</span>
-                                    <span style="font-weight:700; color:${winColor};">${st.win_days||0}/${st.total_days||63} (${st.win_rate||0}%)</span>
+                                    <span style="font-weight:700; color:${winColor};">${st.win_days != null ? st.win_days + '/' + (st.total_days||63) + ' (' + (st.win_rate||0) + '%)' : 'N/A'}</span>
                                 </div>
                                 <div style="display:flex; justify-content:space-between;">
                                     <span style="color:var(--text-dim);">Avg Alpha</span>
