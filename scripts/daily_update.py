@@ -44,7 +44,7 @@ WORKSPACE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, WORKSPACE)
 
 TELEGRAM_CHAT_ID = '690660528'
-OPENCLAW_API     = 'http://localhost:18790/api/message/send'
+OPENCLAW_API     = 'http://localhost:18789/api/message/send'
 
 
 def send_telegram(message):
