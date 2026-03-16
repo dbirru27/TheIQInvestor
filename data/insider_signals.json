@@ -1,151 +1,33 @@
 {
-  "scan_date": "2026-03-12 18:07:15",
+  "scan_date": "2026-03-16 19:38:03",
   "lookback_days": 90,
-  "tickers_scanned": 32,
+  "tickers_scanned": 28,
   "signals": {
-    "ALAB": {
+    "AMD": {
       "ins_score": -13,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 43,
+      "transactions": 33,
       "buys": 0,
-      "sells": 43,
+      "sells": 33,
       "total_buy_value": 0,
-      "total_sell_value": 29459689.0,
+      "total_sell_value": 54130720.0,
       "reasons": [
-        "Cluster sell: 5 insiders",
-        "C-suite sell: Mohan Jitendra ($11,758,147)",
-        "C-suite sell: Gajendra Sanjay ($11,758,147)",
-        "C-suite sell: Tate Michael Truett ($1,485,784)",
-        "All sells, zero buys in period"
-      ],
-      "details": [
-        {
-          "date": "2026-02-17",
-          "owner": "Mohan Jitendra",
-          "title": "Chief Executive Officer",
-          "type": "SELL",
-          "shares": 33647,
-          "price": 122.84,
-          "value": 4133346.0
-        },
-        {
-          "date": "2026-02-17",
-          "owner": "Gajendra Sanjay",
-          "title": "President and COO",
-          "type": "SELL",
-          "shares": 33647,
-          "price": 122.84,
-          "value": 4133346.0
-        },
-        {
-          "date": "2026-02-17",
-          "owner": "Mohan Jitendra",
-          "title": "Chief Executive Officer",
-          "type": "SELL",
-          "shares": 28183,
-          "price": 123.93,
-          "value": 3492680.0
-        },
-        {
-          "date": "2026-02-17",
-          "owner": "Gajendra Sanjay",
-          "title": "President and COO",
-          "type": "SELL",
-          "shares": 28183,
-          "price": 123.93,
-          "value": 3492680.0
-        },
-        {
-          "date": "2026-02-17",
-          "owner": "Mohan Jitendra",
-          "title": "Chief Executive Officer",
-          "type": "SELL",
-          "shares": 18115,
-          "price": 124.66,
-          "value": 2258165.0
-        }
-      ]
-    },
-    "ALNY": {
-      "ins_score": -12,
-      "signal": "dumping",
-      "signal_emoji": "\ud83d\udd34",
-      "transactions": 111,
-      "buys": 0,
-      "sells": 111,
-      "total_buy_value": 0,
-      "total_sell_value": 11622480.0,
-      "reasons": [
-        "Cluster sell: 5 insiders",
-        "C-suite sell: Greenstreet Yvonne ($3,175,279)",
-        "C-suite sell: Poulton Jeffrey V. ($1,520,149)",
-        "All sells, zero buys in period"
-      ],
-      "details": [
-        {
-          "date": "2026-02-27",
-          "owner": "Garg Pushkal",
-          "title": "EVP Chief R&D",
-          "type": "SELL",
-          "shares": 2259,
-          "price": 330.73,
-          "value": 747119.0
-        },
-        {
-          "date": "2026-03-02",
-          "owner": "Greenstreet Yvonne",
-          "title": "Chief Executive Officer",
-          "type": "SELL",
-          "shares": 1669,
-          "price": 326.81,
-          "value": 545446.0
-        },
-        {
-          "date": "2026-03-02",
-          "owner": "Greenstreet Yvonne",
-          "title": "Chief Executive Officer",
-          "type": "SELL",
-          "shares": 1399,
-          "price": 327.67,
-          "value": 458410.0
-        },
-        {
-          "date": "2026-02-27",
-          "owner": "Garg Pushkal",
-          "title": "EVP Chief R&D",
-          "type": "SELL",
-          "shares": 1159,
-          "price": 331.49,
-          "value": 384197.0
-        },
-        {
-          "date": "2026-03-02",
-          "owner": "Greenstreet Yvonne",
-          "title": "Chief Executive Officer",
-          "type": "SELL",
-          "shares": 1098,
-          "price": 325.63,
-          "value": 357542.0
-        }
-      ]
-    },
-    "AMD": {
-      "ins_score": -12,
-      "signal": "dumping",
-      "signal_emoji": "\ud83d\udd34",
-      "transactions": 26,
-      "buys": 0,
-      "sells": 26,
-      "total_buy_value": 0,
-      "total_sell_value": 36271492.0,
-      "reasons": [
-        "Cluster sell: 5 insiders",
+        "Cluster sell: 6 insiders",
+        "C-suite sell: Su Lisa T ($43,690,032)",
         "C-suite sell: Hu Jean X. ($4,023,580)",
-        "C-suite sell: Su Lisa T ($26,794,875)",
         "All sells, zero buys in period"
       ],
       "details": [
+        {
+          "date": "2026-03-12",
+          "owner": "Su Lisa T",
+          "title": "Chair, President & CEO",
+          "type": "SELL",
+          "shares": 35587,
+          "price": 198.2,
+          "value": 7053343.0
+        },
         {
           "date": "2026-02-11",
           "owner": "Su Lisa T",
@@ -165,6 +47,15 @@
           "value": 4070467.0
         },
         {
+          "date": "2026-03-12",
+          "owner": "Su Lisa T",
+          "title": "Chair, President & CEO",
+          "type": "SELL",
+          "shares": 18279,
+          "price": 199.15,
+          "value": 3640263.0
+        },
+        {
           "date": "2026-02-11",
           "owner": "Su Lisa T",
           "title": "Chair, President & CEO",
@@ -172,88 +63,68 @@
           "shares": 16366,
           "price": 211.06,
           "value": 3454208.0
-        },
-        {
-          "date": "2026-02-11",
-          "owner": "Su Lisa T",
-          "title": "Chair, President & CEO",
-          "type": "SELL",
-          "shares": 14565,
-          "price": 216.17,
-          "value": 3148516.0
-        },
-        {
-          "date": "2026-02-11",
-          "owner": "Su Lisa T",
-          "title": "Chair, President & CEO",
-          "type": "SELL",
-          "shares": 14005,
-          "price": 216.89,
-          "value": 3037544.0
         }
       ]
     },
     "ANET": {
-      "ins_score": -12,
+      "ins_score": -10,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 29,
+      "transactions": 14,
       "buys": 0,
-      "sells": 29,
+      "sells": 14,
       "total_buy_value": 0,
-      "total_sell_value": 9582795.0,
+      "total_sell_value": 1323794.0,
       "reasons": [
-        "Cluster sell: 4 insiders",
-        "C-suite sell: Duda Kenneth ($8,259,001)",
+        "Cluster sell: 3 insiders",
         "Heavy sell: Giancarlo Charles H dumped 54%",
-        "Heavy sell: Duda Kenneth dumped 38%",
         "All sells, zero buys in period"
       ],
       "details": [
         {
-          "date": "2026-02-17",
-          "owner": "Duda Kenneth",
-          "title": "President and CTO",
+          "date": "2026-03-02",
+          "owner": "Giancarlo Charles H",
+          "title": "",
           "type": "SELL",
-          "shares": 10989,
-          "price": 142.92,
-          "value": 1570595.0
+          "shares": 3600,
+          "price": 128.87,
+          "value": 463944.0
         },
         {
-          "date": "2026-02-17",
-          "owner": "Duda Kenneth",
-          "title": "President and CTO",
+          "date": "2026-03-02",
+          "owner": "Giancarlo Charles H",
+          "title": "",
           "type": "SELL",
-          "shares": 10363,
-          "price": 142.1,
-          "value": 1472586.0
+          "shares": 3100,
+          "price": 127.9,
+          "value": 396494.0
         },
         {
-          "date": "2026-02-17",
-          "owner": "Duda Kenneth",
-          "title": "President and CTO",
+          "date": "2026-03-02",
+          "owner": "Giancarlo Charles H",
+          "title": "",
           "type": "SELL",
-          "shares": 6069,
-          "price": 141.15,
-          "value": 856625.0
+          "shares": 1300,
+          "price": 129.95,
+          "value": 168934.0
         },
         {
-          "date": "2026-02-17",
-          "owner": "Duda Kenneth",
-          "title": "President and CTO",
+          "date": "2026-02-25",
+          "owner": "Wassenaar Yvonne",
+          "title": "",
           "type": "SELL",
-          "shares": 5494,
-          "price": 142.92,
-          "value": 785226.0
+          "shares": 835,
+          "price": 132.66,
+          "value": 110768.0
         },
         {
-          "date": "2026-02-17",
-          "owner": "Duda Kenneth",
-          "title": "President and CTO",
+          "date": "2026-02-25",
+          "owner": "Wassenaar Yvonne",
+          "title": "",
           "type": "SELL",
-          "shares": 5182,
-          "price": 142.1,
-          "value": 736364.0
+          "shares": 504,
+          "price": 133.35,
+          "value": 67211.0
         }
       ]
     },
@@ -599,156 +470,17 @@
         }
       ]
     },
-    "HALO": {
-      "ins_score": -7,
-      "signal": "dumping",
-      "signal_emoji": "\ud83d\udd34",
-      "transactions": 17,
-      "buys": 0,
-      "sells": 17,
-      "total_buy_value": 0,
-      "total_sell_value": 9284819.0,
-      "reasons": [
-        "C-suite sell: Torley Helen ($7,329,660)",
-        "Heavy sell: Caudill Cortney dumped 56%",
-        "All sells, zero buys in period"
-      ],
-      "details": [
-        {
-          "date": "2026-03-09",
-          "owner": "Caudill Cortney",
-          "title": "SVP, CHIEF OPERATING OFFICER",
-          "type": "SELL",
-          "shares": 17900,
-          "price": 67.75,
-          "value": 1212743.0
-        },
-        {
-          "date": "2026-03-02",
-          "owner": "Torley Helen",
-          "title": "PRESIDENT AND CEO",
-          "type": "SELL",
-          "shares": 15322,
-          "price": 69.8,
-          "value": 1069460.0
-        },
-        {
-          "date": "2026-03-03",
-          "owner": "Torley Helen",
-          "title": "PRESIDENT AND CEO",
-          "type": "SELL",
-          "shares": 13481,
-          "price": 68.85,
-          "value": 928167.0
-        },
-        {
-          "date": "2026-02-04",
-          "owner": "Torley Helen",
-          "title": "PRESIDENT AND CEO",
-          "type": "SELL",
-          "shares": 10100,
-          "price": 77.54,
-          "value": 783154.0
-        },
-        {
-          "date": "2026-02-04",
-          "owner": "Torley Helen",
-          "title": "PRESIDENT AND CEO",
-          "type": "SELL",
-          "shares": 9900,
-          "price": 76.94,
-          "value": 761666.0
-        }
-      ]
-    },
-    "HEI": {
-      "ins_score": 2,
+    "HII": {
+      "ins_score": 0,
       "signal": "neutral",
       "signal_emoji": "\u26aa",
-      "transactions": 1,
-      "buys": 1,
-      "sells": 0,
-      "total_buy_value": 999897.0,
-      "total_sell_value": 0,
-      "reasons": [
-        "Significant buys: $999,897"
-      ],
-      "details": [
-        {
-          "date": "2026-03-04",
-          "owner": "CHERUVATATH NANDAKUMAR",
-          "title": "",
-          "type": "BUY",
-          "shares": 4082,
-          "price": 244.95,
-          "value": 999897.0
-        }
-      ]
-    },
-    "HII": {
-      "ins_score": -13,
-      "signal": "dumping",
-      "signal_emoji": "\ud83d\udd34",
-      "transactions": 5,
+      "transactions": 0,
       "buys": 0,
-      "sells": 5,
+      "sells": 0,
       "total_buy_value": 0,
-      "total_sell_value": 7355748.0,
-      "reasons": [
-        "Cluster sell: 5 insiders",
-        "C-suite sell: Stiehle Thomas E. ($1,937,430)",
-        "Heavy sell: Chewning Eric D. dumped 47%",
-        "Heavy sell: Schuck Nicolas G dumped 44%",
-        "Heavy sell: Green Edgar A III dumped 38%",
-        "All sells, zero buys in period"
-      ],
-      "details": [
-        {
-          "date": "2026-03-02",
-          "owner": "Green Edgar A III",
-          "title": "Ex VP, Pres. HII Mission Tech",
-          "type": "SELL",
-          "shares": 4447,
-          "price": 457.74,
-          "value": 2035979.0
-        },
-        {
-          "date": "2026-03-06",
-          "owner": "Stiehle Thomas E.",
-          "title": "Ex. VP and CFO",
-          "type": "SELL",
-          "shares": 4500,
-          "price": 430.54,
-          "value": 1937430.0
-        },
-        {
-          "date": "2026-03-05",
-          "owner": "Boudreaux Chad N.",
-          "title": "Ex VP & Chief Legal Officer",
-          "type": "SELL",
-          "shares": 4400,
-          "price": 422.45,
-          "value": 1858780.0
-        },
-        {
-          "date": "2026-03-02",
-          "owner": "Schuck Nicolas G",
-          "title": "Corp VP, Controller & CAO",
-          "type": "SELL",
-          "shares": 1720,
-          "price": 457.39,
-          "value": 786711.0
-        },
-        {
-          "date": "2026-03-04",
-          "owner": "Chewning Eric D.",
-          "title": "EVP, Maritime Sys & Corp STR",
-          "type": "SELL",
-          "shares": 1700,
-          "price": 433.44,
-          "value": 736848.0
-        }
-      ]
+      "total_sell_value": 0,
+      "reasons": [],
+      "details": []
     },
     "HUBB": {
       "ins_score": -6,
@@ -889,12 +621,12 @@
       "details": []
     },
     "LMT": {
-      "ins_score": -6,
+      "ins_score": -7,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 2,
+      "transactions": 10,
       "buys": 0,
-      "sells": 2,
+      "sells": 10,
       "total_buy_value": 0,
       "total_sell_value": 0.0,
       "reasons": [
@@ -904,20 +636,47 @@
       ],
       "details": [
         {
-          "date": "2026-02-27",
-          "owner": "Ulmer Gregory M",
-          "title": "President Aeronautics",
+          "date": "2026-03-11",
+          "owner": "Cahill Timothy S",
+          "title": "Pres. Missiles & Fire Control",
           "type": "SELL",
-          "shares": 320,
+          "shares": 80,
           "price": 0.0,
           "value": 0.0
         },
         {
-          "date": "2026-02-27",
-          "owner": "Ulmer Gregory M",
-          "title": "President Aeronautics",
+          "date": "2026-03-11",
+          "owner": "Cahill Timothy S",
+          "title": "Pres. Missiles & Fire Control",
           "type": "SELL",
-          "shares": 2520,
+          "shares": 280,
+          "price": 0.0,
+          "value": 0.0
+        },
+        {
+          "date": "2026-03-11",
+          "owner": "Cahill Timothy S",
+          "title": "Pres. Missiles & Fire Control",
+          "type": "SELL",
+          "shares": 400,
+          "price": 0.0,
+          "value": 0.0
+        },
+        {
+          "date": "2026-03-11",
+          "owner": "Cahill Timothy S",
+          "title": "Pres. Missiles & Fire Control",
+          "type": "SELL",
+          "shares": 440,
+          "price": 0.0,
+          "value": 0.0
+        },
+        {
+          "date": "2026-03-11",
+          "owner": "Cahill Timothy S",
+          "title": "Pres. Missiles & Fire Control",
+          "type": "SELL",
+          "shares": 600,
           "price": 0.0,
           "value": 0.0
         }
@@ -1230,11 +989,11 @@
       "ins_score": -9,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 24,
+      "transactions": 25,
       "buys": 0,
-      "sells": 24,
+      "sells": 25,
       "total_buy_value": 0,
-      "total_sell_value": 8088854.0,
+      "total_sell_value": 8131127.0,
       "reasons": [
         "Cluster sell: 3 insiders",
         "C-suite sell: MOSLEY WILLIAM D ($7,695,262)",

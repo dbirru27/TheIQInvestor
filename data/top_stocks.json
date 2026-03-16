@@ -142,8 +142,21 @@
       "analyst_count": 24,
       "current_price": 43.59000015258789,
       "ewros_score": 94,
-      "iq_edge": 82,
-      "iq_edge_raw": 0.686138
+      "iq_edge": 87,
+      "iq_edge_raw": 0.758849,
+      "ewros_raw": 1697.97,
+      "ewros_trend": 53,
+      "ewros_prior": 41,
+      "ewros_stats": {
+        "win_days": 37,
+        "total_days": 63,
+        "win_rate": 58.7,
+        "avg_alpha_bps": 35.7,
+        "best_alpha_pct": 6.08,
+        "worst_alpha_pct": -6.94,
+        "stock_return_3mo": 20.0,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "EQT",
@@ -282,9 +295,22 @@
       "target_mean": 66.14815,
       "analyst_count": 27,
       "current_price": 64.30999755859375,
-      "ewros_score": 92,
+      "ewros_score": 91,
       "iq_edge": 1,
-      "iq_edge_raw": 0.023786
+      "iq_edge_raw": 0.031551,
+      "ewros_raw": 1362.38,
+      "ewros_trend": 45,
+      "ewros_prior": 46,
+      "ewros_stats": {
+        "win_days": 36,
+        "total_days": 63,
+        "win_rate": 57.1,
+        "avg_alpha_bps": 28.1,
+        "best_alpha_pct": 5.35,
+        "worst_alpha_pct": -5.66,
+        "stock_return_3mo": 14.7,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "UI",
@@ -424,8 +450,21 @@
       "analyst_count": 2,
       "current_price": 775.7899780273438,
       "ewros_score": 96,
-      "iq_edge": 39,
-      "iq_edge_raw": 0.252286
+      "iq_edge": 32,
+      "iq_edge_raw": 0.21451,
+      "ewros_raw": 2068.29,
+      "ewros_trend": 2,
+      "ewros_prior": 94,
+      "ewros_stats": {
+        "win_days": 31,
+        "total_days": 63,
+        "win_rate": 49.2,
+        "avg_alpha_bps": 54.3,
+        "best_alpha_pct": 13.99,
+        "worst_alpha_pct": -4.44,
+        "stock_return_3mo": 32.6,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "ELS",
@@ -564,9 +603,22 @@
       "target_mean": 69.73529,
       "analyst_count": 17,
       "current_price": 67.44999694824219,
-      "ewros_score": 78,
-      "iq_edge": 51,
-      "iq_edge_raw": 0.360445
+      "ewros_score": 77,
+      "iq_edge": 58,
+      "iq_edge_raw": 0.4222,
+      "ewros_raw": 629.31,
+      "ewros_trend": 15,
+      "ewros_prior": 62,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 19.5,
+        "best_alpha_pct": 3.41,
+        "worst_alpha_pct": -3.36,
+        "stock_return_3mo": 9.6,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "NFG",
@@ -706,8 +758,21 @@
       "analyst_count": 3,
       "current_price": 94.61000061035156,
       "ewros_score": 90,
-      "iq_edge": 6,
-      "iq_edge_raw": 0.067902
+      "iq_edge": 4,
+      "iq_edge_raw": 0.053249,
+      "ewros_raw": 1174.45,
+      "ewros_trend": 37,
+      "ewros_prior": 53,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 26.7,
+        "best_alpha_pct": 3.3,
+        "worst_alpha_pct": -3.62,
+        "stock_return_3mo": 14.5,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "VTR",
@@ -846,9 +911,22 @@
       "target_mean": 91.45,
       "analyst_count": 20,
       "current_price": 87.79000091552734,
-      "ewros_score": 86,
-      "iq_edge": 65,
-      "iq_edge_raw": 0.479978
+      "ewros_score": 87,
+      "iq_edge": 54,
+      "iq_edge_raw": 0.383124,
+      "ewros_raw": 959.82,
+      "ewros_trend": 18,
+      "ewros_prior": 69,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 25.3,
+        "best_alpha_pct": 3.96,
+        "worst_alpha_pct": -2.07,
+        "stock_return_3mo": 13.6,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "EGP",
@@ -989,7 +1067,20 @@
       "current_price": 189.97000122070312,
       "ewros_score": 70,
       "iq_edge": 71,
-      "iq_edge_raw": 0.557201
+      "iq_edge_raw": 0.55486,
+      "ewros_raw": 384.92,
+      "ewros_trend": 24,
+      "ewros_prior": 46,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 9.8,
+        "best_alpha_pct": 4.17,
+        "worst_alpha_pct": -2.99,
+        "stock_return_3mo": 3.1,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "LAMR",
@@ -1128,9 +1219,22 @@
       "target_mean": 139.8,
       "analyst_count": 5,
       "current_price": 133.67999267578125,
-      "ewros_score": 68,
+      "ewros_score": 69,
       "iq_edge": 82,
-      "iq_edge_raw": 0.683453
+      "iq_edge_raw": 0.692876,
+      "ewros_raw": 367.03,
+      "ewros_trend": 26,
+      "ewros_prior": 43,
+      "ewros_stats": {
+        "win_days": 32,
+        "total_days": 63,
+        "win_rate": 50.8,
+        "avg_alpha_bps": 10.4,
+        "best_alpha_pct": 3.45,
+        "worst_alpha_pct": -2.28,
+        "stock_return_3mo": 3.5,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "LIN",
@@ -1269,9 +1373,22 @@
       "target_mean": 515.1231,
       "analyst_count": 26,
       "current_price": 497.4100036621094,
-      "ewros_score": 87,
-      "iq_edge": 24,
-      "iq_edge_raw": 0.164245
+      "ewros_score": 88,
+      "iq_edge": 31,
+      "iq_edge_raw": 0.203951,
+      "ewros_raw": 1043.55,
+      "ewros_trend": 21,
+      "ewros_prior": 67,
+      "ewros_stats": {
+        "win_days": 41,
+        "total_days": 63,
+        "win_rate": 65.1,
+        "avg_alpha_bps": 38.4,
+        "best_alpha_pct": 4.28,
+        "worst_alpha_pct": -4.41,
+        "stock_return_3mo": 23.3,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "OHI",
@@ -1410,9 +1527,22 @@
       "target_mean": 49.5,
       "analyst_count": 16,
       "current_price": 47.83000183105469,
-      "ewros_score": 82,
-      "iq_edge": 44,
-      "iq_edge_raw": 0.293228
+      "ewros_score": 79,
+      "iq_edge": 49,
+      "iq_edge_raw": 0.340533,
+      "ewros_raw": 702.11,
+      "ewros_trend": 20,
+      "ewros_prior": 59,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 19.5,
+        "best_alpha_pct": 7.32,
+        "worst_alpha_pct": -3.77,
+        "stock_return_3mo": 9.4,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "ADC",
@@ -1551,9 +1681,22 @@
       "target_mean": 83.58333,
       "analyst_count": 18,
       "current_price": 79.79000091552734,
-      "ewros_score": 83,
-      "iq_edge": 25,
-      "iq_edge_raw": 0.165963
+      "ewros_score": 81,
+      "iq_edge": 17,
+      "iq_edge_raw": 0.125505,
+      "ewros_raw": 768.65,
+      "ewros_trend": 26,
+      "ewros_prior": 55,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 23.0,
+        "best_alpha_pct": 4.28,
+        "worst_alpha_pct": -3.74,
+        "stock_return_3mo": 12.0,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "ES",
@@ -1692,9 +1835,22 @@
       "target_mean": 75.61538,
       "analyst_count": 13,
       "current_price": 73.19999694824219,
-      "ewros_score": 74,
-      "iq_edge": 52,
-      "iq_edge_raw": 0.361536
+      "ewros_score": 76,
+      "iq_edge": 40,
+      "iq_edge_raw": 0.263575,
+      "ewros_raw": 574.13,
+      "ewros_trend": 33,
+      "ewros_prior": 43,
+      "ewros_stats": {
+        "win_days": 36,
+        "total_days": 63,
+        "win_rate": 57.1,
+        "avg_alpha_bps": 18.2,
+        "best_alpha_pct": 4.25,
+        "worst_alpha_pct": -2.46,
+        "stock_return_3mo": 8.4,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "GLPI",
@@ -1835,7 +1991,20 @@
       "current_price": 47.529998779296875,
       "ewros_score": 76,
       "iq_edge": 35,
-      "iq_edge_raw": 0.231117
+      "iq_edge_raw": 0.232865,
+      "ewros_raw": 560.0,
+      "ewros_trend": 28,
+      "ewros_prior": 48,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 24.7,
+        "best_alpha_pct": 4.52,
+        "worst_alpha_pct": -3.65,
+        "stock_return_3mo": 13.1,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "QSR",
@@ -1975,8 +2144,21 @@
       "analyst_count": 29,
       "current_price": 74.56999969482422,
       "ewros_score": 86,
-      "iq_edge": 8,
-      "iq_edge_raw": 0.07366
+      "iq_edge": 20,
+      "iq_edge_raw": 0.136083,
+      "ewros_raw": 905.82,
+      "ewros_trend": 57,
+      "ewros_prior": 29,
+      "ewros_stats": {
+        "win_days": 30,
+        "total_days": 63,
+        "win_rate": 47.6,
+        "avg_alpha_bps": 14.6,
+        "best_alpha_pct": 4.29,
+        "worst_alpha_pct": -4.61,
+        "stock_return_3mo": 5.8,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "AEE",
@@ -2115,9 +2297,22 @@
       "target_mean": 115.84615,
       "analyst_count": 13,
       "current_price": 112.86000061035156,
-      "ewros_score": 84,
-      "iq_edge": 31,
-      "iq_edge_raw": 0.198848
+      "ewros_score": 86,
+      "iq_edge": 44,
+      "iq_edge_raw": 0.300667,
+      "ewros_raw": 912.58,
+      "ewros_trend": 26,
+      "ewros_prior": 60,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 28.5,
+        "best_alpha_pct": 4.68,
+        "worst_alpha_pct": -2.52,
+        "stock_return_3mo": 16.1,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "CINF",
@@ -2257,8 +2452,21 @@
       "analyst_count": 6,
       "current_price": 166.57000732421875,
       "ewros_score": 70,
-      "iq_edge": 89,
-      "iq_edge_raw": 0.803819
+      "iq_edge": 92,
+      "iq_edge_raw": 0.834915,
+      "ewros_raw": 389.81,
+      "ewros_trend": 30,
+      "ewros_prior": 40,
+      "ewros_stats": {
+        "win_days": 30,
+        "total_days": 63,
+        "win_rate": 47.6,
+        "avg_alpha_bps": 6.7,
+        "best_alpha_pct": 3.6,
+        "worst_alpha_pct": -3.06,
+        "stock_return_3mo": 0.9,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "DLR",
@@ -2397,9 +2605,22 @@
       "target_mean": 197.06897,
       "analyst_count": 29,
       "current_price": 181.25,
-      "ewros_score": 88,
+      "ewros_score": 87,
       "iq_edge": 32,
-      "iq_edge_raw": 0.210533
+      "iq_edge_raw": 0.212283,
+      "ewros_raw": 961.0,
+      "ewros_trend": 11,
+      "ewros_prior": 76,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 26.5,
+        "best_alpha_pct": 4.83,
+        "worst_alpha_pct": -2.66,
+        "stock_return_3mo": 14.1,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "NEE",
@@ -2540,7 +2761,20 @@
       "current_price": 92.81999969482422,
       "ewros_score": 83,
       "iq_edge": 57,
-      "iq_edge_raw": 0.396717
+      "iq_edge_raw": 0.416983,
+      "ewros_raw": 816.45,
+      "ewros_trend": 16,
+      "ewros_prior": 67,
+      "ewros_stats": {
+        "win_days": 36,
+        "total_days": 63,
+        "win_rate": 57.1,
+        "avg_alpha_bps": 26.4,
+        "best_alpha_pct": 3.73,
+        "worst_alpha_pct": -2.98,
+        "stock_return_3mo": 14.3,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "NI",
@@ -2679,9 +2913,22 @@
       "target_mean": 48.53846,
       "analyst_count": 13,
       "current_price": 47.470001220703125,
-      "ewros_score": 86,
-      "iq_edge": 25,
-      "iq_edge_raw": 0.173526
+      "ewros_score": 85,
+      "iq_edge": 18,
+      "iq_edge_raw": 0.130647,
+      "ewros_raw": 883.51,
+      "ewros_trend": 32,
+      "ewros_prior": 53,
+      "ewros_stats": {
+        "win_days": 40,
+        "total_days": 63,
+        "win_rate": 63.5,
+        "avg_alpha_bps": 25.5,
+        "best_alpha_pct": 2.71,
+        "worst_alpha_pct": -3.52,
+        "stock_return_3mo": 13.9,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "WELL",
@@ -2820,9 +3067,22 @@
       "target_mean": 228.1,
       "analyst_count": 20,
       "current_price": 210.17999267578125,
-      "ewros_score": 84,
-      "iq_edge": 67,
-      "iq_edge_raw": 0.507813
+      "ewros_score": 86,
+      "iq_edge": 69,
+      "iq_edge_raw": 0.535754,
+      "ewros_raw": 901.35,
+      "ewros_trend": 16,
+      "ewros_prior": 70,
+      "ewros_stats": {
+        "win_days": 37,
+        "total_days": 63,
+        "win_rate": 58.7,
+        "avg_alpha_bps": 25.4,
+        "best_alpha_pct": 4.26,
+        "worst_alpha_pct": -3.7,
+        "stock_return_3mo": 13.6,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "AEP",
@@ -2962,8 +3222,21 @@
       "analyst_count": 19,
       "current_price": 134.14999389648438,
       "ewros_score": 89,
-      "iq_edge": 53,
-      "iq_edge_raw": 0.368888
+      "iq_edge": 50,
+      "iq_edge_raw": 0.350312,
+      "ewros_raw": 1064.73,
+      "ewros_trend": 29,
+      "ewros_prior": 60,
+      "ewros_stats": {
+        "win_days": 39,
+        "total_days": 63,
+        "win_rate": 61.9,
+        "avg_alpha_bps": 30.5,
+        "best_alpha_pct": 4.96,
+        "worst_alpha_pct": -2.78,
+        "stock_return_3mo": 17.4,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "AR",
@@ -3103,8 +3376,21 @@
       "analyst_count": 22,
       "current_price": 41.029998779296875,
       "ewros_score": 94,
-      "iq_edge": 77,
-      "iq_edge_raw": 0.633935
+      "iq_edge": 78,
+      "iq_edge_raw": 0.648502,
+      "ewros_raw": 1760.03,
+      "ewros_trend": 58,
+      "ewros_prior": 36,
+      "ewros_stats": {
+        "win_days": 33,
+        "total_days": 63,
+        "win_rate": 52.4,
+        "avg_alpha_bps": 28.9,
+        "best_alpha_pct": 7.55,
+        "worst_alpha_pct": -8.11,
+        "stock_return_3mo": 14.1,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "ATO",
@@ -3244,8 +3530,21 @@
       "analyst_count": 10,
       "current_price": 187.82000732421875,
       "ewros_score": 86,
-      "iq_edge": 2,
-      "iq_edge_raw": 0.036423
+      "iq_edge": 1,
+      "iq_edge_raw": 0.028792,
+      "ewros_raw": 921.29,
+      "ewros_trend": 34,
+      "ewros_prior": 52,
+      "ewros_stats": {
+        "win_days": 36,
+        "total_days": 63,
+        "win_rate": 57.1,
+        "avg_alpha_bps": 23.4,
+        "best_alpha_pct": 2.87,
+        "worst_alpha_pct": -2.29,
+        "stock_return_3mo": 12.4,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "BRX",
@@ -3384,9 +3683,22 @@
       "target_mean": 31.65278,
       "analyst_count": 18,
       "current_price": 29.969999313354492,
-      "ewros_score": 87,
-      "iq_edge": 47,
-      "iq_edge_raw": 0.325182
+      "ewros_score": 86,
+      "iq_edge": 62,
+      "iq_edge_raw": 0.459931,
+      "ewros_raw": 935.9,
+      "ewros_trend": 16,
+      "ewros_prior": 70,
+      "ewros_stats": {
+        "win_days": 39,
+        "total_days": 63,
+        "win_rate": 61.9,
+        "avg_alpha_bps": 30.1,
+        "best_alpha_pct": 4.46,
+        "worst_alpha_pct": -2.76,
+        "stock_return_3mo": 17.1,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "FE",
@@ -3527,7 +3839,20 @@
       "current_price": 51.7599983215332,
       "ewros_score": 88,
       "iq_edge": 42,
-      "iq_edge_raw": 0.276394
+      "iq_edge_raw": 0.285503,
+      "ewros_raw": 1034.77,
+      "ewros_trend": 31,
+      "ewros_prior": 57,
+      "ewros_stats": {
+        "win_days": 37,
+        "total_days": 63,
+        "win_rate": 58.7,
+        "avg_alpha_bps": 30.3,
+        "best_alpha_pct": 3.44,
+        "worst_alpha_pct": -2.68,
+        "stock_return_3mo": 17.4,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "LNT",
@@ -3666,9 +3991,22 @@
       "target_mean": 75.36364,
       "analyst_count": 11,
       "current_price": 73.02999877929688,
-      "ewros_score": 84,
-      "iq_edge": 45,
-      "iq_edge_raw": 0.303375
+      "ewros_score": 85,
+      "iq_edge": 54,
+      "iq_edge_raw": 0.385907,
+      "ewros_raw": 891.23,
+      "ewros_trend": 32,
+      "ewros_prior": 53,
+      "ewros_stats": {
+        "win_days": 32,
+        "total_days": 63,
+        "win_rate": 50.8,
+        "avg_alpha_bps": 23.5,
+        "best_alpha_pct": 3.67,
+        "worst_alpha_pct": -2.71,
+        "stock_return_3mo": 12.5,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "REG",
@@ -3807,9 +4145,22 @@
       "target_mean": 81.45,
       "analyst_count": 20,
       "current_price": 77.38999938964844,
-      "ewros_score": 81,
-      "iq_edge": 77,
-      "iq_edge_raw": 0.62757
+      "ewros_score": 80,
+      "iq_edge": 78,
+      "iq_edge_raw": 0.647556,
+      "ewros_raw": 721.04,
+      "ewros_trend": 21,
+      "ewros_prior": 59,
+      "ewros_stats": {
+        "win_days": 41,
+        "total_days": 63,
+        "win_rate": 65.1,
+        "avg_alpha_bps": 26.0,
+        "best_alpha_pct": 2.91,
+        "worst_alpha_pct": -2.41,
+        "stock_return_3mo": 14.2,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "SRE",
@@ -3949,8 +4300,21 @@
       "analyst_count": 16,
       "current_price": 95.94000244140625,
       "ewros_score": 82,
-      "iq_edge": 55,
-      "iq_edge_raw": 0.379845
+      "iq_edge": 63,
+      "iq_edge_raw": 0.467046,
+      "ewros_raw": 787.51,
+      "ewros_trend": 30,
+      "ewros_prior": 52,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 17.2,
+        "best_alpha_pct": 3.31,
+        "worst_alpha_pct": -3.92,
+        "stock_return_3mo": 7.8,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "TJX",
@@ -4089,9 +4453,22 @@
       "target_mean": 171.77779,
       "analyst_count": 18,
       "current_price": 156.02000427246094,
-      "ewros_score": 63,
-      "iq_edge": 89,
-      "iq_edge_raw": 0.801381
+      "ewros_score": 64,
+      "iq_edge": 90,
+      "iq_edge_raw": 0.792686,
+      "ewros_raw": 238.11,
+      "ewros_trend": 22,
+      "ewros_prior": 42,
+      "ewros_stats": {
+        "win_days": 30,
+        "total_days": 63,
+        "win_rate": 47.6,
+        "avg_alpha_bps": 5.4,
+        "best_alpha_pct": 3.82,
+        "worst_alpha_pct": -2.57,
+        "stock_return_3mo": 0.3,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "TRV",
@@ -4231,8 +4608,21 @@
       "analyst_count": 22,
       "current_price": 304.6400146484375,
       "ewros_score": 77,
-      "iq_edge": 2,
-      "iq_edge_raw": 0.038739
+      "iq_edge": 13,
+      "iq_edge_raw": 0.103976,
+      "ewros_raw": 600.26,
+      "ewros_trend": 26,
+      "ewros_prior": 51,
+      "ewros_stats": {
+        "win_days": 33,
+        "total_days": 63,
+        "win_rate": 52.4,
+        "avg_alpha_bps": 16.8,
+        "best_alpha_pct": 2.97,
+        "worst_alpha_pct": -3.36,
+        "stock_return_3mo": 7.7,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "WTM",
@@ -4372,8 +4762,21 @@
       "analyst_count": 0,
       "current_price": 2199.68994140625,
       "ewros_score": 76,
-      "iq_edge": 25,
-      "iq_edge_raw": 0.168837
+      "iq_edge": 36,
+      "iq_edge_raw": 0.243864,
+      "ewros_raw": 575.88,
+      "ewros_trend": 13,
+      "ewros_prior": 63,
+      "ewros_stats": {
+        "win_days": 37,
+        "total_days": 63,
+        "win_rate": 58.7,
+        "avg_alpha_bps": 16.8,
+        "best_alpha_pct": 3.64,
+        "worst_alpha_pct": -4.43,
+        "stock_return_3mo": 7.6,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "CNP",
@@ -4513,8 +4916,21 @@
       "analyst_count": 16,
       "current_price": 44.13999938964844,
       "ewros_score": 88,
-      "iq_edge": 27,
-      "iq_edge_raw": 0.181039
+      "iq_edge": 34,
+      "iq_edge_raw": 0.231439,
+      "ewros_raw": 1053.32,
+      "ewros_trend": 29,
+      "ewros_prior": 59,
+      "ewros_stats": {
+        "win_days": 38,
+        "total_days": 63,
+        "win_rate": 60.3,
+        "avg_alpha_bps": 31.5,
+        "best_alpha_pct": 3.03,
+        "worst_alpha_pct": -2.34,
+        "stock_return_3mo": 18.2,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "DTE",
@@ -4653,9 +5069,22 @@
       "target_mean": 151.5,
       "analyst_count": 13,
       "current_price": 149.25999450683594,
-      "ewros_score": 86,
-      "iq_edge": 43,
-      "iq_edge_raw": 0.283693
+      "ewros_score": 87,
+      "iq_edge": 38,
+      "iq_edge_raw": 0.255918,
+      "ewros_raw": 942.12,
+      "ewros_trend": 33,
+      "ewros_prior": 54,
+      "ewros_stats": {
+        "win_days": 36,
+        "total_days": 63,
+        "win_rate": 57.1,
+        "avg_alpha_bps": 25.9,
+        "best_alpha_pct": 2.91,
+        "worst_alpha_pct": -2.89,
+        "stock_return_3mo": 14.2,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "EW",
@@ -4794,9 +5223,22 @@
       "target_mean": 96.46429,
       "analyst_count": 28,
       "current_price": 83.55999755859375,
-      "ewros_score": 67,
-      "iq_edge": 90,
-      "iq_edge_raw": 0.816805
+      "ewros_score": 68,
+      "iq_edge": 89,
+      "iq_edge_raw": 0.787638,
+      "ewros_raw": 339.24,
+      "ewros_trend": 47,
+      "ewros_prior": 21,
+      "ewros_stats": {
+        "win_days": 31,
+        "total_days": 63,
+        "win_rate": 49.2,
+        "avg_alpha_bps": 4.5,
+        "best_alpha_pct": 4.36,
+        "worst_alpha_pct": -2.91,
+        "stock_return_3mo": -0.8,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "PFE",
@@ -4936,8 +5378,21 @@
       "analyst_count": 26,
       "current_price": 26.610000610351562,
       "ewros_score": 67,
-      "iq_edge": 79,
-      "iq_edge_raw": 0.652439
+      "iq_edge": 76,
+      "iq_edge_raw": 0.618971,
+      "ewros_raw": 320.71,
+      "ewros_trend": 6,
+      "ewros_prior": 61,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 10.3,
+        "best_alpha_pct": 4.4,
+        "worst_alpha_pct": -3.13,
+        "stock_return_3mo": 3.1,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "STAG",
@@ -5076,9 +5531,22 @@
       "target_mean": 41.45455,
       "analyst_count": 11,
       "current_price": 38.29999923706055,
-      "ewros_score": 67,
-      "iq_edge": 64,
-      "iq_edge_raw": 0.474825
+      "ewros_score": 65,
+      "iq_edge": 75,
+      "iq_edge_raw": 0.606845,
+      "ewros_raw": 264.75,
+      "ewros_trend": 33,
+      "ewros_prior": 32,
+      "ewros_stats": {
+        "win_days": 30,
+        "total_days": 63,
+        "win_rate": 47.6,
+        "avg_alpha_bps": 5.7,
+        "best_alpha_pct": 3.51,
+        "worst_alpha_pct": -3.43,
+        "stock_return_3mo": 0.4,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "UTHR",
@@ -5218,8 +5686,21 @@
       "analyst_count": 12,
       "current_price": 534.2999877929688,
       "ewros_score": 90,
-      "iq_edge": 78,
-      "iq_edge_raw": 0.641213
+      "iq_edge": 79,
+      "iq_edge_raw": 0.651722,
+      "ewros_raw": 1171.73,
+      "ewros_trend": 54,
+      "ewros_prior": 36,
+      "ewros_stats": {
+        "win_days": 32,
+        "total_days": 63,
+        "win_rate": 50.8,
+        "avg_alpha_bps": 21.9,
+        "best_alpha_pct": 12.18,
+        "worst_alpha_pct": -5.33,
+        "stock_return_3mo": 9.4,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "XEL",
@@ -5358,9 +5839,22 @@
       "target_mean": 89.17647,
       "analyst_count": 17,
       "current_price": 81.62999725341797,
-      "ewros_score": 77,
-      "iq_edge": 46,
-      "iq_edge_raw": 0.31591
+      "ewros_score": 78,
+      "iq_edge": 58,
+      "iq_edge_raw": 0.426592,
+      "ewros_raw": 653.71,
+      "ewros_trend": 31,
+      "ewros_prior": 47,
+      "ewros_stats": {
+        "win_days": 36,
+        "total_days": 63,
+        "win_rate": 57.1,
+        "avg_alpha_bps": 19.1,
+        "best_alpha_pct": 3.23,
+        "worst_alpha_pct": -2.55,
+        "stock_return_3mo": 9.3,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "ALL",
@@ -5499,9 +5993,22 @@
       "target_mean": 240.5238,
       "analyst_count": 21,
       "current_price": 207.80999755859375,
-      "ewros_score": 69,
-      "iq_edge": 74,
-      "iq_edge_raw": 0.593317
+      "ewros_score": 67,
+      "iq_edge": 80,
+      "iq_edge_raw": 0.670978,
+      "ewros_raw": 331.68,
+      "ewros_trend": 25,
+      "ewros_prior": 42,
+      "ewros_stats": {
+        "win_days": 37,
+        "total_days": 63,
+        "win_rate": 58.7,
+        "avg_alpha_bps": 6.4,
+        "best_alpha_pct": 5.15,
+        "worst_alpha_pct": -5.47,
+        "stock_return_3mo": 0.5,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "CMS",
@@ -5640,9 +6147,22 @@
       "target_mean": 79.15385,
       "analyst_count": 13,
       "current_price": 78.2699966430664,
-      "ewros_score": 83,
-      "iq_edge": 42,
-      "iq_edge_raw": 0.275636
+      "ewros_score": 84,
+      "iq_edge": 31,
+      "iq_edge_raw": 0.206839,
+      "ewros_raw": 859.84,
+      "ewros_trend": 33,
+      "ewros_prior": 51,
+      "ewros_stats": {
+        "win_days": 33,
+        "total_days": 63,
+        "win_rate": 52.4,
+        "avg_alpha_bps": 23.2,
+        "best_alpha_pct": 3.01,
+        "worst_alpha_pct": -2.65,
+        "stock_return_3mo": 12.2,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "EVRG",
@@ -5782,8 +6302,21 @@
       "analyst_count": 11,
       "current_price": 83.23999786376953,
       "ewros_score": 84,
-      "iq_edge": 44,
-      "iq_edge_raw": 0.296336
+      "iq_edge": 47,
+      "iq_edge_raw": 0.329383,
+      "ewros_raw": 855.67,
+      "ewros_trend": 23,
+      "ewros_prior": 61,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 25.0,
+        "best_alpha_pct": 3.33,
+        "worst_alpha_pct": -2.98,
+        "stock_return_3mo": 13.5,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "EXC",
@@ -5924,7 +6457,20 @@
       "current_price": 50.290000915527344,
       "ewros_score": 89,
       "iq_edge": 2,
-      "iq_edge_raw": 0.038072
+      "iq_edge_raw": 0.036445,
+      "ewros_raw": 1134.52,
+      "ewros_trend": 25,
+      "ewros_prior": 64,
+      "ewros_stats": {
+        "win_days": 33,
+        "total_days": 63,
+        "win_rate": 52.4,
+        "avg_alpha_bps": 29.8,
+        "best_alpha_pct": 8.52,
+        "worst_alpha_pct": -2.44,
+        "stock_return_3mo": 16.7,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "IDA",
@@ -6064,8 +6610,21 @@
       "analyst_count": 9,
       "current_price": 142.67999267578125,
       "ewros_score": 81,
-      "iq_edge": 52,
-      "iq_edge_raw": 0.36336
+      "iq_edge": 44,
+      "iq_edge_raw": 0.303779,
+      "ewros_raw": 758.97,
+      "ewros_trend": 14,
+      "ewros_prior": 67,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 24.9,
+        "best_alpha_pct": 4.22,
+        "worst_alpha_pct": -2.16,
+        "stock_return_3mo": 13.4,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "KIM",
@@ -6204,9 +6763,22 @@
       "target_mean": 24.46591,
       "analyst_count": 22,
       "current_price": 23.190000534057617,
-      "ewros_score": 86,
-      "iq_edge": 6,
-      "iq_edge_raw": 0.064016
+      "ewros_score": 85,
+      "iq_edge": 15,
+      "iq_edge_raw": 0.117126,
+      "ewros_raw": 860.13,
+      "ewros_trend": 20,
+      "ewros_prior": 65,
+      "ewros_stats": {
+        "win_days": 37,
+        "total_days": 63,
+        "win_rate": 58.7,
+        "avg_alpha_bps": 27.5,
+        "best_alpha_pct": 3.4,
+        "worst_alpha_pct": -2.62,
+        "stock_return_3mo": 15.2,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "MSI",
@@ -6346,8 +6918,21 @@
       "analyst_count": 10,
       "current_price": 470.7900085449219,
       "ewros_score": 91,
-      "iq_edge": 54,
-      "iq_edge_raw": 0.376424
+      "iq_edge": 68,
+      "iq_edge_raw": 0.527721,
+      "ewros_raw": 1328.67,
+      "ewros_trend": 5,
+      "ewros_prior": 86,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 44.6,
+        "best_alpha_pct": 9.22,
+        "worst_alpha_pct": -1.85,
+        "stock_return_3mo": 27.9,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "WEC",
@@ -6486,9 +7071,22 @@
       "target_mean": 122.38235,
       "analyst_count": 17,
       "current_price": 117.9000015258789,
-      "ewros_score": 83,
-      "iq_edge": 26,
-      "iq_edge_raw": 0.174028
+      "ewros_score": 84,
+      "iq_edge": 32,
+      "iq_edge_raw": 0.214731,
+      "ewros_raw": 844.09,
+      "ewros_trend": 31,
+      "ewros_prior": 53,
+      "ewros_stats": {
+        "win_days": 36,
+        "total_days": 63,
+        "win_rate": 57.1,
+        "avg_alpha_bps": 25.5,
+        "best_alpha_pct": 3.06,
+        "worst_alpha_pct": -2.38,
+        "stock_return_3mo": 13.9,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "COST",
@@ -6628,8 +7226,21 @@
       "analyst_count": 32,
       "current_price": 1001.739990234375,
       "ewros_score": 79,
-      "iq_edge": 64,
-      "iq_edge_raw": 0.475295
+      "iq_edge": 71,
+      "iq_edge_raw": 0.561354,
+      "ewros_raw": 699.27,
+      "ewros_trend": 14,
+      "ewros_prior": 65,
+      "ewros_stats": {
+        "win_days": 33,
+        "total_days": 63,
+        "win_rate": 52.4,
+        "avg_alpha_bps": 25.0,
+        "best_alpha_pct": 3.72,
+        "worst_alpha_pct": -2.55,
+        "stock_return_3mo": 13.3,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "DUK",
@@ -6769,8 +7380,21 @@
       "analyst_count": 17,
       "current_price": 133.4600067138672,
       "ewros_score": 88,
-      "iq_edge": 2,
-      "iq_edge_raw": 0.037001
+      "iq_edge": 1,
+      "iq_edge_raw": 0.026997,
+      "ewros_raw": 1026.16,
+      "ewros_trend": 33,
+      "ewros_prior": 55,
+      "ewros_stats": {
+        "win_days": 37,
+        "total_days": 63,
+        "win_rate": 58.7,
+        "avg_alpha_bps": 29.3,
+        "best_alpha_pct": 2.9,
+        "worst_alpha_pct": -3.17,
+        "stock_return_3mo": 16.7,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "GD",
@@ -6909,9 +7533,22 @@
       "target_mean": 394.5275,
       "analyst_count": 20,
       "current_price": 354.3599853515625,
-      "ewros_score": 66,
-      "iq_edge": 89,
-      "iq_edge_raw": 0.803183
+      "ewros_score": 67,
+      "iq_edge": 88,
+      "iq_edge_raw": 0.765456,
+      "ewros_raw": 317.0,
+      "ewros_trend": 36,
+      "ewros_prior": 31,
+      "ewros_stats": {
+        "win_days": 29,
+        "total_days": 63,
+        "win_rate": 46.0,
+        "avg_alpha_bps": 11.5,
+        "best_alpha_pct": 3.43,
+        "worst_alpha_pct": -3.86,
+        "stock_return_3mo": 3.8,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "LNG",
@@ -7051,8 +7688,21 @@
       "analyst_count": 22,
       "current_price": 251.2899932861328,
       "ewros_score": 94,
-      "iq_edge": 86,
-      "iq_edge_raw": 0.749881
+      "iq_edge": 96,
+      "iq_edge_raw": 0.894605,
+      "ewros_raw": 1729.24,
+      "ewros_trend": 35,
+      "ewros_prior": 59,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 48.7,
+        "best_alpha_pct": 5.92,
+        "worst_alpha_pct": -2.67,
+        "stock_return_3mo": 31.2,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "MO",
@@ -7191,9 +7841,22 @@
       "target_mean": 65.5,
       "analyst_count": 12,
       "current_price": 67.52999877929688,
-      "ewros_score": 84,
-      "iq_edge": 56,
-      "iq_edge_raw": 0.388889
+      "ewros_score": 83,
+      "iq_edge": 63,
+      "iq_edge_raw": 0.467074,
+      "ewros_raw": 829.53,
+      "ewros_trend": 7,
+      "ewros_prior": 76,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 27.8,
+        "best_alpha_pct": 4.03,
+        "worst_alpha_pct": -5.14,
+        "stock_return_3mo": 15.0,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "NNN",
@@ -7332,9 +7995,22 @@
       "target_mean": 45.15625,
       "analyst_count": 16,
       "current_price": 45.22999954223633,
-      "ewros_score": 84,
-      "iq_edge": 47,
-      "iq_edge_raw": 0.326681
+      "ewros_score": 82,
+      "iq_edge": 48,
+      "iq_edge_raw": 0.334906,
+      "ewros_raw": 793.34,
+      "ewros_trend": 26,
+      "ewros_prior": 56,
+      "ewros_stats": {
+        "win_days": 38,
+        "total_days": 63,
+        "win_rate": 60.3,
+        "avg_alpha_bps": 25.0,
+        "best_alpha_pct": 2.91,
+        "worst_alpha_pct": -3.21,
+        "stock_return_3mo": 13.5,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "OGE",
@@ -7474,8 +8150,21 @@
       "analyst_count": 10,
       "current_price": 48.38999938964844,
       "ewros_score": 85,
-      "iq_edge": 17,
-      "iq_edge_raw": 0.126302
+      "iq_edge": 25,
+      "iq_edge_raw": 0.162676,
+      "ewros_raw": 889.7,
+      "ewros_trend": 29,
+      "ewros_prior": 56,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 25.0,
+        "best_alpha_pct": 3.53,
+        "worst_alpha_pct": -2.39,
+        "stock_return_3mo": 13.5,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "PEG",
@@ -7614,9 +8303,22 @@
       "target_mean": 90.08824,
       "analyst_count": 17,
       "current_price": 84.87999725341797,
-      "ewros_score": 74,
-      "iq_edge": 68,
-      "iq_edge_raw": 0.520047
+      "ewros_score": 76,
+      "iq_edge": 62,
+      "iq_edge_raw": 0.464361,
+      "ewros_raw": 586.46,
+      "ewros_trend": 23,
+      "ewros_prior": 53,
+      "ewros_stats": {
+        "win_days": 38,
+        "total_days": 63,
+        "win_rate": 60.3,
+        "avg_alpha_bps": 16.5,
+        "best_alpha_pct": 2.75,
+        "worst_alpha_pct": -3.48,
+        "stock_return_3mo": 7.5,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "PPL",
@@ -7756,8 +8458,21 @@
       "analyst_count": 15,
       "current_price": 38.7400016784668,
       "ewros_score": 85,
-      "iq_edge": 37,
-      "iq_edge_raw": 0.243325
+      "iq_edge": 38,
+      "iq_edge_raw": 0.252962,
+      "ewros_raw": 881.93,
+      "ewros_trend": 40,
+      "ewros_prior": 45,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 28.3,
+        "best_alpha_pct": 3.24,
+        "worst_alpha_pct": -2.53,
+        "stock_return_3mo": 15.8,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "SO",
@@ -7896,9 +8611,22 @@
       "target_mean": 101.07895,
       "analyst_count": 19,
       "current_price": 99.11000061035156,
-      "ewros_score": 88,
-      "iq_edge": 22,
-      "iq_edge_raw": 0.151499
+      "ewros_score": 89,
+      "iq_edge": 31,
+      "iq_edge_raw": 0.208316,
+      "ewros_raw": 1068.87,
+      "ewros_trend": 37,
+      "ewros_prior": 52,
+      "ewros_stats": {
+        "win_days": 39,
+        "total_days": 63,
+        "win_rate": 61.9,
+        "avg_alpha_bps": 30.0,
+        "best_alpha_pct": 4.67,
+        "worst_alpha_pct": -3.27,
+        "stock_return_3mo": 17.0,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "SUI",
@@ -8037,9 +8765,22 @@
       "target_mean": 143.41176,
       "analyst_count": 17,
       "current_price": 134.9499969482422,
-      "ewros_score": 78,
-      "iq_edge": 41,
-      "iq_edge_raw": 0.268859
+      "ewros_score": 79,
+      "iq_edge": 40,
+      "iq_edge_raw": 0.266802,
+      "ewros_raw": 690.8,
+      "ewros_trend": 34,
+      "ewros_prior": 45,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 19.7,
+        "best_alpha_pct": 2.96,
+        "worst_alpha_pct": -2.41,
+        "stock_return_3mo": 9.6,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "WTRG",
@@ -8178,9 +8919,22 @@
       "target_mean": 40.6,
       "analyst_count": 5,
       "current_price": 41.040000915527344,
-      "ewros_score": 80,
+      "ewros_score": 81,
       "iq_edge": 1,
-      "iq_edge_raw": 0.023466
+      "iq_edge_raw": 0.026427,
+      "ewros_raw": 767.17,
+      "ewros_trend": 43,
+      "ewros_prior": 38,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 19.0,
+        "best_alpha_pct": 4.79,
+        "worst_alpha_pct": -3.12,
+        "stock_return_3mo": 8.9,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "HR",
@@ -8320,8 +9074,21 @@
       "analyst_count": 10,
       "current_price": 18.149999618530273,
       "ewros_score": 74,
-      "iq_edge": 51,
-      "iq_edge_raw": 0.354199
+      "iq_edge": 74,
+      "iq_edge_raw": 0.582954,
+      "ewros_raw": 522.49,
+      "ewros_trend": 33,
+      "ewros_prior": 41,
+      "ewros_stats": {
+        "win_days": 33,
+        "total_days": 63,
+        "win_rate": 52.4,
+        "avg_alpha_bps": 12.1,
+        "best_alpha_pct": 3.01,
+        "worst_alpha_pct": -3.2,
+        "stock_return_3mo": 4.6,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "YUM",
@@ -8461,8 +9228,21 @@
       "analyst_count": 24,
       "current_price": 161.77999877929688,
       "ewros_score": 75,
-      "iq_edge": 28,
-      "iq_edge_raw": 0.186605
+      "iq_edge": 37,
+      "iq_edge_raw": 0.247565,
+      "ewros_raw": 535.68,
+      "ewros_trend": 16,
+      "ewros_prior": 59,
+      "ewros_stats": {
+        "win_days": 32,
+        "total_days": 63,
+        "win_rate": 50.8,
+        "avg_alpha_bps": 19.3,
+        "best_alpha_pct": 4.2,
+        "worst_alpha_pct": -3.17,
+        "stock_return_3mo": 9.2,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "APD",
@@ -8601,9 +9381,22 @@
       "target_mean": 304.8632,
       "analyst_count": 22,
       "current_price": 289.1600036621094,
-      "ewros_score": 87,
-      "iq_edge": 28,
-      "iq_edge_raw": 0.188828
+      "ewros_score": 88,
+      "iq_edge": 29,
+      "iq_edge_raw": 0.19144,
+      "ewros_raw": 1025.07,
+      "ewros_trend": 13,
+      "ewros_prior": 75,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 32.9,
+        "best_alpha_pct": 6.74,
+        "worst_alpha_pct": -4.1,
+        "stock_return_3mo": 18.6,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "CTVA",
@@ -8743,8 +9536,21 @@
       "analyst_count": 21,
       "current_price": 79.04000091552734,
       "ewros_score": 88,
-      "iq_edge": 12,
-      "iq_edge_raw": 0.093112
+      "iq_edge": 9,
+      "iq_edge_raw": 0.081558,
+      "ewros_raw": 1026.82,
+      "ewros_trend": 26,
+      "ewros_prior": 62,
+      "ewros_stats": {
+        "win_days": 39,
+        "total_days": 63,
+        "win_rate": 61.9,
+        "avg_alpha_bps": 33.9,
+        "best_alpha_pct": 3.36,
+        "worst_alpha_pct": -2.79,
+        "stock_return_3mo": 19.7,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "DINO",
@@ -8884,8 +9690,21 @@
       "analyst_count": 15,
       "current_price": 56.59000015258789,
       "ewros_score": 90,
-      "iq_edge": 47,
-      "iq_edge_raw": 0.324024
+      "iq_edge": 38,
+      "iq_edge_raw": 0.254552,
+      "ewros_raw": 1195.97,
+      "ewros_trend": 15,
+      "ewros_prior": 75,
+      "ewros_stats": {
+        "win_days": 37,
+        "total_days": 63,
+        "win_rate": 58.7,
+        "avg_alpha_bps": 30.1,
+        "best_alpha_pct": 7.54,
+        "worst_alpha_pct": -11.36,
+        "stock_return_3mo": 14.6,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "MDU",
@@ -9024,9 +9843,22 @@
       "target_mean": 22.0,
       "analyst_count": 6,
       "current_price": 20.610000610351562,
-      "ewros_score": 70,
-      "iq_edge": 35,
-      "iq_edge_raw": 0.228181
+      "ewros_score": 69,
+      "iq_edge": 26,
+      "iq_edge_raw": 0.17283,
+      "ewros_raw": 370.92,
+      "ewros_trend": 25,
+      "ewros_prior": 44,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 12.8,
+        "best_alpha_pct": 3.5,
+        "worst_alpha_pct": -3.34,
+        "stock_return_3mo": 4.9,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "MCD",
@@ -9166,8 +9998,21 @@
       "analyst_count": 33,
       "current_price": 326.6499938964844,
       "ewros_score": 71,
-      "iq_edge": 68,
-      "iq_edge_raw": 0.522386
+      "iq_edge": 83,
+      "iq_edge_raw": 0.699267,
+      "ewros_raw": 424.46,
+      "ewros_trend": 11,
+      "ewros_prior": 60,
+      "ewros_stats": {
+        "win_days": 28,
+        "total_days": 63,
+        "win_rate": 44.4,
+        "avg_alpha_bps": 13.4,
+        "best_alpha_pct": 4.29,
+        "worst_alpha_pct": -2.16,
+        "stock_return_3mo": 5.5,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "HOLX",
@@ -9307,8 +10152,21 @@
       "analyst_count": 10,
       "current_price": 75.1500015258789,
       "ewros_score": 64,
-      "iq_edge": 78,
-      "iq_edge_raw": 0.647705
+      "iq_edge": 86,
+      "iq_edge_raw": 0.736145,
+      "ewros_raw": 232.28,
+      "ewros_trend": 27,
+      "ewros_prior": 37,
+      "ewros_stats": {
+        "win_days": 32,
+        "total_days": 63,
+        "win_rate": 50.8,
+        "avg_alpha_bps": 5.1,
+        "best_alpha_pct": 2.21,
+        "worst_alpha_pct": -1.77,
+        "stock_return_3mo": 0.4,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "AL",
@@ -9447,9 +10305,22 @@
       "target_mean": 65.0,
       "analyst_count": 3,
       "current_price": 64.61000061035156,
-      "ewros_score": 64,
-      "iq_edge": 76,
-      "iq_edge_raw": 0.617346
+      "ewros_score": 65,
+      "iq_edge": 88,
+      "iq_edge_raw": 0.762349,
+      "ewros_raw": 247.35,
+      "ewros_trend": 26,
+      "ewros_prior": 39,
+      "ewros_stats": {
+        "win_days": 32,
+        "total_days": 63,
+        "win_rate": 50.8,
+        "avg_alpha_bps": 6.1,
+        "best_alpha_pct": 2.07,
+        "worst_alpha_pct": -1.89,
+        "stock_return_3mo": 1.0,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "MASI",
@@ -9590,7 +10461,20 @@
       "current_price": 175.39999389648438,
       "ewros_score": 95,
       "iq_edge": 42,
-      "iq_edge_raw": 0.280551
+      "iq_edge_raw": 0.286899,
+      "ewros_raw": 1894.75,
+      "ewros_trend": 67,
+      "ewros_prior": 28,
+      "ewros_stats": {
+        "win_days": 33,
+        "total_days": 63,
+        "win_rate": 52.4,
+        "avg_alpha_bps": 47.8,
+        "best_alpha_pct": 34.06,
+        "worst_alpha_pct": -4.97,
+        "stock_return_3mo": 24.2,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "CFLT",
@@ -9729,9 +10613,22 @@
       "target_mean": 30.89474,
       "analyst_count": 19,
       "current_price": 30.989999771118164,
-      "ewros_score": 67,
-      "iq_edge": 93,
-      "iq_edge_raw": 0.861075
+      "ewros_score": 70,
+      "iq_edge": 96,
+      "iq_edge_raw": 0.896407,
+      "ewros_raw": 390.84,
+      "ewros_trend": 3,
+      "ewros_prior": 67,
+      "ewros_stats": {
+        "win_days": 36,
+        "total_days": 63,
+        "win_rate": 57.1,
+        "avg_alpha_bps": 8.9,
+        "best_alpha_pct": 1.74,
+        "worst_alpha_pct": -1.23,
+        "stock_return_3mo": 2.8,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "EXAS",
@@ -9870,9 +10767,22 @@
       "target_mean": 105.8125,
       "analyst_count": 16,
       "current_price": 103.8499984741211,
-      "ewros_score": 67,
-      "iq_edge": 75,
-      "iq_edge_raw": 0.608149
+      "ewros_score": 68,
+      "iq_edge": 80,
+      "iq_edge_raw": 0.678205,
+      "ewros_raw": 342.47,
+      "ewros_trend": -3,
+      "ewros_prior": 71,
+      "ewros_stats": {
+        "win_days": 32,
+        "total_days": 63,
+        "win_rate": 50.8,
+        "avg_alpha_bps": 8.3,
+        "best_alpha_pct": 1.96,
+        "worst_alpha_pct": -1.41,
+        "stock_return_3mo": 2.5,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "RSG",
@@ -10011,9 +10921,22 @@
       "target_mean": 244.875,
       "analyst_count": 24,
       "current_price": 224.1300048828125,
-      "ewros_score": 71,
-      "iq_edge": 69,
-      "iq_edge_raw": 0.532591
+      "ewros_score": 72,
+      "iq_edge": 70,
+      "iq_edge_raw": 0.551391,
+      "ewros_raw": 458.34,
+      "ewros_trend": 23,
+      "ewros_prior": 49,
+      "ewros_stats": {
+        "win_days": 33,
+        "total_days": 63,
+        "win_rate": 52.4,
+        "avg_alpha_bps": 14.4,
+        "best_alpha_pct": 2.47,
+        "worst_alpha_pct": -2.71,
+        "stock_return_3mo": 6.1,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "ADM",
@@ -10152,9 +11075,22 @@
       "target_mean": 61.18182,
       "analyst_count": 11,
       "current_price": 70.75,
-      "ewros_score": 88,
-      "iq_edge": 83,
-      "iq_edge_raw": 0.702186
+      "ewros_score": 87,
+      "iq_edge": 81,
+      "iq_edge_raw": 0.686709,
+      "ewros_raw": 1013.98,
+      "ewros_trend": 11,
+      "ewros_prior": 76,
+      "ewros_stats": {
+        "win_days": 36,
+        "total_days": 63,
+        "win_rate": 57.1,
+        "avg_alpha_bps": 32.1,
+        "best_alpha_pct": 4.57,
+        "worst_alpha_pct": -3.41,
+        "stock_return_3mo": 18.1,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "EA",
@@ -10293,9 +11229,22 @@
       "target_mean": 205.58824,
       "analyst_count": 17,
       "current_price": 200.2100067138672,
-      "ewros_score": 59,
-      "iq_edge": 80,
-      "iq_edge_raw": 0.663568
+      "ewros_score": 61,
+      "iq_edge": 78,
+      "iq_edge_raw": 0.648389,
+      "ewros_raw": 149.22,
+      "ewros_trend": 27,
+      "ewros_prior": 34,
+      "ewros_stats": {
+        "win_days": 30,
+        "total_days": 63,
+        "win_rate": 47.6,
+        "avg_alpha_bps": 1.8,
+        "best_alpha_pct": 1.91,
+        "worst_alpha_pct": -1.77,
+        "stock_return_3mo": -1.7,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "WWD",
@@ -10434,9 +11383,22 @@
       "target_mean": 417.75,
       "analyst_count": 8,
       "current_price": 367.5899963378906,
-      "ewros_score": 78,
-      "iq_edge": 41,
-      "iq_edge_raw": 0.267702
+      "ewros_score": 82,
+      "iq_edge": 45,
+      "iq_edge_raw": 0.316725,
+      "ewros_raw": 784.59,
+      "ewros_trend": -11,
+      "ewros_prior": 93,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 40.6,
+        "best_alpha_pct": 14.27,
+        "worst_alpha_pct": -4.73,
+        "stock_return_3mo": 23.1,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "AWK",
@@ -10575,9 +11537,22 @@
       "target_mean": 137.7,
       "analyst_count": 10,
       "current_price": 139.1199951171875,
-      "ewros_score": 82,
-      "iq_edge": 34,
-      "iq_edge_raw": 0.220133
+      "ewros_score": 83,
+      "iq_edge": 37,
+      "iq_edge_raw": 0.246439,
+      "ewros_raw": 809.54,
+      "ewros_trend": 47,
+      "ewros_prior": 36,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 16.2,
+        "best_alpha_pct": 5.33,
+        "worst_alpha_pct": -3.39,
+        "stock_return_3mo": 6.9,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "CW",
@@ -10716,9 +11691,22 @@
       "target_mean": 711.4286,
       "analyst_count": 7,
       "current_price": 683.8400268554688,
-      "ewros_score": 83,
-      "iq_edge": 39,
-      "iq_edge_raw": 0.254796
+      "ewros_score": 85,
+      "iq_edge": 47,
+      "iq_edge_raw": 0.33096,
+      "ewros_raw": 888.47,
+      "ewros_trend": 8,
+      "ewros_prior": 77,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 36.4,
+        "best_alpha_pct": 7.35,
+        "worst_alpha_pct": -6.9,
+        "stock_return_3mo": 20.1,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "FTNT",
@@ -10857,9 +11845,22 @@
       "target_mean": 89.05882,
       "analyst_count": 34,
       "current_price": 84.48999786376953,
-      "ewros_score": 77,
-      "iq_edge": 90,
-      "iq_edge_raw": 0.82114
+      "ewros_score": 79,
+      "iq_edge": 87,
+      "iq_edge_raw": 0.75331,
+      "ewros_raw": 671.55,
+      "ewros_trend": 27,
+      "ewros_prior": 52,
+      "ewros_stats": {
+        "win_days": 31,
+        "total_days": 63,
+        "win_rate": 49.2,
+        "avg_alpha_bps": 10.4,
+        "best_alpha_pct": 5.14,
+        "worst_alpha_pct": -4.68,
+        "stock_return_3mo": 2.4,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "HWM",
@@ -10999,8 +12000,21 @@
       "analyst_count": 20,
       "current_price": 240.72999572753906,
       "ewros_score": 82,
-      "iq_edge": 73,
-      "iq_edge_raw": 0.577157
+      "iq_edge": 71,
+      "iq_edge_raw": 0.55799,
+      "ewros_raw": 804.89,
+      "ewros_trend": -5,
+      "ewros_prior": 87,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 39.2,
+        "best_alpha_pct": 7.58,
+        "worst_alpha_pct": -3.77,
+        "stock_return_3mo": 22.9,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "KR",
@@ -11141,7 +12155,20 @@
       "current_price": 74.48999786376953,
       "ewros_score": 92,
       "iq_edge": 66,
-      "iq_edge_raw": 0.507171
+      "iq_edge_raw": 0.495074,
+      "ewros_raw": 1416.19,
+      "ewros_trend": 21,
+      "ewros_prior": 71,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 34.8,
+        "best_alpha_pct": 5.82,
+        "worst_alpha_pct": -3.95,
+        "stock_return_3mo": 19.7,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "AM",
@@ -11281,8 +12308,21 @@
       "analyst_count": 7,
       "current_price": 22.8799991607666,
       "ewros_score": 93,
-      "iq_edge": 28,
-      "iq_edge_raw": 0.185236
+      "iq_edge": 19,
+      "iq_edge_raw": 0.132907,
+      "ewros_raw": 1545.66,
+      "ewros_trend": 10,
+      "ewros_prior": 83,
+      "ewros_stats": {
+        "win_days": 42,
+        "total_days": 63,
+        "win_rate": 66.7,
+        "avg_alpha_bps": 42.8,
+        "best_alpha_pct": 3.84,
+        "worst_alpha_pct": -3.7,
+        "stock_return_3mo": 26.7,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "AMGN",
@@ -11422,8 +12462,21 @@
       "analyst_count": 29,
       "current_price": 366.25,
       "ewros_score": 77,
-      "iq_edge": 80,
-      "iq_edge_raw": 0.666826
+      "iq_edge": 70,
+      "iq_edge_raw": 0.5461,
+      "ewros_raw": 629.17,
+      "ewros_trend": 11,
+      "ewros_prior": 66,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 28.9,
+        "best_alpha_pct": 8.64,
+        "worst_alpha_pct": -3.36,
+        "stock_return_3mo": 15.4,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "CRS",
@@ -11562,9 +12615,22 @@
       "target_mean": 412.75,
       "analyst_count": 8,
       "current_price": 374.07000732421875,
-      "ewros_score": 81,
-      "iq_edge": 40,
-      "iq_edge_raw": 0.259374
+      "ewros_score": 82,
+      "iq_edge": 31,
+      "iq_edge_raw": 0.203307,
+      "ewros_raw": 809.11,
+      "ewros_trend": 4,
+      "ewros_prior": 78,
+      "ewros_stats": {
+        "win_days": 32,
+        "total_days": 63,
+        "win_rate": 50.8,
+        "avg_alpha_bps": 32.6,
+        "best_alpha_pct": 9.71,
+        "worst_alpha_pct": -6.2,
+        "stock_return_3mo": 16.2,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "GILD",
@@ -11704,8 +12770,21 @@
       "analyst_count": 28,
       "current_price": 145.2100067138672,
       "ewros_score": 80,
-      "iq_edge": 58,
-      "iq_edge_raw": 0.399768
+      "iq_edge": 64,
+      "iq_edge_raw": 0.475591,
+      "ewros_raw": 755.57,
+      "ewros_trend": -8,
+      "ewros_prior": 88,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 32.3,
+        "best_alpha_pct": 5.84,
+        "worst_alpha_pct": -3.38,
+        "stock_return_3mo": 17.9,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "HON",
@@ -11845,8 +12924,21 @@
       "analyst_count": 24,
       "current_price": 234.50999450683594,
       "ewros_score": 80,
-      "iq_edge": 80,
-      "iq_edge_raw": 0.669568
+      "iq_edge": 85,
+      "iq_edge_raw": 0.728303,
+      "ewros_raw": 717.04,
+      "ewros_trend": -2,
+      "ewros_prior": 82,
+      "ewros_stats": {
+        "win_days": 43,
+        "total_days": 63,
+        "win_rate": 68.3,
+        "avg_alpha_bps": 35.7,
+        "best_alpha_pct": 5.09,
+        "worst_alpha_pct": -2.53,
+        "stock_return_3mo": 21.0,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "HSY",
@@ -11985,9 +13077,22 @@
       "target_mean": 230.3913,
       "analyst_count": 23,
       "current_price": 220.11000061035156,
-      "ewros_score": 84,
-      "iq_edge": 27,
-      "iq_edge_raw": 0.184403
+      "ewros_score": 85,
+      "iq_edge": 35,
+      "iq_edge_raw": 0.233168,
+      "ewros_raw": 868.57,
+      "ewros_trend": -5,
+      "ewros_prior": 90,
+      "ewros_stats": {
+        "win_days": 37,
+        "total_days": 63,
+        "win_rate": 58.7,
+        "avg_alpha_bps": 36.6,
+        "best_alpha_pct": 10.28,
+        "worst_alpha_pct": -3.29,
+        "stock_return_3mo": 21.2,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "MRK",
@@ -12126,9 +13231,22 @@
       "target_mean": 127.77778,
       "analyst_count": 27,
       "current_price": 115.43000030517578,
-      "ewros_score": 72,
-      "iq_edge": 69,
-      "iq_edge_raw": 0.530242
+      "ewros_score": 74,
+      "iq_edge": 76,
+      "iq_edge_raw": 0.619598,
+      "ewros_raw": 507.33,
+      "ewros_trend": -7,
+      "ewros_prior": 81,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 29.9,
+        "best_alpha_pct": 4.27,
+        "worst_alpha_pct": -3.99,
+        "stock_return_3mo": 16.6,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "NOC",
@@ -12268,8 +13386,21 @@
       "analyst_count": 21,
       "current_price": 735.9600219726562,
       "ewros_score": 90,
-      "iq_edge": 76,
-      "iq_edge_raw": 0.619913
+      "iq_edge": 80,
+      "iq_edge_raw": 0.674576,
+      "ewros_raw": 1220.73,
+      "ewros_trend": 12,
+      "ewros_prior": 78,
+      "ewros_stats": {
+        "win_days": 33,
+        "total_days": 63,
+        "win_rate": 52.4,
+        "avg_alpha_bps": 49.9,
+        "best_alpha_pct": 5.97,
+        "worst_alpha_pct": -5.18,
+        "stock_return_3mo": 31.4,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "NYT",
@@ -12408,9 +13539,22 @@
       "target_mean": 70.75,
       "analyst_count": 8,
       "current_price": 79.75,
-      "ewros_score": 89,
-      "iq_edge": 34,
-      "iq_edge_raw": 0.224516
+      "ewros_score": 88,
+      "iq_edge": 15,
+      "iq_edge_raw": 0.118218,
+      "ewros_raw": 1060.34,
+      "ewros_trend": 31,
+      "ewros_prior": 57,
+      "ewros_stats": {
+        "win_days": 36,
+        "total_days": 63,
+        "win_rate": 57.1,
+        "avg_alpha_bps": 31.6,
+        "best_alpha_pct": 4.37,
+        "worst_alpha_pct": -5.86,
+        "stock_return_3mo": 17.7,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "OKE",
@@ -12550,8 +13694,21 @@
       "analyst_count": 20,
       "current_price": 85.31999969482422,
       "ewros_score": 86,
-      "iq_edge": 64,
-      "iq_edge_raw": 0.474365
+      "iq_edge": 73,
+      "iq_edge_raw": 0.577607,
+      "ewros_raw": 912.12,
+      "ewros_trend": 5,
+      "ewros_prior": 81,
+      "ewros_stats": {
+        "win_days": 36,
+        "total_days": 63,
+        "win_rate": 57.1,
+        "avg_alpha_bps": 29.6,
+        "best_alpha_pct": 4.76,
+        "worst_alpha_pct": -5.81,
+        "stock_return_3mo": 15.9,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "BMY",
@@ -12690,9 +13847,22 @@
       "target_mean": 62.36,
       "analyst_count": 25,
       "current_price": 59.709999084472656,
-      "ewros_score": 77,
-      "iq_edge": 38,
-      "iq_edge_raw": 0.24413
+      "ewros_score": 78,
+      "iq_edge": 42,
+      "iq_edge_raw": 0.283225,
+      "ewros_raw": 660.25,
+      "ewros_trend": 2,
+      "ewros_prior": 76,
+      "ewros_stats": {
+        "win_days": 32,
+        "total_days": 63,
+        "win_rate": 50.8,
+        "avg_alpha_bps": 30.0,
+        "best_alpha_pct": 4.55,
+        "worst_alpha_pct": -2.45,
+        "stock_return_3mo": 16.6,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "CSX",
@@ -12832,8 +14002,21 @@
       "analyst_count": 24,
       "current_price": 39.779998779296875,
       "ewros_score": 70,
-      "iq_edge": 8,
-      "iq_edge_raw": 0.075445
+      "iq_edge": 6,
+      "iq_edge_raw": 0.067615,
+      "ewros_raw": 404.66,
+      "ewros_trend": -3,
+      "ewros_prior": 73,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 16.2,
+        "best_alpha_pct": 2.83,
+        "worst_alpha_pct": -3.25,
+        "stock_return_3mo": 7.1,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "EOG",
@@ -12973,8 +14156,21 @@
       "analyst_count": 29,
       "current_price": 134.50999450683594,
       "ewros_score": 94,
-      "iq_edge": 88,
-      "iq_edge_raw": 0.78493
+      "iq_edge": 80,
+      "iq_edge_raw": 0.67146,
+      "ewros_raw": 1680.96,
+      "ewros_trend": 26,
+      "ewros_prior": 68,
+      "ewros_stats": {
+        "win_days": 35,
+        "total_days": 63,
+        "win_rate": 55.6,
+        "avg_alpha_bps": 38.9,
+        "best_alpha_pct": 4.92,
+        "worst_alpha_pct": -3.81,
+        "stock_return_3mo": 22.8,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "TIGO",
@@ -13114,8 +14310,21 @@
       "analyst_count": 8,
       "current_price": 72.88999938964844,
       "ewros_score": 95,
-      "iq_edge": 38,
-      "iq_edge_raw": 0.246712
+      "iq_edge": 49,
+      "iq_edge_raw": 0.338078,
+      "ewros_raw": 1897.35,
+      "ewros_trend": 6,
+      "ewros_prior": 89,
+      "ewros_stats": {
+        "win_days": 38,
+        "total_days": 63,
+        "win_rate": 60.3,
+        "avg_alpha_bps": 63.9,
+        "best_alpha_pct": 6.52,
+        "worst_alpha_pct": -9.27,
+        "stock_return_3mo": 42.3,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "VZ",
@@ -13255,8 +14464,21 @@
       "analyst_count": 22,
       "current_price": 50.970001220703125,
       "ewros_score": 92,
-      "iq_edge": 35,
-      "iq_edge_raw": 0.228957
+      "iq_edge": 54,
+      "iq_edge_raw": 0.383735,
+      "ewros_raw": 1449.22,
+      "ewros_trend": 1,
+      "ewros_prior": 91,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 43.7,
+        "best_alpha_pct": 12.13,
+        "worst_alpha_pct": -3.6,
+        "stock_return_3mo": 26.7,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "BWXT",
@@ -13395,9 +14617,22 @@
       "target_mean": 232.0,
       "analyst_count": 10,
       "current_price": 204.6699981689453,
-      "ewros_score": 79,
-      "iq_edge": 57,
-      "iq_edge_raw": 0.398857
+      "ewros_score": 80,
+      "iq_edge": 53,
+      "iq_edge_raw": 0.371564,
+      "ewros_raw": 743.96,
+      "ewros_trend": 34,
+      "ewros_prior": 46,
+      "ewros_stats": {
+        "win_days": 34,
+        "total_days": 63,
+        "win_rate": 54.0,
+        "avg_alpha_bps": 26.2,
+        "best_alpha_pct": 5.04,
+        "worst_alpha_pct": -9.37,
+        "stock_return_3mo": 11.6,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "CTRA",
@@ -13537,8 +14772,21 @@
       "analyst_count": 23,
       "current_price": 32.369998931884766,
       "ewros_score": 92,
-      "iq_edge": 83,
-      "iq_edge_raw": 0.70827
+      "iq_edge": 90,
+      "iq_edge_raw": 0.794532,
+      "ewros_raw": 1408.67,
+      "ewros_trend": 10,
+      "ewros_prior": 82,
+      "ewros_stats": {
+        "win_days": 39,
+        "total_days": 63,
+        "win_rate": 61.9,
+        "avg_alpha_bps": 38.0,
+        "best_alpha_pct": 5.84,
+        "worst_alpha_pct": -4.1,
+        "stock_return_3mo": 22.2,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "DTM",
@@ -13677,9 +14925,22 @@
       "target_mean": 140.07143,
       "analyst_count": 14,
       "current_price": 137.05999755859375,
-      "ewros_score": 83,
-      "iq_edge": 48,
-      "iq_edge_raw": 0.332023
+      "ewros_score": 84,
+      "iq_edge": 47,
+      "iq_edge_raw": 0.331138,
+      "ewros_raw": 841.39,
+      "ewros_trend": 15,
+      "ewros_prior": 69,
+      "ewros_stats": {
+        "win_days": 36,
+        "total_days": 63,
+        "win_rate": 57.1,
+        "avg_alpha_bps": 26.8,
+        "best_alpha_pct": 3.36,
+        "worst_alpha_pct": -2.74,
+        "stock_return_3mo": 14.7,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "EIX",
@@ -13819,8 +15080,21 @@
       "analyst_count": 13,
       "current_price": 72.97000122070312,
       "ewros_score": 91,
-      "iq_edge": 75,
-      "iq_edge_raw": 0.613517
+      "iq_edge": 69,
+      "iq_edge_raw": 0.530283,
+      "ewros_raw": 1293.48,
+      "ewros_trend": 8,
+      "ewros_prior": 83,
+      "ewros_stats": {
+        "win_days": 39,
+        "total_days": 63,
+        "win_rate": 61.9,
+        "avg_alpha_bps": 42.4,
+        "best_alpha_pct": 4.56,
+        "worst_alpha_pct": -3.07,
+        "stock_return_3mo": 26.0,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "NVT",
@@ -13959,9 +15233,22 @@
       "target_mean": 127.38769,
       "analyst_count": 13,
       "current_price": 114.30000305175781,
-      "ewros_score": 74,
-      "iq_edge": 37,
-      "iq_edge_raw": 0.241504
+      "ewros_score": 76,
+      "iq_edge": 34,
+      "iq_edge_raw": 0.228637,
+      "ewros_raw": 594.55,
+      "ewros_trend": 27,
+      "ewros_prior": 49,
+      "ewros_stats": {
+        "win_days": 36,
+        "total_days": 63,
+        "win_rate": 57.1,
+        "avg_alpha_bps": 15.4,
+        "best_alpha_pct": 4.57,
+        "worst_alpha_pct": -6.29,
+        "stock_return_3mo": 4.7,
+        "spy_return_3mo": -2.9
+      }
     },
     {
       "ticker": "PEP",
@@ -14100,9 +15387,22 @@
       "target_mean": 171.2381,
       "analyst_count": 21,
       "current_price": 157.72000122070312,
-      "ewros_score": 68,
-      "iq_edge": 73,
-      "iq_edge_raw": 0.57791
+      "ewros_score": 67,
+      "iq_edge": 64,
+      "iq_edge_raw": 0.483664,
+      "ewros_raw": 319.6,
+      "ewros_trend": -9,
+      "ewros_prior": 76,
+      "ewros_stats": {
+        "win_days": 33,
+        "total_days": 63,
+        "win_rate": 52.4,
+        "avg_alpha_bps": 14.3,
+        "best_alpha_pct": 5.77,
+        "worst_alpha_pct": -2.84,
+        "stock_return_3mo": 5.8,
+        "spy_return_3mo": -2.9
+      }
     }
   ]
 }
