@@ -1843,13 +1843,17 @@
         let _currentUser = null;
         let _userProfile = null;  // {tier, limits, ai_calls_today, ...}
 
+        // Auth readiness gate — tabs await this before making authenticated API calls
+        let _authReadyResolve;
+        const authReady = new Promise(resolve => { _authReadyResolve = resolve; });
+
         async function initAuth() {
             try {
                 const res = await fetch('/api/config');
                 const cfg = await res.json();
                 if (cfg.supabase_url && cfg.supabase_anon_key) {
                     _supabaseClient = supabase.createClient(cfg.supabase_url, cfg.supabase_anon_key);
-                    // Listen for auth changes
+                    // Listen for auth changes (fires after initial session check too)
                     _supabaseClient.auth.onAuthStateChange((event, session) => {
                         _currentUser = session?.user || null;
                         updateAuthUI();
@@ -1861,7 +1865,7 @@
                             ewrosData = null;
                         }
                     });
-                    // Check existing session
+                    // Check existing session — this is the authoritative auth state
                     const { data: { session } } = await _supabaseClient.auth.getSession();
                     _currentUser = session?.user || null;
                     updateAuthUI();
@@ -1869,6 +1873,9 @@
                 }
             } catch(e) {
                 console.warn('Auth init failed:', e);
+            } finally {
+                // Always resolve — tabs waiting on authReady will now proceed
+                _authReadyResolve();
             }
         }
 
@@ -2630,7 +2637,8 @@
             hideAllViews();
             document.getElementById('watchlist-view').style.display = 'block';
             updateActiveNav('portfolio');
-            
+            await authReady;  // wait for Supabase session check before any API call
+
             if (!watchlistData) {
                 try {
                     // Load portfolio structure from Supabase
@@ -5120,6 +5128,7 @@
             document.getElementById('watchlist-entries-view').style.display = 'block';
             updateActiveNav('watchlist');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            await authReady;  // wait for Supabase session check before any API call
 
             if (!wlData) {
                 try {
