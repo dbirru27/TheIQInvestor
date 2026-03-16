@@ -297,6 +297,37 @@ def main():
             f'Steps: {len(steps_to_run) + 1} tasks queued'
         )
 
+    # ── Launch watchdog in background ─────────────────────────────────────────
+    # Watchdog monitors THIS process, detects stalls/crashes, auto-restarts once,
+    # and sends Telegram alerts. Runs as a detached subprocess so it survives
+    # even if the main pipeline crashes.
+    if not args.dry_run:
+        try:
+            log_path = os.path.join(WORKSPACE, 'logs', 'daily_update.log')
+            restart_cmd = (
+                f'{sys.executable} {os.path.join(WORKSPACE, "scripts", "daily_update.py")}'
+            )
+            watchdog_cmd = [
+                sys.executable,
+                os.path.join(WORKSPACE, 'scripts', 'pipeline_watchdog.py'),
+                '--pid', str(os.getpid()),
+                '--log', log_path,
+                '--cmd', restart_cmd,
+            ]
+            watchdog_log = os.path.join(WORKSPACE, 'logs', 'watchdog.log')
+            os.makedirs(os.path.dirname(watchdog_log), exist_ok=True)
+            with open(watchdog_log, 'a') as wf:
+                import subprocess as _sp
+                _sp.Popen(
+                    watchdog_cmd,
+                    stdout=wf, stderr=wf,
+                    start_new_session=True,   # detach from parent process group
+                    cwd=WORKSPACE
+                )
+            print(f'  [watchdog] started (monitoring PID {os.getpid()})')
+        except Exception as e:
+            print(f'  [watchdog] failed to start: {e} — continuing without watchdog')
+
     # Milestones to ping after (step name → emoji + label)
     MILESTONES = {
         'cache':   ('📥', 'Data download complete'),
