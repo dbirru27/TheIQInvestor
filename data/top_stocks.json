@@ -1,7 +1,7 @@
 {
   "version": "5.0",
   "max_score": 100,
-  "last_scan": "2026-03-17 19:01 PST",
+  "last_scan": "2026-03-17 19:03 PST",
   "total_stocks": 141,
   "stocks": [
     {
@@ -141,9 +141,9 @@
       "target_mean": 42.41667,
       "analyst_count": 24,
       "current_price": 43.59000015258789,
-      "ewros_score": 94,
-      "iq_edge": 87,
-      "iq_edge_raw": 0.758849
+      "ewros_score": 93,
+      "iq_edge": 77,
+      "iq_edge_raw": 0.617672
     },
     {
       "ticker": "EQT",
@@ -283,8 +283,8 @@
       "analyst_count": 27,
       "current_price": 64.30999755859375,
       "ewros_score": 91,
-      "iq_edge": 1,
-      "iq_edge_raw": 0.031551
+      "iq_edge": 2,
+      "iq_edge_raw": 0.040088
     },
     {
       "ticker": "UI",
@@ -424,8 +424,8 @@
       "analyst_count": 2,
       "current_price": 775.7899780273438,
       "ewros_score": 96,
-      "iq_edge": 32,
-      "iq_edge_raw": 0.21451
+      "iq_edge": 2,
+      "iq_edge_raw": 0.037357
     },
     {
       "ticker": "ELS",
@@ -564,9 +564,9 @@
       "target_mean": 69.73529,
       "analyst_count": 17,
       "current_price": 67.44999694824219,
-      "ewros_score": 77,
-      "iq_edge": 58,
-      "iq_edge_raw": 0.4222
+      "ewros_score": 78,
+      "iq_edge": 23,
+      "iq_edge_raw": 0.169008
     },
     {
       "ticker": "NFG",
@@ -705,9 +705,9 @@
       "target_mean": 98.33333,
       "analyst_count": 3,
       "current_price": 94.61000061035156,
-      "ewros_score": 90,
+      "ewros_score": 87,
       "iq_edge": 4,
-      "iq_edge_raw": 0.053249
+      "iq_edge_raw": 0.049407
     },
     {
       "ticker": "VTR",
@@ -846,9 +846,9 @@
       "target_mean": 91.45,
       "analyst_count": 20,
       "current_price": 87.79000091552734,
-      "ewros_score": 87,
-      "iq_edge": 54,
-      "iq_edge_raw": 0.383124
+      "ewros_score": 86,
+      "iq_edge": 50,
+      "iq_edge_raw": 0.351276
     },
     {
       "ticker": "EGP",
@@ -987,9 +987,9 @@
       "target_mean": 205.57895,
       "analyst_count": 19,
       "current_price": 189.97000122070312,
-      "ewros_score": 70,
-      "iq_edge": 71,
-      "iq_edge_raw": 0.55486
+      "ewros_score": 69,
+      "iq_edge": 47,
+      "iq_edge_raw": 0.332717
     },
     {
       "ticker": "LAMR",
@@ -1128,9 +1128,9 @@
       "target_mean": 139.8,
       "analyst_count": 5,
       "current_price": 133.67999267578125,
-      "ewros_score": 69,
-      "iq_edge": 82,
-      "iq_edge_raw": 0.692876
+      "ewros_score": 68,
+      "iq_edge": 57,
+      "iq_edge_raw": 0.410409
     },
     {
       "ticker": "LIN",
@@ -1269,9 +1269,9 @@
       "target_mean": 515.1231,
       "analyst_count": 26,
       "current_price": 497.4100036621094,
-      "ewros_score": 88,
-      "iq_edge": 31,
-      "iq_edge_raw": 0.203951
+      "ewros_score": 85,
+      "iq_edge": 13,
+      "iq_edge_raw": 0.104901
     },
     {
       "ticker": "OHI",
@@ -1410,9 +1410,9 @@
       "target_mean": 49.5,
       "analyst_count": 16,
       "current_price": 47.83000183105469,
-      "ewros_score": 79,
-      "iq_edge": 49,
-      "iq_edge_raw": 0.340533
+      "ewros_score": 74,
+      "iq_edge": 44,
+      "iq_edge_raw": 0.309996
     },
     {
       "ticker": "ADC",
@@ -1552,8 +1552,8 @@
       "analyst_count": 18,
       "current_price": 79.79000091552734,
       "ewros_score": 81,
-      "iq_edge": 17,
-      "iq_edge_raw": 0.125505
+      "iq_edge": 15,
+      "iq_edge_raw": 0.124048
     },
     {
       "ticker": "ES",
@@ -1692,9 +1692,9 @@
       "target_mean": 75.61538,
       "analyst_count": 13,
       "current_price": 73.19999694824219,
-      "ewros_score": 76,
-      "iq_edge": 40,
-      "iq_edge_raw": 0.263575
+      "ewros_score": 69,
+      "iq_edge": 66,
+      "iq_edge_raw": 0.494685
     },
     {
       "ticker": "GLPI",
@@ -1833,9 +1833,9 @@
       "target_mean": 54.32609,
       "analyst_count": 23,
       "current_price": 47.529998779296875,
-      "ewros_score": 76,
-      "iq_edge": 35,
-      "iq_edge_raw": 0.232865
+      "ewros_score": 72,
+      "iq_edge": 28,
+      "iq_edge_raw": 0.195045
     },
     {
       "ticker": "QSR",
@@ -1974,9 +1974,9 @@
       "target_mean": 79.86207,
       "analyst_count": 29,
       "current_price": 74.56999969482422,
-      "ewros_score": 86,
-      "iq_edge": 20,
-      "iq_edge_raw": 0.136083
+      "ewros_score": 85,
+      "iq_edge": 31,
+      "iq_edge_raw": 0.224634
     },
     {
       "ticker": "AEE",
@@ -2115,9 +2115,9 @@
       "target_mean": 115.84615,
       "analyst_count": 13,
       "current_price": 112.86000061035156,
-      "ewros_score": 86,
-      "iq_edge": 44,
-      "iq_edge_raw": 0.300667
+      "ewros_score": 82,
+      "iq_edge": 20,
+      "iq_edge_raw": 0.152891
     },
     {
       "ticker": "CINF",
@@ -2256,9 +2256,9 @@
       "target_mean": 173.66667,
       "analyst_count": 6,
       "current_price": 166.57000732421875,
-      "ewros_score": 70,
-      "iq_edge": 92,
-      "iq_edge_raw": 0.834915
+      "ewros_score": 62,
+      "iq_edge": 94,
+      "iq_edge_raw": 0.864039
     },
     {
       "ticker": "DLR",
@@ -2397,9 +2397,9 @@
       "target_mean": 197.06897,
       "analyst_count": 29,
       "current_price": 181.25,
-      "ewros_score": 87,
-      "iq_edge": 32,
-      "iq_edge_raw": 0.212283
+      "ewros_score": 85,
+      "iq_edge": 54,
+      "iq_edge_raw": 0.388717
     },
     {
       "ticker": "NEE",
@@ -2538,9 +2538,9 @@
       "target_mean": 93.78182,
       "analyst_count": 22,
       "current_price": 92.81999969482422,
-      "ewros_score": 83,
-      "iq_edge": 57,
-      "iq_edge_raw": 0.416983
+      "ewros_score": 81,
+      "iq_edge": 64,
+      "iq_edge_raw": 0.472169
     },
     {
       "ticker": "NI",
@@ -2679,9 +2679,9 @@
       "target_mean": 48.53846,
       "analyst_count": 13,
       "current_price": 47.470001220703125,
-      "ewros_score": 85,
-      "iq_edge": 18,
-      "iq_edge_raw": 0.130647
+      "ewros_score": 82,
+      "iq_edge": 17,
+      "iq_edge_raw": 0.135504
     },
     {
       "ticker": "WELL",
@@ -2820,9 +2820,9 @@
       "target_mean": 228.1,
       "analyst_count": 20,
       "current_price": 210.17999267578125,
-      "ewros_score": 86,
-      "iq_edge": 69,
-      "iq_edge_raw": 0.535754
+      "ewros_score": 87,
+      "iq_edge": 58,
+      "iq_edge_raw": 0.41754
     },
     {
       "ticker": "AEP",
@@ -2961,9 +2961,9 @@
       "target_mean": 137.26315,
       "analyst_count": 19,
       "current_price": 134.14999389648438,
-      "ewros_score": 89,
-      "iq_edge": 50,
-      "iq_edge_raw": 0.350312
+      "ewros_score": 87,
+      "iq_edge": 33,
+      "iq_edge_raw": 0.23023
     },
     {
       "ticker": "AR",
@@ -3103,8 +3103,8 @@
       "analyst_count": 22,
       "current_price": 41.029998779296875,
       "ewros_score": 94,
-      "iq_edge": 78,
-      "iq_edge_raw": 0.648502
+      "iq_edge": 81,
+      "iq_edge_raw": 0.681535
     },
     {
       "ticker": "ATO",
@@ -3243,9 +3243,9 @@
       "target_mean": 182.5,
       "analyst_count": 10,
       "current_price": 187.82000732421875,
-      "ewros_score": 86,
+      "ewros_score": 83,
       "iq_edge": 1,
-      "iq_edge_raw": 0.028792
+      "iq_edge_raw": 0.024825
     },
     {
       "ticker": "BRX",
@@ -3384,9 +3384,9 @@
       "target_mean": 31.65278,
       "analyst_count": 18,
       "current_price": 29.969999313354492,
-      "ewros_score": 86,
-      "iq_edge": 62,
-      "iq_edge_raw": 0.459931
+      "ewros_score": 83,
+      "iq_edge": 59,
+      "iq_edge_raw": 0.428398
     },
     {
       "ticker": "FE",
@@ -3525,9 +3525,9 @@
       "target_mean": 52.23077,
       "analyst_count": 13,
       "current_price": 51.7599983215332,
-      "ewros_score": 88,
-      "iq_edge": 42,
-      "iq_edge_raw": 0.285503
+      "ewros_score": 84,
+      "iq_edge": 40,
+      "iq_edge_raw": 0.280796
     },
     {
       "ticker": "LNT",
@@ -3666,9 +3666,9 @@
       "target_mean": 75.36364,
       "analyst_count": 11,
       "current_price": 73.02999877929688,
-      "ewros_score": 85,
-      "iq_edge": 54,
-      "iq_edge_raw": 0.385907
+      "ewros_score": 82,
+      "iq_edge": 36,
+      "iq_edge_raw": 0.250804
     },
     {
       "ticker": "REG",
@@ -3807,9 +3807,9 @@
       "target_mean": 81.45,
       "analyst_count": 20,
       "current_price": 77.38999938964844,
-      "ewros_score": 80,
-      "iq_edge": 78,
-      "iq_edge_raw": 0.647556
+      "ewros_score": 78,
+      "iq_edge": 67,
+      "iq_edge_raw": 0.503637
     },
     {
       "ticker": "SRE",
@@ -3948,9 +3948,9 @@
       "target_mean": 101.75,
       "analyst_count": 16,
       "current_price": 95.94000244140625,
-      "ewros_score": 82,
-      "iq_edge": 63,
-      "iq_edge_raw": 0.467046
+      "ewros_score": 81,
+      "iq_edge": 11,
+      "iq_edge_raw": 0.09268
     },
     {
       "ticker": "TJX",
@@ -4089,9 +4089,9 @@
       "target_mean": 171.77779,
       "analyst_count": 18,
       "current_price": 156.02000427246094,
-      "ewros_score": 64,
-      "iq_edge": 90,
-      "iq_edge_raw": 0.792686
+      "ewros_score": 59,
+      "iq_edge": 97,
+      "iq_edge_raw": 0.902154
     },
     {
       "ticker": "TRV",
@@ -4231,8 +4231,8 @@
       "analyst_count": 22,
       "current_price": 304.6400146484375,
       "ewros_score": 77,
-      "iq_edge": 13,
-      "iq_edge_raw": 0.103976
+      "iq_edge": 29,
+      "iq_edge_raw": 0.208462
     },
     {
       "ticker": "WTM",
@@ -4371,9 +4371,9 @@
       "target_mean": null,
       "analyst_count": 0,
       "current_price": 2199.68994140625,
-      "ewros_score": 76,
-      "iq_edge": 36,
-      "iq_edge_raw": 0.243864
+      "ewros_score": 75,
+      "iq_edge": 41,
+      "iq_edge_raw": 0.287104
     },
     {
       "ticker": "CNP",
@@ -4512,9 +4512,9 @@
       "target_mean": 44.5,
       "analyst_count": 16,
       "current_price": 44.13999938964844,
-      "ewros_score": 88,
-      "iq_edge": 34,
-      "iq_edge_raw": 0.231439
+      "ewros_score": 84,
+      "iq_edge": 35,
+      "iq_edge_raw": 0.246853
     },
     {
       "ticker": "DTE",
@@ -4653,9 +4653,9 @@
       "target_mean": 151.5,
       "analyst_count": 13,
       "current_price": 149.25999450683594,
-      "ewros_score": 87,
-      "iq_edge": 38,
-      "iq_edge_raw": 0.255918
+      "ewros_score": 85,
+      "iq_edge": 21,
+      "iq_edge_raw": 0.156263
     },
     {
       "ticker": "STAG",
@@ -4794,9 +4794,9 @@
       "target_mean": 41.45455,
       "analyst_count": 11,
       "current_price": 38.29999923706055,
-      "ewros_score": 65,
-      "iq_edge": 75,
-      "iq_edge_raw": 0.606845
+      "ewros_score": 67,
+      "iq_edge": 50,
+      "iq_edge_raw": 0.350454
     },
     {
       "ticker": "XEL",
@@ -4935,9 +4935,9 @@
       "target_mean": 89.17647,
       "analyst_count": 17,
       "current_price": 81.62999725341797,
-      "ewros_score": 78,
-      "iq_edge": 58,
-      "iq_edge_raw": 0.426592
+      "ewros_score": 76,
+      "iq_edge": 42,
+      "iq_edge_raw": 0.293824
     },
     {
       "ticker": "ALL",
@@ -5076,9 +5076,9 @@
       "target_mean": 240.5238,
       "analyst_count": 21,
       "current_price": 207.80999755859375,
-      "ewros_score": 67,
-      "iq_edge": 80,
-      "iq_edge_raw": 0.670978
+      "ewros_score": 64,
+      "iq_edge": 69,
+      "iq_edge_raw": 0.518082
     },
     {
       "ticker": "CMS",
@@ -5217,9 +5217,9 @@
       "target_mean": 79.15385,
       "analyst_count": 13,
       "current_price": 78.2699966430664,
-      "ewros_score": 84,
-      "iq_edge": 31,
-      "iq_edge_raw": 0.206839
+      "ewros_score": 83,
+      "iq_edge": 6,
+      "iq_edge_raw": 0.067286
     },
     {
       "ticker": "EVRG",
@@ -5358,9 +5358,9 @@
       "target_mean": 87.5,
       "analyst_count": 11,
       "current_price": 83.23999786376953,
-      "ewros_score": 84,
-      "iq_edge": 47,
-      "iq_edge_raw": 0.329383
+      "ewros_score": 81,
+      "iq_edge": 3,
+      "iq_edge_raw": 0.04768
     },
     {
       "ticker": "EXC",
@@ -5499,9 +5499,9 @@
       "target_mean": 50.75,
       "analyst_count": 16,
       "current_price": 50.290000915527344,
-      "ewros_score": 89,
-      "iq_edge": 2,
-      "iq_edge_raw": 0.036445
+      "ewros_score": 88,
+      "iq_edge": 1,
+      "iq_edge_raw": 0.028495
     },
     {
       "ticker": "IDA",
@@ -5640,9 +5640,9 @@
       "target_mean": 146.44444,
       "analyst_count": 9,
       "current_price": 142.67999267578125,
-      "ewros_score": 81,
-      "iq_edge": 44,
-      "iq_edge_raw": 0.303779
+      "ewros_score": 79,
+      "iq_edge": 51,
+      "iq_edge_raw": 0.361147
     },
     {
       "ticker": "KIM",
@@ -5781,9 +5781,9 @@
       "target_mean": 24.46591,
       "analyst_count": 22,
       "current_price": 23.190000534057617,
-      "ewros_score": 85,
-      "iq_edge": 15,
-      "iq_edge_raw": 0.117126
+      "ewros_score": 83,
+      "iq_edge": 58,
+      "iq_edge_raw": 0.415423
     },
     {
       "ticker": "MSI",
@@ -5922,9 +5922,9 @@
       "target_mean": 502.0,
       "analyst_count": 10,
       "current_price": 470.7900085449219,
-      "ewros_score": 91,
-      "iq_edge": 68,
-      "iq_edge_raw": 0.527721
+      "ewros_score": 90,
+      "iq_edge": 72,
+      "iq_edge_raw": 0.566819
     },
     {
       "ticker": "WEC",
@@ -6063,9 +6063,9 @@
       "target_mean": 122.38235,
       "analyst_count": 17,
       "current_price": 117.9000015258789,
-      "ewros_score": 84,
-      "iq_edge": 32,
-      "iq_edge_raw": 0.214731
+      "ewros_score": 81,
+      "iq_edge": 34,
+      "iq_edge_raw": 0.24351
     },
     {
       "ticker": "COST",
@@ -6204,9 +6204,9 @@
       "target_mean": 1067.0938,
       "analyst_count": 32,
       "current_price": 1001.739990234375,
-      "ewros_score": 79,
+      "ewros_score": 77,
       "iq_edge": 71,
-      "iq_edge_raw": 0.561354
+      "iq_edge_raw": 0.549541
     },
     {
       "ticker": "DUK",
@@ -6345,9 +6345,9 @@
       "target_mean": 138.11765,
       "analyst_count": 17,
       "current_price": 133.4600067138672,
-      "ewros_score": 88,
+      "ewros_score": 86,
       "iq_edge": 1,
-      "iq_edge_raw": 0.026997
+      "iq_edge_raw": 0.020057
     },
     {
       "ticker": "GD",
@@ -6487,8 +6487,8 @@
       "analyst_count": 20,
       "current_price": 354.3599853515625,
       "ewros_score": 67,
-      "iq_edge": 88,
-      "iq_edge_raw": 0.765456
+      "iq_edge": 66,
+      "iq_edge_raw": 0.496317
     },
     {
       "ticker": "LNG",
@@ -6628,8 +6628,8 @@
       "analyst_count": 22,
       "current_price": 251.2899932861328,
       "ewros_score": 94,
-      "iq_edge": 96,
-      "iq_edge_raw": 0.894605
+      "iq_edge": 85,
+      "iq_edge_raw": 0.728137
     },
     {
       "ticker": "MO",
@@ -6768,9 +6768,9 @@
       "target_mean": 65.5,
       "analyst_count": 12,
       "current_price": 67.52999877929688,
-      "ewros_score": 83,
-      "iq_edge": 63,
-      "iq_edge_raw": 0.467074
+      "ewros_score": 80,
+      "iq_edge": 65,
+      "iq_edge_raw": 0.482094
     },
     {
       "ticker": "NNN",
@@ -6909,9 +6909,9 @@
       "target_mean": 45.15625,
       "analyst_count": 16,
       "current_price": 45.22999954223633,
-      "ewros_score": 82,
-      "iq_edge": 48,
-      "iq_edge_raw": 0.334906
+      "ewros_score": 79,
+      "iq_edge": 74,
+      "iq_edge_raw": 0.590874
     },
     {
       "ticker": "OGE",
@@ -7050,9 +7050,9 @@
       "target_mean": 47.35,
       "analyst_count": 10,
       "current_price": 48.38999938964844,
-      "ewros_score": 85,
-      "iq_edge": 25,
-      "iq_edge_raw": 0.162676
+      "ewros_score": 82,
+      "iq_edge": 6,
+      "iq_edge_raw": 0.065655
     },
     {
       "ticker": "PEG",
@@ -7191,9 +7191,9 @@
       "target_mean": 90.08824,
       "analyst_count": 17,
       "current_price": 84.87999725341797,
-      "ewros_score": 76,
-      "iq_edge": 62,
-      "iq_edge_raw": 0.464361
+      "ewros_score": 74,
+      "iq_edge": 69,
+      "iq_edge_raw": 0.520314
     },
     {
       "ticker": "PPL",
@@ -7332,9 +7332,9 @@
       "target_mean": 40.66667,
       "analyst_count": 15,
       "current_price": 38.7400016784668,
-      "ewros_score": 85,
-      "iq_edge": 38,
-      "iq_edge_raw": 0.252962
+      "ewros_score": 81,
+      "iq_edge": 34,
+      "iq_edge_raw": 0.24391
     },
     {
       "ticker": "SO",
@@ -7473,9 +7473,9 @@
       "target_mean": 101.07895,
       "analyst_count": 19,
       "current_price": 99.11000061035156,
-      "ewros_score": 89,
-      "iq_edge": 31,
-      "iq_edge_raw": 0.208316
+      "ewros_score": 86,
+      "iq_edge": 32,
+      "iq_edge_raw": 0.227619
     },
     {
       "ticker": "SUI",
@@ -7615,8 +7615,8 @@
       "analyst_count": 17,
       "current_price": 134.9499969482422,
       "ewros_score": 79,
-      "iq_edge": 40,
-      "iq_edge_raw": 0.266802
+      "iq_edge": 27,
+      "iq_edge_raw": 0.190552
     },
     {
       "ticker": "WTRG",
@@ -7755,9 +7755,9 @@
       "target_mean": 40.6,
       "analyst_count": 5,
       "current_price": 41.040000915527344,
-      "ewros_score": 81,
+      "ewros_score": 78,
       "iq_edge": 1,
-      "iq_edge_raw": 0.026427
+      "iq_edge_raw": 0.018336
     },
     {
       "ticker": "HR",
@@ -7896,9 +7896,9 @@
       "target_mean": 19.4,
       "analyst_count": 10,
       "current_price": 18.149999618530273,
-      "ewros_score": 74,
-      "iq_edge": 74,
-      "iq_edge_raw": 0.582954
+      "ewros_score": 70,
+      "iq_edge": 67,
+      "iq_edge_raw": 0.501503
     },
     {
       "ticker": "YUM",
@@ -8037,9 +8037,9 @@
       "target_mean": 171.75,
       "analyst_count": 24,
       "current_price": 161.77999877929688,
-      "ewros_score": 75,
-      "iq_edge": 37,
-      "iq_edge_raw": 0.247565
+      "ewros_score": 76,
+      "iq_edge": 26,
+      "iq_edge_raw": 0.188398
     },
     {
       "ticker": "APD",
@@ -8178,9 +8178,9 @@
       "target_mean": 304.8632,
       "analyst_count": 22,
       "current_price": 289.1600036621094,
-      "ewros_score": 88,
-      "iq_edge": 29,
-      "iq_edge_raw": 0.19144
+      "ewros_score": 84,
+      "iq_edge": 6,
+      "iq_edge_raw": 0.065056
     },
     {
       "ticker": "CTVA",
@@ -8319,9 +8319,9 @@
       "target_mean": 83.33333,
       "analyst_count": 21,
       "current_price": 79.04000091552734,
-      "ewros_score": 88,
-      "iq_edge": 9,
-      "iq_edge_raw": 0.081558
+      "ewros_score": 89,
+      "iq_edge": 65,
+      "iq_edge_raw": 0.482072
     },
     {
       "ticker": "DINO",
@@ -8460,9 +8460,9 @@
       "target_mean": 60.4,
       "analyst_count": 15,
       "current_price": 56.59000015258789,
-      "ewros_score": 90,
-      "iq_edge": 38,
-      "iq_edge_raw": 0.254552
+      "ewros_score": 91,
+      "iq_edge": 51,
+      "iq_edge_raw": 0.360039
     },
     {
       "ticker": "EW",
@@ -8601,9 +8601,9 @@
       "target_mean": 96.46429,
       "analyst_count": 28,
       "current_price": 83.55999755859375,
-      "ewros_score": 68,
-      "iq_edge": 89,
-      "iq_edge_raw": 0.787638
+      "ewros_score": 69,
+      "iq_edge": 63,
+      "iq_edge_raw": 0.470088
     },
     {
       "ticker": "MDU",
@@ -8742,9 +8742,9 @@
       "target_mean": 22.0,
       "analyst_count": 6,
       "current_price": 20.610000610351562,
-      "ewros_score": 69,
-      "iq_edge": 26,
-      "iq_edge_raw": 0.17283
+      "ewros_score": 62,
+      "iq_edge": 90,
+      "iq_edge_raw": 0.803931
     },
     {
       "ticker": "PFE",
@@ -8883,9 +8883,9 @@
       "target_mean": 28.42577,
       "analyst_count": 26,
       "current_price": 26.610000610351562,
-      "ewros_score": 67,
-      "iq_edge": 76,
-      "iq_edge_raw": 0.618971
+      "ewros_score": 77,
+      "iq_edge": 64,
+      "iq_edge_raw": 0.47876
     },
     {
       "ticker": "UTHR",
@@ -9025,8 +9025,8 @@
       "analyst_count": 12,
       "current_price": 534.2999877929688,
       "ewros_score": 90,
-      "iq_edge": 79,
-      "iq_edge_raw": 0.651722
+      "iq_edge": 77,
+      "iq_edge_raw": 0.624992
     },
     {
       "ticker": "MCD",
@@ -9165,9 +9165,9 @@
       "target_mean": 344.0909,
       "analyst_count": 33,
       "current_price": 326.6499938964844,
-      "ewros_score": 71,
-      "iq_edge": 83,
-      "iq_edge_raw": 0.699267
+      "ewros_score": 67,
+      "iq_edge": 90,
+      "iq_edge_raw": 0.814665
     },
     {
       "ticker": "AL",
@@ -9306,9 +9306,9 @@
       "target_mean": 65.0,
       "analyst_count": 3,
       "current_price": 64.61000061035156,
-      "ewros_score": 65,
-      "iq_edge": 88,
-      "iq_edge_raw": 0.762349
+      "ewros_score": 62,
+      "iq_edge": 81,
+      "iq_edge_raw": 0.685287
     },
     {
       "ticker": "CFLT",
@@ -9447,9 +9447,9 @@
       "target_mean": 30.89474,
       "analyst_count": 19,
       "current_price": 30.989999771118164,
-      "ewros_score": 70,
+      "ewros_score": 67,
       "iq_edge": 96,
-      "iq_edge_raw": 0.896407
+      "iq_edge_raw": 0.893706
     },
     {
       "ticker": "RSG",
@@ -9588,9 +9588,9 @@
       "target_mean": 244.875,
       "analyst_count": 24,
       "current_price": 224.1300048828125,
-      "ewros_score": 72,
-      "iq_edge": 70,
-      "iq_edge_raw": 0.551391
+      "ewros_score": 70,
+      "iq_edge": 75,
+      "iq_edge_raw": 0.601551
     },
     {
       "ticker": "ADM",
@@ -9729,9 +9729,9 @@
       "target_mean": 61.18182,
       "analyst_count": 11,
       "current_price": 70.75,
-      "ewros_score": 87,
-      "iq_edge": 81,
-      "iq_edge_raw": 0.686709
+      "ewros_score": 89,
+      "iq_edge": 91,
+      "iq_edge_raw": 0.821562
     },
     {
       "ticker": "EA",
@@ -9870,9 +9870,9 @@
       "target_mean": 205.58824,
       "analyst_count": 17,
       "current_price": 200.2100067138672,
-      "ewros_score": 61,
-      "iq_edge": 78,
-      "iq_edge_raw": 0.648389
+      "ewros_score": 57,
+      "iq_edge": 43,
+      "iq_edge_raw": 0.300654
     },
     {
       "ticker": "WWD",
@@ -10011,9 +10011,9 @@
       "target_mean": 417.75,
       "analyst_count": 8,
       "current_price": 367.5899963378906,
-      "ewros_score": 82,
-      "iq_edge": 45,
-      "iq_edge_raw": 0.316725
+      "ewros_score": 81,
+      "iq_edge": 37,
+      "iq_edge_raw": 0.259731
     },
     {
       "ticker": "HOLX",
@@ -10152,9 +10152,9 @@
       "target_mean": 76.6,
       "analyst_count": 10,
       "current_price": 75.1500015258789,
-      "ewros_score": 64,
-      "iq_edge": 86,
-      "iq_edge_raw": 0.736145
+      "ewros_score": 61,
+      "iq_edge": 96,
+      "iq_edge_raw": 0.891212
     },
     {
       "ticker": "AWK",
@@ -10293,9 +10293,9 @@
       "target_mean": 137.7,
       "analyst_count": 10,
       "current_price": 139.1199951171875,
-      "ewros_score": 83,
-      "iq_edge": 37,
-      "iq_edge_raw": 0.246439
+      "ewros_score": 79,
+      "iq_edge": 46,
+      "iq_edge_raw": 0.320123
     },
     {
       "ticker": "CW",
@@ -10434,9 +10434,9 @@
       "target_mean": 711.4286,
       "analyst_count": 7,
       "current_price": 683.8400268554688,
-      "ewros_score": 85,
-      "iq_edge": 47,
-      "iq_edge_raw": 0.33096
+      "ewros_score": 83,
+      "iq_edge": 44,
+      "iq_edge_raw": 0.306383
     },
     {
       "ticker": "FTNT",
@@ -10575,9 +10575,9 @@
       "target_mean": 89.05882,
       "analyst_count": 34,
       "current_price": 84.48999786376953,
-      "ewros_score": 79,
-      "iq_edge": 87,
-      "iq_edge_raw": 0.75331
+      "ewros_score": 72,
+      "iq_edge": 85,
+      "iq_edge_raw": 0.730146
     },
     {
       "ticker": "HWM",
@@ -10716,9 +10716,9 @@
       "target_mean": 279.996,
       "analyst_count": 20,
       "current_price": 240.72999572753906,
-      "ewros_score": 82,
-      "iq_edge": 71,
-      "iq_edge_raw": 0.55799
+      "ewros_score": 80,
+      "iq_edge": 64,
+      "iq_edge_raw": 0.479038
     },
     {
       "ticker": "KR",
@@ -10857,9 +10857,9 @@
       "target_mean": 74.90909,
       "analyst_count": 22,
       "current_price": 74.48999786376953,
-      "ewros_score": 92,
-      "iq_edge": 66,
-      "iq_edge_raw": 0.495074
+      "ewros_score": 90,
+      "iq_edge": 49,
+      "iq_edge_raw": 0.340089
     },
     {
       "ticker": "AM",
@@ -10998,9 +10998,9 @@
       "target_mean": 21.14286,
       "analyst_count": 7,
       "current_price": 22.8799991607666,
-      "ewros_score": 93,
-      "iq_edge": 19,
-      "iq_edge_raw": 0.132907
+      "ewros_score": 92,
+      "iq_edge": 18,
+      "iq_edge_raw": 0.141079
     },
     {
       "ticker": "CRS",
@@ -11139,9 +11139,9 @@
       "target_mean": 412.75,
       "analyst_count": 8,
       "current_price": 374.07000732421875,
-      "ewros_score": 82,
-      "iq_edge": 31,
-      "iq_edge_raw": 0.203307
+      "ewros_score": 87,
+      "iq_edge": 1,
+      "iq_edge_raw": 0.024896
     },
     {
       "ticker": "HON",
@@ -11280,9 +11280,9 @@
       "target_mean": 251.43625,
       "analyst_count": 24,
       "current_price": 234.50999450683594,
-      "ewros_score": 80,
-      "iq_edge": 85,
-      "iq_edge_raw": 0.728303
+      "ewros_score": 74,
+      "iq_edge": 93,
+      "iq_edge_raw": 0.851235
     },
     {
       "ticker": "HSY",
@@ -11421,9 +11421,9 @@
       "target_mean": 230.3913,
       "analyst_count": 23,
       "current_price": 220.11000061035156,
-      "ewros_score": 85,
-      "iq_edge": 35,
-      "iq_edge_raw": 0.233168
+      "ewros_score": 80,
+      "iq_edge": 24,
+      "iq_edge_raw": 0.172865
     },
     {
       "ticker": "MASI",
@@ -11563,8 +11563,8 @@
       "analyst_count": 5,
       "current_price": 175.39999389648438,
       "ewros_score": 95,
-      "iq_edge": 42,
-      "iq_edge_raw": 0.286899
+      "iq_edge": 16,
+      "iq_edge_raw": 0.129269
     },
     {
       "ticker": "NOC",
@@ -11703,9 +11703,9 @@
       "target_mean": 724.3914,
       "analyst_count": 21,
       "current_price": 735.9600219726562,
-      "ewros_score": 90,
-      "iq_edge": 80,
-      "iq_edge_raw": 0.674576
+      "ewros_score": 87,
+      "iq_edge": 79,
+      "iq_edge_raw": 0.652083
     },
     {
       "ticker": "NYT",
@@ -11845,8 +11845,8 @@
       "analyst_count": 8,
       "current_price": 79.75,
       "ewros_score": 88,
-      "iq_edge": 15,
-      "iq_edge_raw": 0.118218
+      "iq_edge": 35,
+      "iq_edge_raw": 0.248525
     },
     {
       "ticker": "OKE",
@@ -11985,9 +11985,9 @@
       "target_mean": 89.75,
       "analyst_count": 20,
       "current_price": 85.31999969482422,
-      "ewros_score": 86,
-      "iq_edge": 73,
-      "iq_edge_raw": 0.577607
+      "ewros_score": 87,
+      "iq_edge": 85,
+      "iq_edge_raw": 0.719112
     },
     {
       "ticker": "CSX",
@@ -12126,9 +12126,9 @@
       "target_mean": 40.8125,
       "analyst_count": 24,
       "current_price": 39.779998779296875,
-      "ewros_score": 70,
-      "iq_edge": 6,
-      "iq_edge_raw": 0.067615
+      "ewros_score": 73,
+      "iq_edge": 8,
+      "iq_edge_raw": 0.077648
     },
     {
       "ticker": "EOG",
@@ -12268,8 +12268,8 @@
       "analyst_count": 29,
       "current_price": 134.50999450683594,
       "ewros_score": 94,
-      "iq_edge": 80,
-      "iq_edge_raw": 0.67146
+      "iq_edge": 29,
+      "iq_edge_raw": 0.199809
     },
     {
       "ticker": "EXAS",
@@ -12408,9 +12408,9 @@
       "target_mean": 105.8125,
       "analyst_count": 16,
       "current_price": 103.8499984741211,
-      "ewros_score": 68,
-      "iq_edge": 80,
-      "iq_edge_raw": 0.678205
+      "ewros_score": 66,
+      "iq_edge": 69,
+      "iq_edge_raw": 0.521831
     },
     {
       "ticker": "TIGO",
@@ -12550,8 +12550,8 @@
       "analyst_count": 8,
       "current_price": 72.88999938964844,
       "ewros_score": 95,
-      "iq_edge": 49,
-      "iq_edge_raw": 0.338078
+      "iq_edge": 63,
+      "iq_edge_raw": 0.465003
     },
     {
       "ticker": "VZ",
@@ -12690,9 +12690,9 @@
       "target_mean": 50.53636,
       "analyst_count": 22,
       "current_price": 50.970001220703125,
-      "ewros_score": 92,
-      "iq_edge": 54,
-      "iq_edge_raw": 0.383735
+      "ewros_score": 90,
+      "iq_edge": 61,
+      "iq_edge_raw": 0.44109
     },
     {
       "ticker": "BWXT",
@@ -12831,9 +12831,9 @@
       "target_mean": 232.0,
       "analyst_count": 10,
       "current_price": 204.6699981689453,
-      "ewros_score": 80,
-      "iq_edge": 53,
-      "iq_edge_raw": 0.371564
+      "ewros_score": 85,
+      "iq_edge": 36,
+      "iq_edge_raw": 0.253417
     },
     {
       "ticker": "CTRA",
@@ -12972,9 +12972,9 @@
       "target_mean": 34.65217,
       "analyst_count": 23,
       "current_price": 32.369998931884766,
-      "ewros_score": 92,
-      "iq_edge": 90,
-      "iq_edge_raw": 0.794532
+      "ewros_score": 93,
+      "iq_edge": 92,
+      "iq_edge_raw": 0.844094
     },
     {
       "ticker": "DTM",
@@ -13113,9 +13113,9 @@
       "target_mean": 140.07143,
       "analyst_count": 14,
       "current_price": 137.05999755859375,
-      "ewros_score": 84,
-      "iq_edge": 47,
-      "iq_edge_raw": 0.331138
+      "ewros_score": 80,
+      "iq_edge": 53,
+      "iq_edge_raw": 0.380355
     },
     {
       "ticker": "EIX",
@@ -13254,9 +13254,9 @@
       "target_mean": 73.34615,
       "analyst_count": 13,
       "current_price": 72.97000122070312,
-      "ewros_score": 91,
-      "iq_edge": 69,
-      "iq_edge_raw": 0.530283
+      "ewros_score": 90,
+      "iq_edge": 58,
+      "iq_edge_raw": 0.419888
     },
     {
       "ticker": "NVT",
@@ -13395,9 +13395,9 @@
       "target_mean": 127.38769,
       "analyst_count": 13,
       "current_price": 114.30000305175781,
-      "ewros_score": 76,
-      "iq_edge": 34,
-      "iq_edge_raw": 0.228637
+      "ewros_score": 80,
+      "iq_edge": 46,
+      "iq_edge_raw": 0.3186
     },
     {
       "ticker": "PEP",
@@ -13536,9 +13536,9 @@
       "target_mean": 171.2381,
       "analyst_count": 21,
       "current_price": 157.72000122070312,
-      "ewros_score": 67,
-      "iq_edge": 64,
-      "iq_edge_raw": 0.483664
+      "ewros_score": 61,
+      "iq_edge": 70,
+      "iq_edge_raw": 0.524813
     },
     {
       "ticker": "VNOM",
@@ -13677,9 +13677,9 @@
       "target_mean": 52.47059,
       "analyst_count": 17,
       "current_price": 44.900001525878906,
-      "ewros_score": 86,
-      "iq_edge": 27,
-      "iq_edge_raw": 0.175945
+      "ewros_score": 89,
+      "iq_edge": 16,
+      "iq_edge_raw": 0.133075
     },
     {
       "ticker": "WM",
@@ -13818,9 +13818,9 @@
       "target_mean": 253.12,
       "analyst_count": 25,
       "current_price": 236.9600067138672,
-      "ewros_score": 77,
-      "iq_edge": 16,
-      "iq_edge_raw": 0.120717
+      "ewros_score": 73,
+      "iq_edge": 71,
+      "iq_edge_raw": 0.543073
     },
     {
       "ticker": "WMB",
@@ -13959,9 +13959,9 @@
       "target_mean": 78.03286,
       "analyst_count": 21,
       "current_price": 73.88999938964844,
-      "ewros_score": 89,
-      "iq_edge": 61,
-      "iq_edge_raw": 0.451512
+      "ewros_score": 88,
+      "iq_edge": 71,
+      "iq_edge_raw": 0.547784
     },
     {
       "ticker": "APA",
@@ -14101,8 +14101,8 @@
       "analyst_count": 28,
       "current_price": 34.540000915527344,
       "ewros_score": 97,
-      "iq_edge": 49,
-      "iq_edge_raw": 0.339118
+      "iq_edge": 40,
+      "iq_edge_raw": 0.277637
     }
   ]
 }
