@@ -39,6 +39,11 @@
       "price": 22.88,
       "ewros_score": 39,
       "tier": "SELL"
+    },
+    "2026-03-17": {
+      "price": 23.24,
+      "ewros_score": 45,
+      "tier": "SELL"
     }
   },
   "NVT": {
@@ -80,6 +85,11 @@
     "2026-03-16": {
       "price": 114.3,
       "ewros_score": 76,
+      "tier": "HOLD"
+    },
+    "2026-03-17": {
+      "price": 114.71,
+      "ewros_score": 80,
       "tier": "HOLD"
     }
   },
@@ -123,6 +133,11 @@
       "price": 50.46,
       "ewros_score": 76,
       "tier": "HOLD"
+    },
+    "2026-03-17": {
+      "price": 51.43,
+      "ewros_score": 81,
+      "tier": "HOLD"
     }
   },
   "PCG": {
@@ -164,6 +179,11 @@
     "2026-03-16": {
       "price": 18.45,
       "ewros_score": 90,
+      "tier": "HOLD"
+    },
+    "2026-03-17": {
+      "price": 18.36,
+      "ewros_score": 88,
       "tier": "HOLD"
     }
   },
@@ -207,6 +227,11 @@
       "price": 219.3,
       "ewros_score": 76,
       "tier": "HOLD"
+    },
+    "2026-03-17": {
+      "price": 211.64,
+      "ewros_score": 61,
+      "tier": "SELL"
     }
   },
   "MPC": {
@@ -247,6 +272,11 @@
     },
     "2026-03-16": {
       "price": 228.94,
+      "ewros_score": 95,
+      "tier": "HOLD"
+    },
+    "2026-03-17": {
+      "price": 233.26,
       "ewros_score": 95,
       "tier": "HOLD"
     }
@@ -291,6 +321,11 @@
       "price": 152.48,
       "ewros_score": 42,
       "tier": "SELL"
+    },
+    "2026-03-17": {
+      "price": 154.75,
+      "ewros_score": 49,
+      "tier": "SELL"
     }
   },
   "RRC": {
@@ -298,12 +333,22 @@
       "price": 43.59,
       "ewros_score": 94,
       "tier": "HOLD"
+    },
+    "2026-03-17": {
+      "price": 43.36,
+      "ewros_score": 93,
+      "tier": "HOLD"
     }
   },
   "NFG": {
     "2026-03-16": {
       "price": 94.61,
       "ewros_score": 90,
+      "tier": "HOLD"
+    },
+    "2026-03-17": {
+      "price": 93.45,
+      "ewros_score": 87,
       "tier": "HOLD"
     }
   }

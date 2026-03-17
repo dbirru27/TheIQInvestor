@@ -1,42 +1,211 @@
 {
-  "earnings": [],
+  "earnings": [
+    {
+      "ticker": "MU",
+      "earnings_date": "2026-03-18",
+      "days_until": 1,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "ASML",
+      "earnings_date": "2026-04-15",
+      "days_until": 29,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "TSM",
+      "earnings_date": "2026-04-16",
+      "days_until": 30,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "NOC",
+      "earnings_date": "2026-04-21",
+      "days_until": 35,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "LMT",
+      "earnings_date": "2026-04-21",
+      "days_until": 35,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "RTX",
+      "earnings_date": "2026-04-21",
+      "days_until": 35,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "GEV",
+      "earnings_date": "2026-04-22",
+      "days_until": 36,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "FIX",
+      "earnings_date": "2026-04-23",
+      "days_until": 37,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "GOOGL",
+      "earnings_date": "2026-04-23",
+      "days_until": 37,
+      "basket": "Trading Account"
+    },
+    {
+      "ticker": "APH",
+      "earnings_date": "2026-04-29",
+      "days_until": 43,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "VRT",
+      "earnings_date": "2026-04-29",
+      "days_until": 43,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "LHX",
+      "earnings_date": "2026-04-30",
+      "days_until": 44,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "HUBB",
+      "earnings_date": "2026-04-30",
+      "days_until": 44,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "HWM",
+      "earnings_date": "2026-04-30",
+      "days_until": 44,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "HII",
+      "earnings_date": "2026-04-30",
+      "days_until": 44,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "ETN",
+      "earnings_date": "2026-04-30",
+      "days_until": 44,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "LLY",
+      "earnings_date": "2026-04-30",
+      "days_until": 44,
+      "basket": "Biotech"
+    },
+    {
+      "ticker": "PWR",
+      "earnings_date": "2026-04-30",
+      "days_until": 44,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "NVT",
+      "earnings_date": "2026-05-01",
+      "days_until": 45,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "CCJ",
+      "earnings_date": "2026-05-05",
+      "days_until": 49,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "AMD",
+      "earnings_date": "2026-05-05",
+      "days_until": 49,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "ANET",
+      "earnings_date": "2026-05-05",
+      "days_until": 49,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "STX",
+      "earnings_date": "2026-05-05",
+      "days_until": 49,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "WDC",
+      "earnings_date": "2026-05-06",
+      "days_until": 50,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "CEG",
+      "earnings_date": "2026-05-11",
+      "days_until": 55,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "NVDA",
+      "earnings_date": "2026-05-20",
+      "days_until": 64,
+      "basket": "themastertest"
+    },
+    {
+      "ticker": "MRVL",
+      "earnings_date": "2026-05-28",
+      "days_until": 72,
+      "basket": "AI Semis"
+    },
+    {
+      "ticker": "AVGO",
+      "earnings_date": "2026-06-03",
+      "days_until": 78,
+      "basket": "AI Semis"
+    }
+  ],
   "fomc": [
     {
       "date": "2026-03-18",
       "label": "FOMC Mar 18-19",
-      "days_until": 2
+      "days_until": 1
     },
     {
       "date": "2026-05-06",
       "label": "FOMC May 6-7",
-      "days_until": 51
+      "days_until": 50
     },
     {
       "date": "2026-06-17",
       "label": "FOMC Jun 17-18",
-      "days_until": 93
+      "days_until": 92
     },
     {
       "date": "2026-07-29",
       "label": "FOMC Jul 29-30",
-      "days_until": 135
+      "days_until": 134
     },
     {
       "date": "2026-09-16",
       "label": "FOMC Sep 16-17",
-      "days_until": 184
+      "days_until": 183
     },
     {
       "date": "2026-11-04",
       "label": "FOMC Nov 4-5",
-      "days_until": 233
+      "days_until": 232
     },
     {
       "date": "2026-12-16",
       "label": "FOMC Dec 16-17",
-      "days_until": 275
+      "days_until": 274
     }
   ],
-  "timestamp": "2026-03-16 19:33:11 EST",
+  "timestamp": "2026-03-17 19:05:52 EST",
   "ticker_count": 42
 }
