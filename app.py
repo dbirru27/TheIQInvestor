@@ -2423,9 +2423,10 @@ def chart_data(ticker):
 
 
 def _get_fundamentals(ticker):
-    """Get quarterly revenue + EPS from yfinance."""
+    """Get quarterly revenue + EPS + earnings dates from yfinance."""
     revenue = []
     eps = []
+    earnings_dates = []
 
     try:
         import yfinance as yf
@@ -2452,14 +2453,35 @@ def _get_fundamentals(ticker):
                         q = (ts.month - 1) // 3 + 1
                         label = f'{ts.year}Q{q}'
                         eps.append({'time': date_str, 'value': float(val), 'label': label})
+
+        # Earnings report dates
+        try:
+            ed = t.earnings_dates
+            if ed is not None and not ed.empty:
+                for ts, row in ed.iterrows():
+                    date_str = ts.strftime('%Y-%m-%d')
+                    est = row.get('EPS Estimate')
+                    actual = row.get('Reported EPS')
+                    surprise = row.get('Surprise(%)')
+                    entry = {'time': date_str}
+                    if actual is not None and not (isinstance(actual, float) and actual != actual):
+                        entry['actual'] = round(float(actual), 2)
+                    if est is not None and not (isinstance(est, float) and est != est):
+                        entry['estimate'] = round(float(est), 2)
+                    if surprise is not None and not (isinstance(surprise, float) and surprise != surprise):
+                        entry['surprise'] = round(float(surprise), 2)
+                    earnings_dates.append(entry)
+        except Exception:
+            pass
+
     except Exception:
         pass
 
-    # Sort by time
     revenue.sort(key=lambda x: x['time'])
     eps.sort(key=lambda x: x['time'])
+    earnings_dates.sort(key=lambda x: x['time'])
 
-    return {'revenue': revenue, 'eps': eps}
+    return {'revenue': revenue, 'eps': eps, 'earnings_dates': earnings_dates}
 
 
 if __name__ == '__main__':

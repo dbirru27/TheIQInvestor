@@ -6521,6 +6521,29 @@
                 });
                 _chartCandleSeries.setData(data.candles);
 
+                // Earnings markers on price chart
+                const earningsDates = (data.fundamentals || {}).earnings_dates || [];
+                if (earningsDates.length > 0) {
+                    const candleDates = new Set(data.candles.map(c => c.time));
+                    const markers = earningsDates
+                        .filter(e => e.actual !== undefined && candleDates.has(e.time))
+                        .map(e => {
+                            const beat = e.surprise !== undefined && e.surprise > 0;
+                            const miss = e.surprise !== undefined && e.surprise < 0;
+                            const surpriseStr = e.surprise !== undefined ? ` (${e.surprise > 0 ? '+' : ''}${e.surprise}%)` : '';
+                            return {
+                                time: e.time,
+                                position: 'belowBar',
+                                color: beat ? '#22c55e' : miss ? '#ef4444' : '#94a3b8',
+                                shape: beat ? 'arrowUp' : miss ? 'arrowDown' : 'circle',
+                                text: `E: $${e.actual}${surpriseStr}`,
+                            };
+                        });
+                    if (markers.length > 0) {
+                        _chartCandleSeries.setMarkers(markers);
+                    }
+                }
+
                 // Volume series
                 _chartVolumeSeries = _chartInstance.addHistogramSeries({
                     priceFormat: { type: 'volume' },
