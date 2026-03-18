@@ -145,7 +145,11 @@
       "iq_edge": 86,
       "iq_edge_raw": 0.756923,
       "ibd_rs": 72,
-      "ibd_rs_raw": 6.98
+      "ibd_rs_raw": 6.98,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "WTM",
@@ -288,7 +292,11 @@
       "iq_edge": 57,
       "iq_edge_raw": 0.439415,
       "ibd_rs": 63,
-      "ibd_rs_raw": 4.73
+      "ibd_rs_raw": 4.73,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "OHI",
@@ -431,7 +439,11 @@
       "iq_edge": 50,
       "iq_edge_raw": 0.381213,
       "ibd_rs": 74,
-      "ibd_rs_raw": 7.55
+      "ibd_rs_raw": 7.55,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "DRS",
@@ -574,7 +586,11 @@
       "iq_edge": 93,
       "iq_edge_raw": 0.859953,
       "ibd_rs": 91,
-      "ibd_rs_raw": 16.9
+      "ibd_rs_raw": 16.9,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "NFG",
@@ -717,7 +733,11 @@
       "iq_edge": 14,
       "iq_edge_raw": 0.110141,
       "ibd_rs": 72,
-      "ibd_rs_raw": 6.82
+      "ibd_rs_raw": 6.82,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "UI",
@@ -860,7 +880,11 @@
       "iq_edge": 1,
       "iq_edge_raw": 0.021321,
       "ibd_rs": 97,
-      "ibd_rs_raw": 30.81
+      "ibd_rs_raw": 30.81,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "PPL",
@@ -1003,7 +1027,11 @@
       "iq_edge": 24,
       "iq_edge_raw": 0.177132,
       "ibd_rs": 63,
-      "ibd_rs_raw": 4.63
+      "ibd_rs_raw": 4.63,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "FE",
@@ -1146,7 +1174,11 @@
       "iq_edge": 30,
       "iq_edge_raw": 0.219746,
       "ibd_rs": 78,
-      "ibd_rs_raw": 8.8
+      "ibd_rs_raw": 8.8,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "EGP",
@@ -1289,7 +1321,11 @@
       "iq_edge": 64,
       "iq_edge_raw": 0.493955,
       "ibd_rs": 53,
-      "ibd_rs_raw": 2.44
+      "ibd_rs_raw": 2.44,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "NEE",
@@ -1432,7 +1468,11 @@
       "iq_edge": 72,
       "iq_edge_raw": 0.568398,
       "ibd_rs": 76,
-      "ibd_rs_raw": 8.22
+      "ibd_rs_raw": 8.22,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "BRX",
@@ -1575,7 +1615,11 @@
       "iq_edge": 64,
       "iq_edge_raw": 0.494685,
       "ibd_rs": 71,
-      "ibd_rs_raw": 6.69
+      "ibd_rs_raw": 6.69,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "EQT",
@@ -1718,7 +1762,11 @@
       "iq_edge": 3,
       "iq_edge_raw": 0.039049,
       "ibd_rs": 74,
-      "ibd_rs_raw": 7.64
+      "ibd_rs_raw": 7.64,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "GD",
@@ -1861,7 +1909,11 @@
       "iq_edge": 85,
       "iq_edge_raw": 0.740874,
       "ibd_rs": 72,
-      "ibd_rs_raw": 7.11
+      "ibd_rs_raw": 7.11,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "NVT",
@@ -2004,7 +2056,11 @@
       "iq_edge": 17,
       "iq_edge_raw": 0.139774,
       "ibd_rs": 93,
-      "ibd_rs_raw": 21.21
+      "ibd_rs_raw": 21.21,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "AEE",
@@ -2147,7 +2203,11 @@
       "iq_edge": 13,
       "iq_edge_raw": 0.107339,
       "ibd_rs": 65,
-      "ibd_rs_raw": 5.09
+      "ibd_rs_raw": 5.09,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "PFE",
@@ -2290,7 +2350,11 @@
       "iq_edge": 81,
       "iq_edge_raw": 0.687796,
       "ibd_rs": 57,
-      "ibd_rs_raw": 3.38
+      "ibd_rs_raw": 3.38,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "CNP",
@@ -2433,7 +2497,11 @@
       "iq_edge": 37,
       "iq_edge_raw": 0.271724,
       "ibd_rs": 72,
-      "ibd_rs_raw": 7.02
+      "ibd_rs_raw": 7.02,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "VTR",
@@ -2576,7 +2644,11 @@
       "iq_edge": 27,
       "iq_edge_raw": 0.195727,
       "ibd_rs": 77,
-      "ibd_rs_raw": 8.33
+      "ibd_rs_raw": 8.33,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "AEP",
@@ -2719,7 +2791,11 @@
       "iq_edge": 44,
       "iq_edge_raw": 0.329039,
       "ibd_rs": 75,
-      "ibd_rs_raw": 7.99
+      "ibd_rs_raw": 7.99,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "DUK",
@@ -2862,7 +2938,11 @@
       "iq_edge": 4,
       "iq_edge_raw": 0.044719,
       "ibd_rs": 65,
-      "ibd_rs_raw": 5.08
+      "ibd_rs_raw": 5.08,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "IDA",
@@ -3005,7 +3085,11 @@
       "iq_edge": 72,
       "iq_edge_raw": 0.568884,
       "ibd_rs": 71,
-      "ibd_rs_raw": 6.81
+      "ibd_rs_raw": 6.81,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "AR",
@@ -3148,7 +3232,11 @@
       "iq_edge": 89,
       "iq_edge_raw": 0.793794,
       "ibd_rs": 67,
-      "ibd_rs_raw": 5.58
+      "ibd_rs_raw": 5.58,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "ELS",
@@ -3291,7 +3379,11 @@
       "iq_edge": 64,
       "iq_edge_raw": 0.494278,
       "ibd_rs": 50,
-      "ibd_rs_raw": 1.54
+      "ibd_rs_raw": 1.54,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "EXC",
@@ -3434,7 +3526,11 @@
       "iq_edge": 10,
       "iq_edge_raw": 0.08834,
       "ibd_rs": 66,
-      "ibd_rs_raw": 5.21
+      "ibd_rs_raw": 5.21,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "KR",
@@ -3577,7 +3673,11 @@
       "iq_edge": 48,
       "iq_edge_raw": 0.368112,
       "ibd_rs": 69,
-      "ibd_rs_raw": 6.32
+      "ibd_rs_raw": 6.32,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "LNT",
@@ -3720,7 +3820,11 @@
       "iq_edge": 29,
       "iq_edge_raw": 0.212381,
       "ibd_rs": 66,
-      "ibd_rs_raw": 5.34
+      "ibd_rs_raw": 5.34,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "MSI",
@@ -3863,7 +3967,11 @@
       "iq_edge": 80,
       "iq_edge_raw": 0.665107,
       "ibd_rs": 79,
-      "ibd_rs_raw": 9.41
+      "ibd_rs_raw": 9.41,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "SIRI",
@@ -4006,7 +4114,11 @@
       "iq_edge": 93,
       "iq_edge_raw": 0.861251,
       "ibd_rs": 52,
-      "ibd_rs_raw": 2.15
+      "ibd_rs_raw": 2.15,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "TRV",
@@ -4149,7 +4261,11 @@
       "iq_edge": 56,
       "iq_edge_raw": 0.42722,
       "ibd_rs": 59,
-      "ibd_rs_raw": 3.68
+      "ibd_rs_raw": 3.68,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "WELL",
@@ -4292,7 +4408,11 @@
       "iq_edge": 36,
       "iq_edge_raw": 0.269256,
       "ibd_rs": 78,
-      "ibd_rs_raw": 9.3
+      "ibd_rs_raw": 9.3,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "XEL",
@@ -4435,7 +4555,11 @@
       "iq_edge": 79,
       "iq_edge_raw": 0.642584,
       "ibd_rs": 62,
-      "ibd_rs_raw": 4.53
+      "ibd_rs_raw": 4.53,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "DTE",
@@ -4578,7 +4702,11 @@
       "iq_edge": 5,
       "iq_edge_raw": 0.051288,
       "ibd_rs": 66,
-      "ibd_rs_raw": 5.17
+      "ibd_rs_raw": 5.17,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "ES",
@@ -4721,7 +4849,11 @@
       "iq_edge": 53,
       "iq_edge_raw": 0.40594,
       "ibd_rs": 67,
-      "ibd_rs_raw": 5.6
+      "ibd_rs_raw": 5.6,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "LIN",
@@ -4864,7 +4996,11 @@
       "iq_edge": 61,
       "iq_edge_raw": 0.466928,
       "ibd_rs": 66,
-      "ibd_rs_raw": 5.21
+      "ibd_rs_raw": 5.21,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "EVRG",
@@ -5007,7 +5143,11 @@
       "iq_edge": 2,
       "iq_edge_raw": 0.037241,
       "ibd_rs": 71,
-      "ibd_rs_raw": 6.64
+      "ibd_rs_raw": 6.64,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "COST",
@@ -5150,7 +5290,11 @@
       "iq_edge": 46,
       "iq_edge_raw": 0.350459,
       "ibd_rs": 65,
-      "ibd_rs_raw": 5.03
+      "ibd_rs_raw": 5.03,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "DLR",
@@ -5293,7 +5437,11 @@
       "iq_edge": 66,
       "iq_edge_raw": 0.514918,
       "ibd_rs": 77,
-      "ibd_rs_raw": 8.28
+      "ibd_rs_raw": 8.28,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "PEG",
@@ -5436,7 +5584,11 @@
       "iq_edge": 78,
       "iq_edge_raw": 0.635202,
       "ibd_rs": 51,
-      "ibd_rs_raw": 1.88
+      "ibd_rs_raw": 1.88,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "QSR",
@@ -5579,7 +5731,11 @@
       "iq_edge": 10,
       "iq_edge_raw": 0.087772,
       "ibd_rs": 59,
-      "ibd_rs_raw": 3.84
+      "ibd_rs_raw": 3.84,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "WEC",
@@ -5722,7 +5878,11 @@
       "iq_edge": 40,
       "iq_edge_raw": 0.296879,
       "ibd_rs": 62,
-      "ibd_rs_raw": 4.45
+      "ibd_rs_raw": 4.45,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "HR",
@@ -5865,7 +6025,11 @@
       "iq_edge": 83,
       "iq_edge_raw": 0.701049,
       "ibd_rs": 58,
-      "ibd_rs_raw": 3.63
+      "ibd_rs_raw": 3.63,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "NI",
@@ -6008,7 +6172,11 @@
       "iq_edge": 48,
       "iq_edge_raw": 0.367016,
       "ibd_rs": 71,
-      "ibd_rs_raw": 6.78
+      "ibd_rs_raw": 6.78,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "OGE",
@@ -6151,7 +6319,11 @@
       "iq_edge": 3,
       "iq_edge_raw": 0.039237,
       "ibd_rs": 63,
-      "ibd_rs_raw": 4.54
+      "ibd_rs_raw": 4.54,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "REG",
@@ -6294,7 +6466,11 @@
       "iq_edge": 81,
       "iq_edge_raw": 0.684005,
       "ibd_rs": 62,
-      "ibd_rs_raw": 4.49
+      "ibd_rs_raw": 4.49,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "ATO",
@@ -6437,7 +6613,11 @@
       "iq_edge": 1,
       "iq_edge_raw": 0.018217,
       "ibd_rs": 69,
-      "ibd_rs_raw": 6.33
+      "ibd_rs_raw": 6.33,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "CRS",
@@ -6580,7 +6760,11 @@
       "iq_edge": 1,
       "iq_edge_raw": 0.009808,
       "ibd_rs": 94,
-      "ibd_rs_raw": 21.65
+      "ibd_rs_raw": 21.65,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "CTVA",
@@ -6723,7 +6907,11 @@
       "iq_edge": 50,
       "iq_edge_raw": 0.381243,
       "ibd_rs": 81,
-      "ibd_rs_raw": 10.12
+      "ibd_rs_raw": 10.12,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "LNG",
@@ -6866,7 +7054,11 @@
       "iq_edge": 82,
       "iq_edge_raw": 0.698302,
       "ibd_rs": 88,
-      "ibd_rs_raw": 13.72
+      "ibd_rs_raw": 13.72,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "SRE",
@@ -7009,7 +7201,11 @@
       "iq_edge": 11,
       "iq_edge_raw": 0.08898,
       "ibd_rs": 77,
-      "ibd_rs_raw": 8.31
+      "ibd_rs_raw": 8.31,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "SUI",
@@ -7152,7 +7348,11 @@
       "iq_edge": 16,
       "iq_edge_raw": 0.122931,
       "ibd_rs": 55,
-      "ibd_rs_raw": 2.83
+      "ibd_rs_raw": 2.83,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "AL",
@@ -7295,7 +7495,11 @@
       "iq_edge": 68,
       "iq_edge_raw": 0.536108,
       "ibd_rs": 74,
-      "ibd_rs_raw": 7.47
+      "ibd_rs_raw": 7.47,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "CMS",
@@ -7438,7 +7642,11 @@
       "iq_edge": 6,
       "iq_edge_raw": 0.060254,
       "ibd_rs": 58,
-      "ibd_rs_raw": 3.51
+      "ibd_rs_raw": 3.51,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "JHG",
@@ -7581,7 +7789,11 @@
       "iq_edge": 24,
       "iq_edge_raw": 0.174636,
       "ibd_rs": 82,
-      "ibd_rs_raw": 10.34
+      "ibd_rs_raw": 10.34,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "KIM",
@@ -7724,7 +7936,11 @@
       "iq_edge": 40,
       "iq_edge_raw": 0.295784,
       "ibd_rs": 65,
-      "ibd_rs_raw": 4.96
+      "ibd_rs_raw": 4.96,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "ADC",
@@ -7867,7 +8083,11 @@
       "iq_edge": 40,
       "iq_edge_raw": 0.29595,
       "ibd_rs": 58,
-      "ibd_rs_raw": 3.59
+      "ibd_rs_raw": 3.59,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "AWK",
@@ -8010,7 +8230,11 @@
       "iq_edge": 44,
       "iq_edge_raw": 0.329066,
       "ibd_rs": 42,
-      "ibd_rs_raw": -0.09
+      "ibd_rs_raw": -0.09,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "DTM",
@@ -8153,7 +8377,11 @@
       "iq_edge": 43,
       "iq_edge_raw": 0.320667,
       "ibd_rs": 80,
-      "ibd_rs_raw": 9.81
+      "ibd_rs_raw": 9.81,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "SO",
@@ -8296,7 +8524,11 @@
       "iq_edge": 31,
       "iq_edge_raw": 0.221572,
       "ibd_rs": 62,
-      "ibd_rs_raw": 4.47
+      "ibd_rs_raw": 4.47,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "STAG",
@@ -8439,7 +8671,11 @@
       "iq_edge": 91,
       "iq_edge_raw": 0.826218,
       "ibd_rs": 54,
-      "ibd_rs_raw": 2.51
+      "ibd_rs_raw": 2.51,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "CFLT",
@@ -8582,7 +8818,11 @@
       "iq_edge": 81,
       "iq_edge_raw": 0.67987,
       "ibd_rs": 68,
-      "ibd_rs_raw": 5.77
+      "ibd_rs_raw": 5.77,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "NYT",
@@ -8725,7 +8965,11 @@
       "iq_edge": 16,
       "iq_edge_raw": 0.127848,
       "ibd_rs": 89,
-      "ibd_rs_raw": 14.94
+      "ibd_rs_raw": 14.94,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "BWXT",
@@ -8868,7 +9112,11 @@
       "iq_edge": 51,
       "iq_edge_raw": 0.387051,
       "ibd_rs": 94,
-      "ibd_rs_raw": 21.33
+      "ibd_rs_raw": 21.33,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "CTRA",
@@ -9011,7 +9259,11 @@
       "iq_edge": 92,
       "iq_edge_raw": 0.855807,
       "ibd_rs": 80,
-      "ibd_rs_raw": 9.83
+      "ibd_rs_raw": 9.83,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "ECG",
@@ -9154,7 +9406,11 @@
       "iq_edge": 41,
       "iq_edge_raw": 0.304849,
       "ibd_rs": 97,
-      "ibd_rs_raw": 32.53
+      "ibd_rs_raw": 32.53,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "HSY",
@@ -9297,7 +9553,11 @@
       "iq_edge": 10,
       "iq_edge_raw": 0.083495,
       "ibd_rs": 76,
-      "ibd_rs_raw": 8.0
+      "ibd_rs_raw": 8.0,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "WTRG",
@@ -9440,7 +9700,11 @@
       "iq_edge": 5,
       "iq_edge_raw": 0.055105,
       "ibd_rs": 54,
-      "ibd_rs_raw": 2.63
+      "ibd_rs_raw": 2.63,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "AM",
@@ -9583,7 +9847,11 @@
       "iq_edge": 18,
       "iq_edge_raw": 0.142736,
       "ibd_rs": 86,
-      "ibd_rs_raw": 12.58
+      "ibd_rs_raw": 12.58,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "CW",
@@ -9726,7 +9994,11 @@
       "iq_edge": 42,
       "iq_edge_raw": 0.30627,
       "ibd_rs": 94,
-      "ibd_rs_raw": 22.71
+      "ibd_rs_raw": 22.71,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "BG",
@@ -9869,7 +10141,11 @@
       "iq_edge": 80,
       "iq_edge_raw": 0.666068,
       "ibd_rs": 92,
-      "ibd_rs_raw": 18.74
+      "ibd_rs_raw": 18.74,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "DINO",
@@ -10012,7 +10288,11 @@
       "iq_edge": 32,
       "iq_edge_raw": 0.231874,
       "ibd_rs": 92,
-      "ibd_rs_raw": 18.3
+      "ibd_rs_raw": 18.3,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "FIVE",
@@ -10155,7 +10435,11 @@
       "iq_edge": 45,
       "iq_edge_raw": 0.340488,
       "ibd_rs": 97,
-      "ibd_rs_raw": 28.95
+      "ibd_rs_raw": 28.95,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "HOLX",
@@ -10298,7 +10582,11 @@
       "iq_edge": 93,
       "iq_edge_raw": 0.863196,
       "ibd_rs": 61,
-      "ibd_rs_raw": 4.19
+      "ibd_rs_raw": 4.19,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "IRDM",
@@ -10441,7 +10729,11 @@
       "iq_edge": 21,
       "iq_edge_raw": 0.160752,
       "ibd_rs": 85,
-      "ibd_rs_raw": 11.58
+      "ibd_rs_raw": 11.58,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "EQIX",
@@ -10584,7 +10876,11 @@
       "iq_edge": 77,
       "iq_edge_raw": 0.628259,
       "ibd_rs": 80,
-      "ibd_rs_raw": 9.69
+      "ibd_rs_raw": 9.69,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "INCY",
@@ -10727,7 +11023,11 @@
       "iq_edge": 71,
       "iq_edge_raw": 0.565247,
       "ibd_rs": 76,
-      "ibd_rs_raw": 8.22
+      "ibd_rs_raw": 8.22,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "JCI",
@@ -10870,7 +11170,11 @@
       "iq_edge": 34,
       "iq_edge_raw": 0.246439,
       "ibd_rs": 88,
-      "ibd_rs_raw": 13.9
+      "ibd_rs_raw": 13.9,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "RSG",
@@ -11013,7 +11317,11 @@
       "iq_edge": 65,
       "iq_edge_raw": 0.507032,
       "ibd_rs": 43,
-      "ibd_rs_raw": -0.01
+      "ibd_rs_raw": -0.01,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "WBS",
@@ -11156,7 +11464,11 @@
       "iq_edge": 49,
       "iq_edge_raw": 0.372243,
       "ibd_rs": 77,
-      "ibd_rs_raw": 8.45
+      "ibd_rs_raw": 8.45,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "GILD",
@@ -11299,7 +11611,11 @@
       "iq_edge": 74,
       "iq_edge_raw": 0.584168,
       "ibd_rs": 79,
-      "ibd_rs_raw": 9.33
+      "ibd_rs_raw": 9.33,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "NNN",
@@ -11442,7 +11758,11 @@
       "iq_edge": 66,
       "iq_edge_raw": 0.510765,
       "ibd_rs": 63,
-      "ibd_rs_raw": 4.58
+      "ibd_rs_raw": 4.58,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "PEN",
@@ -11585,7 +11905,11 @@
       "iq_edge": 77,
       "iq_edge_raw": 0.632942,
       "ibd_rs": 70,
-      "ibd_rs_raw": 6.39
+      "ibd_rs_raw": 6.39,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "VZ",
@@ -11728,7 +12052,11 @@
       "iq_edge": 35,
       "iq_edge_raw": 0.264175,
       "ibd_rs": 78,
-      "ibd_rs_raw": 8.88
+      "ibd_rs_raw": 8.88,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "WWD",
@@ -11871,7 +12199,11 @@
       "iq_edge": 37,
       "iq_edge_raw": 0.280552,
       "ibd_rs": 93,
-      "ibd_rs_raw": 20.76
+      "ibd_rs_raw": 20.76,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "CBOE",
@@ -12014,7 +12346,11 @@
       "iq_edge": 48,
       "iq_edge_raw": 0.369277,
       "ibd_rs": 78,
-      "ibd_rs_raw": 8.95
+      "ibd_rs_raw": 8.95,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "FIX",
@@ -12157,7 +12493,11 @@
       "iq_edge": 54,
       "iq_edge_raw": 0.407619,
       "ibd_rs": 98,
-      "ibd_rs_raw": 44.32
+      "ibd_rs_raw": 44.32,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "RNR",
@@ -12300,7 +12640,11 @@
       "iq_edge": 66,
       "iq_edge_raw": 0.511164,
       "ibd_rs": 69,
-      "ibd_rs_raw": 6.26
+      "ibd_rs_raw": 6.26,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "APA",
@@ -12443,7 +12787,11 @@
       "iq_edge": 50,
       "iq_edge_raw": 0.380702,
       "ibd_rs": 95,
-      "ibd_rs_raw": 24.25
+      "ibd_rs_raw": 24.25,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "EA",
@@ -12586,7 +12934,11 @@
       "iq_edge": 76,
       "iq_edge_raw": 0.617402,
       "ibd_rs": 73,
-      "ibd_rs_raw": 7.18
+      "ibd_rs_raw": 7.18,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "GEV",
@@ -12729,7 +13081,11 @@
       "iq_edge": 61,
       "iq_edge_raw": 0.467021,
       "ibd_rs": 97,
-      "ibd_rs_raw": 28.46
+      "ibd_rs_raw": 28.46,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "JNJ",
@@ -12880,7 +13236,11 @@
       "iq_edge": 56,
       "iq_edge_raw": 0.427715,
       "ibd_rs": 83,
-      "ibd_rs_raw": 10.71
+      "ibd_rs_raw": 10.71,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "PCG",
@@ -13023,7 +13383,11 @@
       "iq_edge": 42,
       "iq_edge_raw": 0.306661,
       "ibd_rs": 68,
-      "ibd_rs_raw": 5.91
+      "ibd_rs_raw": 5.91,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "RTX",
@@ -13166,7 +13530,11 @@
       "iq_edge": 58,
       "iq_edge_raw": 0.445247,
       "ibd_rs": 85,
-      "ibd_rs_raw": 11.93
+      "ibd_rs_raw": 11.93,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "URI",
@@ -13309,7 +13677,11 @@
       "iq_edge": 9,
       "iq_edge_raw": 0.079006,
       "ibd_rs": 57,
-      "ibd_rs_raw": 3.39
+      "ibd_rs_raw": 3.39,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "VRT",
@@ -13452,7 +13824,11 @@
       "iq_edge": 36,
       "iq_edge_raw": 0.267295,
       "ibd_rs": 98,
-      "ibd_rs_raw": 40.14
+      "ibd_rs_raw": 40.14,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "WM",
@@ -13595,7 +13971,11 @@
       "iq_edge": 74,
       "iq_edge_raw": 0.594812,
       "ibd_rs": 54,
-      "ibd_rs_raw": 2.48
+      "ibd_rs_raw": 2.48,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "HON",
@@ -13738,7 +14118,11 @@
       "iq_edge": 65,
       "iq_edge_raw": 0.504055,
       "ibd_rs": 72,
-      "ibd_rs_raw": 6.96
+      "ibd_rs_raw": 6.96,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "KO",
@@ -13881,7 +14265,11 @@
       "iq_edge": 90,
       "iq_edge_raw": 0.806037,
       "ibd_rs": 59,
-      "ibd_rs_raw": 3.8
+      "ibd_rs_raw": 3.8,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "MRVL",
@@ -14024,7 +14412,11 @@
       "iq_edge": 64,
       "iq_edge_raw": 0.498639,
       "ibd_rs": 69,
-      "ibd_rs_raw": 6.34
+      "ibd_rs_raw": 6.34,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "MTZ",
@@ -14167,7 +14559,11 @@
       "iq_edge": 47,
       "iq_edge_raw": 0.358003,
       "ibd_rs": 96,
-      "ibd_rs_raw": 28.36
+      "ibd_rs_raw": 28.36,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     },
     {
       "ticker": "PWR",
@@ -14310,7 +14706,11 @@
       "iq_edge": 48,
       "iq_edge_raw": 0.364876,
       "ibd_rs": 95,
-      "ibd_rs_raw": 23.96
+      "ibd_rs_raw": 23.96,
+      "ewros_raw": null,
+      "ewros_trend": null,
+      "ewros_prior": null,
+      "ewros_stats": null
     }
   ]
 }
