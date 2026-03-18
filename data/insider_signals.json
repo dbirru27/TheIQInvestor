@@ -1,5 +1,5 @@
 {
-  "scan_date": "2026-03-16 19:38:03",
+  "scan_date": "2026-03-18 16:54:11",
   "lookback_days": 90,
   "tickers_scanned": 28,
   "signals": {
@@ -771,11 +771,11 @@
       "ins_score": -11,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 11,
+      "transactions": 10,
       "buys": 0,
-      "sells": 11,
+      "sells": 10,
       "total_buy_value": 0,
-      "total_sell_value": 5932695.0,
+      "total_sell_value": 5385401.0,
       "reasons": [
         "Cluster sell: 4 insiders",
         "Heavy sell: Simpson Kathryn G dumped 100%",
@@ -822,12 +822,12 @@
         },
         {
           "date": "2026-02-17",
-          "owner": "Simpson Kathryn G",
-          "title": "Corp VP & General Counsel",
+          "owner": "Hardesty Michael A",
+          "title": "Corp VP, Controller & CAO",
           "type": "SELL",
-          "shares": 779,
-          "price": 702.56,
-          "value": 547294.0
+          "shares": 715,
+          "price": 700.63,
+          "value": 501609.0
         }
       ]
     },
@@ -835,11 +835,11 @@
       "ins_score": -9,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 50,
+      "transactions": 46,
       "buys": 0,
-      "sells": 50,
+      "sells": 46,
       "total_buy_value": 0,
-      "total_sell_value": 160695379.0,
+      "total_sell_value": 146063077.0,
       "reasons": [
         "Cluster sell: 3 insiders",
         "C-suite sell: Kress Colette ($17,180,815)",
@@ -883,13 +883,13 @@
           "value": 13296153.0
         },
         {
-          "date": "2026-01-02",
-          "owner": "Robertson Donald F Jr",
-          "title": "Principal Accounting Officer",
+          "date": "2026-03-10",
+          "owner": "Puri Ajay K",
+          "title": "EVP, Worldwide Field Ops",
           "type": "SELL",
-          "shares": 38911,
-          "price": 189.71,
-          "value": 7381934.0
+          "shares": 24940,
+          "price": 183.11,
+          "value": 4566863.0
         }
       ]
     },
@@ -918,21 +918,18 @@
       "details": []
     },
     "RTX": {
-      "ins_score": -16,
+      "ins_score": -12,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 11,
+      "transactions": 7,
       "buys": 0,
-      "sells": 11,
+      "sells": 7,
       "total_buy_value": 0,
-      "total_sell_value": 31107308.0,
+      "total_sell_value": 20266662.0,
       "reasons": [
-        "Cluster sell: 6 insiders",
-        "C-suite sell: Mitchill Neil G. JR ($7,349,900)",
+        "Cluster sell: 4 insiders",
         "C-suite sell: Calio Christopher T. ($12,955,182)",
-        "C-suite sell: Eddy Shane G ($3,490,746)",
         "Heavy sell: Williams Dantaya M dumped 43%",
-        "Heavy sell: Mitchill Neil G. JR dumped 28%",
         "Heavy sell: Maharajh Ramsaran dumped 53%",
         "Heavy sell: Calio Christopher T. dumped 36%",
         "All sells, zero buys in period"
@@ -946,24 +943,6 @@
           "shares": 51107,
           "price": 203.57,
           "value": 10403796.0
-        },
-        {
-          "date": "2026-02-19",
-          "owner": "Mitchill Neil G. JR",
-          "title": "EVP, Chief Financial Officer",
-          "type": "SELL",
-          "shares": 23531,
-          "price": 205.57,
-          "value": 4837385.0
-        },
-        {
-          "date": "2026-02-12",
-          "owner": "Eddy Shane G",
-          "title": "President, P&W",
-          "type": "SELL",
-          "shares": 17527,
-          "price": 199.16,
-          "value": 3490746.0
         },
         {
           "date": "2026-02-19",
@@ -982,6 +961,24 @@
           "shares": 12713,
           "price": 202.83,
           "value": 2578611.0
+        },
+        {
+          "date": "2026-02-19",
+          "owner": "Calio Christopher T.",
+          "title": "Chairman, President and CEO",
+          "type": "SELL",
+          "shares": 11420,
+          "price": 204.7,
+          "value": 2337716.0
+        },
+        {
+          "date": "2026-02-13",
+          "owner": "DaSilva Kevin G",
+          "title": "Senior VP and Treasurer",
+          "type": "SELL",
+          "shares": 7951,
+          "price": 201.31,
+          "value": 1600621.0
         }
       ]
     },
@@ -989,11 +986,11 @@
       "ins_score": -9,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 25,
+      "transactions": 24,
       "buys": 0,
-      "sells": 25,
+      "sells": 24,
       "total_buy_value": 0,
-      "total_sell_value": 8131127.0,
+      "total_sell_value": 8032727.0,
       "reasons": [
         "Cluster sell: 3 insiders",
         "C-suite sell: MOSLEY WILLIAM D ($7,695,262)",
@@ -1072,28 +1069,18 @@
       "details": []
     },
     "WDC": {
-      "ins_score": -9,
+      "ins_score": -3,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 34,
+      "transactions": 1,
       "buys": 0,
-      "sells": 34,
+      "sells": 1,
       "total_buy_value": 0,
-      "total_sell_value": 12025845.0,
+      "total_sell_value": 2174858.0,
       "reasons": [
-        "Cluster sell: 4 insiders",
         "All sells, zero buys in period"
       ],
       "details": [
-        {
-          "date": "2026-03-04",
-          "owner": "Tregillis Cynthia L",
-          "title": "Chief Legal Officer & Corp Sec",
-          "type": "SELL",
-          "shares": 8547,
-          "price": 269.22,
-          "value": 2300986.0
-        },
         {
           "date": "2026-03-06",
           "owner": "Gubbi Vidyadhara K",
@@ -1102,33 +1089,6 @@
           "shares": 8518,
           "price": 255.32,
           "value": 2174858.0
-        },
-        {
-          "date": "2026-03-04",
-          "owner": "Gubbi Vidyadhara K",
-          "title": "Chief of Global Operations",
-          "type": "SELL",
-          "shares": 7175,
-          "price": 270.62,
-          "value": 1941678.0
-        },
-        {
-          "date": "2026-03-04",
-          "owner": "Gubbi Vidyadhara K",
-          "title": "Chief of Global Operations",
-          "type": "SELL",
-          "shares": 2973,
-          "price": 269.57,
-          "value": 801432.0
-        },
-        {
-          "date": "2026-02-17",
-          "owner": "Davis Brian Scott",
-          "title": "Chief Sales & Mrktng Officer",
-          "type": "SELL",
-          "shares": 2129,
-          "price": 277.37,
-          "value": 590512.0
         }
       ]
     }
