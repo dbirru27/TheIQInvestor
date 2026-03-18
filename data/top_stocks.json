@@ -1,7 +1,7 @@
 {
   "version": "5.0",
   "max_score": 100,
-  "last_scan": "2026-03-17 21:36 PST",
+  "last_scan": "2026-03-17 21:45 PST",
   "total_stocks": 141,
   "stocks": [
     {
@@ -126,9 +126,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+24.3% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 71 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 10328032256,
@@ -144,10 +144,8 @@
       "ewros_score": 93,
       "iq_edge": 77,
       "iq_edge_raw": 0.617672,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 71,
+      "ibd_rs_raw": 7.33
     },
     {
       "ticker": "EQT",
@@ -271,9 +269,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+24.9% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 76 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 40147058688,
@@ -289,10 +287,8 @@
       "ewros_score": 91,
       "iq_edge": 2,
       "iq_edge_raw": 0.040088,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 76,
+      "ibd_rs_raw": 8.32
     },
     {
       "ticker": "UI",
@@ -416,8 +412,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+26.3% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 97 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 5
         }
       ],
@@ -434,10 +430,8 @@
       "ewros_score": 96,
       "iq_edge": 2,
       "iq_edge_raw": 0.037357,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 97,
+      "ibd_rs_raw": 27.85
     },
     {
       "ticker": "ELS",
@@ -560,10 +554,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+7.8% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 54 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 13515378688,
@@ -579,10 +573,8 @@
       "ewros_score": 78,
       "iq_edge": 23,
       "iq_edge_raw": 0.169008,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 54,
+      "ibd_rs_raw": 3.02
     },
     {
       "ticker": "NFG",
@@ -706,9 +698,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+7.9% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "value": "RS 75 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 8990449664,
@@ -724,10 +716,8 @@
       "ewros_score": 87,
       "iq_edge": 4,
       "iq_edge_raw": 0.049407,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 75,
+      "ibd_rs_raw": 8.21
     },
     {
       "ticker": "VTR",
@@ -851,9 +841,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+26.9% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 79 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 41697198080,
@@ -869,10 +859,8 @@
       "ewros_score": 86,
       "iq_edge": 50,
       "iq_edge_raw": 0.351276,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 79,
+      "ibd_rs_raw": 9.28
     },
     {
       "ticker": "EGP",
@@ -995,10 +983,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+13.8% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "passed": false,
+          "value": "RS 53 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 10134671360,
@@ -1014,10 +1002,8 @@
       "ewros_score": 69,
       "iq_edge": 47,
       "iq_edge_raw": 0.332717,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 53,
+      "ibd_rs_raw": 2.72
     },
     {
       "ticker": "LAMR",
@@ -1140,10 +1126,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+3.9% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 1
+          "passed": false,
+          "value": "RS 65 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 13545877504,
@@ -1159,10 +1145,8 @@
       "ewros_score": 68,
       "iq_edge": 57,
       "iq_edge_raw": 0.410409,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 65,
+      "ibd_rs_raw": 5.55
     },
     {
       "ticker": "LIN",
@@ -1286,8 +1270,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+2.0% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 71 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 1
         }
       ],
@@ -1304,10 +1288,8 @@
       "ewros_score": 85,
       "iq_edge": 13,
       "iq_edge_raw": 0.104901,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 71,
+      "ibd_rs_raw": 7.41
     },
     {
       "ticker": "OHI",
@@ -1431,9 +1413,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+11.7% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 77 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 14529798144,
@@ -1449,10 +1431,8 @@
       "ewros_score": 74,
       "iq_edge": 44,
       "iq_edge_raw": 0.309996,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 77,
+      "ibd_rs_raw": 8.71
     },
     {
       "ticker": "ADC",
@@ -1575,10 +1555,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+8.9% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 59 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 9604794368,
@@ -1594,10 +1574,8 @@
       "ewros_score": 81,
       "iq_edge": 15,
       "iq_edge_raw": 0.124048,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 59,
+      "ibd_rs_raw": 4.23
     },
     {
       "ticker": "ES",
@@ -1720,10 +1698,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+13.8% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "passed": false,
+          "value": "RS 68 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 27486351360,
@@ -1739,10 +1717,8 @@
       "ewros_score": 69,
       "iq_edge": 66,
       "iq_edge_raw": 0.494685,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 68,
+      "ibd_rs_raw": 6.32
     },
     {
       "ticker": "GLPI",
@@ -1866,8 +1842,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": false,
-          "value": "-1.1% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 54 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 0
         }
       ],
@@ -1884,10 +1860,8 @@
       "ewros_score": 72,
       "iq_edge": 28,
       "iq_edge_raw": 0.195045,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 54,
+      "ibd_rs_raw": 3.04
     },
     {
       "ticker": "QSR",
@@ -2010,10 +1984,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+19.4% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "passed": false,
+          "value": "RS 61 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 33993535488,
@@ -2029,10 +2003,8 @@
       "ewros_score": 85,
       "iq_edge": 31,
       "iq_edge_raw": 0.224634,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 61,
+      "ibd_rs_raw": 4.79
     },
     {
       "ticker": "AEE",
@@ -2155,10 +2127,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+11.2% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "passed": false,
+          "value": "RS 69 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 31197270016,
@@ -2174,10 +2146,8 @@
       "ewros_score": 82,
       "iq_edge": 20,
       "iq_edge_raw": 0.152891,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 69,
+      "ibd_rs_raw": 6.5
     },
     {
       "ticker": "CINF",
@@ -2300,10 +2270,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+6.1% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 56 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 25988003840,
@@ -2319,10 +2289,8 @@
       "ewros_score": 62,
       "iq_edge": 94,
       "iq_edge_raw": 0.864039,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 56,
+      "ibd_rs_raw": 3.55
     },
     {
       "ticker": "DLR",
@@ -2446,9 +2414,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+8.8% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "value": "RS 74 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 63402057728,
@@ -2464,10 +2432,8 @@
       "ewros_score": 85,
       "iq_edge": 54,
       "iq_edge_raw": 0.388717,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 74,
+      "ibd_rs_raw": 8.01
     },
     {
       "ticker": "NEE",
@@ -2591,9 +2557,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+29.9% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 76 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 193392508928,
@@ -2609,10 +2575,8 @@
       "ewros_score": 81,
       "iq_edge": 64,
       "iq_edge_raw": 0.472169,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 76,
+      "ibd_rs_raw": 8.34
     },
     {
       "ticker": "NI",
@@ -2736,9 +2700,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+15.4% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 71 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 22715971584,
@@ -2754,10 +2718,8 @@
       "ewros_score": 82,
       "iq_edge": 17,
       "iq_edge_raw": 0.135504,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 71,
+      "ibd_rs_raw": 7.37
     },
     {
       "ticker": "WELL",
@@ -2881,9 +2843,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+21.5% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 81 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 3
         }
       ],
       "market_cap": 146653609984,
@@ -2899,10 +2861,8 @@
       "ewros_score": 87,
       "iq_edge": 58,
       "iq_edge_raw": 0.41754,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 81,
+      "ibd_rs_raw": 10.42
     },
     {
       "ticker": "AEP",
@@ -3026,9 +2986,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+22.3% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 79 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 72556568576,
@@ -3044,10 +3004,8 @@
       "ewros_score": 87,
       "iq_edge": 33,
       "iq_edge_raw": 0.23023,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 79,
+      "ibd_rs_raw": 9.49
     },
     {
       "ticker": "AR",
@@ -3170,10 +3128,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+24.1% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "passed": false,
+          "value": "RS 63 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 12658780160,
@@ -3189,10 +3147,8 @@
       "ewros_score": 94,
       "iq_edge": 81,
       "iq_edge_raw": 0.681535,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 63,
+      "ibd_rs_raw": 5.23
     },
     {
       "ticker": "ATO",
@@ -3316,9 +3272,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+11.7% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 72 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 31072743424,
@@ -3334,10 +3290,8 @@
       "ewros_score": 83,
       "iq_edge": 1,
       "iq_edge_raw": 0.024825,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 72,
+      "ibd_rs_raw": 7.54
     },
     {
       "ticker": "BRX",
@@ -3461,9 +3415,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+6.6% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "value": "RS 76 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 9188495360,
@@ -3479,10 +3433,8 @@
       "ewros_score": 83,
       "iq_edge": 59,
       "iq_edge_raw": 0.428398,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 76,
+      "ibd_rs_raw": 8.32
     },
     {
       "ticker": "FE",
@@ -3606,9 +3558,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+18.3% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 80 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 3
         }
       ],
       "market_cap": 29913804800,
@@ -3624,10 +3576,8 @@
       "ewros_score": 84,
       "iq_edge": 40,
       "iq_edge_raw": 0.280796,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 80,
+      "ibd_rs_raw": 10.14
     },
     {
       "ticker": "LNT",
@@ -3750,10 +3700,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+12.4% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "passed": false,
+          "value": "RS 68 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 18778994688,
@@ -3769,10 +3719,8 @@
       "ewros_score": 82,
       "iq_edge": 36,
       "iq_edge_raw": 0.250804,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 68,
+      "ibd_rs_raw": 6.49
     },
     {
       "ticker": "REG",
@@ -3895,10 +3843,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+5.7% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 65 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 14452175872,
@@ -3914,10 +3862,8 @@
       "ewros_score": 78,
       "iq_edge": 67,
       "iq_edge_raw": 0.503637,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 65,
+      "ibd_rs_raw": 5.67
     },
     {
       "ticker": "SRE",
@@ -4041,9 +3987,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+17.7% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 78 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 62676082688,
@@ -4059,10 +4005,8 @@
       "ewros_score": 81,
       "iq_edge": 11,
       "iq_edge_raw": 0.09268,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 78,
+      "ibd_rs_raw": 8.77
     },
     {
       "ticker": "TJX",
@@ -4186,9 +4130,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+8.7% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "value": "RS 71 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 173640712192,
@@ -4204,10 +4148,8 @@
       "ewros_score": 59,
       "iq_edge": 97,
       "iq_edge_raw": 0.902154,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 71,
+      "ibd_rs_raw": 7.13
     },
     {
       "ticker": "TRV",
@@ -4330,10 +4272,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+8.8% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 62 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 67954044928,
@@ -4349,10 +4291,8 @@
       "ewros_score": 77,
       "iq_edge": 29,
       "iq_edge_raw": 0.208462,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 62,
+      "ibd_rs_raw": 4.97
     },
     {
       "ticker": "WTM",
@@ -4475,10 +4415,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+19.1% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "passed": false,
+          "value": "RS 62 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 5454520320,
@@ -4494,10 +4434,8 @@
       "ewros_score": 75,
       "iq_edge": 41,
       "iq_edge_raw": 0.287104,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 62,
+      "ibd_rs_raw": 4.96
     },
     {
       "ticker": "CNP",
@@ -4621,9 +4559,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+14.8% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 77 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 28874766336,
@@ -4639,10 +4577,8 @@
       "ewros_score": 84,
       "iq_edge": 35,
       "iq_edge_raw": 0.246853,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 77,
+      "ibd_rs_raw": 8.7
     },
     {
       "ticker": "DTE",
@@ -4765,10 +4701,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+8.9% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 67 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 31016787968,
@@ -4784,10 +4720,8 @@
       "ewros_score": 85,
       "iq_edge": 21,
       "iq_edge_raw": 0.156263,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 67,
+      "ibd_rs_raw": 5.9
     },
     {
       "ticker": "STAG",
@@ -4910,10 +4844,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+4.0% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 1
+          "passed": false,
+          "value": "RS 52 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 7469865984,
@@ -4929,10 +4863,8 @@
       "ewros_score": 67,
       "iq_edge": 50,
       "iq_edge_raw": 0.350454,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 52,
+      "ibd_rs_raw": 2.43
     },
     {
       "ticker": "XEL",
@@ -5055,10 +4987,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+11.7% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "passed": false,
+          "value": "RS 66 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 50927063040,
@@ -5074,10 +5006,8 @@
       "ewros_score": 76,
       "iq_edge": 42,
       "iq_edge_raw": 0.293824,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 66,
+      "ibd_rs_raw": 5.8
     },
     {
       "ticker": "ALL",
@@ -5200,10 +5130,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+0.9% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 1
+          "passed": false,
+          "value": "RS 42 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 53934141440,
@@ -5219,10 +5149,8 @@
       "ewros_score": 64,
       "iq_edge": 69,
       "iq_edge_raw": 0.518082,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 42,
+      "ibd_rs_raw": 0.44
     },
     {
       "ticker": "CMS",
@@ -5345,10 +5273,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+7.8% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 60 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 23983562752,
@@ -5364,10 +5292,8 @@
       "ewros_score": 83,
       "iq_edge": 6,
       "iq_edge_raw": 0.067286,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 60,
+      "ibd_rs_raw": 4.5
     },
     {
       "ticker": "EVRG",
@@ -5491,9 +5417,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+14.7% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 73 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 19168638976,
@@ -5509,10 +5435,8 @@
       "ewros_score": 81,
       "iq_edge": 3,
       "iq_edge_raw": 0.04768,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 73,
+      "ibd_rs_raw": 7.7
     },
     {
       "ticker": "EXC",
@@ -5635,10 +5559,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+14.3% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "passed": false,
+          "value": "RS 69 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 51441270784,
@@ -5654,10 +5578,8 @@
       "ewros_score": 88,
       "iq_edge": 1,
       "iq_edge_raw": 0.028495,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 69,
+      "ibd_rs_raw": 6.71
     },
     {
       "ticker": "IDA",
@@ -5781,9 +5703,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+12.7% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 74 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 7832993280,
@@ -5799,10 +5721,8 @@
       "ewros_score": 79,
       "iq_edge": 51,
       "iq_edge_raw": 0.361147,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 74,
+      "ibd_rs_raw": 7.78
     },
     {
       "ticker": "KIM",
@@ -5925,10 +5845,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+1.6% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 1
+          "passed": false,
+          "value": "RS 69 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 15704130560,
@@ -5944,10 +5864,8 @@
       "ewros_score": 83,
       "iq_edge": 58,
       "iq_edge_raw": 0.415423,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 69,
+      "ibd_rs_raw": 6.51
     },
     {
       "ticker": "MSI",
@@ -6070,10 +5988,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": false,
-          "value": "-4.4% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 0
+          "passed": true,
+          "value": "RS 80 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 3
         }
       ],
       "market_cap": 78412423168,
@@ -6089,10 +6007,8 @@
       "ewros_score": 90,
       "iq_edge": 72,
       "iq_edge_raw": 0.566819,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 80,
+      "ibd_rs_raw": 9.8
     },
     {
       "ticker": "WEC",
@@ -6215,10 +6131,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+8.0% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 66 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 38380146688,
@@ -6234,10 +6150,8 @@
       "ewros_score": 81,
       "iq_edge": 34,
       "iq_edge_raw": 0.24351,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 66,
+      "ibd_rs_raw": 5.89
     },
     {
       "ticker": "COST",
@@ -6361,8 +6275,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": false,
-          "value": "-0.9% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 63 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 0
         }
       ],
@@ -6379,10 +6293,8 @@
       "ewros_score": 77,
       "iq_edge": 71,
       "iq_edge_raw": 0.549541,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 63,
+      "ibd_rs_raw": 5.21
     },
     {
       "ticker": "DUK",
@@ -6505,10 +6417,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+9.3% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 69 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 103787954176,
@@ -6524,10 +6436,8 @@
       "ewros_score": 86,
       "iq_edge": 1,
       "iq_edge_raw": 0.020057,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 69,
+      "ibd_rs_raw": 6.67
     },
     {
       "ticker": "GD",
@@ -6651,9 +6561,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+7.8% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "value": "RS 73 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 95815311360,
@@ -6669,10 +6579,8 @@
       "ewros_score": 67,
       "iq_edge": 66,
       "iq_edge_raw": 0.496317,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 73,
+      "ibd_rs_raw": 7.62
     },
     {
       "ticker": "LNG",
@@ -6796,9 +6704,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+4.3% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 1
+          "value": "RS 82 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 3
         }
       ],
       "market_cap": 54086348800,
@@ -6814,10 +6722,8 @@
       "ewros_score": 94,
       "iq_edge": 85,
       "iq_edge_raw": 0.728137,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 82,
+      "ibd_rs_raw": 10.56
     },
     {
       "ticker": "MO",
@@ -6941,8 +6847,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+2.1% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 75 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 1
         }
       ],
@@ -6959,10 +6865,8 @@
       "ewros_score": 80,
       "iq_edge": 65,
       "iq_edge_raw": 0.482094,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 75,
+      "ibd_rs_raw": 8.09
     },
     {
       "ticker": "NNN",
@@ -7085,10 +6989,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+5.7% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 66 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 8590960640,
@@ -7104,10 +7008,8 @@
       "ewros_score": 79,
       "iq_edge": 74,
       "iq_edge_raw": 0.590874,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 66,
+      "ibd_rs_raw": 5.78
     },
     {
       "ticker": "OGE",
@@ -7230,10 +7132,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+9.2% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 64 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 9980873728,
@@ -7249,10 +7151,8 @@
       "ewros_score": 82,
       "iq_edge": 6,
       "iq_edge_raw": 0.065655,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 64,
+      "ibd_rs_raw": 5.34
     },
     {
       "ticker": "PEG",
@@ -7375,10 +7275,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+3.5% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 1
+          "passed": false,
+          "value": "RS 54 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 42368188416,
@@ -7394,10 +7294,8 @@
       "ewros_score": 74,
       "iq_edge": 69,
       "iq_edge_raw": 0.520314,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 54,
+      "ibd_rs_raw": 2.85
     },
     {
       "ticker": "PPL",
@@ -7520,10 +7418,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+6.7% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 67 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 29105627136,
@@ -7539,10 +7437,8 @@
       "ewros_score": 81,
       "iq_edge": 34,
       "iq_edge_raw": 0.24391,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 67,
+      "ibd_rs_raw": 6.03
     },
     {
       "ticker": "SO",
@@ -7665,10 +7561,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+6.1% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 67 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 110942863360,
@@ -7684,10 +7580,8 @@
       "ewros_score": 86,
       "iq_edge": 32,
       "iq_edge_raw": 0.227619,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 67,
+      "ibd_rs_raw": 6.05
     },
     {
       "ticker": "SUI",
@@ -7810,10 +7704,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+2.0% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 1
+          "passed": false,
+          "value": "RS 61 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 17279248384,
@@ -7829,10 +7723,8 @@
       "ewros_score": 79,
       "iq_edge": 27,
       "iq_edge_raw": 0.190552,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 61,
+      "ibd_rs_raw": 4.57
     },
     {
       "ticker": "WTRG",
@@ -7955,10 +7847,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+5.7% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 56 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 11619155968,
@@ -7974,10 +7866,8 @@
       "ewros_score": 78,
       "iq_edge": 1,
       "iq_edge_raw": 0.018336,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 56,
+      "ibd_rs_raw": 3.56
     },
     {
       "ticker": "HR",
@@ -8101,8 +7991,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": false,
-          "value": "-5.0% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 59 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 0
         }
       ],
@@ -8119,10 +8009,8 @@
       "ewros_score": 70,
       "iq_edge": 67,
       "iq_edge_raw": 0.501503,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 59,
+      "ibd_rs_raw": 4.26
     },
     {
       "ticker": "YUM",
@@ -8245,10 +8133,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+8.1% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 55 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 44918673408,
@@ -8264,10 +8152,8 @@
       "ewros_score": 76,
       "iq_edge": 26,
       "iq_edge_raw": 0.188398,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 55,
+      "ibd_rs_raw": 3.13
     },
     {
       "ticker": "APD",
@@ -8391,8 +8277,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": false,
-          "value": "-1.3% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 62 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 0
         }
       ],
@@ -8409,10 +8295,8 @@
       "ewros_score": 84,
       "iq_edge": 6,
       "iq_edge_raw": 0.065056,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 62,
+      "ibd_rs_raw": 4.89
     },
     {
       "ticker": "CTVA",
@@ -8536,8 +8420,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+5.9% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 81 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 3
         }
       ],
@@ -8554,10 +8438,8 @@
       "ewros_score": 89,
       "iq_edge": 65,
       "iq_edge_raw": 0.482072,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 81,
+      "ibd_rs_raw": 10.54
     },
     {
       "ticker": "DINO",
@@ -8681,9 +8563,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+5.5% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "value": "RS 91 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 5
         }
       ],
       "market_cap": 10409630720,
@@ -8699,10 +8581,8 @@
       "ewros_score": 91,
       "iq_edge": 51,
       "iq_edge_raw": 0.360039,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 91,
+      "ibd_rs_raw": 16.28
     },
     {
       "ticker": "EW",
@@ -8825,10 +8705,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+1.3% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 1
+          "passed": false,
+          "value": "RS 57 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 48531648512,
@@ -8844,10 +8724,8 @@
       "ewros_score": 69,
       "iq_edge": 63,
       "iq_edge_raw": 0.470088,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 57,
+      "ibd_rs_raw": 3.74
     },
     {
       "ticker": "MDU",
@@ -8970,10 +8848,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+26.9% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "passed": false,
+          "value": "RS 66 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 4212329984,
@@ -8989,10 +8867,8 @@
       "ewros_score": 62,
       "iq_edge": 90,
       "iq_edge_raw": 0.803931,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 66,
+      "ibd_rs_raw": 5.89
     },
     {
       "ticker": "PFE",
@@ -9115,10 +8991,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+8.0% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 55 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 151311581184,
@@ -9134,10 +9010,8 @@
       "ewros_score": 77,
       "iq_edge": 64,
       "iq_edge_raw": 0.47876,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 55,
+      "ibd_rs_raw": 3.18
     },
     {
       "ticker": "UTHR",
@@ -9261,8 +9135,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+28.9% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 90 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 5
         }
       ],
@@ -9279,10 +9153,8 @@
       "ewros_score": 90,
       "iq_edge": 77,
       "iq_edge_raw": 0.624992,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 90,
+      "ibd_rs_raw": 14.81
     },
     {
       "ticker": "MCD",
@@ -9405,10 +9277,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+1.7% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 1
+          "passed": false,
+          "value": "RS 55 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 233098870784,
@@ -9424,10 +9296,8 @@
       "ewros_score": 67,
       "iq_edge": 90,
       "iq_edge_raw": 0.814665,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 55,
+      "ibd_rs_raw": 3.19
     },
     {
       "ticker": "AL",
@@ -9550,10 +9420,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": false,
-          "value": "-1.5% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 0
+          "passed": true,
+          "value": "RS 74 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 7238607872,
@@ -9569,10 +9439,8 @@
       "ewros_score": 62,
       "iq_edge": 81,
       "iq_edge_raw": 0.685287,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 74,
+      "ibd_rs_raw": 7.99
     },
     {
       "ticker": "CFLT",
@@ -9696,9 +9564,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+51.8% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 70 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 11133729792,
@@ -9714,10 +9582,8 @@
       "ewros_score": 67,
       "iq_edge": 96,
       "iq_edge_raw": 0.893706,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 70,
+      "ibd_rs_raw": 6.74
     },
     {
       "ticker": "RSG",
@@ -9841,8 +9707,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": false,
-          "value": "-5.0% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 46 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 0
         }
       ],
@@ -9859,10 +9725,8 @@
       "ewros_score": 70,
       "iq_edge": 75,
       "iq_edge_raw": 0.601551,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 46,
+      "ibd_rs_raw": 1.06
     },
     {
       "ticker": "ADM",
@@ -9986,9 +9850,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+11.3% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 87 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 3
         }
       ],
       "market_cap": 34045030400,
@@ -10004,10 +9868,8 @@
       "ewros_score": 89,
       "iq_edge": 91,
       "iq_edge_raw": 0.821562,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 87,
+      "ibd_rs_raw": 13.13
     },
     {
       "ticker": "EA",
@@ -10131,9 +9993,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+17.3% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 73 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 50103296000,
@@ -10149,10 +10011,8 @@
       "ewros_score": 57,
       "iq_edge": 43,
       "iq_edge_raw": 0.300654,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 73,
+      "ibd_rs_raw": 7.64
     },
     {
       "ticker": "WWD",
@@ -10276,8 +10136,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+51.6% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 94 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 5
         }
       ],
@@ -10294,10 +10154,8 @@
       "ewros_score": 81,
       "iq_edge": 37,
       "iq_edge_raw": 0.259731,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 94,
+      "ibd_rs_raw": 20.7
     },
     {
       "ticker": "HOLX",
@@ -10420,10 +10278,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+9.2% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 61 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 16776855552,
@@ -10439,10 +10297,8 @@
       "ewros_score": 61,
       "iq_edge": 96,
       "iq_edge_raw": 0.891212,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 61,
+      "ibd_rs_raw": 4.64
     },
     {
       "ticker": "AWK",
@@ -10566,8 +10422,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": false,
-          "value": "-2.8% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 47 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 0
         }
       ],
@@ -10584,10 +10440,8 @@
       "ewros_score": 79,
       "iq_edge": 46,
       "iq_edge_raw": 0.320123,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 47,
+      "ibd_rs_raw": 1.39
     },
     {
       "ticker": "CW",
@@ -10711,8 +10565,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+38.6% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 94 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 5
         }
       ],
@@ -10729,10 +10583,8 @@
       "ewros_score": 83,
       "iq_edge": 44,
       "iq_edge_raw": 0.306383,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 94,
+      "ibd_rs_raw": 21.33
     },
     {
       "ticker": "FTNT",
@@ -10855,10 +10707,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+2.4% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 1
+          "passed": false,
+          "value": "RS 35 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 62830829568,
@@ -10874,10 +10726,8 @@
       "ewros_score": 72,
       "iq_edge": 85,
       "iq_edge_raw": 0.730146,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 35,
+      "ibd_rs_raw": -1.52
     },
     {
       "ticker": "HWM",
@@ -11001,8 +10851,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+31.2% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 93 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 5
         }
       ],
@@ -11019,10 +10869,8 @@
       "ewros_score": 80,
       "iq_edge": 64,
       "iq_edge_raw": 0.479038,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 93,
+      "ibd_rs_raw": 19.09
     },
     {
       "ticker": "KR",
@@ -11146,9 +10994,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+7.8% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "value": "RS 73 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 45736857600,
@@ -11164,10 +11012,8 @@
       "ewros_score": 90,
       "iq_edge": 49,
       "iq_edge_raw": 0.340089,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 73,
+      "ibd_rs_raw": 7.64
     },
     {
       "ticker": "AM",
@@ -11291,9 +11137,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+25.0% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 87 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 3
         }
       ],
       "market_cap": 10897171456,
@@ -11309,10 +11155,8 @@
       "ewros_score": 92,
       "iq_edge": 18,
       "iq_edge_raw": 0.141079,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 87,
+      "ibd_rs_raw": 13.36
     },
     {
       "ticker": "CRS",
@@ -11436,8 +11280,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+49.6% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 93 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 5
         }
       ],
@@ -11454,10 +11298,8 @@
       "ewros_score": 87,
       "iq_edge": 1,
       "iq_edge_raw": 0.024896,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 93,
+      "ibd_rs_raw": 19.8
     },
     {
       "ticker": "HON",
@@ -11581,9 +11423,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+13.4% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 77 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 149072314368,
@@ -11599,10 +11441,8 @@
       "ewros_score": 74,
       "iq_edge": 93,
       "iq_edge_raw": 0.851235,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 77,
+      "ibd_rs_raw": 8.46
     },
     {
       "ticker": "HSY",
@@ -11726,9 +11566,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+14.7% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 81 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 3
         }
       ],
       "market_cap": 44635033600,
@@ -11744,10 +11584,8 @@
       "ewros_score": 80,
       "iq_edge": 24,
       "iq_edge_raw": 0.172865,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 81,
+      "ibd_rs_raw": 10.32
     },
     {
       "ticker": "MASI",
@@ -11870,10 +11708,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+15.0% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "passed": false,
+          "value": "RS 68 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 9421425664,
@@ -11889,10 +11727,8 @@
       "ewros_score": 95,
       "iq_edge": 16,
       "iq_edge_raw": 0.129269,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 68,
+      "ibd_rs_raw": 6.32
     },
     {
       "ticker": "NOC",
@@ -12016,8 +11852,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+25.8% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 91 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 5
         }
       ],
@@ -12034,10 +11870,8 @@
       "ewros_score": 87,
       "iq_edge": 79,
       "iq_edge_raw": 0.652083,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 91,
+      "ibd_rs_raw": 15.95
     },
     {
       "ticker": "NYT",
@@ -12161,9 +11995,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+34.3% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 89 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 3
         }
       ],
       "market_cap": 12947333120,
@@ -12179,10 +12013,8 @@
       "ewros_score": 88,
       "iq_edge": 35,
       "iq_edge_raw": 0.248525,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 89,
+      "ibd_rs_raw": 14.37
     },
     {
       "ticker": "OKE",
@@ -12305,10 +12137,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+18.8% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "passed": false,
+          "value": "RS 53 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 53733138432,
@@ -12324,10 +12156,8 @@
       "ewros_score": 87,
       "iq_edge": 85,
       "iq_edge_raw": 0.719112,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 53,
+      "ibd_rs_raw": 2.72
     },
     {
       "ticker": "CSX",
@@ -12451,9 +12281,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+20.6% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 73 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 73973161984,
@@ -12469,10 +12299,8 @@
       "ewros_score": 73,
       "iq_edge": 8,
       "iq_edge_raw": 0.077648,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 73,
+      "ibd_rs_raw": 7.6
     },
     {
       "ticker": "EOG",
@@ -12596,9 +12424,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+13.4% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 73 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 72984920064,
@@ -12614,10 +12442,8 @@
       "ewros_score": 94,
       "iq_edge": 29,
       "iq_edge_raw": 0.199809,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 73,
+      "ibd_rs_raw": 7.71
     },
     {
       "ticker": "EXAS",
@@ -12741,8 +12567,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+84.0% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 95 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 5
         }
       ],
@@ -12759,10 +12585,8 @@
       "ewros_score": 66,
       "iq_edge": 69,
       "iq_edge_raw": 0.521831,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 95,
+      "ibd_rs_raw": 22.54
     },
     {
       "ticker": "TIGO",
@@ -12886,8 +12710,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+57.8% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 97 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 5
         }
       ],
@@ -12904,10 +12728,8 @@
       "ewros_score": 95,
       "iq_edge": 63,
       "iq_edge_raw": 0.465003,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 97,
+      "ibd_rs_raw": 31.48
     },
     {
       "ticker": "VZ",
@@ -13031,9 +12853,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+17.6% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 83 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 3
         }
       ],
       "market_cap": 214975365120,
@@ -13049,10 +12871,8 @@
       "ewros_score": 90,
       "iq_edge": 61,
       "iq_edge_raw": 0.44109,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 83,
+      "ibd_rs_raw": 11.01
     },
     {
       "ticker": "BWXT",
@@ -13176,8 +12996,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+22.9% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 93 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 5
         }
       ],
@@ -13194,10 +13014,8 @@
       "ewros_score": 85,
       "iq_edge": 36,
       "iq_edge_raw": 0.253417,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 93,
+      "ibd_rs_raw": 19.04
     },
     {
       "ticker": "CTRA",
@@ -13321,9 +13139,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+33.4% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 77 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 1
         }
       ],
       "market_cap": 24577656832,
@@ -13339,10 +13157,8 @@
       "ewros_score": 93,
       "iq_edge": 92,
       "iq_edge_raw": 0.844094,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 77,
+      "ibd_rs_raw": 8.71
     },
     {
       "ticker": "DTM",
@@ -13466,9 +13282,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+28.9% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 84 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 3
         }
       ],
       "market_cap": 13941944320,
@@ -13484,10 +13300,8 @@
       "ewros_score": 80,
       "iq_edge": 53,
       "iq_edge_raw": 0.380355,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 84,
+      "ibd_rs_raw": 11.36
     },
     {
       "ticker": "EIX",
@@ -13611,9 +13425,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+33.8% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 87 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 3
         }
       ],
       "market_cap": 28078192640,
@@ -13629,10 +13443,8 @@
       "ewros_score": 90,
       "iq_edge": 58,
       "iq_edge_raw": 0.419888,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 87,
+      "ibd_rs_raw": 12.68
     },
     {
       "ticker": "NVT",
@@ -13756,8 +13568,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+22.0% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 91 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 5
         }
       ],
@@ -13774,10 +13586,8 @@
       "ewros_score": 80,
       "iq_edge": 46,
       "iq_edge_raw": 0.3186,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 91,
+      "ibd_rs_raw": 16.99
     },
     {
       "ticker": "PEP",
@@ -13900,10 +13710,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+7.9% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 55 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 215656890368,
@@ -13919,10 +13729,8 @@
       "ewros_score": 61,
       "iq_edge": 70,
       "iq_edge_raw": 0.524813,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 55,
+      "ibd_rs_raw": 3.21
     },
     {
       "ticker": "VNOM",
@@ -14045,10 +13853,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+16.0% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "passed": false,
+          "value": "RS 58 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 16834813952,
@@ -14064,10 +13872,8 @@
       "ewros_score": 89,
       "iq_edge": 16,
       "iq_edge_raw": 0.133075,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 58,
+      "ibd_rs_raw": 3.86
     },
     {
       "ticker": "WM",
@@ -14190,10 +13996,10 @@
         {
           "name": "Relative Strength",
           "category": "Context",
-          "passed": true,
-          "value": "+5.5% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 3
+          "passed": false,
+          "value": "RS 58 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
         }
       ],
       "market_cap": 95574450176,
@@ -14209,10 +14015,8 @@
       "ewros_score": 73,
       "iq_edge": 71,
       "iq_edge_raw": 0.543073,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 58,
+      "ibd_rs_raw": 3.85
     },
     {
       "ticker": "WMB",
@@ -14336,9 +14140,9 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+27.1% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
-          "points": 5
+          "value": "RS 81 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 3
         }
       ],
       "market_cap": 90261299200,
@@ -14354,10 +14158,8 @@
       "ewros_score": 88,
       "iq_edge": 71,
       "iq_edge_raw": 0.547784,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 81,
+      "ibd_rs_raw": 10.53
     },
     {
       "ticker": "APA",
@@ -14481,8 +14283,8 @@
           "name": "Relative Strength",
           "category": "Context",
           "passed": true,
-          "value": "+59.3% vs SPY (6mo)",
-          "threshold": ">0% outperformance vs SPY",
+          "value": "RS 94 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
           "points": 5
         }
       ],
@@ -14499,10 +14301,8 @@
       "ewros_score": 97,
       "iq_edge": 40,
       "iq_edge_raw": 0.277637,
-      "ewros_raw": null,
-      "ewros_trend": null,
-      "ewros_prior": null,
-      "ewros_stats": null
+      "ibd_rs": 94,
+      "ibd_rs_raw": 20.61
     }
   ]
 }
