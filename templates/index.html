@@ -1614,7 +1614,13 @@
                 <div id="chart-container" style="width:100%; height:500px; border-radius:8px 8px 0 0; overflow:hidden;"></div>
                 <!-- EWROS pane -->
                 <div id="ewros-chart-label" style="display:none; padding:8px 0 2px 0; font-size:0.75rem; font-weight:600; color:#a78bfa; letter-spacing:0.5px;">EWROS (Relative Momentum vs SPY)</div>
-                <div id="ewros-chart-container" style="display:none; width:100%; height:150px; border-radius:0 0 8px 8px; overflow:hidden;"></div>
+                <div id="ewros-chart-container" style="display:none; width:100%; height:150px; overflow:hidden;"></div>
+                <!-- Revenue pane -->
+                <div id="revenue-chart-label" style="display:none; padding:8px 0 2px 0; font-size:0.75rem; font-weight:600; color:#38bdf8; letter-spacing:0.5px;">Quarterly Revenue</div>
+                <div id="revenue-chart-container" style="display:none; width:100%; height:160px; overflow:hidden;"></div>
+                <!-- EPS pane -->
+                <div id="eps-chart-label" style="display:none; padding:8px 0 2px 0; font-size:0.75rem; font-weight:600; color:#22c55e; letter-spacing:0.5px;">Quarterly EPS</div>
+                <div id="eps-chart-container" style="display:none; width:100%; height:160px; border-radius:0 0 8px 8px; overflow:hidden;"></div>
             </div>
         </div>
 
@@ -6403,7 +6409,8 @@
         let _chartSma50Series = null;
         let _chartSma200Series = null;
         let _ewrosChartInstance = null;
-        let _ewrosLineSeries = null;
+        let _revenueChartInstance = null;
+        let _epsChartInstance = null;
         let _chartPeriod = '1y';
         let _chartLoaded = false;
 
@@ -6550,6 +6557,97 @@
                     ewrosContainer.style.display = 'none';
                 }
 
+                // Revenue bar chart
+                const revContainer = document.getElementById('revenue-chart-container');
+                const revLabel = document.getElementById('revenue-chart-label');
+                if (_revenueChartInstance) { _revenueChartInstance.remove(); _revenueChartInstance = null; }
+                revContainer.innerHTML = '';
+
+                const fundData = data.fundamentals || {};
+                const revData = fundData.revenue || [];
+
+                if (revData.length > 0) {
+                    revLabel.style.display = 'block';
+                    revContainer.style.display = 'block';
+                    _revenueChartInstance = LightweightCharts.createChart(revContainer, {
+                        width: revContainer.clientWidth, height: 160,
+                        layout: { background: { type: 'solid', color: '#131722' }, textColor: '#94a3b8', attributionLogo: false },
+                        grid: { vertLines: { color: '#1e2940' }, horzLines: { color: '#1e2940' } },
+                        rightPriceScale: { borderColor: '#2d3748' },
+                        timeScale: { borderColor: '#2d3748', timeVisible: false },
+                    });
+                    const revSeries = _revenueChartInstance.addHistogramSeries({
+                        color: '#38bdf8', priceFormat: { type: 'custom', formatter: v => {
+                            if (Math.abs(v) >= 1e9) return '$' + (v/1e9).toFixed(1) + 'B';
+                            if (Math.abs(v) >= 1e6) return '$' + (v/1e6).toFixed(0) + 'M';
+                            return '$' + v.toFixed(0);
+                        }},
+                    });
+                    // Color bars: green if YoY growth, red if decline
+                    const revByLabel = {};
+                    revData.forEach(r => revByLabel[r.label] = r);
+                    const revBars = revData.map(r => {
+                        const [yr, q] = r.label.split('Q').map(Number);
+                        const prevLabel = (yr-1) + 'Q' + q;
+                        const prev = revByLabel[prevLabel];
+                        const growing = prev ? r.value >= prev.value : true;
+                        return { time: r.time, value: r.value, color: growing ? 'rgba(56,189,248,0.7)' : 'rgba(239,68,68,0.5)' };
+                    });
+                    revSeries.setData(revBars);
+                    _revenueChartInstance.timeScale().fitContent();
+
+                    // Sync with main chart
+                    _chartInstance.timeScale().subscribeVisibleLogicalRangeChange(range => {
+                        if (range && _revenueChartInstance) _revenueChartInstance.timeScale().setVisibleLogicalRange(range);
+                    });
+                } else {
+                    revLabel.style.display = 'none';
+                    revContainer.style.display = 'none';
+                }
+
+                // EPS bar chart
+                const epsContainer = document.getElementById('eps-chart-container');
+                const epsLabel = document.getElementById('eps-chart-label');
+                if (_epsChartInstance) { _epsChartInstance.remove(); _epsChartInstance = null; }
+                epsContainer.innerHTML = '';
+
+                const epsData = fundData.eps || [];
+
+                if (epsData.length > 0) {
+                    epsLabel.style.display = 'block';
+                    epsContainer.style.display = 'block';
+                    _epsChartInstance = LightweightCharts.createChart(epsContainer, {
+                        width: epsContainer.clientWidth, height: 160,
+                        layout: { background: { type: 'solid', color: '#131722' }, textColor: '#94a3b8', attributionLogo: false },
+                        grid: { vertLines: { color: '#1e2940' }, horzLines: { color: '#1e2940' } },
+                        rightPriceScale: { borderColor: '#2d3748' },
+                        timeScale: { borderColor: '#2d3748', timeVisible: false },
+                    });
+                    const epsSeries = _epsChartInstance.addHistogramSeries({
+                        color: '#22c55e', priceFormat: { type: 'price', precision: 2 },
+                    });
+                    // Color: green if YoY growth, red if decline
+                    const epsByLabel = {};
+                    epsData.forEach(e => epsByLabel[e.label] = e);
+                    const epsBars = epsData.map(e => {
+                        const [yr, q] = e.label.split('Q').map(Number);
+                        const prevLabel = (yr-1) + 'Q' + q;
+                        const prev = epsByLabel[prevLabel];
+                        const growing = prev ? e.value >= prev.value : true;
+                        return { time: e.time, value: e.value, color: growing ? 'rgba(34,197,94,0.7)' : 'rgba(239,68,68,0.5)' };
+                    });
+                    epsSeries.setData(epsBars);
+                    _epsChartInstance.timeScale().fitContent();
+
+                    // Sync with main chart
+                    _chartInstance.timeScale().subscribeVisibleLogicalRangeChange(range => {
+                        if (range && _epsChartInstance) _epsChartInstance.timeScale().setVisibleLogicalRange(range);
+                    });
+                } else {
+                    epsLabel.style.display = 'none';
+                    epsContainer.style.display = 'none';
+                }
+
                 // Responsive resize
                 const resizeHandler = () => {
                     if (_chartInstance && container.clientWidth > 0) {
@@ -6557,6 +6655,12 @@
                     }
                     if (_ewrosChartInstance && ewrosContainer.clientWidth > 0) {
                         _ewrosChartInstance.applyOptions({ width: ewrosContainer.clientWidth });
+                    }
+                    if (_revenueChartInstance && revContainer.clientWidth > 0) {
+                        _revenueChartInstance.applyOptions({ width: revContainer.clientWidth });
+                    }
+                    if (_epsChartInstance && epsContainer.clientWidth > 0) {
+                        _epsChartInstance.applyOptions({ width: epsContainer.clientWidth });
                     }
                 };
                 window._chartResizeHandler && window.removeEventListener('resize', window._chartResizeHandler);
