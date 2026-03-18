@@ -19,12 +19,6 @@
       "basket": "AI Semis"
     },
     {
-      "ticker": "LMT",
-      "earnings_date": "2026-04-21",
-      "days_until": 34,
-      "basket": "Defense & Aerospace"
-    },
-    {
       "ticker": "RTX",
       "earnings_date": "2026-04-21",
       "days_until": 34,
@@ -32,6 +26,12 @@
     },
     {
       "ticker": "NOC",
+      "earnings_date": "2026-04-21",
+      "days_until": 34,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "LMT",
       "earnings_date": "2026-04-21",
       "days_until": 34,
       "basket": "Defense & Aerospace"
@@ -55,37 +55,37 @@
       "basket": "Trading Account"
     },
     {
-      "ticker": "VRT",
-      "earnings_date": "2026-04-29",
-      "days_until": 42,
-      "basket": "Grid-to-Chip"
-    },
-    {
       "ticker": "APH",
       "earnings_date": "2026-04-29",
       "days_until": 42,
       "basket": "Grid-to-Chip"
     },
     {
-      "ticker": "ETN",
+      "ticker": "VRT",
+      "earnings_date": "2026-04-29",
+      "days_until": 42,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "HUBB",
       "earnings_date": "2026-04-30",
       "days_until": 43,
       "basket": "Grid-to-Chip"
     },
     {
-      "ticker": "LLY",
+      "ticker": "PWR",
       "earnings_date": "2026-04-30",
       "days_until": 43,
-      "basket": "Biotech"
+      "basket": "Grid-to-Chip"
     },
     {
-      "ticker": "LHX",
+      "ticker": "HWM",
       "earnings_date": "2026-04-30",
       "days_until": 43,
       "basket": "Defense & Aerospace"
     },
     {
-      "ticker": "HUBB",
+      "ticker": "ETN",
       "earnings_date": "2026-04-30",
       "days_until": 43,
       "basket": "Grid-to-Chip"
@@ -97,16 +97,16 @@
       "basket": "Defense & Aerospace"
     },
     {
-      "ticker": "HWM",
+      "ticker": "LHX",
       "earnings_date": "2026-04-30",
       "days_until": 43,
       "basket": "Defense & Aerospace"
     },
     {
-      "ticker": "PWR",
+      "ticker": "LLY",
       "earnings_date": "2026-04-30",
       "days_until": 43,
-      "basket": "Grid-to-Chip"
+      "basket": "Biotech"
     },
     {
       "ticker": "NVT",
@@ -115,7 +115,7 @@
       "basket": "Grid-to-Chip"
     },
     {
-      "ticker": "AMD",
+      "ticker": "ANET",
       "earnings_date": "2026-05-05",
       "days_until": 48,
       "basket": "AI Semis"
@@ -133,7 +133,7 @@
       "basket": "Grid-to-Chip"
     },
     {
-      "ticker": "ANET",
+      "ticker": "AMD",
       "earnings_date": "2026-05-05",
       "days_until": 48,
       "basket": "AI Semis"
@@ -206,6 +206,6 @@
       "days_until": 273
     }
   ],
-  "timestamp": "2026-03-18 18:12:51 EST",
+  "timestamp": "2026-03-18 18:23:57 EST",
   "ticker_count": 42
 }
