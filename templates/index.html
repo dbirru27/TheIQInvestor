@@ -786,10 +786,10 @@
         <div id="dashboard-view" style="position:relative;">
             <div class="dash-page-gradient"></div>
 
-            <!-- Row 1: O'Neil Market Stage Banner -->
+            <!-- Row 1: Market Stage Banner -->
             <div class="dash-stage-banner dash-glass" id="dash-stage-banner" style="display:none;">
                 <div>
-                    <div style="font-size:0.6rem; text-transform:uppercase; letter-spacing:2px; opacity:0.5; margin-bottom:4px;">O'Neil Market Stage</div>
+                    <div style="font-size:0.6rem; text-transform:uppercase; letter-spacing:2px; opacity:0.5; margin-bottom:4px;">Market Stage</div>
                     <div class="stage-name" id="dash-stage-name">Loading...</div>
                     <div class="stage-detail" id="dash-stage-detail"></div>
                     <span class="stage-ftd" id="dash-stage-ftd" style="display:none;"></span>
@@ -2528,7 +2528,7 @@
             const summary = summaryRes.status === 'fulfilled' ? summaryRes.value : null;
             const internals = internalsRes.status === 'fulfilled' ? internalsRes.value : null;
 
-            // Row 1: O'Neil Market Stage
+            // Row 1: Market Stage
             if (internals && internals.market_stage) {
                 const ms = internals.market_stage;
                 const colorMap = {

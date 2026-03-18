@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-IBD Market Stage Calculator — Proper O'Neil Rules
+IBD Market Stage Calculator
 ===================================================
 Implements the exact IBD Follow-Through Day methodology:
 

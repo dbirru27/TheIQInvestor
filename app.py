@@ -1189,7 +1189,7 @@ def market_internals():
             'pct': round(up_count / len(breadth_tickers) * 100, 1)
         }
 
-        # --- O'Neil IBD Market Stage (proper FTD rules via shared module) ---
+        # --- IBD Market Stage (proper FTD rules via shared module) ---
         try:
             from scripts.market_stage import compute_market_stage
             results['market_stage'] = compute_market_stage()
