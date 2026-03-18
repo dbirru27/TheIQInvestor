@@ -2250,7 +2250,9 @@
                         const stageShort = stage.stage.replace('MARKET IN ', '').replace('RALLY ', '');
                         document.getElementById('hero-stage-value').textContent = stageShort;
                         document.getElementById('hero-stage-value').style.color = c;
-                        document.getElementById('hero-stage-sub').textContent = `${stage.distribution_days} dist days`;
+                        let heroSub = `${stage.distribution_days} dist days`;
+                        if (stage.rally_day && stage.rally_day > 0) heroSub += ` · Rally Day ${stage.rally_day}`;
+                        document.getElementById('hero-stage-sub').textContent = heroSub;
 
                         // Market banner (removed from dashboard, no-op if missing)
                         const banner = document.getElementById('hero-market-banner');
@@ -2544,8 +2546,11 @@
                 banner.style.borderColor = c.border;
                 document.getElementById('dash-stage-name').textContent = ms.stage;
                 document.getElementById('dash-stage-name').style.color = c.text;
-                document.getElementById('dash-stage-detail').textContent =
-                    `${ms.distribution_days} dist + ${ms.stalling_days} stalling = ${ms.total_distribution} total (last ${ms.window})`;
+                let detailText = `${ms.distribution_days} dist + ${ms.stalling_days} stalling = ${ms.total_distribution} total (last ${ms.window})`;
+                if (ms.rally_day && ms.rally_day > 0) {
+                    detailText += ` · Day ${ms.rally_day} of rally attempt`;
+                }
+                document.getElementById('dash-stage-detail').textContent = detailText;
                 document.getElementById('dash-stage-action').textContent = ms.action;
                 document.getElementById('dash-stage-action').style.color = c.text;
                 if (ms.follow_through_day) {
