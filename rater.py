@@ -382,39 +382,84 @@ class BreakoutRater:
         results.append(CriterionResult("Revenue Score", "Growth", revenue_pts >= 15, growth_display, "Magnitude+Consistency+Accel+Beats", int(revenue_pts)))
 
         # 8. Earnings Acceleration (8 pts)
+        # Source priority: quarterly_eps DB table → yfinance quarterly_income_stmt
         earnings_accel_pts = 0
         earnings_accel_val = "N/A"
-        if stock_yf:
+
+        eps_values = []
+
+        # Source 1: quarterly_eps DB table (populated from SEC fundamentals — no rate limits)
+        if db_conn:
+            try:
+                c_eps = db_conn.cursor()
+                c_eps.execute('''
+                    SELECT year, quarter, eps FROM quarterly_eps
+                    WHERE symbol = ? AND eps IS NOT NULL
+                    ORDER BY year ASC, quarter ASC
+                ''', (ticker,))
+                eps_rows = c_eps.fetchall()
+                if len(eps_rows) >= 3:
+                    eps_values = [float(r[2]) for r in eps_rows]
+            except Exception:
+                pass
+
+        # Source 2: yfinance quarterly_income_stmt (live mode fallback)
+        if not eps_values and stock_yf:
             try:
                 quarterly_income = stock_yf.quarterly_income_stmt
                 if quarterly_income is not None and not quarterly_income.empty and 'Net Income' in quarterly_income.index:
                     net_income = quarterly_income.loc['Net Income'].dropna()
                     if len(net_income) >= 3:
-                        net_income_values = net_income.values[::-1]
-                        growth_rates = []
-                        for i in range(1, min(len(net_income_values), 4)):
-                            if net_income_values[i-1] != 0:
-                                gr = (net_income_values[i] - net_income_values[i-1]) / abs(net_income_values[i-1])
-                                growth_rates.append(gr)
-                        
-                        if len(growth_rates) >= 2:
-                            accelerating = all(growth_rates[i] > growth_rates[i-1] for i in range(1, len(growth_rates)))
-                            positive = all(gr > 0 for gr in growth_rates)
-                            if accelerating and positive:
-                                earnings_accel_pts = 8
-                                earnings_accel_val = "Accelerating"
-                            elif positive:
-                                earnings_accel_pts = 4
-                                earnings_accel_val = "Positive, flat"
-                            else:
-                                earnings_accel_pts = 0
-                                earnings_accel_val = "Decelerating/Negative"
-                        else:
-                            earnings_accel_val = "Insufficient quarters"
-            except:
-                earnings_accel_val = "Data unavailable"
-        else:
-            earnings_accel_val = "No yfinance data"
+                        eps_values = list(net_income.values[::-1])
+            except Exception:
+                pass
+
+        if eps_values and len(eps_values) >= 3:
+            try:
+                # Compute YoY growth rates (each quarter vs same quarter prior year)
+                # This avoids seasonal distortion vs raw QoQ comparisons
+                growth_rates = []
+                n_eps = len(eps_values)
+                for i in range(4, n_eps):
+                    prior = eps_values[i - 4]
+                    if prior != 0:
+                        gr = (eps_values[i] - prior) / abs(prior)
+                        growth_rates.append(gr)
+
+                # Fallback to sequential QoQ if not enough YoY data
+                if len(growth_rates) < 2:
+                    growth_rates = []
+                    for i in range(1, min(len(eps_values), 5)):
+                        if eps_values[i-1] != 0:
+                            gr = (eps_values[i] - eps_values[i-1]) / abs(eps_values[i-1])
+                            growth_rates.append(gr)
+
+                if len(growth_rates) >= 2:
+                    recent = growth_rates[-2:]
+                    older  = growth_rates[:-2] if len(growth_rates) > 2 else growth_rates[:1]
+                    avg_recent = np.mean(recent)
+                    avg_older  = np.mean(older)
+                    accelerating = avg_recent > avg_older
+                    positive = avg_recent > 0
+
+                    q_latest = eps_values[-1]
+                    q_yoy    = growth_rates[-1] if growth_rates else 0
+
+                    if accelerating and positive:
+                        earnings_accel_pts = 8
+                        earnings_accel_val = f"Accelerating · EPS ${q_latest:.2f} · YoY {q_yoy*100:+.0f}%"
+                    elif positive:
+                        earnings_accel_pts = 4
+                        earnings_accel_val = f"Positive, flat · EPS ${q_latest:.2f} · YoY {q_yoy*100:+.0f}%"
+                    else:
+                        earnings_accel_pts = 0
+                        earnings_accel_val = f"Decelerating · EPS ${q_latest:.2f} · YoY {q_yoy*100:+.0f}%"
+                else:
+                    earnings_accel_val = f"Insufficient quarters ({len(eps_values)} in DB)"
+            except Exception as e:
+                earnings_accel_val = f"Calc error: {str(e)[:40]}"
+        elif not eps_values:
+            earnings_accel_val = "No EPS data in DB"
         
         results.append(CriterionResult("Earnings Acceleration", "Growth", earnings_accel_pts > 0, earnings_accel_val, "QoQ growth accelerating", earnings_accel_pts))
 
@@ -428,10 +473,49 @@ class BreakoutRater:
         passed_marg = bool(marg is not None and marg > 0.10)
         results.append(CriterionResult("Operating Margin", "Quality", passed_marg, f"{float(marg)*100:.1f}%" if marg else "N/A", "> 10%", 5 if passed_marg else 0))
 
-        # 11. Valuation Sanity (5 pts)
-        peg = info.get('pegRatio')
-        passed_peg = bool(peg is not None and peg < 2.0 and peg > 0)
-        results.append(CriterionResult("Valuation Sanity", "Quality", passed_peg, f"{float(peg):.2f}" if peg else "N/A", "PEG < 2.0", 5 if passed_peg else 0))
+        # 11. Valuation Sanity (5 pts) — PEG = Forward P/E ÷ EPS Growth Rate
+        # yfinance no longer returns pegRatio reliably, so we compute it:
+        #   PEG = forwardPE / (earningsGrowth * 100)
+        # Fallback chain: forwardPE+earningsGrowth → trailingPE+earningsQuarterlyGrowth
+        #                 → DB quarterly_eps YoY growth
+        peg = None
+        peg_method = ""
+
+        fwd_pe   = info.get('forwardPE')
+        trail_pe = info.get('trailingPE')
+        earn_g   = info.get('earningsGrowth')          # YoY net income growth (decimal)
+        earn_qg  = info.get('earningsQuarterlyGrowth') # most recent quarter YoY (decimal)
+
+        if fwd_pe and earn_g and earn_g > 0:
+            peg = round(float(fwd_pe) / (float(earn_g) * 100), 2)
+            peg_method = f"Fwd PE {fwd_pe:.1f} / Growth {earn_g*100:.0f}%"
+        elif trail_pe and earn_qg and earn_qg > 0:
+            peg = round(float(trail_pe) / (float(earn_qg) * 100), 2)
+            peg_method = f"Trail PE {trail_pe:.1f} / QtrGrowth {earn_qg*100:.0f}%"
+        elif db_conn:
+            # Compute TTM EPS growth from quarterly_eps table
+            try:
+                c_peg = db_conn.cursor()
+                c_peg.execute('''
+                    SELECT eps FROM quarterly_eps WHERE symbol=?
+                    ORDER BY year DESC, quarter DESC LIMIT 8
+                ''', (ticker,))
+                eps_rows = [r[0] for r in c_peg.fetchall()]
+                if len(eps_rows) >= 8:
+                    ttm_curr = sum(eps_rows[:4])
+                    ttm_prev = sum(eps_rows[4:8])
+                    if ttm_prev != 0 and ttm_curr > 0 and ttm_prev > 0:
+                        eps_growth = (ttm_curr - ttm_prev) / abs(ttm_prev)
+                        if eps_growth > 0 and (fwd_pe or trail_pe):
+                            pe = float(fwd_pe or trail_pe)
+                            peg = round(pe / (eps_growth * 100), 2)
+                            peg_method = f"PE {pe:.1f} / TTM EPS Gth {eps_growth*100:.0f}%"
+            except Exception:
+                pass
+
+        passed_peg = bool(peg is not None and 0 < peg < 2.0)
+        peg_display = f"{peg:.2f} ({peg_method})" if peg is not None else "N/A — no P/E or growth data"
+        results.append(CriterionResult("Valuation Sanity", "Quality", passed_peg, peg_display, "PEG < 2.0", 5 if passed_peg else 0))
 
         # 12. FCF Quality (3 pts)
         fcf = info.get('freeCashflow')

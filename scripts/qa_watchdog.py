@@ -373,6 +373,56 @@ def check_website_timestamp():
 
 # ── CHECK 7: Sparse columns in key files ─────────────────────────────────────
 
+def check_fundamentals_coverage():
+    """Check that critical fundamental fields are populated across all stocks."""
+    try:
+        import sys
+        sys.path.insert(0, WORKSPACE)
+        from scripts.refresh_fundamentals import validate_coverage
+        conn = db_connect()
+        cov = validate_coverage(conn)
+        conn.close()
+
+        critical_fields = ['forwardPE', 'earningsGrowth', 'returnOnEquity',
+                           'operatingMargins', 'pegRatio']
+        issues = []
+        fixed = False
+
+        for f in critical_fields:
+            pct = cov.get(f, 0)
+            if pct < 70:
+                issues.append(f"{f}: {pct:.0f}% covered")
+
+        avg_rev = cov.get('_avg_revenue_quarters', 0)
+        avg_eps = cov.get('_avg_eps_quarters', 0)
+        if avg_rev < 8:
+            issues.append(f"Quarterly revenue avg {avg_rev:.1f} quarters (need 8+)")
+        if avg_eps < 8:
+            issues.append(f"Quarterly EPS avg {avg_eps:.1f} quarters (need 8+)")
+
+        if issues:
+            # Auto-fix: run refresh_fundamentals
+            import subprocess
+            rc, out, err = run(
+                f"/usr/bin/python3 {WORKSPACE}/scripts/refresh_fundamentals.py",
+                timeout=180
+            )
+            fixed = (rc == 0)
+            return CheckResult(
+                name="Fundamentals Coverage",
+                passed=False,
+                detail="; ".join(issues),
+                fixed=fixed,
+                fix_detail="Ran refresh_fundamentals.py" if fixed else f"Fix failed: {err[:60]}"
+            )
+
+        summary = f"pegRatio {cov.get('pegRatio', 0):.0f}%, rev {avg_rev:.1f}Q, eps {avg_eps:.1f}Q"
+        return CheckResult(name="Fundamentals Coverage", passed=True, detail=summary)
+    except Exception as e:
+        return CheckResult(name="Fundamentals Coverage", passed=False,
+                           detail=f"Check error: {str(e)[:80]}")
+
+
 def check_data_sparseness():
     issues = []
     path = os.path.join(WORKSPACE, "data/all_stocks.json")
@@ -413,6 +463,7 @@ def run_all_checks():
         ("Known Code Bugs",      check_known_bugs,           False),
         ("Website Timestamp",    check_website_timestamp,    True),
         ("Data Sparseness",      check_data_sparseness,      False),
+        ("Fundamentals Coverage", check_fundamentals_coverage, True),
     ]
 
     for name, fn, critical in checks:

@@ -34,6 +34,9 @@ Usage:
 import argparse
 import os
 import subprocess
+import json
+import json
+import json
 import sys
 import time
 from datetime import datetime
@@ -92,6 +95,14 @@ def run_step(fn, dry_run=False):
 def step_refresh_cache():
     import refresh_cache
     refresh_cache.main()
+
+
+def step_refresh_fundamentals():
+    """Refresh fundamental data: SEC backfill + derived fields (pegRatio, etc.)."""
+    subprocess.run(
+        [sys.executable, os.path.join(WORKSPACE, 'scripts/refresh_fundamentals.py')],
+        cwd=WORKSPACE, check=True
+    )
 
 
 def step_scan_all():
@@ -222,6 +233,7 @@ def step_git_push(dry_run=False, skip_git=False):
 
 # name → (label, fn, skip_if_no_cache)
 ALL_STEPS = [
+    ('fundamentals',  'Refresh fundamentals + derived fields',             step_refresh_fundamentals, False),
     ('cache',        'Download prices + fundamentals (refresh_cache)',   step_refresh_cache,      True),
     ('scan',         'Score all stocks (scan_all)',                       step_scan_all,           False),
     ('ewros',        'Compute EWROS scores + stats',                      step_ewros,              False),

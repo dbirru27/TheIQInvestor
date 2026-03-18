@@ -116,6 +116,18 @@ def run_scan(limit=None):
         if i % 100 == 0:
             logger.info(f"  Processed {i}/{len(tickers)} ({len(results)} scored, {errors} errors)...")
     
+    # ── IBD Relative Strength percentile ranking ────────────────────────────
+    # Compute RS = 40%Q1 + 20%Q2 + 20%Q3 + 20%Q4 across all stocks in DB,
+    # then rank into percentile (1-99) and inject into each result.
+    try:
+        from scripts.ibd_rs import inject_ibd_rs
+        results = inject_ibd_rs(results, conn)
+        rs_count = sum(1 for r in results if r.get('ibd_rs') is not None)
+        logger.info(f"IBD RS computed for {rs_count} stocks")
+    except Exception as e:
+        logger.warning(f"IBD RS ranking skipped: {e}")
+    # ────────────────────────────────────────────────────────────────────────
+
     # ── ETF stub entries ────────────────────────────────────────────────────
     # Portfolio ETFs don't have fundamental data, so rater returns None for them.
     # Create minimal "ETF mode" entries so they appear in all_stocks.json,
@@ -215,12 +227,7 @@ def run_scan(limit=None):
     
     all_stocks_slim = {}
     for s in results:
-        is_etf = s.get('grade') == 'ETF'
-        if s['ticker'] in keep_criteria or is_etf:
-            all_stocks_slim[s['ticker']] = s
-        else:
-            slim = {k: v for k, v in s.items() if k != 'criteria'}
-            all_stocks_slim[s['ticker']] = slim
+        all_stocks_slim[s['ticker']] = s  # full data for every stock, no stripping
     
     all_output = {
         'version': '5.1',
