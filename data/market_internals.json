@@ -1,0 +1,47 @@
+{
+  "market_stage": {
+    "stage": "MARKET IN CORRECTION",
+    "color": "red",
+    "action": "Avoid new buys. Raise cash. Protect profits.",
+    "distribution_days": 6,
+    "stalling_days": 2,
+    "total_distribution": 8,
+    "distribution_dates": [
+      "2026-02-12",
+      "2026-02-26",
+      "2026-02-27",
+      "2026-03-03",
+      "2026-03-05",
+      "2026-03-12"
+    ],
+    "follow_through_day": null,
+    "follow_through_pct": null,
+    "rally_attempt_day1": "2026-03-16",
+    "rally_day": 3,
+    "rally_invalidated": false,
+    "window": "25 sessions",
+    "spy_last_close": 668.67,
+    "spy_last_date": "2026-03-18",
+    "computed_at": "2026-03-18 09:34:51 ET"
+  },
+  "volume": {
+    "today": 5687307,
+    "yesterday": 87048100,
+    "avg_50d": 84657098,
+    "vs_avg_pct": -93.3,
+    "above_avg": false
+  },
+  "spy_quote": {
+    "price": 668.67,
+    "change_pct": -0.23,
+    "volume": 82230038,
+    "prev_close": 670.22
+  },
+  "breadth": {
+    "up": 7,
+    "total": 20,
+    "pct": 35.0
+  },
+  "updated_at": "2026-03-18 09:34:52 ET",
+  "market_open": true
+}
