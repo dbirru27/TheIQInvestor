@@ -1,7 +1,7 @@
 {
   "version": "5.0",
   "max_score": 100,
-  "last_scan": "2026-03-18 18:32 PST",
+  "last_scan": "2026-03-18 18:41 PST",
   "total_stocks": 265,
   "stocks": [
     {
@@ -2001,7 +2001,7 @@
       "analyst_count": 13,
       "current_price": 120.2699966430664,
       "ewros_score": 90,
-      "iq_edge": 18,
+      "iq_edge": 17,
       "iq_edge_raw": 0.139774,
       "ibd_rs": 93,
       "ibd_rs_raw": 21.21
@@ -3431,7 +3431,7 @@
       "analyst_count": 16,
       "current_price": 49.25,
       "ewros_score": 86,
-      "iq_edge": 11,
+      "iq_edge": 10,
       "iq_edge_raw": 0.08834,
       "ibd_rs": 66,
       "ibd_rs_raw": 5.21
@@ -7292,7 +7292,7 @@
       "analyst_count": 3,
       "current_price": 64.61000061035156,
       "ewros_score": 67,
-      "iq_edge": 69,
+      "iq_edge": 68,
       "iq_edge_raw": 0.536108,
       "ibd_rs": 74,
       "ibd_rs_raw": 7.47
@@ -11582,7 +11582,7 @@
       "analyst_count": 15,
       "current_price": 338.239990234375,
       "ewros_score": 73,
-      "iq_edge": 78,
+      "iq_edge": 77,
       "iq_edge_raw": 0.632942,
       "ibd_rs": 70,
       "ibd_rs_raw": 6.39
@@ -13592,7 +13592,7 @@
       "analyst_count": 25,
       "current_price": 233.7899932861328,
       "ewros_score": 74,
-      "iq_edge": 75,
+      "iq_edge": 74,
       "iq_edge_raw": 0.594812,
       "ibd_rs": 54,
       "ibd_rs_raw": 2.48
