@@ -2238,7 +2238,7 @@
 
             // Market stage from market_internals
             try {
-                const res = await fetch('data/market_internals.json').catch(() => fetch('/api/market_internals'));
+                const res = await fetch('/api/market_internals');
                 if (res.ok) {
                     const data = await res.json();
                     const stage = data.market_stage;
@@ -2523,7 +2523,7 @@
             // Fetch both APIs in parallel
             const [summaryRes, internalsRes] = await Promise.allSettled([
                 fetch('/api/dashboard_summary').then(r => r.ok ? r.json() : null),
-                fetch('data/market_internals.json').catch(() => fetch('/api/market_internals')).then(r => r.ok ? r.json() : null)
+                fetch('/api/market_internals').then(r => r.ok ? r.json() : null)
             ]);
             const summary = summaryRes.status === 'fulfilled' ? summaryRes.value : null;
             const internals = internalsRes.status === 'fulfilled' ? internalsRes.value : null;
