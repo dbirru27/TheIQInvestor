@@ -6447,6 +6447,7 @@
                     _chartInstance.remove();
                     _chartInstance = null;
                 }
+                container.innerHTML = '';
 
                 _chartInstance = LightweightCharts.createChart(container, {
                     width: container.clientWidth,
