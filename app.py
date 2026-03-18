@@ -1189,73 +1189,10 @@ def market_internals():
             'pct': round(up_count / len(breadth_tickers) * 100, 1)
         }
 
-        # --- O'Neil IBD Market Stage ---
-        # Distribution day = index drops ≥0.2% on higher volume than previous day
-        # Follow-through day = index gains ≥1.25% on higher volume, day 4+ of rally attempt
-        # 0-2 dist = Confirmed Rally, 3-4 = Under Pressure, 5+ = Correction
+        # --- O'Neil IBD Market Stage (proper FTD rules via shared module) ---
         try:
-            url = 'https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1d&range=3mo'
-            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-            resp = urllib.request.urlopen(req, timeout=10)
-            spy_chart = json.loads(resp.read())['chart']['result'][0]
-            spy_closes = spy_chart['indicators']['quote'][0]['close']
-            spy_volumes = spy_chart['indicators']['quote'][0]['volume']
-
-            dist_count = 0
-            stall_count = 0
-            dist_dates = []
-            n = min(26, len(spy_closes))
-            for i in range(len(spy_closes) - n + 1, len(spy_closes)):
-                if i <= 0:
-                    continue
-                prev_c, curr_c = spy_closes[i-1], spy_closes[i]
-                prev_v, curr_v = spy_volumes[i-1], spy_volumes[i]
-                if not all([prev_c, curr_c, prev_v, curr_v]):
-                    continue
-                pct = (curr_c - prev_c) / prev_c * 100
-                if pct <= -0.2 and curr_v > prev_v:
-                    dist_count += 1
-                elif 0 <= pct < 0.4 and curr_v > prev_v * 1.1:
-                    stall_count += 1
-
-            total_dist = dist_count + stall_count
-
-            # Check for follow-through day in last 10 sessions
-            ftd = False
-            for i in range(-10, 0):
-                idx = len(spy_closes) + i
-                if idx > 0 and spy_closes[idx] and spy_closes[idx-1] and spy_volumes[idx] and spy_volumes[idx-1]:
-                    pct = (spy_closes[idx] - spy_closes[idx-1]) / spy_closes[idx-1] * 100
-                    if pct >= 1.25 and spy_volumes[idx] > spy_volumes[idx-1]:
-                        ftd = True
-
-            if total_dist >= 5:
-                stage = 'MARKET IN CORRECTION'
-                stage_color = 'red'
-                action = 'Avoid new buys. Raise cash. Protect profits.'
-            elif total_dist >= 3:
-                stage = 'RALLY UNDER PRESSURE'
-                stage_color = 'yellow'
-                action = 'Be cautious. Tighten stops. No aggressive buys.'
-            elif ftd or total_dist <= 2:
-                stage = 'CONFIRMED RALLY'
-                stage_color = 'green'
-                action = 'Green light for new buys. Follow rotation signals.'
-            else:
-                stage = 'RALLY ATTEMPT'
-                stage_color = 'orange'
-                action = 'Market trying to rally. Wait for follow-through day.'
-
-            results['market_stage'] = {
-                'stage': stage,
-                'color': stage_color,
-                'action': action,
-                'distribution_days': dist_count,
-                'stalling_days': stall_count,
-                'total_distribution': total_dist,
-                'follow_through_day': ftd,
-                'window': '25 sessions'
-            }
+            from scripts.market_stage import compute_market_stage
+            results['market_stage'] = compute_market_stage()
         except Exception:
             results['market_stage'] = None
 
