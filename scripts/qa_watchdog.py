@@ -423,6 +423,105 @@ def check_fundamentals_coverage():
                            detail=f"Check error: {str(e)[:80]}")
 
 
+def check_scoring_output():
+    """
+    The critical check: scan EVERY criterion in ALL scored stocks and flag
+    any that contain 'N/A', 'No yfinance data', 'Insufficient data', or
+    other error strings. This catches broken scoring before Dan sees it.
+    Also verifies that each criterion is actually computing real values,
+    not silently falling back to zero due to missing data.
+    """
+    path = os.path.join(WORKSPACE, 'data/all_stocks.json')
+    d = load_json(path)
+    stocks = [s for s in d['stocks'].values()
+              if s.get('grade') not in ('ETF', None) and s.get('criteria')]
+
+    if not stocks:
+        return CheckResult(name="Scoring Output Validation", passed=False,
+                           detail="No scored stocks found", critical=True)
+
+    n = len(stocks)
+    # Patterns that indicate a criterion failed to compute real data
+    BAD_PATTERNS = [
+        'n/a', 'no yfinance', 'insufficient data', 'data unavailable',
+        'no eps', 'no data', 'calc error', 'error:', 'insufficient quarters'
+    ]
+
+    from collections import defaultdict
+    bad_counts = defaultdict(int)
+    bad_samples = defaultdict(list)
+
+    for s in stocks:
+        for c in s.get('criteria', []):
+            val = str(c.get('value', '')).lower()
+            name = c.get('name', '')
+            for pat in BAD_PATTERNS:
+                if pat in val:
+                    bad_counts[name] += 1
+                    if len(bad_samples[name]) < 3:
+                        bad_samples[name].append(s['ticker'])
+                    break
+
+    # Thresholds: anything > 10% of stocks is a systemic failure
+    SYSTEMIC_THRESHOLD = 0.10
+    systemic = {k: v for k, v in bad_counts.items() if v / n > SYSTEMIC_THRESHOLD}
+    warnings  = {k: v for k, v in bad_counts.items() if 0.05 < v / n <= SYSTEMIC_THRESHOLD}
+
+    if systemic:
+        details = []
+        for k, v in sorted(systemic.items(), key=lambda x: -x[1]):
+            details.append(f"{k}: {v}/{n} ({v/n*100:.0f}%) — e.g. {bad_samples[k][:2]}")
+        return CheckResult(
+            name="Scoring Output Validation",
+            passed=False,
+            detail="SYSTEMIC SCORING FAILURES: " + "; ".join(details),
+            critical=True
+        )
+
+    if warnings:
+        details = [f"{k}: {v}/{n} ({v/n*100:.0f}%)" for k, v in sorted(warnings.items(), key=lambda x: -x[1])]
+        return CheckResult(
+            name="Scoring Output Validation",
+            passed=False,
+            detail="Minor scoring gaps: " + "; ".join(details),
+            critical=False
+        )
+
+    # Also verify grade ordering is sane: no criterion should be 0 pts
+    # for >80% of stocks (would mean it's broken/misconfigured)
+    zero_dominant = []
+    all_criteria_names = set()
+    crit_zero = defaultdict(int)
+    crit_total = defaultdict(int)
+    for s in stocks:
+        for c in s.get('criteria', []):
+            name = c.get('name', '')
+            all_criteria_names.add(name)
+            crit_total[name] += 1
+            if c.get('points', 0) == 0 and c.get('passed') == False:
+                crit_zero[name] += 1
+
+    for name in all_criteria_names:
+        total = crit_total.get(name, 0)
+        zeros = crit_zero.get(name, 0)
+        if total > 100 and zeros / total > 0.95:
+            zero_dominant.append(f"{name}: {zeros/total*100:.0f}% fail rate")
+
+    if zero_dominant:
+        return CheckResult(
+            name="Scoring Output Validation",
+            passed=False,
+            detail="Criteria with suspiciously high fail rate (>95%): " + "; ".join(zero_dominant),
+            critical=True
+        )
+
+    return CheckResult(
+        name="Scoring Output Validation",
+        passed=True,
+        detail=f"All criteria scoring cleanly across {n} stocks. No systemic N/A or error values."
+    )
+
+
 def check_data_sparseness():
     issues = []
     path = os.path.join(WORKSPACE, "data/all_stocks.json")
@@ -456,14 +555,15 @@ def run_all_checks():
     print(f"{'='*60}\n")
 
     checks = [
-        ("Data Freshness",       check_file_freshness,       True),
-        ("RS Scoring Bug",       check_rs_scoring,           True),
-        ("Grade Sanity",         check_grade_sanity,         True),
-        ("Pipeline Status",      check_pipeline_completeness, True),
-        ("Known Code Bugs",      check_known_bugs,           False),
-        ("Website Timestamp",    check_website_timestamp,    True),
-        ("Data Sparseness",      check_data_sparseness,      False),
-        ("Fundamentals Coverage", check_fundamentals_coverage, True),
+        ("Data Freshness",           check_file_freshness,          True),
+        ("Scoring Output Validation", check_scoring_output,         True),   # catches N/A, broken criteria
+        ("RS Scoring Bug",           check_rs_scoring,              True),
+        ("Grade Sanity",             check_grade_sanity,            True),
+        ("Fundamentals Coverage",    check_fundamentals_coverage,   True),
+        ("Pipeline Status",          check_pipeline_completeness,   True),
+        ("Known Code Bugs",          check_known_bugs,              False),
+        ("Website Timestamp",        check_website_timestamp,       True),
+        ("Data Sparseness",          check_data_sparseness,         False),
     ]
 
     for name, fn, critical in checks:
