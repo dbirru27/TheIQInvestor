@@ -11,6 +11,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://s3.tradingview.com/tv.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://unpkg.com/lightweight-charts@4/dist/lightweight-charts.standalone.production.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #0f172a; --surface: #1e293b; --accent: #38bdf8; --text: #f8fafc; --text-dim: #94a3b8; }
@@ -594,6 +595,12 @@
         .iq-ticker-ref { display: inline-flex; align-items: center; gap: 3px; }
         .iq-watch-btn { padding: 1px 5px; background: #1e293b; border: 1px solid #38bdf8; border-radius: 4px; color: #38bdf8; font-size: 0.68rem; cursor: pointer; font-weight: 600; vertical-align: middle; }
         .iq-watch-btn:hover { background: #38bdf8; color: #000; }
+
+        /* Chart tab styles */
+        .chart-tf-btn { background:#1e2333; border:1px solid #374151; color:#94a3b8; padding:6px 14px; border-radius:6px; cursor:pointer; font-size:0.85rem; font-weight:600; transition:all 0.15s; }
+        .chart-tf-btn:hover { border-color:#38bdf8; color:#38bdf8; }
+        .chart-tf-btn.active { background:#38bdf8; color:#000; border-color:#38bdf8; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -606,6 +613,7 @@
         <div class="top-nav-item" data-tab="hunter" onclick="navTo('hunter')">Hunter</div>
         <div class="top-nav-item" data-tab="rotation" onclick="navTo('rotation')">EWROS</div>
         <div class="top-nav-item" data-tab="calendar" onclick="navTo('calendar')">Calendar</div>
+        <div class="top-nav-item" data-tab="charts" onclick="navTo('charts')">Charts</div>
         <div class="top-nav-item" data-tab="screener" onclick="navTo('screener')">Screener</div>
         <div class="top-nav-item" data-tab="alerts" onclick="navTo('alerts')">Alerts</div>
         <div class="top-nav-item" data-tab="research" onclick="navTo('research')">Research</div>
@@ -697,6 +705,7 @@
             <div class="nav-item" onclick="showRotation(); toggleMenu();">Sector EWROS</div>
             <div class="nav-item" onclick="navTo('ewros'); toggleMenu();">EWROS Leaders</div>
             <div class="nav-item" onclick="showCalendar(); toggleMenu();">Calendar</div>
+            <div class="nav-item" onclick="navTo('charts'); toggleMenu();">Charts</div>
             <div class="nav-item" onclick="showScreener(); toggleMenu();">Screener</div>
             <div class="nav-item" onclick="showAlerts(); toggleMenu();">Alerts</div>
             <div class="nav-item" onclick="navTo('research'); toggleMenu();">🔬 Research</div>
@@ -1567,6 +1576,43 @@
             </div>
         </div>
 
+        <!-- CHARTS VIEW -->
+        <div id="charts-view" style="display: none;">
+            <div style="display: flex; gap: 8px; margin-bottom: 16px; align-items: center;">
+                <button onclick="showDashboard()" class="text-sm text-slate-400 hover:text-white flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    Back to Dashboard
+                </button>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <!-- Header row: ticker input + timeframe buttons -->
+                <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-bottom:16px;">
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <input id="chart-ticker-input" type="text" placeholder="Ticker (e.g. AAPL)" value="AAPL"
+                            style="background:#1e2333; border:1px solid #374151; color:#e2e8f0; padding:8px 14px; border-radius:8px; font-size:0.95rem; width:160px; text-transform:uppercase;"
+                            onkeydown="if(event.key==='Enter') loadChart()">
+                        <button onclick="loadChart()" style="background:var(--accent); color:#000; border:none; padding:8px 18px; border-radius:8px; font-weight:600; cursor:pointer; font-size:0.9rem;">Go</button>
+                    </div>
+                    <div id="chart-tf-btns" style="display:flex; gap:6px;">
+                        <button class="chart-tf-btn" data-period="3mo" onclick="setChartPeriod('3mo')">3M</button>
+                        <button class="chart-tf-btn" data-period="6mo" onclick="setChartPeriod('6mo')">6M</button>
+                        <button class="chart-tf-btn active" data-period="1y" onclick="setChartPeriod('1y')">1Y</button>
+                        <button class="chart-tf-btn" data-period="2y" onclick="setChartPeriod('2y')">2Y</button>
+                        <button class="chart-tf-btn" data-period="5y" onclick="setChartPeriod('5y')">5Y</button>
+                    </div>
+                </div>
+                <!-- Ticker info header -->
+                <div id="chart-header" style="margin-bottom:12px; font-size:1.1rem; font-weight:700; color:#e2e8f0;"></div>
+                <!-- Loading spinner -->
+                <div id="chart-loading" style="display:none; text-align:center; padding:60px 0; color:var(--text-dim);">
+                    <div style="display:inline-block; width:32px; height:32px; border:3px solid #374151; border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite;"></div>
+                    <div style="margin-top:10px;">Loading chart data...</div>
+                </div>
+                <!-- Chart container -->
+                <div id="chart-container" style="width:100%; height:600px; border-radius:8px; overflow:hidden;"></div>
+            </div>
+        </div>
+
         <!-- SCREENER VIEW -->
         <div id="screener-view" style="display: none;">
             <div style="display: flex; gap: 8px; margin-bottom: 16px; align-items: center;">
@@ -2192,6 +2238,7 @@
                 alerts: () => showAlerts(),
                 research: () => showResearch(),
                 calendar: () => showCalendar(),
+                charts: () => showCharts(),
                 journal: () => showJournal(),
                 risk: () => showRiskDashboard()
             };
@@ -2493,7 +2540,7 @@
         }
 
         function hideAllViews() {
-            ['landing-view','dashboard-view','hunter-view','detail-view','watchlist-view','rotation-view','ewros-view','watchlist-entries-view','calendar-view','journal-view','risk-view','screener-view','report-view','alerts-view','research-view'].forEach(id => {
+            ['landing-view','dashboard-view','hunter-view','detail-view','watchlist-view','rotation-view','ewros-view','watchlist-entries-view','calendar-view','charts-view','journal-view','risk-view','screener-view','report-view','alerts-view','research-view'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.style.display = 'none';
             });
@@ -4429,6 +4476,7 @@
             else if (hash === 'watchlist') showWatchlistEntries();
             else if (hash === 'pulse') showDashboard();
             else if (hash === 'calendar') showCalendar();
+            else if (hash === 'charts') showCharts();
             else if (hash === 'journal') showJournal();
             else if (hash === 'risk') showRiskDashboard();
             else if (hash === 'screener') showScreener();
@@ -6342,6 +6390,126 @@
         let researchEventSource = null;
         let lastResearchQuery = '';
         let lastReportMarkdown = '';
+
+        // ═══ Charts Tab ═══
+        let _chartInstance = null;
+        let _chartCandleSeries = null;
+        let _chartVolumeSeries = null;
+        let _chartSma50Series = null;
+        let _chartSma200Series = null;
+        let _chartPeriod = '1y';
+        let _chartLoaded = false;
+
+        function showCharts() {
+            if (location.hash !== '#charts') history.pushState(null, '', '#charts');
+            hideAllViews();
+            document.getElementById('charts-view').style.display = 'block';
+            updateActiveNav('charts');
+            if (!_chartLoaded) {
+                _chartLoaded = true;
+                loadChart();
+            } else if (_chartInstance) {
+                _chartInstance.timeScale().fitContent();
+            }
+        }
+
+        function setChartPeriod(period) {
+            _chartPeriod = period;
+            document.querySelectorAll('.chart-tf-btn').forEach(b => b.classList.toggle('active', b.dataset.period === period));
+            loadChart();
+        }
+
+        async function loadChart() {
+            const ticker = document.getElementById('chart-ticker-input').value.trim().toUpperCase();
+            if (!ticker) return;
+            document.getElementById('chart-ticker-input').value = ticker;
+            const loading = document.getElementById('chart-loading');
+            const container = document.getElementById('chart-container');
+            const header = document.getElementById('chart-header');
+            loading.style.display = 'block';
+            container.style.display = 'none';
+            header.textContent = '';
+
+            try {
+                const res = await fetch(`/api/chart-data/${ticker}?period=${_chartPeriod}&interval=1d`);
+                const data = await res.json();
+                if (data.error) throw new Error(data.error);
+
+                loading.style.display = 'none';
+                container.style.display = 'block';
+
+                // Show header
+                const lastCandle = data.candles[data.candles.length - 1];
+                header.textContent = `${data.ticker}  —  $${lastCandle.close.toFixed(2)}`;
+
+                // Clear old chart
+                if (_chartInstance) {
+                    _chartInstance.remove();
+                    _chartInstance = null;
+                }
+
+                _chartInstance = LightweightCharts.createChart(container, {
+                    width: container.clientWidth,
+                    height: 600,
+                    layout: { background: { type: 'solid', color: '#131722' }, textColor: '#94a3b8' },
+                    grid: { vertLines: { color: '#1e2940' }, horzLines: { color: '#1e2940' } },
+                    crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+                    rightPriceScale: { borderColor: '#2d3748' },
+                    timeScale: { borderColor: '#2d3748', timeVisible: false },
+                });
+
+                // Candlestick series
+                _chartCandleSeries = _chartInstance.addCandlestickSeries({
+                    upColor: '#22c55e', downColor: '#ef4444',
+                    borderUpColor: '#22c55e', borderDownColor: '#ef4444',
+                    wickUpColor: '#22c55e', wickDownColor: '#ef4444',
+                });
+                _chartCandleSeries.setData(data.candles);
+
+                // Volume series
+                _chartVolumeSeries = _chartInstance.addHistogramSeries({
+                    priceFormat: { type: 'volume' },
+                    priceScaleId: 'volume',
+                });
+                _chartInstance.priceScale('volume').applyOptions({
+                    scaleMargins: { top: 0.85, bottom: 0 },
+                });
+                _chartVolumeSeries.setData(data.candles.map(c => ({
+                    time: c.time,
+                    value: c.volume,
+                    color: c.close >= c.open ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)',
+                })));
+
+                // SMA 50 (blue)
+                if (data.sma50 && data.sma50.length) {
+                    _chartSma50Series = _chartInstance.addLineSeries({ color: '#3b82f6', lineWidth: 1.5, priceLineVisible: false, lastValueVisible: false });
+                    _chartSma50Series.setData(data.sma50);
+                }
+
+                // SMA 200 (red)
+                if (data.sma200 && data.sma200.length) {
+                    _chartSma200Series = _chartInstance.addLineSeries({ color: '#ef4444', lineWidth: 1.5, priceLineVisible: false, lastValueVisible: false });
+                    _chartSma200Series.setData(data.sma200);
+                }
+
+                _chartInstance.timeScale().fitContent();
+
+                // Responsive resize
+                const resizeHandler = () => {
+                    if (_chartInstance && container.clientWidth > 0) {
+                        _chartInstance.applyOptions({ width: container.clientWidth });
+                    }
+                };
+                window._chartResizeHandler && window.removeEventListener('resize', window._chartResizeHandler);
+                window._chartResizeHandler = resizeHandler;
+                window.addEventListener('resize', resizeHandler);
+
+            } catch (e) {
+                loading.style.display = 'none';
+                container.style.display = 'block';
+                container.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:300px;color:#ef4444;font-size:1rem;">${e.message}</div>`;
+            }
+        }
 
         function showResearch() {
             if (location.hash !== '#research') history.pushState(null, '', '#research');

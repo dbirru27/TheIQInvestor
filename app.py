@@ -2279,5 +2279,66 @@ def delete_report(report_id):
         return jsonify({'error': str(e)}), 500
 
 
+# ═══ Chart Data (yfinance) ═══
+_chart_cache = {}  # key: (ticker, period, interval) -> {data, ts}
+CHART_CACHE_TTL = 300  # 5 minutes
+
+@app.route('/api/chart-data/<ticker>')
+def chart_data(ticker):
+    """Return OHLCV candles + SMA50/SMA200 for a ticker via yfinance."""
+    import time
+    period = request.args.get('period', '1y')
+    interval = request.args.get('interval', '1d')
+
+    if period not in ('3mo', '6mo', '1y', '2y', '5y'):
+        return jsonify({'error': 'Invalid period. Use 3mo, 6mo, 1y, 2y, 5y'}), 400
+
+    ticker = ticker.upper().strip()
+    if not ticker or len(ticker) > 10:
+        return jsonify({'error': 'Invalid ticker'}), 400
+
+    # Check cache
+    cache_key = (ticker, period, interval)
+    cached = _chart_cache.get(cache_key)
+    if cached and time.time() - cached['ts'] < CHART_CACHE_TTL:
+        return jsonify(cached['data'])
+
+    try:
+        import yfinance as yf
+        t = yf.Ticker(ticker)
+        df = t.history(period=period, interval=interval)
+        if df.empty:
+            return jsonify({'error': f'No data found for {ticker}'}), 404
+
+        candles = []
+        closes = []
+        for idx, row in df.iterrows():
+            day = idx.strftime('%Y-%m-%d')
+            candles.append({
+                'time': day,
+                'open': round(row['Open'], 2),
+                'high': round(row['High'], 2),
+                'low': round(row['Low'], 2),
+                'close': round(row['Close'], 2),
+                'volume': int(row['Volume']),
+            })
+            closes.append((day, row['Close']))
+
+        # Compute SMAs
+        sma50, sma200 = [], []
+        close_vals = [c[1] for c in closes]
+        for i in range(len(close_vals)):
+            if i >= 49:
+                sma50.append({'time': closes[i][0], 'value': round(sum(close_vals[i-49:i+1]) / 50, 2)})
+            if i >= 199:
+                sma200.append({'time': closes[i][0], 'value': round(sum(close_vals[i-199:i+1]) / 200, 2)})
+
+        result = {'candles': candles, 'sma50': sma50, 'sma200': sma200, 'ticker': ticker}
+        _chart_cache[cache_key] = {'data': result, 'ts': time.time()}
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=18791, debug=True)
