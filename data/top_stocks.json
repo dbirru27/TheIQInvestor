@@ -1,7 +1,7 @@
 {
   "version": "5.0",
   "max_score": 100,
-  "last_scan": "2026-03-18 17:15 PST",
+  "last_scan": "2026-03-18 17:26 PST",
   "total_stocks": 265,
   "stocks": [
     {
@@ -142,7 +142,7 @@
       "analyst_count": 24,
       "current_price": 43.47999954223633,
       "ewros_score": 93,
-      "iq_edge": 87,
+      "iq_edge": 86,
       "iq_edge_raw": 0.756923,
       "ibd_rs": 72,
       "ibd_rs_raw": 6.98
@@ -1000,7 +1000,7 @@
       "analyst_count": 15,
       "current_price": 38.04999923706055,
       "ewros_score": 80,
-      "iq_edge": 24,
+      "iq_edge": 25,
       "iq_edge_raw": 0.177132,
       "ibd_rs": 63,
       "ibd_rs_raw": 4.63
@@ -2001,7 +2001,7 @@
       "analyst_count": 13,
       "current_price": 120.2699966430664,
       "ewros_score": 90,
-      "iq_edge": 17,
+      "iq_edge": 18,
       "iq_edge_raw": 0.139774,
       "ibd_rs": 93,
       "ibd_rs_raw": 21.21
@@ -2287,7 +2287,7 @@
       "analyst_count": 26,
       "current_price": 27.31999969482422,
       "ewros_score": 78,
-      "iq_edge": 82,
+      "iq_edge": 81,
       "iq_edge_raw": 0.687796,
       "ibd_rs": 57,
       "ibd_rs_raw": 3.38
@@ -3574,7 +3574,7 @@
       "analyst_count": 22,
       "current_price": 73.27999877929688,
       "ewros_score": 90,
-      "iq_edge": 49,
+      "iq_edge": 48,
       "iq_edge_raw": 0.368112,
       "ibd_rs": 69,
       "ibd_rs_raw": 6.32
@@ -3717,7 +3717,7 @@
       "analyst_count": 11,
       "current_price": 71.76000213623047,
       "ewros_score": 81,
-      "iq_edge": 29,
+      "iq_edge": 30,
       "iq_edge_raw": 0.212381,
       "ibd_rs": 66,
       "ibd_rs_raw": 5.34
@@ -4146,7 +4146,7 @@
       "analyst_count": 22,
       "current_price": 299.25,
       "ewros_score": 72,
-      "iq_edge": 56,
+      "iq_edge": 55,
       "iq_edge_raw": 0.42722,
       "ibd_rs": 59,
       "ibd_rs_raw": 3.68
@@ -5147,7 +5147,7 @@
       "analyst_count": 32,
       "current_price": 979.9199829101562,
       "ewros_score": 76,
-      "iq_edge": 47,
+      "iq_edge": 46,
       "iq_edge_raw": 0.350459,
       "ibd_rs": 65,
       "ibd_rs_raw": 5.03
@@ -5576,7 +5576,7 @@
       "analyst_count": 29,
       "current_price": 74.26000213623047,
       "ewros_score": 86,
-      "iq_edge": 11,
+      "iq_edge": 10,
       "iq_edge_raw": 0.087772,
       "ibd_rs": 59,
       "ibd_rs_raw": 3.84
@@ -6720,7 +6720,7 @@
       "analyst_count": 21,
       "current_price": 79.33999633789062,
       "ewros_score": 88,
-      "iq_edge": 51,
+      "iq_edge": 50,
       "iq_edge_raw": 0.381243,
       "ibd_rs": 81,
       "ibd_rs_raw": 10.12
@@ -6863,7 +6863,7 @@
       "analyst_count": 22,
       "current_price": 266.2200012207031,
       "ewros_score": 96,
-      "iq_edge": 83,
+      "iq_edge": 82,
       "iq_edge_raw": 0.698302,
       "ibd_rs": 88,
       "ibd_rs_raw": 13.72
@@ -7292,7 +7292,7 @@
       "analyst_count": 3,
       "current_price": 64.61000061035156,
       "ewros_score": 67,
-      "iq_edge": 68,
+      "iq_edge": 69,
       "iq_edge_raw": 0.536108,
       "ibd_rs": 74,
       "ibd_rs_raw": 7.47
@@ -7864,8 +7864,8 @@
       "analyst_count": 18,
       "current_price": 79.06999969482422,
       "ewros_score": 80,
-      "iq_edge": 38,
-      "iq_edge_raw": 0.281217,
+      "iq_edge": 40,
+      "iq_edge_raw": 0.29595,
       "ibd_rs": 58,
       "ibd_rs_raw": 3.59
     },
@@ -8007,8 +8007,8 @@
       "analyst_count": 10,
       "current_price": 136.75,
       "ewros_score": 78,
-      "iq_edge": 48,
-      "iq_edge_raw": 0.367407,
+      "iq_edge": 44,
+      "iq_edge_raw": 0.329066,
       "ibd_rs": 42,
       "ibd_rs_raw": -0.09
     },
@@ -10009,8 +10009,8 @@
       "analyst_count": 15,
       "current_price": 59.91999816894531,
       "ewros_score": 94,
-      "iq_edge": 33,
-      "iq_edge_raw": 0.23392,
+      "iq_edge": 32,
+      "iq_edge_raw": 0.231874,
       "ibd_rs": 92,
       "ibd_rs_raw": 18.3
     },
@@ -12012,7 +12012,7 @@
       "current_price": 286.9700012207031,
       "ewros_score": 82,
       "iq_edge": 48,
-      "iq_edge_raw": 0.361154,
+      "iq_edge_raw": 0.369277,
       "ibd_rs": 78,
       "ibd_rs_raw": 8.95
     },
