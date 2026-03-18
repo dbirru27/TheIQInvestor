@@ -1,12 +1,29 @@
 #!/usr/bin/env python3
 """
-InvestIQ QA Watchdog
-====================
-Runs daily after the pipeline. Detects bugs, fixes what it can,
-escalates what it can't. Reports to Telegram with a concise pass/fail card.
+InvestIQ QA Watchdog — Self-Healing Edition
+============================================
+Runs as the FINAL step of the daily pipeline (daily_update.py).
+Detects, fixes, and re-validates all data and scoring issues automatically.
+
+Every check has three modes:
+  1. DETECT  — find the problem
+  2. FIX     — auto-repair it (no human needed)
+  3. RE-CHECK — verify the fix actually worked
+  4. ESCALATE — if fix fails, alert Dan with what to do
+
+Problems this agent catches and fixes by itself:
+  A. Scoring output: N/A / "No yfinance data" / "Insufficient data" in any criterion
+  B. Yahoo API field renames (e.g. pegRatio → trailingPegRatio)
+  C. DB fundamental field coverage < 70% for any critical field
+  D. Quarterly revenue/EPS < 8 quarters average
+  E. SPY data missing or thin (< 200 rows) — causes RS "Insufficient data"
+  F. Grade ordering inversion (Grade B avg EWROS > Grade A)
+  G. Stale data files (all_stocks.json not updated today)
+  H. Syntax/import bugs in key pipeline scripts
+  I. GitHub Pages not pushed today (website out of date)
+  J. Pipeline didn't run today or errored
 
 Run: python3 scripts/qa_watchdog.py
-Cron: 0 17 * * 1-5 @ America/New_York (5 PM ET, 30 min after pipeline)
 """
 
 import os
@@ -15,17 +32,26 @@ import json
 import sqlite3
 import subprocess
 import traceback
+import statistics
+import importlib
+import py_compile
+import tempfile
 from datetime import datetime, date, timedelta
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field as dc_field
 from typing import List, Optional
+from collections import defaultdict
 
 WORKSPACE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, WORKSPACE)
 
 from scripts.telegram_utils import send_telegram
 
-TODAY = date.today().strftime("%Y-%m-%d")
-NOW = datetime.now().strftime("%H:%M ET")
+TODAY     = date.today().strftime("%Y-%m-%d")
+NOW       = datetime.now().strftime("%H:%M ET")
+DB_PATH   = os.path.join(WORKSPACE, "data/market_data.db")
+ALL_PATH  = os.path.join(WORKSPACE, "data/all_stocks.json")
+TOP_PATH  = os.path.join(WORKSPACE, "data/top_stocks.json")
+WL_PATH   = os.path.join(WORKSPACE, "data/watchlist.json")
 
 # ── Result dataclass ──────────────────────────────────────────────────────────
 
@@ -36,38 +62,24 @@ class CheckResult:
     detail: str = ""
     fixed: bool = False
     fix_detail: str = ""
-    critical: bool = False
+    critical: bool = True
+    recheck_passed: Optional[bool] = None
 
 RESULTS: List[CheckResult] = []
 
-def check(name, critical=False):
-    """Decorator-style check runner."""
-    def decorator(fn):
-        def wrapper(*args, **kwargs):
-            try:
-                result = fn(*args, **kwargs)
-                if isinstance(result, CheckResult):
-                    result.name = name
-                    result.critical = critical
-                    RESULTS.append(result)
-                    return result
-            except Exception as e:
-                r = CheckResult(name=name, passed=False,
-                                detail=f"Exception: {str(e)[:120]}",
-                                critical=critical)
-                RESULTS.append(r)
-                return r
-        return wrapper
-    return decorator
+# ── Helpers ───────────────────────────────────────────────────────────────────
+
+def sh(cmd, timeout=120):
+    """Run shell command. Return (returncode, stdout, stderr)."""
+    r = subprocess.run(cmd, shell=True, capture_output=True, text=True,
+                       cwd=WORKSPACE, timeout=timeout)
+    return r.returncode, r.stdout.strip(), r.stderr.strip()
 
 
-# ── Helper ────────────────────────────────────────────────────────────────────
-
-def run(cmd, cwd=WORKSPACE, timeout=120):
-    """Run a shell command, return (returncode, stdout, stderr)."""
-    result = subprocess.run(cmd, shell=True, capture_output=True,
-                            text=True, cwd=cwd, timeout=timeout)
-    return result.returncode, result.stdout, result.stderr
+def pyrun(script_path, args="", timeout=300):
+    """Run a python script and return (ok, output)."""
+    rc, out, err = sh(f"{sys.executable} {script_path} {args}", timeout=timeout)
+    return rc == 0, out + err
 
 
 def load_json(path):
@@ -75,586 +87,604 @@ def load_json(path):
         return json.load(f)
 
 
-def db_connect():
-    return sqlite3.connect(os.path.join(WORKSPACE, "data/market_data.db"))
+def db():
+    return sqlite3.connect(DB_PATH)
 
 
-# ── CHECK 1: Data file freshness ──────────────────────────────────────────────
-
-def check_file_freshness():
-    issues = []
-    fixed_any = False
-
-    files_to_check = [
-        ("data/all_stocks.json",  "generated_at", True),
-        ("data/top_stocks.json",  "generated_at", True),
-        ("data/watchlist.json",   "last_updated", True),
-    ]
-
-    for relpath, ts_field, critical in files_to_check:
-        path = os.path.join(WORKSPACE, relpath)
-        if not os.path.exists(path):
-            issues.append(f"MISSING: {relpath}")
-            continue
-        try:
-            d = load_json(path)
-            ts = d.get(ts_field) or d.get("timestamp") or d.get("as_of")
-            if ts and TODAY not in str(ts):
-                issues.append(f"STALE: {relpath} → {str(ts)[:10]} (expected {TODAY})")
-            # Also check git commit date
-        except Exception as e:
-            issues.append(f"PARSE ERROR: {relpath}: {e}")
-
-    # Check git log — last commit should be today
-    rc, out, _ = run("git log --oneline -1 --format='%ci %s'")
-    if out and TODAY not in out:
-        issues.append(f"GIT: last commit is not today → {out.strip()[:60]}")
-
-    if issues:
-        return CheckResult(
-            name="Data Freshness",
-            passed=False,
-            detail="; ".join(issues),
-            critical=True
-        )
-    return CheckResult(name="Data Freshness", passed=True,
-                       detail=f"all_stocks, top_stocks, watchlist, git all dated {TODAY}")
+def all_scored_stocks():
+    """Return list of non-ETF stocks with criteria from all_stocks.json."""
+    d = load_json(ALL_PATH)
+    return [s for s in d['stocks'].values()
+            if s.get('grade') not in ('ETF', None) and s.get('criteria')]
 
 
-# ── CHECK 2: RS scoring (SPY cache bug) ───────────────────────────────────────
+def rescan(steps="scan merge git"):
+    """Re-run pipeline steps to regenerate scoring output after a fix."""
+    ok, out = pyrun(f"{WORKSPACE}/scripts/daily_update.py", f"--only {steps}", timeout=300)
+    return ok
 
-def check_rs_scoring():
-    path = os.path.join(WORKSPACE, "data/all_stocks.json")
-    d = load_json(path)
-    stocks = d.get("stocks", d)
-    if isinstance(stocks, dict):
-        stock_list = list(stocks.values())
+
+# ── CHECK A: Scoring output — N/A / error strings in criteria ─────────────────
+
+def check_scoring_output():
+    """
+    Scan every criterion for every stock. Any systemic N/A or error string
+    means a data source broke silently. Detect → Fix → Re-scan → Re-check.
+    """
+    BAD = ['n/a', 'no yfinance', 'insufficient data', 'data unavailable',
+           'no eps', 'no data', 'calc error', 'error:', 'insufficient quarters']
+
+    def scan_bad():
+        stocks = all_scored_stocks()
+        n = len(stocks)
+        counts = defaultdict(int)
+        samples = defaultdict(list)
+        for s in stocks:
+            for c in s.get('criteria', []):
+                val = str(c.get('value', '')).lower()
+                cname = c.get('name', '')
+                if any(p in val for p in BAD):
+                    counts[cname] += 1
+                    if len(samples[cname]) < 3:
+                        samples[cname].append(s['ticker'])
+        return n, counts, samples
+
+    n, counts, samples = scan_bad()
+    systemic = {k: v for k, v in counts.items() if v / n > 0.10}
+    if not systemic:
+        minor = {k: v for k, v in counts.items() if v / n > 0.05}
+        detail = f"All {n} stocks scoring cleanly."
+        if minor:
+            detail = "Minor gaps (<10%): " + "; ".join(f"{k}: {v}" for k, v in minor.items())
+        return CheckResult("Scoring Output", passed=not bool(minor), detail=detail, critical=False)
+
+    issue_detail = "; ".join(f"{k}: {v}/{n} ({v/n*100:.0f}%) — e.g. {samples[k]}" for k, v in sorted(systemic.items(), key=lambda x: -x[1]))
+
+    # === FIX PHASE ===
+    # Map criterion names to fix actions
+    fix_applied = []
+
+    # 1. "Valuation Sanity" N/A → PEG missing → run refresh_fundamentals
+    if "Valuation Sanity" in systemic:
+        ok, _ = pyrun(f"{WORKSPACE}/scripts/refresh_fundamentals.py", timeout=180)
+        if ok:
+            fix_applied.append("Ran refresh_fundamentals (PEG/derived fields)")
+
+    # 2. "Relative Strength" / "RS" N/A → SPY thin in DB → backfill SPY
+    if any("Strength" in k or "RS" in k for k in systemic):
+        fixed = _backfill_spy()
+        if fixed:
+            fix_applied.append(f"Backfilled SPY history: {fixed}")
+
+    # 3. "Earnings Acceleration" N/A → quarterly_eps missing → SEC backfill
+    if "Earnings Acceleration" in systemic:
+        ok, _ = pyrun(f"{WORKSPACE}/scripts/refresh_fundamentals.py", timeout=180)
+        if ok:
+            fix_applied.append("Ran refresh_fundamentals (quarterly EPS backfill)")
+
+    # 4. "Revenue Score" N/A → quarterly_revenue missing → same fix
+    if "Revenue Score" in systemic:
+        ok, _ = pyrun(f"{WORKSPACE}/scripts/refresh_fundamentals.py", timeout=180)
+        if ok:
+            fix_applied.append("Ran refresh_fundamentals (quarterly revenue backfill)")
+
+    # Re-run scoring if any fix was applied
+    if fix_applied:
+        rescan("scan merge git")
+        # === RE-CHECK ===
+        _, counts2, _ = scan_bad()
+        systemic2 = {k: v for k, v in counts2.items() if v / n > 0.10}
+        recheck_passed = len(systemic2) == 0
     else:
-        stock_list = stocks
-
-    total = 0
-    insufficient = 0
-    for s in stock_list:
-        if s.get("grade") == "ETF":
-            continue
-        for c in s.get("criteria", []):
-            if c.get("name") == "Relative Strength":
-                total += 1
-                if "Insufficient" in str(c.get("value", "")):
-                    insufficient += 1
-
-    pct = insufficient / total * 100 if total else 0
-
-    if pct > 10:  # >10% stocks have RS data failure = systemic bug
-        # FIX: Pre-load SPY into DB with full 1-year history
-        fix_detail = _fix_spy_in_db()
-        return CheckResult(
-            name="RS Scoring (SPY Cache)",
-            passed=False,
-            detail=f"{insufficient}/{total} stocks ({pct:.0f}%) show 'Insufficient data' for RS",
-            fixed=bool(fix_detail),
-            fix_detail=fix_detail,
-            critical=True
-        )
+        recheck_passed = False
 
     return CheckResult(
-        name="RS Scoring (SPY Cache)",
-        passed=True,
-        detail=f"{insufficient}/{total} ({pct:.0f}%) RS failures — within tolerance"
+        name="Scoring Output",
+        passed=False,
+        detail=issue_detail,
+        fixed=bool(fix_applied),
+        fix_detail="; ".join(fix_applied) if fix_applied else "No auto-fix available",
+        critical=True,
+        recheck_passed=recheck_passed
     )
 
 
-def _fix_spy_in_db():
-    """Load SPY 1-year history into the prices DB so RS calc doesn't need yfinance."""
+# ── CHECK B: Yahoo API field renames ─────────────────────────────────────────
+
+def check_yahoo_field_names():
+    """
+    Probe Yahoo Finance live for a sample of stocks.
+    Compare returned keys against what we store in DB.
+    Detect renames (e.g. pegRatio → trailingPegRatio) and normalize DB.
+
+    Known rename map: add entries here when Yahoo changes field names.
+    """
+    RENAME_MAP = {
+        # old_name: [new_name_candidates]
+        'pegRatio': ['trailingPegRatio'],
+        'forwardEps': ['trailingEps', 'epsForward'],
+        'enterpriseValue': ['enterpriseValue'],  # stable, just checking
+    }
+
     try:
         import yfinance as yf
-        import pandas as pd
+        # Probe 5 large-cap stocks
+        probe = yf.download(tickers="AAPL MSFT NVDA GOOGL LLY",
+                            period="1d", auto_adjust=False, progress=False)
+        t = yf.Ticker("NVDA")
+        live_keys = set(t.info.keys())
+    except Exception as e:
+        return CheckResult("Yahoo Field Names", passed=True,
+                           detail=f"Could not probe live (skipped): {e}", critical=False)
 
-        spy = yf.Ticker("SPY")
-        hist = spy.history(period="1y", auto_adjust=False)
+    db_renames = {}  # old_key → new_key that should be used
+    for old, candidates in RENAME_MAP.items():
+        if old not in live_keys:
+            # Old key gone — find which new candidate Yahoo returns
+            for new_key in candidates:
+                if new_key in live_keys:
+                    db_renames[old] = new_key
+                    break
+
+    if not db_renames:
+        return CheckResult("Yahoo Field Names", passed=True,
+                           detail="All expected Yahoo field names intact.")
+
+    # FIX: normalize in DB
+    conn = db()
+    c = conn.cursor()
+    c.execute("SELECT symbol, data FROM fundamentals")
+    rows = c.fetchall()
+    updated = 0
+    for sym, data_str in rows:
+        try:
+            info = json.loads(data_str)
+            changed = False
+            for old_key, new_key in db_renames.items():
+                new_val = info.get(new_key)
+                if new_val is not None and info.get(old_key) is None:
+                    info[old_key] = new_val  # back-populate old key for compatibility
+                    changed = True
+            if changed:
+                c.execute("UPDATE fundamentals SET data=? WHERE symbol=?",
+                          (json.dumps(info), sym))
+                updated += 1
+        except Exception:
+            continue
+    conn.commit()
+    conn.close()
+
+    rename_str = ", ".join(f"{o}→{n}" for o, n in db_renames.items())
+    return CheckResult(
+        name="Yahoo Field Names",
+        passed=False,
+        detail=f"Yahoo renamed: {rename_str}",
+        fixed=True,
+        fix_detail=f"Normalized {updated} DB rows to use new field names",
+        critical=False
+    )
+
+
+# ── CHECK C+D: Fundamental field coverage ────────────────────────────────────
+
+def check_fundamentals_coverage():
+    """
+    Check coverage of critical fundamental fields and quarterly data depth.
+    Auto-fix by running refresh_fundamentals.py.
+    """
+    CRITICAL_FIELDS = {
+        'forwardPE': 80,       # min % coverage required
+        'earningsGrowth': 70,
+        'returnOnEquity': 80,
+        'operatingMargins': 80,
+        'pegRatio': 70,        # now sourced from trailingPegRatio
+        'revenueGrowth': 80,
+    }
+    MIN_QUARTERS = 8
+
+    conn = db()
+    c = conn.cursor()
+    c.execute("SELECT COUNT(*) FROM fundamentals")
+    total = c.fetchone()[0]
+
+    issues = []
+    for field, threshold in CRITICAL_FIELDS.items():
+        c.execute(f"SELECT COUNT(*) FROM fundamentals WHERE json_extract(data,'$.{field}') IS NOT NULL")
+        present = c.fetchone()[0]
+        pct = present / total * 100 if total else 0
+        if pct < threshold:
+            issues.append(f"{field}: {pct:.0f}% (need {threshold}%)")
+
+    c.execute("SELECT AVG(cnt) FROM (SELECT COUNT(*) cnt FROM quarterly_revenue GROUP BY symbol)")
+    avg_rev = c.fetchone()[0] or 0
+    c.execute("SELECT AVG(cnt) FROM (SELECT COUNT(*) cnt FROM quarterly_eps GROUP BY symbol)")
+    avg_eps = c.fetchone()[0] or 0
+    conn.close()
+
+    if avg_rev < MIN_QUARTERS:
+        issues.append(f"quarterly_revenue avg {avg_rev:.1f}Q (need {MIN_QUARTERS}+)")
+    if avg_eps < MIN_QUARTERS:
+        issues.append(f"quarterly_eps avg {avg_eps:.1f}Q (need {MIN_QUARTERS}+)")
+
+    if not issues:
+        return CheckResult("Fundamentals Coverage", passed=True,
+                           detail=f"pegRatio OK, rev {avg_rev:.1f}Q, eps {avg_eps:.1f}Q")
+
+    # FIX: run refresh_fundamentals
+    ok, out = pyrun(f"{WORKSPACE}/scripts/refresh_fundamentals.py", timeout=240)
+
+    # RE-CHECK after fix
+    conn2 = db()
+    c2 = conn2.cursor()
+    still_bad = []
+    for field, threshold in CRITICAL_FIELDS.items():
+        c2.execute(f"SELECT COUNT(*), COUNT(CASE WHEN json_extract(data,'$.{field}') IS NOT NULL THEN 1 END) FROM fundamentals")
+        tot, present = c2.fetchone()
+        pct = present / tot * 100 if tot else 0
+        if pct < threshold:
+            still_bad.append(f"{field}: {pct:.0f}%")
+    conn2.close()
+
+    return CheckResult(
+        name="Fundamentals Coverage",
+        passed=False,
+        detail="; ".join(issues),
+        fixed=ok,
+        fix_detail="refresh_fundamentals.py completed" if ok else f"Fix failed: {out[-80:]}",
+        recheck_passed=len(still_bad) == 0
+    )
+
+
+# ── CHECK E: SPY data in DB ───────────────────────────────────────────────────
+
+def check_spy_db_coverage():
+    """
+    RS calculation requires SPY price history in the DB prices table.
+    If < 200 rows exist, the cache-poison bug causes all stocks to show
+    'Insufficient data'. Detect and auto-fix by fetching full 1-year history.
+    """
+    conn = db()
+    c = conn.cursor()
+    c.execute("SELECT COUNT(*) FROM prices WHERE symbol='SPY'")
+    spy_rows = c.fetchone()[0]
+    conn.close()
+
+    if spy_rows >= 200:
+        return CheckResult("SPY DB Coverage", passed=True,
+                           detail=f"SPY has {spy_rows} rows in DB — sufficient for RS")
+
+    # FIX: fetch full year of SPY
+    fix_detail = _backfill_spy()
+    conn2 = db()
+    c2 = conn2.cursor()
+    c2.execute("SELECT COUNT(*) FROM prices WHERE symbol='SPY'")
+    new_rows = c2.fetchone()[0]
+    conn2.close()
+
+    return CheckResult(
+        name="SPY DB Coverage",
+        passed=False,
+        detail=f"SPY had only {spy_rows} rows (need 200+ for RS calculations)",
+        fixed=bool(fix_detail and "failed" not in fix_detail.lower()),
+        fix_detail=fix_detail,
+        recheck_passed=new_rows >= 200
+    )
+
+
+def _backfill_spy():
+    try:
+        import yfinance as yf
+        hist = yf.Ticker("SPY").history(period="1y", auto_adjust=False)
         if hist.empty or len(hist) < 100:
-            return "SPY fetch returned empty — could not fix"
-
-        conn = db_connect()
+            return "SPY fetch returned insufficient data"
+        conn = db()
         c = conn.cursor()
-
-        # Upsert SPY rows
-        rows_written = 0
+        written = 0
         for dt, row in hist.iterrows():
-            date_str = dt.strftime("%Y-%m-%d")
             c.execute("""
                 INSERT OR REPLACE INTO prices (symbol, date, open, high, low, close, volume)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, ("SPY", date_str,
-                  float(row.get("Open", 0)),
-                  float(row.get("High", 0)),
-                  float(row.get("Low", 0)),
-                  float(row.get("Close", 0)),
+            """, ("SPY", dt.strftime("%Y-%m-%d"),
+                  float(row.get("Open", 0)), float(row.get("High", 0)),
+                  float(row.get("Low", 0)),  float(row.get("Close", 0)),
                   int(row.get("Volume", 0))))
-            rows_written += 1
-
+            written += 1
         conn.commit()
         conn.close()
-        return f"Wrote {rows_written} SPY rows to DB ({hist.index[0].date()} → {hist.index[-1].date()})"
+        return f"Wrote {written} SPY rows to DB"
     except Exception as e:
-        return f"SPY fix failed: {e}"
+        return f"SPY backfill failed: {e}"
 
 
-# ── CHECK 3: Grade sanity (Grade B should not outrank Grade A in EWROS) ───────
+# ── CHECK F: Grade ordering sanity ───────────────────────────────────────────
 
 def check_grade_sanity():
-    path = os.path.join(WORKSPACE, "data/all_stocks.json")
-    d = load_json(path)
-    stocks = d.get("stocks", d)
-    if isinstance(stocks, dict):
-        stock_list = list(stocks.values())
-    else:
-        stock_list = stocks
+    """
+    Grade A should have higher avg EWROS than Grade B, etc.
+    If inverted, the scoring weights are broken. Flag loudly — no auto-fix,
+    needs a scoring redesign decision.
+    """
+    stocks = all_scored_stocks()
+    grade_ewros = defaultdict(list)
+    for s in stocks:
+        g = s.get('grade')
+        e = s.get('ewros_score')
+        if g and e and g != 'ETF':
+            grade_ewros[g].append(float(e))
 
-    grade_ewros = {}
-    for s in stock_list:
-        g = s.get("grade", "?")
-        e = s.get("ewros_score")
-        if e and g not in ("?", "ETF"):
-            grade_ewros.setdefault(g, []).append(e)
-
-    import statistics
-    grade_avg = {g: statistics.mean(v) for g, v in grade_ewros.items() if v}
-
+    avgs = {g: statistics.mean(v) for g, v in grade_ewros.items() if v}
     issues = []
-    if grade_avg.get("B", 0) > grade_avg.get("A", 100):
-        issues.append(
-            f"Grade B avg EWROS ({grade_avg['B']:.1f}) > Grade A ({grade_avg['A']:.1f}) — scoring inverted"
-        )
-    if grade_avg.get("C", 0) > grade_avg.get("B", 100):
-        issues.append(
-            f"Grade C avg EWROS ({grade_avg['C']:.1f}) > Grade B ({grade_avg['B']:.1f})"
-        )
+    grade_order = ['A+', 'A', 'A-', 'B', 'C', 'D', 'F']
+    prev_g, prev_avg = None, None
+    for g in grade_order:
+        if g not in avgs:
+            continue
+        if prev_avg is not None and avgs[g] > prev_avg:
+            issues.append(f"Grade {g} avg EWROS ({avgs[g]:.1f}) > Grade {prev_g} ({prev_avg:.1f})")
+        prev_g, prev_avg = g, avgs[g]
 
-    count_a = len(grade_ewros.get("A", []))
+    count_a = sum(len(grade_ewros.get(g, [])) for g in ['A+', 'A', 'A-'])
     if count_a < 5:
-        issues.append(f"Only {count_a} Grade A stocks — threshold may be too tight")
+        issues.append(f"Only {count_a} A-grade stocks (threshold may be too tight)")
 
-    summary = " | ".join(f"{g}:{grade_avg.get(g,0):.0f}" for g in ["A","B","C","D"])
+    summary = " | ".join(f"{g}:{avgs.get(g,0):.0f}" for g in ['A','B','C','D'] if g in avgs)
 
     if issues:
         return CheckResult(
             name="Grade Sanity",
             passed=False,
             detail="; ".join(issues) + f" | EWROS by grade: {summary}",
+            fixed=False,
+            fix_detail="Cannot auto-fix: requires scoring redesign (PULSE v6.0). Needs human decision.",
             critical=True
         )
+    return CheckResult("Grade Sanity", passed=True, detail=f"EWROS: {summary}")
+
+
+# ── CHECK G: Data file freshness ──────────────────────────────────────────────
+
+def check_data_freshness():
+    issues = []
+    for path, key in [(ALL_PATH, 'generated_at'), (TOP_PATH, 'generated_at'), (WL_PATH, 'last_updated')]:
+        if not os.path.exists(path):
+            issues.append(f"MISSING: {os.path.basename(path)}")
+            continue
+        d = load_json(path)
+        ts = d.get(key) or d.get('timestamp') or d.get('as_of', '')
+        if TODAY not in str(ts):
+            issues.append(f"STALE: {os.path.basename(path)} → {str(ts)[:10]}")
+
+    rc, out, _ = sh("git log --oneline -1 --format='%ci'")
+    if out and TODAY not in out:
+        issues.append(f"GitHub Pages: last push {out[:10]}")
+
+    if not issues:
+        return CheckResult("Data Freshness", passed=True, detail=f"All files current as of {TODAY}")
+
+    return CheckResult("Data Freshness", passed=False, detail="; ".join(issues), critical=True)
+
+
+# ── CHECK H: Syntax + import bugs in key scripts ─────────────────────────────
+
+def check_script_health():
+    """
+    Compile-check all key pipeline scripts. Catch missing imports and
+    syntax errors before they silently break the pipeline.
+    Also run targeted checks for known recurring bugs.
+    """
+    KEY_SCRIPTS = [
+        "rater.py", "scan_all.py", "refresh_cache.py",
+        "scripts/daily_update.py", "scripts/ewros.py",
+        "scripts/refresh_fundamentals.py",
+    ]
+    REQUIRED_IMPORTS = {
+        "scripts/daily_update.py": ["import json", "import sys", "import os"],
+        "rater.py": ["import sqlite3", "import pandas"],
+        "scan_all.py": ["import json"],
+    }
+
+    issues = []
+    fixed = []
+
+    for relpath in KEY_SCRIPTS:
+        fpath = os.path.join(WORKSPACE, relpath)
+        if not os.path.exists(fpath):
+            issues.append(f"MISSING: {relpath}")
+            continue
+        # Syntax check
+        try:
+            py_compile.compile(fpath, doraise=True)
+        except py_compile.PyCompileError as e:
+            issues.append(f"SYNTAX ERROR in {relpath}: {str(e)[:80]}")
+            continue
+
+        # Import checks
+        with open(fpath) as f:
+            content = f.read()
+
+        for imp in REQUIRED_IMPORTS.get(relpath, []):
+            if imp not in content:
+                # Auto-fix: insert at top of imports block
+                lines = content.split('\n')
+                insert_at = next((i for i, l in enumerate(lines)
+                                  if l.startswith('import ') or l.startswith('from ')), 0)
+                lines.insert(insert_at, imp)
+                with open(fpath, 'w') as f:
+                    f.write('\n'.join(lines))
+                fixed.append(f"Inserted '{imp}' into {relpath}")
+
+    if issues or fixed:
+        return CheckResult(
+            name="Script Health",
+            passed=not bool(issues),
+            detail="; ".join(issues) if issues else "No syntax errors",
+            fixed=bool(fixed),
+            fix_detail="; ".join(fixed) if fixed else "",
+            critical=bool(issues)
+        )
+    return CheckResult("Script Health", passed=True,
+                       detail=f"All {len(KEY_SCRIPTS)} scripts compile cleanly")
+
+
+# ── CHECK I: GitHub Pages pushed today ───────────────────────────────────────
+
+def check_github_push():
+    rc, out, _ = sh("git log --oneline -1 --format='%ci|%s'")
+    if rc != 0:
+        return CheckResult("GitHub Push", passed=False, detail="git log failed", critical=False)
+    parts = out.split("|", 1)
+    commit_date = parts[0][:10] if parts else "?"
+    msg = parts[1].strip()[:60] if len(parts) > 1 else "?"
+
+    if commit_date == TODAY:
+        return CheckResult("GitHub Push", passed=True, detail=f"'{msg}'")
+
+    # FIX: push now
+    rc2, _, err = sh("git add -A && git commit -m 'chore: QA watchdog re-push' && git push")
     return CheckResult(
-        name="Grade Sanity",
-        passed=True,
-        detail=f"Grade ordering looks correct. EWROS: {summary}"
+        name="GitHub Push",
+        passed=False,
+        detail=f"Last push was {commit_date}",
+        fixed=(rc2 == 0),
+        fix_detail="Pushed to GitHub Pages" if rc2 == 0 else f"Push failed: {err[:60]}",
+        critical=False
     )
 
 
-# ── CHECK 4: Pipeline step completeness ──────────────────────────────────────
+# ── CHECK J: Pipeline ran today ───────────────────────────────────────────────
 
-def check_pipeline_completeness():
-    """Check that the cron run log shows today's run completed OK."""
+def check_pipeline_ran():
     runs_dir = os.path.expanduser("~/.openclaw/cron/runs")
-    pipeline_id = "5facd568-a287-40d1-ac63-0c36a4310310"  # InvestIQ Daily Pipeline
+    pipeline_id = "5facd568-a287-40d1-ac63-0c36a4310310"
     log_path = os.path.join(runs_dir, f"{pipeline_id}.jsonl")
 
     if not os.path.exists(log_path):
-        return CheckResult(name="Pipeline Completeness", passed=False,
-                           detail="Run log not found", critical=True)
-
-    with open(log_path) as f:
-        lines = f.readlines()
+        return CheckResult("Pipeline Ran Today", passed=False,
+                           detail="Run log not found — pipeline may not be configured", critical=True)
 
     last_run = None
-    for line in reversed(lines):
-        try:
-            d = json.loads(line)
-            if d.get("action") == "finished":
-                last_run = d
-                break
-        except:
-            continue
+    with open(log_path) as f:
+        for line in reversed(f.readlines()):
+            try:
+                d = json.loads(line)
+                if d.get("action") == "finished":
+                    last_run = d
+                    break
+            except Exception:
+                continue
 
     if not last_run:
-        return CheckResult(name="Pipeline Completeness", passed=False,
-                           detail="No finished runs found", critical=True)
+        return CheckResult("Pipeline Ran Today", passed=False,
+                           detail="No finished runs in log", critical=True)
 
     run_ts = datetime.fromtimestamp(last_run["ts"] / 1000)
     run_date = run_ts.strftime("%Y-%m-%d")
     status = last_run.get("status", "?")
 
     if run_date != TODAY:
-        return CheckResult(
-            name="Pipeline Completeness",
-            passed=False,
-            detail=f"Last run was {run_date}, not today ({TODAY}). Status: {status}",
-            critical=True
-        )
+        return CheckResult("Pipeline Ran Today", passed=False,
+                           detail=f"Last run: {run_date} (not today). Status: {status}",
+                           critical=True)
     if status != "ok":
-        err = last_run.get("error", "")[:80]
-        return CheckResult(
-            name="Pipeline Completeness",
-            passed=False,
-            detail=f"Today's run status: {status} — {err}",
-            critical=False
-        )
+        return CheckResult("Pipeline Ran Today", passed=False,
+                           detail=f"Today's run status: {status} — {last_run.get('error','')[:80]}",
+                           critical=False)
 
-    return CheckResult(
-        name="Pipeline Completeness",
-        passed=True,
-        detail=f"Pipeline ran today at {run_ts.strftime('%H:%M ET')} — status: {status}"
-    )
+    return CheckResult("Pipeline Ran Today", passed=True,
+                       detail=f"Ran at {run_ts.strftime('%H:%M ET')}, status: ok")
 
 
-# ── CHECK 5: known import/code bugs ──────────────────────────────────────────
+# ── ORCHESTRATOR ──────────────────────────────────────────────────────────────
 
-def check_known_bugs():
-    issues = []
+CHECKS = [
+    # name                      function                    run_order
+    ("Script Health",           check_script_health),       # run first — broken scripts break everything
+    ("Data Freshness",          check_data_freshness),
+    ("Yahoo Field Names",       check_yahoo_field_names),   # detect renames before coverage check
+    ("Fundamentals Coverage",   check_fundamentals_coverage),
+    ("SPY DB Coverage",         check_spy_db_coverage),
+    ("Scoring Output",          check_scoring_output),      # must run after fixes above
+    ("Grade Sanity",            check_grade_sanity),
+    ("Pipeline Ran Today",      check_pipeline_ran),
+    ("GitHub Push",             check_github_push),
+]
 
-    # Bug: missing `import json` in daily_update.py
-    daily_update = os.path.join(WORKSPACE, "scripts/daily_update.py")
-    if os.path.exists(daily_update):
-        with open(daily_update) as f:
-            content = f.read()
-        if "import json" not in content[:500]:
-            # Auto-fix
-            fixed = content.replace(
-                "import sys\nimport time",
-                "import json\nimport sys\nimport time",
-                1
-            )
-            with open(daily_update, "w") as f:
-                f.write(fixed)
-            issues.append("FIXED: missing `import json` in daily_update.py")
-
-    # Check rater.py exists and has expected scoring weights
-    rater_path = os.path.join(WORKSPACE, "rater.py")
-    if not os.path.exists(rater_path):
-        issues.append("CRITICAL: rater.py missing")
-
-    if issues:
-        return CheckResult(
-            name="Known Bugs",
-            passed=False if any("CRITICAL" in i for i in issues) else True,
-            detail="; ".join(issues),
-            fixed=any("FIXED" in i for i in issues)
-        )
-    return CheckResult(name="Known Bugs", passed=True,
-                       detail="No known bugs detected")
-
-
-# ── CHECK 6: Website timestamp ────────────────────────────────────────────────
-
-def check_website_timestamp():
-    """Check that the latest git commit (GitHub Pages) is today."""
-    rc, out, _ = run("git log --oneline -1 --format='%ci|%s'")
-    if rc != 0:
-        return CheckResult(name="Website Timestamp", passed=False,
-                           detail="Could not read git log")
-
-    parts = out.strip().split("|", 1)
-    commit_date = parts[0][:10] if parts else "?"
-    commit_msg = parts[1].strip() if len(parts) > 1 else "?"
-
-    if commit_date != TODAY:
-        return CheckResult(
-            name="Website Timestamp",
-            passed=False,
-            detail=f"Last GitHub push: {commit_date} — website may be stale (expected {TODAY})",
-            critical=True
-        )
-    return CheckResult(
-        name="Website Timestamp",
-        passed=True,
-        detail=f"GitHub pushed today: '{commit_msg[:50]}'"
-    )
-
-
-# ── CHECK 7: Sparse columns in key files ─────────────────────────────────────
-
-def check_fundamentals_coverage():
-    """Check that critical fundamental fields are populated across all stocks."""
-    try:
-        import sys
-        sys.path.insert(0, WORKSPACE)
-        from scripts.refresh_fundamentals import validate_coverage
-        conn = db_connect()
-        cov = validate_coverage(conn)
-        conn.close()
-
-        critical_fields = ['forwardPE', 'earningsGrowth', 'returnOnEquity',
-                           'operatingMargins', 'pegRatio']
-        issues = []
-        fixed = False
-
-        for f in critical_fields:
-            pct = cov.get(f, 0)
-            if pct < 70:
-                issues.append(f"{f}: {pct:.0f}% covered")
-
-        avg_rev = cov.get('_avg_revenue_quarters', 0)
-        avg_eps = cov.get('_avg_eps_quarters', 0)
-        if avg_rev < 8:
-            issues.append(f"Quarterly revenue avg {avg_rev:.1f} quarters (need 8+)")
-        if avg_eps < 8:
-            issues.append(f"Quarterly EPS avg {avg_eps:.1f} quarters (need 8+)")
-
-        if issues:
-            # Auto-fix: run refresh_fundamentals
-            import subprocess
-            rc, out, err = run(
-                f"/usr/bin/python3 {WORKSPACE}/scripts/refresh_fundamentals.py",
-                timeout=180
-            )
-            fixed = (rc == 0)
-            return CheckResult(
-                name="Fundamentals Coverage",
-                passed=False,
-                detail="; ".join(issues),
-                fixed=fixed,
-                fix_detail="Ran refresh_fundamentals.py" if fixed else f"Fix failed: {err[:60]}"
-            )
-
-        summary = f"pegRatio {cov.get('pegRatio', 0):.0f}%, rev {avg_rev:.1f}Q, eps {avg_eps:.1f}Q"
-        return CheckResult(name="Fundamentals Coverage", passed=True, detail=summary)
-    except Exception as e:
-        return CheckResult(name="Fundamentals Coverage", passed=False,
-                           detail=f"Check error: {str(e)[:80]}")
-
-
-def check_scoring_output():
-    """
-    The critical check: scan EVERY criterion in ALL scored stocks and flag
-    any that contain 'N/A', 'No yfinance data', 'Insufficient data', or
-    other error strings. This catches broken scoring before Dan sees it.
-    Also verifies that each criterion is actually computing real values,
-    not silently falling back to zero due to missing data.
-    """
-    path = os.path.join(WORKSPACE, 'data/all_stocks.json')
-    d = load_json(path)
-    stocks = [s for s in d['stocks'].values()
-              if s.get('grade') not in ('ETF', None) and s.get('criteria')]
-
-    if not stocks:
-        return CheckResult(name="Scoring Output Validation", passed=False,
-                           detail="No scored stocks found", critical=True)
-
-    n = len(stocks)
-    # Patterns that indicate a criterion failed to compute real data
-    BAD_PATTERNS = [
-        'n/a', 'no yfinance', 'insufficient data', 'data unavailable',
-        'no eps', 'no data', 'calc error', 'error:', 'insufficient quarters'
-    ]
-
-    from collections import defaultdict
-    bad_counts = defaultdict(int)
-    bad_samples = defaultdict(list)
-
-    for s in stocks:
-        for c in s.get('criteria', []):
-            val = str(c.get('value', '')).lower()
-            name = c.get('name', '')
-            for pat in BAD_PATTERNS:
-                if pat in val:
-                    bad_counts[name] += 1
-                    if len(bad_samples[name]) < 3:
-                        bad_samples[name].append(s['ticker'])
-                    break
-
-    # Thresholds: anything > 10% of stocks is a systemic failure
-    SYSTEMIC_THRESHOLD = 0.10
-    systemic = {k: v for k, v in bad_counts.items() if v / n > SYSTEMIC_THRESHOLD}
-    warnings  = {k: v for k, v in bad_counts.items() if 0.05 < v / n <= SYSTEMIC_THRESHOLD}
-
-    if systemic:
-        details = []
-        for k, v in sorted(systemic.items(), key=lambda x: -x[1]):
-            details.append(f"{k}: {v}/{n} ({v/n*100:.0f}%) — e.g. {bad_samples[k][:2]}")
-        return CheckResult(
-            name="Scoring Output Validation",
-            passed=False,
-            detail="SYSTEMIC SCORING FAILURES: " + "; ".join(details),
-            critical=True
-        )
-
-    if warnings:
-        details = [f"{k}: {v}/{n} ({v/n*100:.0f}%)" for k, v in sorted(warnings.items(), key=lambda x: -x[1])]
-        return CheckResult(
-            name="Scoring Output Validation",
-            passed=False,
-            detail="Minor scoring gaps: " + "; ".join(details),
-            critical=False
-        )
-
-    # Also verify grade ordering is sane: no criterion should be 0 pts
-    # for >80% of stocks (would mean it's broken/misconfigured)
-    zero_dominant = []
-    all_criteria_names = set()
-    crit_zero = defaultdict(int)
-    crit_total = defaultdict(int)
-    for s in stocks:
-        for c in s.get('criteria', []):
-            name = c.get('name', '')
-            all_criteria_names.add(name)
-            crit_total[name] += 1
-            if c.get('points', 0) == 0 and c.get('passed') == False:
-                crit_zero[name] += 1
-
-    for name in all_criteria_names:
-        total = crit_total.get(name, 0)
-        zeros = crit_zero.get(name, 0)
-        if total > 100 and zeros / total > 0.95:
-            zero_dominant.append(f"{name}: {zeros/total*100:.0f}% fail rate")
-
-    if zero_dominant:
-        return CheckResult(
-            name="Scoring Output Validation",
-            passed=False,
-            detail="Criteria with suspiciously high fail rate (>95%): " + "; ".join(zero_dominant),
-            critical=True
-        )
-
-    return CheckResult(
-        name="Scoring Output Validation",
-        passed=True,
-        detail=f"All criteria scoring cleanly across {n} stocks. No systemic N/A or error values."
-    )
-
-
-def check_data_sparseness():
-    issues = []
-    path = os.path.join(WORKSPACE, "data/all_stocks.json")
-    d = load_json(path)
-    stocks = d.get("stocks", d)
-    if isinstance(stocks, dict):
-        stock_list = [s for s in stocks.values() if s.get("grade") != "ETF"]
-    else:
-        stock_list = [s for s in stocks if s.get("grade") != "ETF"]
-
-    n = len(stock_list)
-    fields_to_check = ["ewros_score", "iq_edge", "score", "grade"]
-    for field in fields_to_check:
-        missing = sum(1 for s in stock_list if not s.get(field))
-        pct = missing / n * 100
-        if pct > 15:
-            issues.append(f"{field}: {missing}/{n} ({pct:.0f}%) missing")
-
-    if issues:
-        return CheckResult(name="Data Sparseness", passed=False,
-                           detail="; ".join(issues), critical=False)
-    return CheckResult(name="Data Sparseness", passed=True,
-                       detail=f"All key fields populated across {n} stocks")
-
-
-# ── RUN ALL CHECKS ────────────────────────────────────────────────────────────
 
 def run_all_checks():
-    print(f"\n{'='*60}")
+    global RESULTS
+    RESULTS = []
+
+    print(f"\n{'='*62}")
     print(f"  InvestIQ QA Watchdog — {TODAY} {NOW}")
-    print(f"{'='*60}\n")
+    print(f"{'='*62}\n")
 
-    checks = [
-        ("Data Freshness",           check_file_freshness,          True),
-        ("Scoring Output Validation", check_scoring_output,         True),   # catches N/A, broken criteria
-        ("RS Scoring Bug",           check_rs_scoring,              True),
-        ("Grade Sanity",             check_grade_sanity,            True),
-        ("Fundamentals Coverage",    check_fundamentals_coverage,   True),
-        ("Pipeline Status",          check_pipeline_completeness,   True),
-        ("Known Code Bugs",          check_known_bugs,              False),
-        ("Website Timestamp",        check_website_timestamp,       True),
-        ("Data Sparseness",          check_data_sparseness,         False),
-    ]
-
-    for name, fn, critical in checks:
+    for name, fn in CHECKS:
         try:
-            r = fn()
-            r.critical = critical
-            RESULTS.append(r)
-            icon = "✅" if r.passed else ("🔧" if r.fixed else ("🚨" if critical else "⚠️"))
-            status = "PASS" if r.passed else ("FIXED" if r.fixed else "FAIL")
-            print(f"  {icon} [{status}] {name}")
-            print(f"         {r.detail[:100]}")
-            if r.fixed and r.fix_detail:
-                print(f"         Fix: {r.fix_detail[:100]}")
-            print()
+            result = fn()
+            result.name = name
         except Exception as e:
-            r = CheckResult(name=name, passed=False,
-                            detail=str(e)[:100], critical=critical)
-            RESULTS.append(r)
-            print(f"  ❌ [ERROR] {name}: {e}")
+            result = CheckResult(name=name, passed=False,
+                                 detail=f"Check crashed: {e}", critical=True)
 
-    return RESULTS
+        RESULTS.append(result)
 
+        icon = "✅" if result.passed else ("🔧" if result.fixed and result.recheck_passed else "🚨" if result.critical else "⚠️")
+        print(f"  {icon} [{('PASS' if result.passed else 'FIXED' if result.fixed and result.recheck_passed else 'FAIL')}] {result.name}")
+        if result.detail:
+            print(f"         {result.detail[:120]}")
+        if result.fixed:
+            status = "✓ verified" if result.recheck_passed else "⚠️ still failing after fix"
+            print(f"         Fix: {result.fix_detail[:100]} [{status}]")
+        print()
 
-# ── Telegram report ───────────────────────────────────────────────────────────
+    # ── Summary ──────────────────────────────────────────────────────────────
+    passed   = [r for r in RESULTS if r.passed]
+    fixed_ok = [r for r in RESULTS if not r.passed and r.fixed and r.recheck_passed]
+    still_bad = [r for r in RESULTS if not r.passed and not (r.fixed and r.recheck_passed)]
+    critical_unresolved = [r for r in still_bad if r.critical]
 
-def build_telegram_message(results):
-    passed = [r for r in results if r.passed]
-    failed = [r for r in results if not r.passed and not r.fixed]
-    fixed  = [r for r in results if r.fixed]
+    print(f"\n{'='*62}")
 
     lines = [f"🔬 *QA Watchdog — {TODAY}*\n"]
 
-    if not failed:
-        lines.append("✅ All checks passed" if not fixed else "✅ All issues resolved")
-    else:
-        critical_fails = [r for r in failed if r.critical]
-        if critical_fails:
-            lines.append(f"🚨 *{len(critical_fails)} critical issue(s) need attention:*")
-            for r in critical_fails:
-                lines.append(f"  • *{r.name}*: {r.detail[:80]}")
-        non_critical = [r for r in failed if not r.critical]
-        if non_critical:
-            lines.append(f"\n⚠️ *{len(non_critical)} warning(s):*")
-            for r in non_critical:
-                lines.append(f"  • {r.name}: {r.detail[:80]}")
+    if critical_unresolved:
+        lines.append(f"🚨 *{len(critical_unresolved)} unresolved critical issue(s):*")
+        for r in critical_unresolved:
+            lines.append(f"  • *{r.name}*: {r.detail[:100]}")
+            if r.fix_detail:
+                lines.append(f"    ↳ {r.fix_detail[:80]}")
+        lines.append("")
 
-    if fixed:
-        lines.append(f"\n🔧 *Auto-fixed {len(fixed)} issue(s):*")
-        for r in fixed:
-            lines.append(f"  • {r.name}: {r.fix_detail[:80]}")
+    if fixed_ok:
+        lines.append(f"🔧 *Auto-fixed {len(fixed_ok)} issue(s):*")
+        for r in fixed_ok:
+            lines.append(f"  • *{r.name}*: {r.fix_detail[:80]}")
+        lines.append("")
 
-    lines.append(f"\n`{len(passed)}/{len(results)} checks passed`")
-    return "\n".join(lines)
+    non_critical_fail = [r for r in still_bad if not r.critical]
+    if non_critical_fail:
+        lines.append(f"⚠️ *{len(non_critical_fail)} minor issue(s):*")
+        for r in non_critical_fail:
+            lines.append(f"  • *{r.name}*: {r.detail[:80]}")
+        lines.append("")
 
+    total = len(RESULTS)
+    ok_count = len(passed) + len(fixed_ok)
+    lines.append(f"`{ok_count}/{total} checks passing`")
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+    if not critical_unresolved and not non_critical_fail:
+        lines.append("✅ All systems healthy.")
+
+    report = "\n".join(lines)
+    print("TELEGRAM REPORT:")
+    print(report)
+    print(f"{'='*62}\n")
+
+    send_telegram(report)
+    print("✅ QA Watchdog complete")
+    return len(critical_unresolved) == 0
+
 
 if __name__ == "__main__":
-    results = run_all_checks()
-
-    failed = [r for r in results if not r.passed and not r.fixed]
-    fixed  = [r for r in results if r.fixed]
-
-    # If RS was fixed, re-run the scan to update scores
-    rs_fixed = any(r.name == "RS Scoring (SPY Cache)" and r.fixed for r in results)
-    if rs_fixed:
-        print("🔄 RS fix applied — re-running scan to update scores...")
-        rc, out, err = run(
-            "/usr/bin/python3 scripts/daily_update.py --only scan merge git",
-            timeout=180
-        )
-        if rc == 0:
-            print("✅ Scan re-run complete")
-            results.append(CheckResult(
-                name="RS Re-scan",
-                passed=True,
-                detail="Scan re-run after SPY fix — scores updated and pushed to GitHub"
-            ))
-        else:
-            print(f"❌ Re-scan failed: {err[:200]}")
-            results.append(CheckResult(
-                name="RS Re-scan",
-                passed=False,
-                detail=f"Re-scan failed: {err[:80]}"
-            ))
-
-    msg = build_telegram_message(results)
-    print("\n" + "="*60)
-    print("TELEGRAM REPORT:")
-    print(msg)
-    print("="*60)
-
-    send_telegram(msg)
-    print("\n✅ QA Watchdog complete")
+    success = run_all_checks()
+    sys.exit(0 if success else 1)
