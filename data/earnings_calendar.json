@@ -19,7 +19,7 @@
       "basket": "AI Semis"
     },
     {
-      "ticker": "LMT",
+      "ticker": "RTX",
       "earnings_date": "2026-04-21",
       "days_until": 34,
       "basket": "Defense & Aerospace"
@@ -31,15 +31,15 @@
       "basket": "Defense & Aerospace"
     },
     {
-      "ticker": "RTX",
-      "earnings_date": "2026-04-21",
-      "days_until": 34,
-      "basket": "Defense & Aerospace"
-    },
-    {
       "ticker": "GEV",
       "earnings_date": "2026-04-22",
       "days_until": 35,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "FIX",
+      "earnings_date": "2026-04-23",
+      "days_until": 36,
       "basket": "Grid-to-Chip"
     },
     {
@@ -47,12 +47,6 @@
       "earnings_date": "2026-04-23",
       "days_until": 36,
       "basket": "Trading Account"
-    },
-    {
-      "ticker": "FIX",
-      "earnings_date": "2026-04-23",
-      "days_until": 36,
-      "basket": "Grid-to-Chip"
     },
     {
       "ticker": "VRT",
@@ -67,7 +61,31 @@
       "basket": "Grid-to-Chip"
     },
     {
+      "ticker": "HWM",
+      "earnings_date": "2026-04-30",
+      "days_until": 43,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "HII",
+      "earnings_date": "2026-04-30",
+      "days_until": 43,
+      "basket": "Defense & Aerospace"
+    },
+    {
+      "ticker": "HUBB",
+      "earnings_date": "2026-04-30",
+      "days_until": 43,
+      "basket": "Grid-to-Chip"
+    },
+    {
       "ticker": "PWR",
+      "earnings_date": "2026-04-30",
+      "days_until": 43,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "ETN",
       "earnings_date": "2026-04-30",
       "days_until": 43,
       "basket": "Grid-to-Chip"
@@ -79,34 +97,10 @@
       "basket": "Defense & Aerospace"
     },
     {
-      "ticker": "ETN",
-      "earnings_date": "2026-04-30",
-      "days_until": 43,
-      "basket": "Grid-to-Chip"
-    },
-    {
-      "ticker": "HUBB",
-      "earnings_date": "2026-04-30",
-      "days_until": 43,
-      "basket": "Grid-to-Chip"
-    },
-    {
       "ticker": "LLY",
       "earnings_date": "2026-04-30",
       "days_until": 43,
       "basket": "Biotech"
-    },
-    {
-      "ticker": "HII",
-      "earnings_date": "2026-04-30",
-      "days_until": 43,
-      "basket": "Defense & Aerospace"
-    },
-    {
-      "ticker": "HWM",
-      "earnings_date": "2026-04-30",
-      "days_until": 43,
-      "basket": "Defense & Aerospace"
     },
     {
       "ticker": "NVT",
@@ -115,10 +109,10 @@
       "basket": "Grid-to-Chip"
     },
     {
-      "ticker": "CCJ",
+      "ticker": "STX",
       "earnings_date": "2026-05-05",
       "days_until": 48,
-      "basket": "Grid-to-Chip"
+      "basket": "AI Semis"
     },
     {
       "ticker": "ANET",
@@ -133,10 +127,10 @@
       "basket": "AI Semis"
     },
     {
-      "ticker": "STX",
+      "ticker": "CCJ",
       "earnings_date": "2026-05-05",
       "days_until": 48,
-      "basket": "AI Semis"
+      "basket": "Grid-to-Chip"
     },
     {
       "ticker": "WDC",
@@ -206,6 +200,6 @@
       "days_until": 273
     }
   ],
-  "timestamp": "2026-03-18 18:35:10 EST",
+  "timestamp": "2026-03-18 18:46:15 EST",
   "ticker_count": 42
 }
