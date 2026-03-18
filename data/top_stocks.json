@@ -1,8 +1,8 @@
 {
   "version": "5.0",
   "max_score": 100,
-  "last_scan": "2026-03-18 17:59 PST",
-  "total_stocks": 263,
+  "last_scan": "2026-03-18 18:08 PST",
+  "total_stocks": 265,
   "stocks": [
     {
       "ticker": "RRC",
@@ -142,7 +142,7 @@
       "analyst_count": 24,
       "current_price": 43.47999954223633,
       "ewros_score": 93,
-      "iq_edge": 87,
+      "iq_edge": 86,
       "iq_edge_raw": 0.756923,
       "ibd_rs": 72,
       "ibd_rs_raw": 6.98
@@ -1000,7 +1000,7 @@
       "analyst_count": 15,
       "current_price": 38.04999923706055,
       "ewros_score": 80,
-      "iq_edge": 25,
+      "iq_edge": 24,
       "iq_edge_raw": 0.177132,
       "ibd_rs": 63,
       "ibd_rs_raw": 4.63
@@ -2287,7 +2287,7 @@
       "analyst_count": 26,
       "current_price": 27.31999969482422,
       "ewros_score": 78,
-      "iq_edge": 82,
+      "iq_edge": 81,
       "iq_edge_raw": 0.687796,
       "ibd_rs": 57,
       "ibd_rs_raw": 3.38
@@ -3717,7 +3717,7 @@
       "analyst_count": 11,
       "current_price": 71.76000213623047,
       "ewros_score": 81,
-      "iq_edge": 30,
+      "iq_edge": 29,
       "iq_edge_raw": 0.212381,
       "ibd_rs": 66,
       "ibd_rs_raw": 5.34
@@ -5147,7 +5147,7 @@
       "analyst_count": 32,
       "current_price": 979.9199829101562,
       "ewros_score": 76,
-      "iq_edge": 47,
+      "iq_edge": 46,
       "iq_edge_raw": 0.350459,
       "ibd_rs": 65,
       "ibd_rs_raw": 5.03
@@ -10088,7 +10088,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Positive, flat \u00b7 EPS $0.66 \u00b7 YoY +2100%",
+          "value": "Positive, flat \u00b7 EPS $0.68 \u00b7 YoY +2167%",
           "threshold": "QoQ growth accelerating",
           "points": 4
         },
