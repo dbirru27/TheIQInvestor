@@ -1611,7 +1611,10 @@
                     <div style="margin-top:10px;">Loading chart data...</div>
                 </div>
                 <!-- Chart container -->
-                <div id="chart-container" style="width:100%; height:600px; border-radius:8px; overflow:hidden;"></div>
+                <div id="chart-container" style="width:100%; height:500px; border-radius:8px 8px 0 0; overflow:hidden;"></div>
+                <!-- EWROS pane -->
+                <div id="ewros-chart-label" style="display:none; padding:8px 0 2px 0; font-size:0.75rem; font-weight:600; color:#a78bfa; letter-spacing:0.5px;">EWROS (Relative Momentum vs SPY)</div>
+                <div id="ewros-chart-container" style="display:none; width:100%; height:150px; border-radius:0 0 8px 8px; overflow:hidden;"></div>
             </div>
         </div>
 
@@ -6399,6 +6402,8 @@
         let _chartVolumeSeries = null;
         let _chartSma50Series = null;
         let _chartSma200Series = null;
+        let _ewrosChartInstance = null;
+        let _ewrosLineSeries = null;
         let _chartPeriod = '1y';
         let _chartLoaded = false;
 
@@ -6497,10 +6502,61 @@
 
                 _chartInstance.timeScale().fitContent();
 
+                // EWROS pane
+                const ewrosContainer = document.getElementById('ewros-chart-container');
+                const ewrosLabel = document.getElementById('ewros-chart-label');
+                if (_ewrosChartInstance) { _ewrosChartInstance.remove(); _ewrosChartInstance = null; }
+                ewrosContainer.innerHTML = '';
+
+                if (data.ewros && data.ewros.length > 0) {
+                    ewrosLabel.style.display = 'block';
+                    ewrosContainer.style.display = 'block';
+
+                    _ewrosChartInstance = LightweightCharts.createChart(ewrosContainer, {
+                        width: ewrosContainer.clientWidth,
+                        height: 150,
+                        layout: { background: { type: 'solid', color: '#131722' }, textColor: '#94a3b8', attributionLogo: false },
+                        grid: { vertLines: { color: '#1e2940' }, horzLines: { color: '#1e2940' } },
+                        rightPriceScale: { borderColor: '#2d3748' },
+                        timeScale: { borderColor: '#2d3748', timeVisible: false },
+                        crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+                    });
+
+                    // Zero line (baseline)
+                    const zeroLine = _ewrosChartInstance.addBaselineSeries({
+                        baseValue: { type: 'price', price: 0 },
+                        topLineColor: '#a78bfa',
+                        topFillColor1: 'rgba(167,139,250,0.15)',
+                        topFillColor2: 'rgba(167,139,250,0.02)',
+                        bottomLineColor: '#ef4444',
+                        bottomFillColor1: 'rgba(239,68,68,0.02)',
+                        bottomFillColor2: 'rgba(239,68,68,0.15)',
+                        lineWidth: 2,
+                        priceLineVisible: false,
+                        lastValueVisible: true,
+                    });
+                    zeroLine.setData(data.ewros);
+                    _ewrosChartInstance.timeScale().fitContent();
+
+                    // Sync time scales
+                    _chartInstance.timeScale().subscribeVisibleLogicalRangeChange(range => {
+                        if (range && _ewrosChartInstance) _ewrosChartInstance.timeScale().setVisibleLogicalRange(range);
+                    });
+                    _ewrosChartInstance.timeScale().subscribeVisibleLogicalRangeChange(range => {
+                        if (range && _chartInstance) _chartInstance.timeScale().setVisibleLogicalRange(range);
+                    });
+                } else {
+                    ewrosLabel.style.display = 'none';
+                    ewrosContainer.style.display = 'none';
+                }
+
                 // Responsive resize
                 const resizeHandler = () => {
                     if (_chartInstance && container.clientWidth > 0) {
                         _chartInstance.applyOptions({ width: container.clientWidth });
+                    }
+                    if (_ewrosChartInstance && ewrosContainer.clientWidth > 0) {
+                        _ewrosChartInstance.applyOptions({ width: ewrosContainer.clientWidth });
                     }
                 };
                 window._chartResizeHandler && window.removeEventListener('resize', window._chartResizeHandler);

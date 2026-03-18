@@ -2281,11 +2281,69 @@ def delete_report(report_id):
 
 # ═══ Chart Data (yfinance) ═══
 _chart_cache = {}  # key: (ticker, period, interval) -> {data, ts}
+_spy_cache = {}    # key: period -> {closes_by_date, ts}
 CHART_CACHE_TTL = 300  # 5 minutes
+EWROS_LOOKBACK = 63    # ~3 months of trading days
+EWROS_LAMBDA = 0.03    # decay factor, ~33 day half-life
+
+# Map requested period to a padded period for EWROS lookback
+_PADDED_PERIOD = {
+    '3mo': '6mo', '6mo': '1y', '1y': '2y', '2y': '5y',
+    '5y': 'max', '10y': 'max', 'max': 'max'
+}
+
+def _fetch_spy_closes(period):
+    """Fetch SPY daily closes, cached."""
+    import time as _time
+    cached = _spy_cache.get(period)
+    if cached and _time.time() - cached['ts'] < CHART_CACHE_TTL:
+        return cached['data']
+    import yfinance as yf
+    spy_df = yf.Ticker('SPY').history(period=period, interval='1d')
+    closes_by_date = {}
+    for idx, row in spy_df.iterrows():
+        closes_by_date[idx.strftime('%Y-%m-%d')] = row['Close']
+    _spy_cache[period] = {'data': closes_by_date, 'ts': _time.time()}
+    return closes_by_date
+
+def _compute_ewros_series(stock_dates_closes, spy_closes_by_date):
+    """Compute rolling EWROS raw for each day where we have enough lookback."""
+    import math
+    # Build aligned daily returns
+    aligned = []  # [(date, stock_return, spy_return)]
+    prev_stock = None
+    prev_spy = None
+    for date, stock_close in stock_dates_closes:
+        spy_close = spy_closes_by_date.get(date)
+        if spy_close is None:
+            prev_stock = stock_close
+            continue
+        if prev_stock is not None and prev_spy is not None and prev_stock > 0 and prev_spy > 0:
+            s_ret = (stock_close - prev_stock) / prev_stock
+            b_ret = (spy_close - prev_spy) / prev_spy
+            aligned.append((date, s_ret, b_ret))
+        prev_stock = stock_close
+        prev_spy = spy_close
+
+    # Compute rolling EWROS
+    ewros_series = []
+    for i in range(len(aligned)):
+        lookback = min(i + 1, EWROS_LOOKBACK)
+        if lookback < 20:
+            continue
+        raw = 0.0
+        for j in range(lookback):
+            idx = i - lookback + 1 + j
+            days_ago = lookback - 1 - j
+            alpha = aligned[idx][1] - aligned[idx][2]
+            weight = math.exp(-EWROS_LAMBDA * days_ago)
+            raw += alpha * weight
+        ewros_series.append({'time': aligned[i][0], 'value': round(raw * 100, 2)})
+    return ewros_series
 
 @app.route('/api/chart-data/<ticker>')
 def chart_data(ticker):
-    """Return OHLCV candles + SMA50/SMA200 for a ticker via yfinance."""
+    """Return OHLCV candles + SMA50/SMA200 + EWROS for a ticker via yfinance."""
     import time
     period = request.args.get('period', '1y')
     interval = request.args.get('interval', '1d')
@@ -2305,14 +2363,20 @@ def chart_data(ticker):
 
     try:
         import yfinance as yf
+
+        # Fetch with padded period for EWROS lookback
+        padded = _PADDED_PERIOD.get(period, 'max')
         t = yf.Ticker(ticker)
-        df = t.history(period=period, interval=interval)
-        if df.empty:
+        df_full = t.history(period=padded, interval=interval)
+        df_display = t.history(period=period, interval=interval) if period != padded else df_full
+        if df_display.empty:
             return jsonify({'error': f'No data found for {ticker}'}), 404
 
+        # Build display candles from the requested period
+        display_start = df_display.index[0].strftime('%Y-%m-%d')
         candles = []
         closes = []
-        for idx, row in df.iterrows():
+        for idx, row in df_display.iterrows():
             day = idx.strftime('%Y-%m-%d')
             candles.append({
                 'time': day,
@@ -2324,7 +2388,7 @@ def chart_data(ticker):
             })
             closes.append((day, row['Close']))
 
-        # Compute SMAs
+        # Compute SMAs from display data
         sma50, sma200 = [], []
         close_vals = [c[1] for c in closes]
         for i in range(len(close_vals)):
@@ -2333,7 +2397,19 @@ def chart_data(ticker):
             if i >= 199:
                 sma200.append({'time': closes[i][0], 'value': round(sum(close_vals[i-199:i+1]) / 200, 2)})
 
-        result = {'candles': candles, 'sma50': sma50, 'sma200': sma200, 'ticker': ticker}
+        # Compute EWROS from padded data (need lookback before display start)
+        ewros = []
+        if ticker.upper() != 'SPY':
+            try:
+                spy_closes = _fetch_spy_closes(padded)
+                full_dates_closes = [(idx.strftime('%Y-%m-%d'), row['Close']) for idx, row in df_full.iterrows()]
+                ewros_full = _compute_ewros_series(full_dates_closes, spy_closes)
+                # Trim to display range
+                ewros = [e for e in ewros_full if e['time'] >= display_start]
+            except Exception:
+                pass  # EWROS is best-effort, don't fail the whole chart
+
+        result = {'candles': candles, 'sma50': sma50, 'sma200': sma200, 'ewros': ewros, 'ticker': ticker}
         _chart_cache[cache_key] = {'data': result, 'ts': time.time()}
         return jsonify(result)
     except Exception as e:
