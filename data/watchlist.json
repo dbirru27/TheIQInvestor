@@ -1,7 +1,7 @@
 {
-  "last_updated": "2026-03-18 18:57 EST",
-  "score_timestamp": "2026-03-18 18:55 PST",
-  "iq_edge_timestamp": "2026-03-18 18:56",
+  "last_updated": "2026-03-18 19:08 EST",
+  "score_timestamp": "2026-03-18 19:06 PST",
+  "iq_edge_timestamp": "2026-03-18 19:08",
   "baskets": {
     "AI Semis": [
       {
@@ -510,7 +510,7 @@
         "context_score": 100,
         "moonshot_score": 30,
         "ewros_score": 88,
-        "iq_edge": 72,
+        "iq_edge": 73,
         "iq_edge_raw": 0.574342,
         "recommendation": "none",
         "target_mean": 724.39,
@@ -1781,7 +1781,7 @@
       "context_score": 100,
       "moonshot_score": 30,
       "ewros_score": 88,
-      "iq_edge": 72,
+      "iq_edge": 73,
       "iq_edge_raw": 0.574342,
       "recommendation": "none",
       "target_mean": 724.39,

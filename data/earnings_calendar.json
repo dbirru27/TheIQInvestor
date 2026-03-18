@@ -25,13 +25,13 @@
       "basket": "Defense & Aerospace"
     },
     {
-      "ticker": "RTX",
+      "ticker": "NOC",
       "earnings_date": "2026-04-21",
       "days_until": 34,
       "basket": "Defense & Aerospace"
     },
     {
-      "ticker": "NOC",
+      "ticker": "RTX",
       "earnings_date": "2026-04-21",
       "days_until": 34,
       "basket": "Defense & Aerospace"
@@ -55,37 +55,25 @@
       "basket": "Grid-to-Chip"
     },
     {
-      "ticker": "VRT",
-      "earnings_date": "2026-04-29",
-      "days_until": 42,
-      "basket": "Grid-to-Chip"
-    },
-    {
       "ticker": "APH",
       "earnings_date": "2026-04-29",
       "days_until": 42,
       "basket": "Grid-to-Chip"
     },
     {
-      "ticker": "HUBB",
-      "earnings_date": "2026-04-30",
-      "days_until": 43,
+      "ticker": "VRT",
+      "earnings_date": "2026-04-29",
+      "days_until": 42,
       "basket": "Grid-to-Chip"
     },
     {
-      "ticker": "LLY",
-      "earnings_date": "2026-04-30",
-      "days_until": 43,
-      "basket": "Biotech"
-    },
-    {
-      "ticker": "HII",
+      "ticker": "LHX",
       "earnings_date": "2026-04-30",
       "days_until": 43,
       "basket": "Defense & Aerospace"
     },
     {
-      "ticker": "LHX",
+      "ticker": "HWM",
       "earnings_date": "2026-04-30",
       "days_until": 43,
       "basket": "Defense & Aerospace"
@@ -97,7 +85,13 @@
       "basket": "Grid-to-Chip"
     },
     {
-      "ticker": "HWM",
+      "ticker": "HUBB",
+      "earnings_date": "2026-04-30",
+      "days_until": 43,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "HII",
       "earnings_date": "2026-04-30",
       "days_until": 43,
       "basket": "Defense & Aerospace"
@@ -109,13 +103,25 @@
       "basket": "Grid-to-Chip"
     },
     {
+      "ticker": "LLY",
+      "earnings_date": "2026-04-30",
+      "days_until": 43,
+      "basket": "Biotech"
+    },
+    {
       "ticker": "NVT",
       "earnings_date": "2026-05-01",
       "days_until": 44,
       "basket": "Grid-to-Chip"
     },
     {
-      "ticker": "STX",
+      "ticker": "CCJ",
+      "earnings_date": "2026-05-05",
+      "days_until": 48,
+      "basket": "Grid-to-Chip"
+    },
+    {
+      "ticker": "AMD",
       "earnings_date": "2026-05-05",
       "days_until": 48,
       "basket": "AI Semis"
@@ -127,13 +133,7 @@
       "basket": "AI Semis"
     },
     {
-      "ticker": "CCJ",
-      "earnings_date": "2026-05-05",
-      "days_until": 48,
-      "basket": "Grid-to-Chip"
-    },
-    {
-      "ticker": "AMD",
+      "ticker": "STX",
       "earnings_date": "2026-05-05",
       "days_until": 48,
       "basket": "AI Semis"
@@ -151,10 +151,10 @@
       "basket": "Grid-to-Chip"
     },
     {
-      "ticker": "MRVL",
-      "earnings_date": "2026-05-28",
-      "days_until": 71,
-      "basket": "AI Semis"
+      "ticker": "NVDA",
+      "earnings_date": "2026-05-20",
+      "days_until": 63,
+      "basket": "themastertest"
     },
     {
       "ticker": "AVGO",
@@ -200,6 +200,6 @@
       "days_until": 273
     }
   ],
-  "timestamp": "2026-03-18 18:57:25 EST",
+  "timestamp": "2026-03-18 19:09:23 EST",
   "ticker_count": 42
 }
