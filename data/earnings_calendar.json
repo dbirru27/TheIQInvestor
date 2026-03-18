@@ -1,42 +1,5 @@
 {
-  "earnings": [
-    {
-      "ticker": "LMT",
-      "earnings_date": "2026-04-21",
-      "days_until": 34,
-      "basket": "Defense & Aerospace"
-    },
-    {
-      "ticker": "GOOGL",
-      "earnings_date": "2026-04-23",
-      "days_until": 36,
-      "basket": "Trading Account"
-    },
-    {
-      "ticker": "FIX",
-      "earnings_date": "2026-04-23",
-      "days_until": 36,
-      "basket": "Grid-to-Chip"
-    },
-    {
-      "ticker": "APH",
-      "earnings_date": "2026-04-29",
-      "days_until": 42,
-      "basket": "Grid-to-Chip"
-    },
-    {
-      "ticker": "HWM",
-      "earnings_date": "2026-04-30",
-      "days_until": 43,
-      "basket": "Defense & Aerospace"
-    },
-    {
-      "ticker": "AVGO",
-      "earnings_date": "2026-06-03",
-      "days_until": 77,
-      "basket": "AI Semis"
-    }
-  ],
+  "earnings": [],
   "fomc": [
     {
       "date": "2026-03-18",
@@ -74,6 +37,6 @@
       "days_until": 273
     }
   ],
-  "timestamp": "2026-03-18 17:01:28 EST",
+  "timestamp": "2026-03-18 17:18:13 EST",
   "ticker_count": 42
 }
