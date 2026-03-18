@@ -2290,8 +2290,8 @@ def chart_data(ticker):
     period = request.args.get('period', '1y')
     interval = request.args.get('interval', '1d')
 
-    if period not in ('3mo', '6mo', '1y', '2y', '5y'):
-        return jsonify({'error': 'Invalid period. Use 3mo, 6mo, 1y, 2y, 5y'}), 400
+    if period not in ('3mo', '6mo', '1y', '2y', '5y', '10y', 'max'):
+        return jsonify({'error': 'Invalid period. Use 3mo, 6mo, 1y, 2y, 5y, 10y, max'}), 400
 
     ticker = ticker.upper().strip()
     if not ticker or len(ticker) > 10:
