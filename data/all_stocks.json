@@ -1,6 +1,6 @@
 {
   "version": "5.1",
-  "last_scan": "2026-03-18 17:38 PST",
+  "last_scan": "2026-03-18 17:39 PST",
   "total_stocks": 1027,
   "stocks": {
     "WTM": {
@@ -8657,7 +8657,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Positive, flat \u00b7 EPS $0.66 \u00b7 YoY +2100%",
+          "value": "Positive, flat \u00b7 EPS $0.68 \u00b7 YoY +2167%",
           "threshold": "QoQ growth accelerating",
           "points": 4
         },
@@ -13384,7 +13384,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Positive, flat \u00b7 EPS $8.68 \u00b7 YoY +41%",
+          "value": "Positive, flat \u00b7 EPS $8.85 \u00b7 YoY +44%",
           "threshold": "QoQ growth accelerating",
           "points": 4
         },
@@ -25261,7 +25261,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Accelerating \u00b7 EPS $3.82 \u00b7 YoY +14%",
+          "value": "Accelerating \u00b7 EPS $4.69 \u00b7 YoY +40%",
           "threshold": "QoQ growth accelerating",
           "points": 8
         },
@@ -25690,7 +25690,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Positive, flat \u00b7 EPS $0.78 \u00b7 YoY -1%",
+          "value": "Positive, flat \u00b7 EPS $0.83 \u00b7 YoY +5%",
           "threshold": "QoQ growth accelerating",
           "points": 4
         },
@@ -26188,6 +26188,149 @@
       "ibd_rs": 55,
       "ibd_rs_raw": 2.64
     },
+    "EXAS": {
+      "ticker": "EXAS",
+      "name": "Exact Sciences Corporation",
+      "sector": "Healthcare",
+      "industry": "Diagnostics & Research",
+      "score": 54,
+      "grade": "C",
+      "max_score": 100,
+      "technical_score": 74,
+      "growth_score": 21,
+      "quality_score": 17,
+      "context_score": 0,
+      "moonshot_score": 50,
+      "criteria": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": true,
+          "value": "$103.75 > $102.91 > $73.81",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": true,
+          "value": "+0.0% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 22
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": false,
+          "value": "Depth 50%",
+          "threshold": "Depth < 40%",
+          "points": 0
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "0.8x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": true,
+          "value": "99.8%",
+          "threshold": "> 90% of 52W High",
+          "points": 5
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "93% of 50d ATR",
+          "threshold": "10d ATR < 75% of 50d ATR",
+          "points": 0
+        },
+        {
+          "name": "Revenue Score",
+          "category": "Growth",
+          "passed": false,
+          "value": "Error: math range error",
+          "threshold": "Magnitude+Consistency+Accel+Beats",
+          "points": 0
+        },
+        {
+          "name": "Earnings Acceleration",
+          "category": "Growth",
+          "passed": true,
+          "value": "Accelerating \u00b7 EPS $-0.21 \u00b7 YoY +0%",
+          "threshold": "QoQ growth accelerating",
+          "points": 8
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": false,
+          "value": "-8.7%",
+          "threshold": "> 15%",
+          "points": 0
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": false,
+          "value": "-9.3%",
+          "threshold": "> 10%",
+          "points": 0
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "N/A \u2014 no P/E or growth data",
+          "threshold": "PEG < 2.0",
+          "points": 0
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "Healthcare",
+          "threshold": "Sector outperforming SPY (3mo)",
+          "points": 0
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "RS 95 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 5
+        }
+      ],
+      "market_cap": 19804651520,
+      "revenue_growth": 66747.9,
+      "earnings_growth": null,
+      "forward_pe": 55.18617,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": "hold",
+      "target_mean": 105.8125,
+      "analyst_count": 16,
+      "current_price": 103.75,
+      "ewros_score": 70,
+      "iq_edge": 70,
+      "iq_edge_raw": 0.55425,
+      "ibd_rs": 95,
+      "ibd_rs_raw": 22.82
+    },
     "EXEL": {
       "ticker": "EXEL",
       "name": "Exelixis, Inc.",
@@ -26548,7 +26691,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Accelerating \u00b7 EPS $2.46 \u00b7 YoY +17%",
+          "value": "Accelerating \u00b7 EPS $2.86 \u00b7 YoY +36%",
           "threshold": "QoQ growth accelerating",
           "points": 8
         },
@@ -31351,6 +31494,149 @@
       "iq_edge_raw": 0.555349,
       "ibd_rs": 52,
       "ibd_rs_raw": 2.15
+    },
+    "COLB": {
+      "ticker": "COLB",
+      "name": "Columbia Banking System, Inc.",
+      "sector": "Financial Services",
+      "industry": "Banks - Regional",
+      "score": 52,
+      "grade": "C",
+      "max_score": 100,
+      "technical_score": 31,
+      "growth_score": 63,
+      "quality_score": 56,
+      "context_score": 0,
+      "moonshot_score": 70,
+      "criteria": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": false,
+          "value": "$26.20 > $29.28 > $26.40",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 0
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "value": "+19.9% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 0
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 28%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "0.9x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": false,
+          "value": "80.1%",
+          "threshold": "> 90% of 52W High",
+          "points": 0
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "86% of 50d ATR",
+          "threshold": "10d ATR < 75% of 50d ATR",
+          "points": 0
+        },
+        {
+          "name": "Revenue Score",
+          "category": "Growth",
+          "passed": true,
+          "value": "YoY: 44.6%, Accel: +30pp",
+          "threshold": "Magnitude+Consistency+Accel+Beats",
+          "points": 20
+        },
+        {
+          "name": "Earnings Acceleration",
+          "category": "Growth",
+          "passed": true,
+          "value": "Positive, flat \u00b7 EPS $0.82 \u00b7 YoY +17%",
+          "threshold": "QoQ growth accelerating",
+          "points": 4
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": false,
+          "value": "8.5%",
+          "threshold": "> 15%",
+          "points": 0
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "52.9%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": true,
+          "value": "1.29 (Yahoo Finance)",
+          "threshold": "PEG < 2.0",
+          "points": 5
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": false,
+          "value": "Negative/NA",
+          "threshold": "FCF > 0",
+          "points": 0
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "Financial Services",
+          "threshold": "Sector outperforming SPY (3mo)",
+          "points": 0
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "RS 45 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
+        }
+      ],
+      "market_cap": 7743428096,
+      "revenue_growth": 44.6,
+      "earnings_growth": 6.0,
+      "forward_pe": 7.7530165,
+      "trailing_pe": 11.391305,
+      "peg_ratio": 1.2922,
+      "recommendation": "hold",
+      "target_mean": 32.73077,
+      "analyst_count": 13,
+      "current_price": 26.200000762939453,
+      "ewros_score": 25,
+      "iq_edge": 92,
+      "iq_edge_raw": 0.84667,
+      "ibd_rs": 45,
+      "ibd_rs_raw": 0.54
     },
     "CPAY": {
       "ticker": "CPAY",
@@ -38216,6 +38502,149 @@
       "ibd_rs": 71,
       "ibd_rs_raw": 6.77
     },
+    "CACI": {
+      "ticker": "CACI",
+      "name": "CACI International, Inc.",
+      "sector": "Technology",
+      "industry": "Information Technology Service",
+      "score": 50,
+      "grade": "C",
+      "max_score": 100,
+      "technical_score": 45,
+      "growth_score": 42,
+      "quality_score": 44,
+      "context_score": 0,
+      "moonshot_score": 10,
+      "criteria": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": true,
+          "value": "$608.73 > $608.13 > $537.84",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 8
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "value": "+10.9% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 0
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 32%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "0.8x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": false,
+          "value": "89.1%",
+          "threshold": "> 90% of 52W High",
+          "points": 0
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "107% of 50d ATR",
+          "threshold": "10d ATR < 75% of 50d ATR",
+          "points": 0
+        },
+        {
+          "name": "Revenue Score",
+          "category": "Growth",
+          "passed": false,
+          "value": "YoY: 5.7%",
+          "threshold": "Magnitude+Consistency+Accel+Beats",
+          "points": 8
+        },
+        {
+          "name": "Earnings Acceleration",
+          "category": "Growth",
+          "passed": true,
+          "value": "Accelerating \u00b7 EPS $6.81 \u00b7 YoY +40%",
+          "threshold": "QoQ growth accelerating",
+          "points": 8
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": false,
+          "value": "13.2%",
+          "threshold": "> 15%",
+          "points": 0
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": false,
+          "value": "9.3%",
+          "threshold": "> 10%",
+          "points": 0
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": true,
+          "value": "1.32 (Yahoo Finance)",
+          "threshold": "PEG < 2.0",
+          "points": 5
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "Technology",
+          "threshold": "Sector outperforming SPY (3mo)",
+          "points": 0
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": true,
+          "value": "RS 83 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 3
+        }
+      ],
+      "market_cap": 13444273152,
+      "revenue_growth": 5.7,
+      "earnings_growth": 14.5,
+      "forward_pe": 19.111189,
+      "trailing_pe": 26.069805,
+      "peg_ratio": 1.318,
+      "recommendation": "strong_buy",
+      "target_mean": 724.0,
+      "analyst_count": 12,
+      "current_price": 608.72998046875,
+      "ewros_score": 77,
+      "iq_edge": 5,
+      "iq_edge_raw": 0.05266,
+      "ibd_rs": 83,
+      "ibd_rs_raw": 10.91
+    },
     "FDX": {
       "ticker": "FDX",
       "name": "FedEx Corporation",
@@ -39005,7 +39434,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Positive, flat \u00b7 EPS $0.06 \u00b7 YoY +100%",
+          "value": "Positive, flat \u00b7 EPS $0.10 \u00b7 YoY +233%",
           "threshold": "QoQ growth accelerating",
           "points": 4
         },
@@ -45231,149 +45660,6 @@
       "ibd_rs": 27,
       "ibd_rs_raw": -3.65
     },
-    "COLB": {
-      "ticker": "COLB",
-      "name": "Columbia Banking System, Inc.",
-      "sector": "Financial Services",
-      "industry": "Banks - Regional",
-      "score": 48,
-      "grade": "C",
-      "max_score": 100,
-      "technical_score": 31,
-      "growth_score": 53,
-      "quality_score": 56,
-      "context_score": 0,
-      "moonshot_score": 70,
-      "criteria": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": false,
-          "value": "$26.20 > $29.28 > $26.40",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 0
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": false,
-          "value": "+19.9% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 0
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 28%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "0.9x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 8
-        },
-        {
-          "name": "52W Proximity",
-          "category": "Timing",
-          "passed": false,
-          "value": "80.1%",
-          "threshold": "> 90% of 52W High",
-          "points": 0
-        },
-        {
-          "name": "Volatility Compression",
-          "category": "Timing",
-          "passed": false,
-          "value": "86% of 50d ATR",
-          "threshold": "10d ATR < 75% of 50d ATR",
-          "points": 0
-        },
-        {
-          "name": "Revenue Score",
-          "category": "Growth",
-          "passed": true,
-          "value": "YoY: 44.6%, Accel: +30pp",
-          "threshold": "Magnitude+Consistency+Accel+Beats",
-          "points": 20
-        },
-        {
-          "name": "Earnings Acceleration",
-          "category": "Growth",
-          "passed": false,
-          "value": "Decelerating \u00b7 EPS $0.82 \u00b7 YoY +17%",
-          "threshold": "QoQ growth accelerating",
-          "points": 0
-        },
-        {
-          "name": "ROE Quality",
-          "category": "Quality",
-          "passed": false,
-          "value": "8.5%",
-          "threshold": "> 15%",
-          "points": 0
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "52.9%",
-          "threshold": "> 10%",
-          "points": 5
-        },
-        {
-          "name": "Valuation Sanity",
-          "category": "Quality",
-          "passed": true,
-          "value": "1.29 (Yahoo Finance)",
-          "threshold": "PEG < 2.0",
-          "points": 5
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": false,
-          "value": "Negative/NA",
-          "threshold": "FCF > 0",
-          "points": 0
-        },
-        {
-          "name": "Industry Strength",
-          "category": "Context",
-          "passed": false,
-          "value": "Financial Services",
-          "threshold": "Sector outperforming SPY (3mo)",
-          "points": 0
-        },
-        {
-          "name": "Relative Strength",
-          "category": "Context",
-          "passed": false,
-          "value": "RS 45 (IBD-style percentile)",
-          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
-          "points": 0
-        }
-      ],
-      "market_cap": 7743428096,
-      "revenue_growth": 44.6,
-      "earnings_growth": 6.0,
-      "forward_pe": 7.7530165,
-      "trailing_pe": 11.391305,
-      "peg_ratio": 1.2922,
-      "recommendation": "hold",
-      "target_mean": 32.73077,
-      "analyst_count": 13,
-      "current_price": 26.200000762939453,
-      "ewros_score": 25,
-      "iq_edge": 92,
-      "iq_edge_raw": 0.84667,
-      "ibd_rs": 45,
-      "ibd_rs_raw": 0.54
-    },
     "COO": {
       "ticker": "COO",
       "name": "The Cooper Companies, Inc.",
@@ -47021,7 +47307,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Accelerating \u00b7 EPS $1.12 \u00b7 YoY +1118%",
+          "value": "Accelerating \u00b7 EPS $1.53 \u00b7 YoY +1491%",
           "threshold": "QoQ growth accelerating",
           "points": 8
         },
@@ -47669,6 +47955,149 @@
       "iq_edge_raw": 0.139738,
       "ibd_rs": 17,
       "ibd_rs_raw": -7.06
+    },
+    "MCHP": {
+      "ticker": "MCHP",
+      "name": "Microchip Technology Incorporat",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "score": 48,
+      "grade": "C",
+      "max_score": 100,
+      "technical_score": 31,
+      "growth_score": 45,
+      "quality_score": 72,
+      "context_score": 0,
+      "moonshot_score": 0,
+      "criteria": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": false,
+          "value": "$64.71 > $73.67 > $66.78",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 0
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "value": "+22.4% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 0
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 42%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "0.8x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": false,
+          "value": "77.6%",
+          "threshold": "> 90% of 52W High",
+          "points": 0
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "91% of 50d ATR",
+          "threshold": "10d ATR < 75% of 50d ATR",
+          "points": 0
+        },
+        {
+          "name": "Revenue Score",
+          "category": "Growth",
+          "passed": false,
+          "value": "YoY: -2.2%, Accel: +12pp",
+          "threshold": "Magnitude+Consistency+Accel+Beats",
+          "points": 9
+        },
+        {
+          "name": "Earnings Acceleration",
+          "category": "Growth",
+          "passed": true,
+          "value": "Accelerating \u00b7 EPS $0.44 \u00b7 YoY +540%",
+          "threshold": "QoQ growth accelerating",
+          "points": 8
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": false,
+          "value": "-1.1%",
+          "threshold": "> 15%",
+          "points": 0
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "13.2%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": true,
+          "value": "0.79 (Yahoo Finance)",
+          "threshold": "PEG < 2.0",
+          "points": 5
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "Technology",
+          "threshold": "Sector outperforming SPY (3mo)",
+          "points": 0
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "RS 60 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
+        }
+      ],
+      "market_cap": 35016876032,
+      "revenue_growth": -2.2,
+      "earnings_growth": 11.4,
+      "forward_pe": 24.361778,
+      "trailing_pe": null,
+      "peg_ratio": 0.7861,
+      "recommendation": "none",
+      "target_mean": 86.66667,
+      "analyst_count": 24,
+      "current_price": 64.70999908447266,
+      "ewros_score": 31,
+      "iq_edge": 44,
+      "iq_edge_raw": 0.324007,
+      "ibd_rs": 60,
+      "ibd_rs_raw": 3.96
     },
     "MRSH": {
       "ticker": "MRSH",
@@ -49672,149 +50101,6 @@
       "ibd_rs": 31,
       "ibd_rs_raw": -2.84
     },
-    "CBSH": {
-      "ticker": "CBSH",
-      "name": "Commerce Bancshares, Inc.",
-      "sector": "Financial Services",
-      "industry": "Banks - Regional",
-      "score": 47,
-      "grade": "C",
-      "max_score": 100,
-      "technical_score": 31,
-      "growth_score": 50,
-      "quality_score": 56,
-      "context_score": 0,
-      "moonshot_score": 20,
-      "criteria": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": false,
-          "value": "$47.50 > $52.52 > $54.83",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 0
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": false,
-          "value": "+16.9% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 0
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 16%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "0.8x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 8
-        },
-        {
-          "name": "52W Proximity",
-          "category": "Timing",
-          "passed": false,
-          "value": "75.9%",
-          "threshold": "> 90% of 52W High",
-          "points": 0
-        },
-        {
-          "name": "Volatility Compression",
-          "category": "Timing",
-          "passed": false,
-          "value": "82% of 50d ATR",
-          "threshold": "10d ATR < 75% of 50d ATR",
-          "points": 0
-        },
-        {
-          "name": "Revenue Score",
-          "category": "Growth",
-          "passed": true,
-          "value": "YoY: 6.4%, Accel: +1pp",
-          "threshold": "Magnitude+Consistency+Accel+Beats",
-          "points": 15
-        },
-        {
-          "name": "Earnings Acceleration",
-          "category": "Growth",
-          "passed": true,
-          "value": "Positive, flat \u00b7 EPS $1.01 \u00b7 YoY +0%",
-          "threshold": "QoQ growth accelerating",
-          "points": 4
-        },
-        {
-          "name": "ROE Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "16.0%",
-          "threshold": "> 15%",
-          "points": 5
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "42.6%",
-          "threshold": "> 10%",
-          "points": 5
-        },
-        {
-          "name": "Valuation Sanity",
-          "category": "Quality",
-          "passed": false,
-          "value": "2.17 (Yahoo Finance)",
-          "threshold": "PEG < 2.0",
-          "points": 0
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": false,
-          "value": "Negative/NA",
-          "threshold": "FCF > 0",
-          "points": 0
-        },
-        {
-          "name": "Industry Strength",
-          "category": "Context",
-          "passed": false,
-          "value": "Financial Services",
-          "threshold": "Sector outperforming SPY (3mo)",
-          "points": 0
-        },
-        {
-          "name": "Relative Strength",
-          "category": "Context",
-          "passed": false,
-          "value": "RS 19 (IBD-style percentile)",
-          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
-          "points": 0
-        }
-      ],
-      "market_cap": 6999463936,
-      "revenue_growth": 6.4,
-      "earnings_growth": 5.0,
-      "forward_pe": 10.829296,
-      "trailing_pe": 11.757426,
-      "peg_ratio": 2.1659,
-      "recommendation": "hold",
-      "target_mean": 61.5,
-      "analyst_count": 8,
-      "current_price": 47.5,
-      "ewros_score": 27,
-      "iq_edge": 68,
-      "iq_edge_raw": 0.534131,
-      "ibd_rs": 19,
-      "ibd_rs_raw": -6.12
-    },
     "CHDN": {
       "ticker": "CHDN",
       "name": "Churchill Downs, Incorporated",
@@ -50318,7 +50604,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Accelerating \u00b7 EPS $0.65 \u00b7 YoY +117%",
+          "value": "Accelerating \u00b7 EPS $1.24 \u00b7 YoY +313%",
           "threshold": "QoQ growth accelerating",
           "points": 8
         },
@@ -50386,6 +50672,149 @@
       "iq_edge_raw": 0.192985,
       "ibd_rs": 78,
       "ibd_rs_raw": 9.13
+    },
+    "EMR": {
+      "ticker": "EMR",
+      "name": "Emerson Electric Company",
+      "sector": "Industrials",
+      "industry": "Specialty Industrial Machinery",
+      "score": 47,
+      "grade": "C",
+      "max_score": 100,
+      "technical_score": 31,
+      "growth_score": 42,
+      "quality_score": 72,
+      "context_score": 0,
+      "moonshot_score": 0,
+      "criteria": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": false,
+          "value": "$129.88 > $146.46 > $135.93",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 0
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "value": "+21.1% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 0
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 25%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "0.8x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": false,
+          "value": "78.9%",
+          "threshold": "> 90% of 52W High",
+          "points": 0
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "91% of 50d ATR",
+          "threshold": "10d ATR < 75% of 50d ATR",
+          "points": 0
+        },
+        {
+          "name": "Revenue Score",
+          "category": "Growth",
+          "passed": false,
+          "value": "YoY: 4.1%",
+          "threshold": "Magnitude+Consistency+Accel+Beats",
+          "points": 8
+        },
+        {
+          "name": "Earnings Acceleration",
+          "category": "Growth",
+          "passed": true,
+          "value": "Accelerating \u00b7 EPS $1.46 \u00b7 YoY +43%",
+          "threshold": "QoQ growth accelerating",
+          "points": 8
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": false,
+          "value": "9.6%",
+          "threshold": "> 15%",
+          "points": 0
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "24.6%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": true,
+          "value": "1.70 (Yahoo Finance)",
+          "threshold": "PEG < 2.0",
+          "points": 5
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "Positive",
+          "threshold": "FCF > 0",
+          "points": 3
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "Industrials",
+          "threshold": "Sector outperforming SPY (3mo)",
+          "points": 0
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "RS 54 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
+        }
+      ],
+      "market_cap": 73031794688,
+      "revenue_growth": 4.1,
+      "earnings_growth": 4.9,
+      "forward_pe": 18.09753,
+      "trailing_pe": 31.833336,
+      "peg_ratio": 1.6986,
+      "recommendation": "buy",
+      "target_mean": 166.36769,
+      "analyst_count": 26,
+      "current_price": 129.8800048828125,
+      "ewros_score": 27,
+      "iq_edge": 65,
+      "iq_edge_raw": 0.510429,
+      "ibd_rs": 54,
+      "ibd_rs_raw": 2.61
     },
     "EOG": {
       "ticker": "EOG",
@@ -51891,7 +52320,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Accelerating \u00b7 EPS $1.72 \u00b7 YoY +28%",
+          "value": "Accelerating \u00b7 EPS $1.66 \u00b7 YoY +24%",
           "threshold": "QoQ growth accelerating",
           "points": 8
         },
@@ -52320,7 +52749,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Accelerating \u00b7 EPS $0.89 \u00b7 YoY +201%",
+          "value": "Accelerating \u00b7 EPS $1.67 \u00b7 YoY +290%",
           "threshold": "QoQ growth accelerating",
           "points": 8
         },
@@ -55694,149 +56123,6 @@
       "ibd_rs": 67,
       "ibd_rs_raw": 5.45
     },
-    "CACI": {
-      "ticker": "CACI",
-      "name": "CACI International, Inc.",
-      "sector": "Technology",
-      "industry": "Information Technology Service",
-      "score": 46,
-      "grade": "C",
-      "max_score": 100,
-      "technical_score": 45,
-      "growth_score": 32,
-      "quality_score": 44,
-      "context_score": 0,
-      "moonshot_score": 10,
-      "criteria": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": true,
-          "value": "$608.73 > $608.13 > $537.84",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 8
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": false,
-          "value": "+10.9% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 0
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 32%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "0.8x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 8
-        },
-        {
-          "name": "52W Proximity",
-          "category": "Timing",
-          "passed": false,
-          "value": "89.1%",
-          "threshold": "> 90% of 52W High",
-          "points": 0
-        },
-        {
-          "name": "Volatility Compression",
-          "category": "Timing",
-          "passed": false,
-          "value": "107% of 50d ATR",
-          "threshold": "10d ATR < 75% of 50d ATR",
-          "points": 0
-        },
-        {
-          "name": "Revenue Score",
-          "category": "Growth",
-          "passed": false,
-          "value": "YoY: 5.7%",
-          "threshold": "Magnitude+Consistency+Accel+Beats",
-          "points": 8
-        },
-        {
-          "name": "Earnings Acceleration",
-          "category": "Growth",
-          "passed": true,
-          "value": "Positive, flat \u00b7 EPS $5.59 \u00b7 YoY +15%",
-          "threshold": "QoQ growth accelerating",
-          "points": 4
-        },
-        {
-          "name": "ROE Quality",
-          "category": "Quality",
-          "passed": false,
-          "value": "13.2%",
-          "threshold": "> 15%",
-          "points": 0
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": false,
-          "value": "9.3%",
-          "threshold": "> 10%",
-          "points": 0
-        },
-        {
-          "name": "Valuation Sanity",
-          "category": "Quality",
-          "passed": true,
-          "value": "1.32 (Yahoo Finance)",
-          "threshold": "PEG < 2.0",
-          "points": 5
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 3
-        },
-        {
-          "name": "Industry Strength",
-          "category": "Context",
-          "passed": false,
-          "value": "Technology",
-          "threshold": "Sector outperforming SPY (3mo)",
-          "points": 0
-        },
-        {
-          "name": "Relative Strength",
-          "category": "Context",
-          "passed": true,
-          "value": "RS 83 (IBD-style percentile)",
-          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
-          "points": 3
-        }
-      ],
-      "market_cap": 13444273152,
-      "revenue_growth": 5.7,
-      "earnings_growth": 14.5,
-      "forward_pe": 19.111189,
-      "trailing_pe": 26.069805,
-      "peg_ratio": 1.318,
-      "recommendation": "strong_buy",
-      "target_mean": 724.0,
-      "analyst_count": 12,
-      "current_price": 608.72998046875,
-      "ewros_score": 77,
-      "iq_edge": 5,
-      "iq_edge_raw": 0.05266,
-      "ibd_rs": 83,
-      "ibd_rs_raw": 10.91
-    },
     "CF": {
       "ticker": "CF",
       "name": "CF Industries Holdings, Inc.",
@@ -56054,7 +56340,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Accelerating \u00b7 EPS $0.76 \u00b7 YoY +73%",
+          "value": "Accelerating \u00b7 EPS $1.29 \u00b7 YoY +193%",
           "threshold": "QoQ growth accelerating",
           "points": 8
         },
@@ -56551,149 +56837,6 @@
       "iq_edge_raw": 0.382611,
       "ibd_rs": 56,
       "ibd_rs_raw": 3.18
-    },
-    "EXAS": {
-      "ticker": "EXAS",
-      "name": "Exact Sciences Corporation",
-      "sector": "Healthcare",
-      "industry": "Diagnostics & Research",
-      "score": 46,
-      "grade": "C",
-      "max_score": 100,
-      "technical_score": 74,
-      "growth_score": 0,
-      "quality_score": 17,
-      "context_score": 0,
-      "moonshot_score": 50,
-      "criteria": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": true,
-          "value": "$103.75 > $102.91 > $73.81",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 8
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": true,
-          "value": "+0.0% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 22
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": false,
-          "value": "Depth 50%",
-          "threshold": "Depth < 40%",
-          "points": 0
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "0.8x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 8
-        },
-        {
-          "name": "52W Proximity",
-          "category": "Timing",
-          "passed": true,
-          "value": "99.8%",
-          "threshold": "> 90% of 52W High",
-          "points": 5
-        },
-        {
-          "name": "Volatility Compression",
-          "category": "Timing",
-          "passed": false,
-          "value": "93% of 50d ATR",
-          "threshold": "10d ATR < 75% of 50d ATR",
-          "points": 0
-        },
-        {
-          "name": "Revenue Score",
-          "category": "Growth",
-          "passed": false,
-          "value": "Error: math range error",
-          "threshold": "Magnitude+Consistency+Accel+Beats",
-          "points": 0
-        },
-        {
-          "name": "Earnings Acceleration",
-          "category": "Growth",
-          "passed": false,
-          "value": "Decelerating \u00b7 EPS $-0.21 \u00b7 YoY +0%",
-          "threshold": "QoQ growth accelerating",
-          "points": 0
-        },
-        {
-          "name": "ROE Quality",
-          "category": "Quality",
-          "passed": false,
-          "value": "-8.7%",
-          "threshold": "> 15%",
-          "points": 0
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": false,
-          "value": "-9.3%",
-          "threshold": "> 10%",
-          "points": 0
-        },
-        {
-          "name": "Valuation Sanity",
-          "category": "Quality",
-          "passed": false,
-          "value": "N/A \u2014 no P/E or growth data",
-          "threshold": "PEG < 2.0",
-          "points": 0
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 3
-        },
-        {
-          "name": "Industry Strength",
-          "category": "Context",
-          "passed": false,
-          "value": "Healthcare",
-          "threshold": "Sector outperforming SPY (3mo)",
-          "points": 0
-        },
-        {
-          "name": "Relative Strength",
-          "category": "Context",
-          "passed": true,
-          "value": "RS 95 (IBD-style percentile)",
-          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
-          "points": 5
-        }
-      ],
-      "market_cap": 19804651520,
-      "revenue_growth": 66747.9,
-      "earnings_growth": null,
-      "forward_pe": 55.18617,
-      "trailing_pe": null,
-      "peg_ratio": null,
-      "recommendation": "hold",
-      "target_mean": 105.8125,
-      "analyst_count": 16,
-      "current_price": 103.75,
-      "ewros_score": 70,
-      "iq_edge": 70,
-      "iq_edge_raw": 0.55425,
-      "ibd_rs": 95,
-      "ibd_rs_raw": 22.82
     },
     "HAYW": {
       "ticker": "HAYW",
@@ -70320,149 +70463,6 @@
       "ibd_rs": 58,
       "ibd_rs_raw": 3.5
     },
-    "MCHP": {
-      "ticker": "MCHP",
-      "name": "Microchip Technology Incorporat",
-      "sector": "Technology",
-      "industry": "Semiconductors",
-      "score": 44,
-      "grade": "C",
-      "max_score": 100,
-      "technical_score": 31,
-      "growth_score": 34,
-      "quality_score": 72,
-      "context_score": 0,
-      "moonshot_score": 0,
-      "criteria": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": false,
-          "value": "$64.71 > $73.67 > $66.78",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 0
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": false,
-          "value": "+22.4% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 0
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 42%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "0.8x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 8
-        },
-        {
-          "name": "52W Proximity",
-          "category": "Timing",
-          "passed": false,
-          "value": "77.6%",
-          "threshold": "> 90% of 52W High",
-          "points": 0
-        },
-        {
-          "name": "Volatility Compression",
-          "category": "Timing",
-          "passed": false,
-          "value": "91% of 50d ATR",
-          "threshold": "10d ATR < 75% of 50d ATR",
-          "points": 0
-        },
-        {
-          "name": "Revenue Score",
-          "category": "Growth",
-          "passed": false,
-          "value": "YoY: -2.2%, Accel: +12pp",
-          "threshold": "Magnitude+Consistency+Accel+Beats",
-          "points": 9
-        },
-        {
-          "name": "Earnings Acceleration",
-          "category": "Growth",
-          "passed": true,
-          "value": "Positive, flat \u00b7 EPS $0.06 \u00b7 YoY +160%",
-          "threshold": "QoQ growth accelerating",
-          "points": 4
-        },
-        {
-          "name": "ROE Quality",
-          "category": "Quality",
-          "passed": false,
-          "value": "-1.1%",
-          "threshold": "> 15%",
-          "points": 0
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "13.2%",
-          "threshold": "> 10%",
-          "points": 5
-        },
-        {
-          "name": "Valuation Sanity",
-          "category": "Quality",
-          "passed": true,
-          "value": "0.79 (Yahoo Finance)",
-          "threshold": "PEG < 2.0",
-          "points": 5
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 3
-        },
-        {
-          "name": "Industry Strength",
-          "category": "Context",
-          "passed": false,
-          "value": "Technology",
-          "threshold": "Sector outperforming SPY (3mo)",
-          "points": 0
-        },
-        {
-          "name": "Relative Strength",
-          "category": "Context",
-          "passed": false,
-          "value": "RS 60 (IBD-style percentile)",
-          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
-          "points": 0
-        }
-      ],
-      "market_cap": 35016876032,
-      "revenue_growth": -2.2,
-      "earnings_growth": 11.4,
-      "forward_pe": 24.361778,
-      "trailing_pe": null,
-      "peg_ratio": 0.7861,
-      "recommendation": "none",
-      "target_mean": 86.66667,
-      "analyst_count": 24,
-      "current_price": 64.70999908447266,
-      "ewros_score": 31,
-      "iq_edge": 44,
-      "iq_edge_raw": 0.324007,
-      "ibd_rs": 60,
-      "ibd_rs_raw": 3.96
-    },
     "MDT": {
       "ticker": "MDT",
       "name": "Medtronic plc.",
@@ -73895,6 +73895,149 @@
       "ibd_rs": 50,
       "ibd_rs_raw": 1.67
     },
+    "CBSH": {
+      "ticker": "CBSH",
+      "name": "Commerce Bancshares, Inc.",
+      "sector": "Financial Services",
+      "industry": "Banks - Regional",
+      "score": 43,
+      "grade": "C",
+      "max_score": 100,
+      "technical_score": 31,
+      "growth_score": 39,
+      "quality_score": 56,
+      "context_score": 0,
+      "moonshot_score": 20,
+      "criteria": [
+        {
+          "name": "Trend Alignment",
+          "category": "Momentum",
+          "passed": false,
+          "value": "$47.50 > $52.52 > $54.83",
+          "threshold": "Price > SMA50 > SMA200",
+          "points": 0
+        },
+        {
+          "name": "Breakout Pattern",
+          "category": "Breakout",
+          "passed": false,
+          "value": "+16.9% from Base",
+          "threshold": "Flat Base + Near High",
+          "points": 0
+        },
+        {
+          "name": "Consolidation",
+          "category": "Breakout",
+          "passed": true,
+          "value": "Depth 16%",
+          "threshold": "Depth < 40%",
+          "points": 10
+        },
+        {
+          "name": "Volume Dry-up",
+          "category": "Breakout",
+          "passed": true,
+          "value": "0.8x avg",
+          "threshold": "Vol < 1.2x Avg",
+          "points": 8
+        },
+        {
+          "name": "52W Proximity",
+          "category": "Timing",
+          "passed": false,
+          "value": "75.9%",
+          "threshold": "> 90% of 52W High",
+          "points": 0
+        },
+        {
+          "name": "Volatility Compression",
+          "category": "Timing",
+          "passed": false,
+          "value": "82% of 50d ATR",
+          "threshold": "10d ATR < 75% of 50d ATR",
+          "points": 0
+        },
+        {
+          "name": "Revenue Score",
+          "category": "Growth",
+          "passed": true,
+          "value": "YoY: 6.4%, Accel: +1pp",
+          "threshold": "Magnitude+Consistency+Accel+Beats",
+          "points": 15
+        },
+        {
+          "name": "Earnings Acceleration",
+          "category": "Growth",
+          "passed": false,
+          "value": "Decelerating \u00b7 EPS $1.01 \u00b7 YoY +0%",
+          "threshold": "QoQ growth accelerating",
+          "points": 0
+        },
+        {
+          "name": "ROE Quality",
+          "category": "Quality",
+          "passed": true,
+          "value": "16.0%",
+          "threshold": "> 15%",
+          "points": 5
+        },
+        {
+          "name": "Operating Margin",
+          "category": "Quality",
+          "passed": true,
+          "value": "42.6%",
+          "threshold": "> 10%",
+          "points": 5
+        },
+        {
+          "name": "Valuation Sanity",
+          "category": "Quality",
+          "passed": false,
+          "value": "2.17 (Yahoo Finance)",
+          "threshold": "PEG < 2.0",
+          "points": 0
+        },
+        {
+          "name": "FCF Quality",
+          "category": "Quality",
+          "passed": false,
+          "value": "Negative/NA",
+          "threshold": "FCF > 0",
+          "points": 0
+        },
+        {
+          "name": "Industry Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "Financial Services",
+          "threshold": "Sector outperforming SPY (3mo)",
+          "points": 0
+        },
+        {
+          "name": "Relative Strength",
+          "category": "Context",
+          "passed": false,
+          "value": "RS 19 (IBD-style percentile)",
+          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
+          "points": 0
+        }
+      ],
+      "market_cap": 6999463936,
+      "revenue_growth": 6.4,
+      "earnings_growth": 5.0,
+      "forward_pe": 10.829296,
+      "trailing_pe": 11.757426,
+      "peg_ratio": 2.1659,
+      "recommendation": "hold",
+      "target_mean": 61.5,
+      "analyst_count": 8,
+      "current_price": 47.5,
+      "ewros_score": 27,
+      "iq_edge": 68,
+      "iq_edge_raw": 0.534131,
+      "ibd_rs": 19,
+      "ibd_rs_raw": -6.12
+    },
     "CHTR": {
       "ticker": "CHTR",
       "name": "Charter Communications, Inc.",
@@ -74895,149 +75038,6 @@
       "iq_edge_raw": 0.085945,
       "ibd_rs": 46,
       "ibd_rs_raw": 0.92
-    },
-    "EMR": {
-      "ticker": "EMR",
-      "name": "Emerson Electric Company",
-      "sector": "Industrials",
-      "industry": "Specialty Industrial Machinery",
-      "score": 43,
-      "grade": "C",
-      "max_score": 100,
-      "technical_score": 31,
-      "growth_score": 32,
-      "quality_score": 72,
-      "context_score": 0,
-      "moonshot_score": 0,
-      "criteria": [
-        {
-          "name": "Trend Alignment",
-          "category": "Momentum",
-          "passed": false,
-          "value": "$129.88 > $146.46 > $135.93",
-          "threshold": "Price > SMA50 > SMA200",
-          "points": 0
-        },
-        {
-          "name": "Breakout Pattern",
-          "category": "Breakout",
-          "passed": false,
-          "value": "+21.1% from Base",
-          "threshold": "Flat Base + Near High",
-          "points": 0
-        },
-        {
-          "name": "Consolidation",
-          "category": "Breakout",
-          "passed": true,
-          "value": "Depth 25%",
-          "threshold": "Depth < 40%",
-          "points": 10
-        },
-        {
-          "name": "Volume Dry-up",
-          "category": "Breakout",
-          "passed": true,
-          "value": "0.8x avg",
-          "threshold": "Vol < 1.2x Avg",
-          "points": 8
-        },
-        {
-          "name": "52W Proximity",
-          "category": "Timing",
-          "passed": false,
-          "value": "78.9%",
-          "threshold": "> 90% of 52W High",
-          "points": 0
-        },
-        {
-          "name": "Volatility Compression",
-          "category": "Timing",
-          "passed": false,
-          "value": "91% of 50d ATR",
-          "threshold": "10d ATR < 75% of 50d ATR",
-          "points": 0
-        },
-        {
-          "name": "Revenue Score",
-          "category": "Growth",
-          "passed": false,
-          "value": "YoY: 4.1%",
-          "threshold": "Magnitude+Consistency+Accel+Beats",
-          "points": 8
-        },
-        {
-          "name": "Earnings Acceleration",
-          "category": "Growth",
-          "passed": true,
-          "value": "Positive, flat \u00b7 EPS $1.07 \u00b7 YoY +5%",
-          "threshold": "QoQ growth accelerating",
-          "points": 4
-        },
-        {
-          "name": "ROE Quality",
-          "category": "Quality",
-          "passed": false,
-          "value": "9.6%",
-          "threshold": "> 15%",
-          "points": 0
-        },
-        {
-          "name": "Operating Margin",
-          "category": "Quality",
-          "passed": true,
-          "value": "24.6%",
-          "threshold": "> 10%",
-          "points": 5
-        },
-        {
-          "name": "Valuation Sanity",
-          "category": "Quality",
-          "passed": true,
-          "value": "1.70 (Yahoo Finance)",
-          "threshold": "PEG < 2.0",
-          "points": 5
-        },
-        {
-          "name": "FCF Quality",
-          "category": "Quality",
-          "passed": true,
-          "value": "Positive",
-          "threshold": "FCF > 0",
-          "points": 3
-        },
-        {
-          "name": "Industry Strength",
-          "category": "Context",
-          "passed": false,
-          "value": "Industrials",
-          "threshold": "Sector outperforming SPY (3mo)",
-          "points": 0
-        },
-        {
-          "name": "Relative Strength",
-          "category": "Context",
-          "passed": false,
-          "value": "RS 54 (IBD-style percentile)",
-          "threshold": "\u2265 70 for points, \u2265 90 for full 5 pts",
-          "points": 0
-        }
-      ],
-      "market_cap": 73031794688,
-      "revenue_growth": 4.1,
-      "earnings_growth": 4.9,
-      "forward_pe": 18.09753,
-      "trailing_pe": 31.833336,
-      "peg_ratio": 1.6986,
-      "recommendation": "buy",
-      "target_mean": 166.36769,
-      "analyst_count": 26,
-      "current_price": 129.8800048828125,
-      "ewros_score": 27,
-      "iq_edge": 65,
-      "iq_edge_raw": 0.510429,
-      "ibd_rs": 54,
-      "ibd_rs_raw": 2.61
     },
     "FDS": {
       "ticker": "FDS",
@@ -100718,7 +100718,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": false,
-          "value": "Decelerating \u00b7 EPS $0.52 \u00b7 YoY -36%",
+          "value": "Decelerating \u00b7 EPS $0.82 \u00b7 YoY +1%",
           "threshold": "QoQ growth accelerating",
           "points": 0
         },
@@ -107161,7 +107161,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": false,
-          "value": "Decelerating \u00b7 EPS $1.29 \u00b7 YoY -16%",
+          "value": "Decelerating \u00b7 EPS $1.39 \u00b7 YoY -10%",
           "threshold": "QoQ growth accelerating",
           "points": 0
         },
@@ -108019,7 +108019,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Positive, flat \u00b7 EPS $6.61 \u00b7 YoY +8%",
+          "value": "Positive, flat \u00b7 EPS $7.33 \u00b7 YoY +19%",
           "threshold": "QoQ growth accelerating",
           "points": 4
         },
@@ -124561,7 +124561,7 @@
       "growth_score": 13,
       "quality_score": 44,
       "context_score": 0,
-      "moonshot_score": 0,
+      "moonshot_score": 10,
       "criteria": [
         {
           "name": "Trend Alignment",
@@ -124615,7 +124615,7 @@
           "name": "Revenue Score",
           "category": "Growth",
           "passed": false,
-          "value": "YoY: -2.8%, Accel: -13pp",
+          "value": "YoY: 5.8%, Accel: -22pp",
           "threshold": "Magnitude+Consistency+Accel+Beats",
           "points": 5
         },
@@ -124677,7 +124677,7 @@
         }
       ],
       "market_cap": 1432713344,
-      "revenue_growth": -2.8,
+      "revenue_growth": 5.8,
       "earnings_growth": -0.5,
       "forward_pe": 7.7066383,
       "trailing_pe": null,
@@ -124704,7 +124704,7 @@
       "growth_score": 13,
       "quality_score": 44,
       "context_score": 0,
-      "moonshot_score": 0,
+      "moonshot_score": 10,
       "criteria": [
         {
           "name": "Trend Alignment",
@@ -124758,7 +124758,7 @@
           "name": "Revenue Score",
           "category": "Growth",
           "passed": false,
-          "value": "YoY: -2.8%, Accel: -13pp",
+          "value": "YoY: 5.8%, Accel: -22pp",
           "threshold": "Magnitude+Consistency+Accel+Beats",
           "points": 5
         },
@@ -124820,7 +124820,7 @@
         }
       ],
       "market_cap": 1439878784,
-      "revenue_growth": -2.8,
+      "revenue_growth": 5.8,
       "earnings_growth": -0.5,
       "forward_pe": null,
       "trailing_pe": null,
@@ -137922,7 +137922,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": false,
-          "value": "Decelerating \u00b7 EPS $-1.39 \u00b7 YoY -336%",
+          "value": "Decelerating \u00b7 EPS $0.45 \u00b7 YoY -24%",
           "threshold": "QoQ growth accelerating",
           "points": 0
         },
@@ -145157,11 +145157,11 @@
       "ibd_rs": 1,
       "ibd_rs_raw": -24.33
     },
-    "DXJ": {
-      "ticker": "DXJ",
-      "name": "WisdomTree Japan Hedged Equity Fund",
+    "GRID": {
+      "ticker": "GRID",
+      "name": "First Trust NASDAQ Clean Edge Smart Grid Infrastructure Index Fund",
       "sector": "ETF",
-      "industry": "Japan Stock",
+      "industry": "Infrastructure",
       "score": null,
       "grade": "ETF",
       "max_score": null,
@@ -145171,7 +145171,7 @@
       "context_score": null,
       "moonshot_score": null,
       "criteria": [],
-      "market_cap": 5780495872,
+      "market_cap": 6365877760,
       "revenue_growth": null,
       "earnings_growth": null,
       "forward_pe": null,
@@ -145180,142 +145180,14 @@
       "recommendation": null,
       "target_mean": null,
       "analyst_count": null,
-      "current_price": 166.7,
+      "current_price": 175.775,
       "ewros_score": 71,
       "ewros_raw": 0,
       "ewros_trend": 0,
       "ewros_prior": 0,
       "ewros_stats": {},
-      "iq_edge": 56,
-      "iq_edge_raw": 0.436384
-    },
-    "VGT": {
-      "ticker": "VGT",
-      "name": "Vanguard Information Technology Index Fund ETF Shares",
-      "sector": "ETF",
-      "industry": "Technology",
-      "score": null,
-      "grade": "ETF",
-      "max_score": null,
-      "technical_score": null,
-      "growth_score": null,
-      "quality_score": null,
-      "context_score": null,
-      "moonshot_score": null,
-      "criteria": [],
-      "market_cap": 126508539904,
-      "revenue_growth": null,
-      "earnings_growth": null,
-      "forward_pe": null,
-      "trailing_pe": null,
-      "peg_ratio": null,
-      "recommendation": null,
-      "target_mean": null,
-      "analyst_count": null,
-      "current_price": 731.99,
-      "ewros_score": 56,
-      "ewros_raw": 0,
-      "ewros_trend": 0,
-      "ewros_prior": 0,
-      "ewros_stats": {},
-      "iq_edge": 99,
-      "iq_edge_raw": 0.964478
-    },
-    "SIL": {
-      "ticker": "SIL",
-      "name": "Global X Silver Miners ETF",
-      "sector": "ETF",
-      "industry": "Equity Precious Metals",
-      "score": null,
-      "grade": "ETF",
-      "max_score": null,
-      "technical_score": null,
-      "growth_score": null,
-      "quality_score": null,
-      "context_score": null,
-      "moonshot_score": null,
-      "criteria": [],
-      "market_cap": 6277300224,
-      "revenue_growth": null,
-      "earnings_growth": null,
-      "forward_pe": null,
-      "trailing_pe": null,
-      "peg_ratio": null,
-      "recommendation": null,
-      "target_mean": null,
-      "analyst_count": null,
-      "current_price": 107.57,
-      "ewros_score": 31,
-      "ewros_raw": 0,
-      "ewros_trend": 0,
-      "ewros_prior": 0,
-      "ewros_stats": {},
-      "iq_edge": 55,
-      "iq_edge_raw": 0.422337
-    },
-    "SHLD": {
-      "ticker": "SHLD",
-      "name": "Global X Defense Tech ETF",
-      "sector": "ETF",
-      "industry": "Industrials",
-      "score": null,
-      "grade": "ETF",
-      "max_score": null,
-      "technical_score": null,
-      "growth_score": null,
-      "quality_score": null,
-      "context_score": null,
-      "moonshot_score": null,
-      "criteria": [],
-      "market_cap": 7525804544,
-      "revenue_growth": null,
-      "earnings_growth": null,
-      "forward_pe": null,
-      "trailing_pe": null,
-      "peg_ratio": null,
-      "recommendation": null,
-      "target_mean": null,
-      "analyst_count": null,
-      "current_price": 76.86,
-      "ewros_score": 83,
-      "ewros_raw": 0,
-      "ewros_trend": 0,
-      "ewros_prior": 0,
-      "ewros_stats": {},
-      "iq_edge": 52,
-      "iq_edge_raw": 0.398051
-    },
-    "NLR": {
-      "ticker": "NLR",
-      "name": "VanEck Uranium and Nuclear ETF",
-      "sector": "ETF",
-      "industry": "Natural Resources",
-      "score": null,
-      "grade": "ETF",
-      "max_score": null,
-      "technical_score": null,
-      "growth_score": null,
-      "quality_score": null,
-      "context_score": null,
-      "moonshot_score": null,
-      "criteria": [],
-      "market_cap": 4823398400,
-      "revenue_growth": null,
-      "earnings_growth": null,
-      "forward_pe": null,
-      "trailing_pe": null,
-      "peg_ratio": null,
-      "recommendation": null,
-      "target_mean": null,
-      "analyst_count": null,
-      "current_price": 147.88,
-      "ewros_score": 58,
-      "ewros_raw": 0,
-      "ewros_trend": 0,
-      "ewros_prior": 0,
-      "ewros_stats": {},
-      "iq_edge": 38,
-      "iq_edge_raw": 0.283271
+      "iq_edge": 81,
+      "iq_edge_raw": 0.680465
     },
     "COPX": {
       "ticker": "COPX",
@@ -145349,70 +145221,6 @@
       "iq_edge": 42,
       "iq_edge_raw": 0.312037
     },
-    "GLD": {
-      "ticker": "GLD",
-      "name": "SPDR Gold Shares",
-      "sector": "ETF",
-      "industry": "Commodities Focused",
-      "score": null,
-      "grade": "ETF",
-      "max_score": null,
-      "technical_score": null,
-      "growth_score": null,
-      "quality_score": null,
-      "context_score": null,
-      "moonshot_score": null,
-      "criteria": [],
-      "market_cap": 174068531200,
-      "revenue_growth": null,
-      "earnings_growth": null,
-      "forward_pe": null,
-      "trailing_pe": null,
-      "peg_ratio": null,
-      "recommendation": null,
-      "target_mean": null,
-      "analyst_count": null,
-      "current_price": 467.56,
-      "ewros_score": 68,
-      "ewros_raw": 0,
-      "ewros_trend": 0,
-      "ewros_prior": 0,
-      "ewros_stats": {},
-      "iq_edge": 65,
-      "iq_edge_raw": 0.50667
-    },
-    "VOO": {
-      "ticker": "VOO",
-      "name": "Vanguard S&P 500 ETF",
-      "sector": "ETF",
-      "industry": "Large Blend",
-      "score": null,
-      "grade": "ETF",
-      "max_score": null,
-      "technical_score": null,
-      "growth_score": null,
-      "quality_score": null,
-      "context_score": null,
-      "moonshot_score": null,
-      "criteria": [],
-      "market_cap": 1509873025024,
-      "revenue_growth": null,
-      "earnings_growth": null,
-      "forward_pe": null,
-      "trailing_pe": null,
-      "peg_ratio": null,
-      "recommendation": null,
-      "target_mean": null,
-      "analyst_count": null,
-      "current_price": 633.15,
-      "ewros_score": 54,
-      "ewros_raw": 0,
-      "ewros_trend": 0,
-      "ewros_prior": 0,
-      "ewros_stats": {},
-      "iq_edge": 77,
-      "iq_edge_raw": 0.629317
-    },
     "VUG": {
       "ticker": "VUG",
       "name": "Vanguard Growth Index Fund ETF Shares",
@@ -145444,6 +145252,70 @@
       "ewros_stats": {},
       "iq_edge": 82,
       "iq_edge_raw": 0.695108
+    },
+    "VGT": {
+      "ticker": "VGT",
+      "name": "Vanguard Information Technology Index Fund ETF Shares",
+      "sector": "ETF",
+      "industry": "Technology",
+      "score": null,
+      "grade": "ETF",
+      "max_score": null,
+      "technical_score": null,
+      "growth_score": null,
+      "quality_score": null,
+      "context_score": null,
+      "moonshot_score": null,
+      "criteria": [],
+      "market_cap": 126508539904,
+      "revenue_growth": null,
+      "earnings_growth": null,
+      "forward_pe": null,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": null,
+      "target_mean": null,
+      "analyst_count": null,
+      "current_price": 731.99,
+      "ewros_score": 56,
+      "ewros_raw": 0,
+      "ewros_trend": 0,
+      "ewros_prior": 0,
+      "ewros_stats": {},
+      "iq_edge": 99,
+      "iq_edge_raw": 0.964478
+    },
+    "NLR": {
+      "ticker": "NLR",
+      "name": "VanEck Uranium and Nuclear ETF",
+      "sector": "ETF",
+      "industry": "Natural Resources",
+      "score": null,
+      "grade": "ETF",
+      "max_score": null,
+      "technical_score": null,
+      "growth_score": null,
+      "quality_score": null,
+      "context_score": null,
+      "moonshot_score": null,
+      "criteria": [],
+      "market_cap": 4823398400,
+      "revenue_growth": null,
+      "earnings_growth": null,
+      "forward_pe": null,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": null,
+      "target_mean": null,
+      "analyst_count": null,
+      "current_price": 147.88,
+      "ewros_score": 58,
+      "ewros_raw": 0,
+      "ewros_trend": 0,
+      "ewros_prior": 0,
+      "ewros_stats": {},
+      "iq_edge": 38,
+      "iq_edge_raw": 0.283271
     },
     "XBI": {
       "ticker": "XBI",
@@ -145477,6 +145349,134 @@
       "iq_edge": 96,
       "iq_edge_raw": 0.905144
     },
+    "SHLD": {
+      "ticker": "SHLD",
+      "name": "Global X Defense Tech ETF",
+      "sector": "ETF",
+      "industry": "Industrials",
+      "score": null,
+      "grade": "ETF",
+      "max_score": null,
+      "technical_score": null,
+      "growth_score": null,
+      "quality_score": null,
+      "context_score": null,
+      "moonshot_score": null,
+      "criteria": [],
+      "market_cap": 7525804544,
+      "revenue_growth": null,
+      "earnings_growth": null,
+      "forward_pe": null,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": null,
+      "target_mean": null,
+      "analyst_count": null,
+      "current_price": 76.86,
+      "ewros_score": 83,
+      "ewros_raw": 0,
+      "ewros_trend": 0,
+      "ewros_prior": 0,
+      "ewros_stats": {},
+      "iq_edge": 52,
+      "iq_edge_raw": 0.398051
+    },
+    "VOO": {
+      "ticker": "VOO",
+      "name": "Vanguard S&P 500 ETF",
+      "sector": "ETF",
+      "industry": "Large Blend",
+      "score": null,
+      "grade": "ETF",
+      "max_score": null,
+      "technical_score": null,
+      "growth_score": null,
+      "quality_score": null,
+      "context_score": null,
+      "moonshot_score": null,
+      "criteria": [],
+      "market_cap": 1509873025024,
+      "revenue_growth": null,
+      "earnings_growth": null,
+      "forward_pe": null,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": null,
+      "target_mean": null,
+      "analyst_count": null,
+      "current_price": 633.15,
+      "ewros_score": 54,
+      "ewros_raw": 0,
+      "ewros_trend": 0,
+      "ewros_prior": 0,
+      "ewros_stats": {},
+      "iq_edge": 77,
+      "iq_edge_raw": 0.629317
+    },
+    "DXJ": {
+      "ticker": "DXJ",
+      "name": "WisdomTree Japan Hedged Equity Fund",
+      "sector": "ETF",
+      "industry": "Japan Stock",
+      "score": null,
+      "grade": "ETF",
+      "max_score": null,
+      "technical_score": null,
+      "growth_score": null,
+      "quality_score": null,
+      "context_score": null,
+      "moonshot_score": null,
+      "criteria": [],
+      "market_cap": 5780495872,
+      "revenue_growth": null,
+      "earnings_growth": null,
+      "forward_pe": null,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": null,
+      "target_mean": null,
+      "analyst_count": null,
+      "current_price": 166.7,
+      "ewros_score": 71,
+      "ewros_raw": 0,
+      "ewros_trend": 0,
+      "ewros_prior": 0,
+      "ewros_stats": {},
+      "iq_edge": 56,
+      "iq_edge_raw": 0.436384
+    },
+    "GLD": {
+      "ticker": "GLD",
+      "name": "SPDR Gold Shares",
+      "sector": "ETF",
+      "industry": "Commodities Focused",
+      "score": null,
+      "grade": "ETF",
+      "max_score": null,
+      "technical_score": null,
+      "growth_score": null,
+      "quality_score": null,
+      "context_score": null,
+      "moonshot_score": null,
+      "criteria": [],
+      "market_cap": 174068531200,
+      "revenue_growth": null,
+      "earnings_growth": null,
+      "forward_pe": null,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": null,
+      "target_mean": null,
+      "analyst_count": null,
+      "current_price": 467.56,
+      "ewros_score": 68,
+      "ewros_raw": 0,
+      "ewros_trend": 0,
+      "ewros_prior": 0,
+      "ewros_stats": {},
+      "iq_edge": 65,
+      "iq_edge_raw": 0.50667
+    },
     "XLI": {
       "ticker": "XLI",
       "name": "State Street Industrial Select Sector SPDR ETF",
@@ -145509,6 +145509,38 @@
       "iq_edge": 68,
       "iq_edge_raw": 0.528719
     },
+    "SIL": {
+      "ticker": "SIL",
+      "name": "Global X Silver Miners ETF",
+      "sector": "ETF",
+      "industry": "Equity Precious Metals",
+      "score": null,
+      "grade": "ETF",
+      "max_score": null,
+      "technical_score": null,
+      "growth_score": null,
+      "quality_score": null,
+      "context_score": null,
+      "moonshot_score": null,
+      "criteria": [],
+      "market_cap": 6277300224,
+      "revenue_growth": null,
+      "earnings_growth": null,
+      "forward_pe": null,
+      "trailing_pe": null,
+      "peg_ratio": null,
+      "recommendation": null,
+      "target_mean": null,
+      "analyst_count": null,
+      "current_price": 107.57,
+      "ewros_score": 31,
+      "ewros_raw": 0,
+      "ewros_trend": 0,
+      "ewros_prior": 0,
+      "ewros_stats": {},
+      "iq_edge": 55,
+      "iq_edge_raw": 0.422337
+    },
     "UFO": {
       "ticker": "UFO",
       "name": "Procure Space ETF",
@@ -145540,38 +145572,6 @@
       "ewros_stats": {},
       "iq_edge": 72,
       "iq_edge_raw": 0.573689
-    },
-    "GRID": {
-      "ticker": "GRID",
-      "name": "First Trust NASDAQ Clean Edge Smart Grid Infrastructure Index Fund",
-      "sector": "ETF",
-      "industry": "Infrastructure",
-      "score": null,
-      "grade": "ETF",
-      "max_score": null,
-      "technical_score": null,
-      "growth_score": null,
-      "quality_score": null,
-      "context_score": null,
-      "moonshot_score": null,
-      "criteria": [],
-      "market_cap": 6365877760,
-      "revenue_growth": null,
-      "earnings_growth": null,
-      "forward_pe": null,
-      "trailing_pe": null,
-      "peg_ratio": null,
-      "recommendation": null,
-      "target_mean": null,
-      "analyst_count": null,
-      "current_price": 175.775,
-      "ewros_score": 71,
-      "ewros_raw": 0,
-      "ewros_trend": 0,
-      "ewros_prior": 0,
-      "ewros_stats": {},
-      "iq_edge": 81,
-      "iq_edge_raw": 0.680465
     }
   }
 }

@@ -1,7 +1,7 @@
 {
   "version": "5.0",
   "max_score": 100,
-  "last_scan": "2026-03-18 17:38 PST",
+  "last_scan": "2026-03-18 17:39 PST",
   "total_stocks": 175,
   "stocks": [
     {
@@ -8658,7 +8658,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Positive, flat \u00b7 EPS $0.66 \u00b7 YoY +2100%",
+          "value": "Positive, flat \u00b7 EPS $0.68 \u00b7 YoY +2167%",
           "threshold": "QoQ growth accelerating",
           "points": 4
         },
@@ -13385,7 +13385,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Positive, flat \u00b7 EPS $8.68 \u00b7 YoY +41%",
+          "value": "Positive, flat \u00b7 EPS $8.85 \u00b7 YoY +44%",
           "threshold": "QoQ growth accelerating",
           "points": 4
         },
