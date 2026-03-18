@@ -1615,12 +1615,13 @@
                 <!-- EWROS pane -->
                 <div id="ewros-chart-label" style="display:none; padding:8px 0 2px 0; font-size:0.75rem; font-weight:600; color:#a78bfa; letter-spacing:0.5px;">EWROS (Relative Momentum vs SPY)</div>
                 <div id="ewros-chart-container" style="display:none; width:100%; height:150px; overflow:hidden;"></div>
-                <!-- Revenue pane -->
-                <div id="revenue-chart-label" style="display:none; padding:8px 0 2px 0; font-size:0.75rem; font-weight:600; color:#38bdf8; letter-spacing:0.5px;">Quarterly Revenue</div>
-                <div id="revenue-chart-container" style="display:none; width:100%; height:160px; overflow:hidden;"></div>
-                <!-- EPS pane -->
-                <div id="eps-chart-label" style="display:none; padding:8px 0 2px 0; font-size:0.75rem; font-weight:600; color:#22c55e; letter-spacing:0.5px;">Quarterly EPS</div>
-                <div id="eps-chart-container" style="display:none; width:100%; height:160px; border-radius:0 0 8px 8px; overflow:hidden;"></div>
+                <!-- Fundamentals section -->
+                <div id="fundamentals-section" style="display:none; padding:16px 0 0 0;">
+                    <div style="display:flex; gap:24px; flex-wrap:wrap;">
+                        <div id="revenue-bars" style="flex:1; min-width:280px;"></div>
+                        <div id="eps-bars" style="flex:1; min-width:280px;"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -6409,10 +6410,49 @@
         let _chartSma50Series = null;
         let _chartSma200Series = null;
         let _ewrosChartInstance = null;
-        let _revenueChartInstance = null;
-        let _epsChartInstance = null;
         let _chartPeriod = '1y';
         let _chartLoaded = false;
+
+        function _renderFundBars(title, items, isRevenue) {
+            if (!items || items.length === 0) return '';
+            const maxVal = Math.max(...items.map(i => Math.abs(i.value)));
+            const color = isRevenue ? '#38bdf8' : '#22c55e';
+            const fmtVal = v => {
+                if (isRevenue) {
+                    if (Math.abs(v) >= 1e9) return '$' + (v/1e9).toFixed(1) + 'B';
+                    if (Math.abs(v) >= 1e6) return '$' + (v/1e6).toFixed(0) + 'M';
+                    return '$' + v.toFixed(0);
+                }
+                return '$' + v.toFixed(2);
+            };
+            // Build YoY growth lookup
+            const byLabel = {};
+            items.forEach(i => byLabel[i.label] = i);
+
+            let html = `<div style="font-size:0.8rem;font-weight:700;color:${color};margin-bottom:10px;letter-spacing:0.5px;">${title}</div>`;
+            html += '<div style="display:flex;align-items:flex-end;gap:6px;height:120px;">';
+            items.forEach(item => {
+                const pct = maxVal > 0 ? (Math.abs(item.value) / maxVal) * 100 : 0;
+                const [yr, q] = item.label.split('Q').map(Number);
+                const prevLabel = (yr-1) + 'Q' + q;
+                const prev = byLabel[prevLabel];
+                let growthStr = '';
+                let barColor = color;
+                if (prev && prev.value !== 0) {
+                    const growth = ((item.value - prev.value) / Math.abs(prev.value)) * 100;
+                    growthStr = (growth >= 0 ? '+' : '') + growth.toFixed(0) + '%';
+                    barColor = growth >= 0 ? color : '#ef4444';
+                }
+                html += `<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;">
+                    <div style="font-size:0.65rem;color:#94a3b8;margin-bottom:2px;white-space:nowrap;">${fmtVal(item.value)}</div>
+                    ${growthStr ? `<div style="font-size:0.6rem;color:${barColor};margin-bottom:2px;font-weight:600;">${growthStr}</div>` : ''}
+                    <div style="width:100%;max-width:48px;height:${Math.max(pct, 4)}%;background:${barColor};border-radius:4px 4px 0 0;opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'"></div>
+                    <div style="font-size:0.65rem;color:#64748b;margin-top:4px;">${item.label}</div>
+                </div>`;
+            });
+            html += '</div>';
+            return html;
+        }
 
         function showCharts() {
             if (location.hash !== '#charts') history.pushState(null, '', '#charts');
@@ -6557,95 +6597,18 @@
                     ewrosContainer.style.display = 'none';
                 }
 
-                // Revenue bar chart
-                const revContainer = document.getElementById('revenue-chart-container');
-                const revLabel = document.getElementById('revenue-chart-label');
-                if (_revenueChartInstance) { _revenueChartInstance.remove(); _revenueChartInstance = null; }
-                revContainer.innerHTML = '';
-
+                // Fundamentals (HTML bar charts)
+                const fundSection = document.getElementById('fundamentals-section');
                 const fundData = data.fundamentals || {};
                 const revData = fundData.revenue || [];
-
-                if (revData.length > 0) {
-                    revLabel.style.display = 'block';
-                    revContainer.style.display = 'block';
-                    _revenueChartInstance = LightweightCharts.createChart(revContainer, {
-                        width: revContainer.clientWidth, height: 160,
-                        layout: { background: { type: 'solid', color: '#131722' }, textColor: '#94a3b8', attributionLogo: false },
-                        grid: { vertLines: { color: '#1e2940' }, horzLines: { color: '#1e2940' } },
-                        rightPriceScale: { borderColor: '#2d3748' },
-                        timeScale: { borderColor: '#2d3748', timeVisible: false },
-                    });
-                    const revSeries = _revenueChartInstance.addHistogramSeries({
-                        color: '#38bdf8', priceFormat: { type: 'custom', formatter: v => {
-                            if (Math.abs(v) >= 1e9) return '$' + (v/1e9).toFixed(1) + 'B';
-                            if (Math.abs(v) >= 1e6) return '$' + (v/1e6).toFixed(0) + 'M';
-                            return '$' + v.toFixed(0);
-                        }},
-                    });
-                    // Color bars: green if YoY growth, red if decline
-                    const revByLabel = {};
-                    revData.forEach(r => revByLabel[r.label] = r);
-                    const revBars = revData.map(r => {
-                        const [yr, q] = r.label.split('Q').map(Number);
-                        const prevLabel = (yr-1) + 'Q' + q;
-                        const prev = revByLabel[prevLabel];
-                        const growing = prev ? r.value >= prev.value : true;
-                        return { time: r.time, value: r.value, color: growing ? 'rgba(56,189,248,0.7)' : 'rgba(239,68,68,0.5)' };
-                    });
-                    revSeries.setData(revBars);
-                    _revenueChartInstance.timeScale().fitContent();
-
-                    // Sync with main chart
-                    _chartInstance.timeScale().subscribeVisibleLogicalRangeChange(range => {
-                        if (range && _revenueChartInstance) _revenueChartInstance.timeScale().setVisibleLogicalRange(range);
-                    });
-                } else {
-                    revLabel.style.display = 'none';
-                    revContainer.style.display = 'none';
-                }
-
-                // EPS bar chart
-                const epsContainer = document.getElementById('eps-chart-container');
-                const epsLabel = document.getElementById('eps-chart-label');
-                if (_epsChartInstance) { _epsChartInstance.remove(); _epsChartInstance = null; }
-                epsContainer.innerHTML = '';
-
                 const epsData = fundData.eps || [];
 
-                if (epsData.length > 0) {
-                    epsLabel.style.display = 'block';
-                    epsContainer.style.display = 'block';
-                    _epsChartInstance = LightweightCharts.createChart(epsContainer, {
-                        width: epsContainer.clientWidth, height: 160,
-                        layout: { background: { type: 'solid', color: '#131722' }, textColor: '#94a3b8', attributionLogo: false },
-                        grid: { vertLines: { color: '#1e2940' }, horzLines: { color: '#1e2940' } },
-                        rightPriceScale: { borderColor: '#2d3748' },
-                        timeScale: { borderColor: '#2d3748', timeVisible: false },
-                    });
-                    const epsSeries = _epsChartInstance.addHistogramSeries({
-                        color: '#22c55e', priceFormat: { type: 'price', precision: 2 },
-                    });
-                    // Color: green if YoY growth, red if decline
-                    const epsByLabel = {};
-                    epsData.forEach(e => epsByLabel[e.label] = e);
-                    const epsBars = epsData.map(e => {
-                        const [yr, q] = e.label.split('Q').map(Number);
-                        const prevLabel = (yr-1) + 'Q' + q;
-                        const prev = epsByLabel[prevLabel];
-                        const growing = prev ? e.value >= prev.value : true;
-                        return { time: e.time, value: e.value, color: growing ? 'rgba(34,197,94,0.7)' : 'rgba(239,68,68,0.5)' };
-                    });
-                    epsSeries.setData(epsBars);
-                    _epsChartInstance.timeScale().fitContent();
-
-                    // Sync with main chart
-                    _chartInstance.timeScale().subscribeVisibleLogicalRangeChange(range => {
-                        if (range && _epsChartInstance) _epsChartInstance.timeScale().setVisibleLogicalRange(range);
-                    });
+                if (revData.length > 0 || epsData.length > 0) {
+                    fundSection.style.display = 'block';
+                    document.getElementById('revenue-bars').innerHTML = _renderFundBars('Quarterly Revenue', revData, true);
+                    document.getElementById('eps-bars').innerHTML = _renderFundBars('Quarterly EPS', epsData, false);
                 } else {
-                    epsLabel.style.display = 'none';
-                    epsContainer.style.display = 'none';
+                    fundSection.style.display = 'none';
                 }
 
                 // Responsive resize
@@ -6655,12 +6618,6 @@
                     }
                     if (_ewrosChartInstance && ewrosContainer.clientWidth > 0) {
                         _ewrosChartInstance.applyOptions({ width: ewrosContainer.clientWidth });
-                    }
-                    if (_revenueChartInstance && revContainer.clientWidth > 0) {
-                        _revenueChartInstance.applyOptions({ width: revContainer.clientWidth });
-                    }
-                    if (_epsChartInstance && epsContainer.clientWidth > 0) {
-                        _epsChartInstance.applyOptions({ width: epsContainer.clientWidth });
                     }
                 };
                 window._chartResizeHandler && window.removeEventListener('resize', window._chartResizeHandler);
