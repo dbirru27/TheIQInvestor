@@ -94,6 +94,10 @@ def refresh_ticker(symbol, db, retry_count=0):
         # Fetch fundamentals
         info = ticker_obj.info
         if info:
+            # Normalize renamed Yahoo Finance fields before storing
+            # pegRatio was renamed to trailingPegRatio — keep both keys for compatibility
+            if info.get('trailingPegRatio') and not info.get('pegRatio'):
+                info['pegRatio'] = info['trailingPegRatio']
             db.save_fundamentals(symbol, info)
         else:
             logger.warning(f"{symbol}: No fundamentals available")

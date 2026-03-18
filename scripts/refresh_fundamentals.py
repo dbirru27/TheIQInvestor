@@ -190,14 +190,18 @@ def compute_derived_fields(conn):
             info = json.loads(data_str)
             changed = False
 
-            # Compute and store pegRatio
-            fwd_pe  = info.get('forwardPE')
-            earn_g  = info.get('earningsGrowth')
-            earn_qg = info.get('earningsQuarterlyGrowth')
+            # Normalize pegRatio: Yahoo renamed it to trailingPegRatio
+            # Priority: trailingPegRatio (Yahoo direct) → computed fallback
+            fwd_pe   = info.get('forwardPE')
+            earn_g   = info.get('earningsGrowth')
+            earn_qg  = info.get('earningsQuarterlyGrowth')
             trail_pe = info.get('trailingPE')
 
+            yahoo_peg = info.get('trailingPegRatio') or info.get('pegRatio')
             peg = None
-            if fwd_pe and earn_g and earn_g > 0:
+            if yahoo_peg and float(yahoo_peg) > 0:
+                peg = round(float(yahoo_peg), 4)      # trust Yahoo directly
+            elif fwd_pe and earn_g and earn_g > 0:
                 peg = round(float(fwd_pe) / (float(earn_g) * 100), 4)
             elif trail_pe and earn_qg and earn_qg > 0:
                 peg = round(float(trail_pe) / (float(earn_qg) * 100), 4)

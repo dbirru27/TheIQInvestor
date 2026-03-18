@@ -473,20 +473,24 @@ class BreakoutRater:
         passed_marg = bool(marg is not None and marg > 0.10)
         results.append(CriterionResult("Operating Margin", "Quality", passed_marg, f"{float(marg)*100:.1f}%" if marg else "N/A", "> 10%", 5 if passed_marg else 0))
 
-        # 11. Valuation Sanity (5 pts) — PEG = Forward P/E ÷ EPS Growth Rate
-        # yfinance no longer returns pegRatio reliably, so we compute it:
-        #   PEG = forwardPE / (earningsGrowth * 100)
-        # Fallback chain: forwardPE+earningsGrowth → trailingPE+earningsQuarterlyGrowth
-        #                 → DB quarterly_eps YoY growth
+        # 11. Valuation Sanity (5 pts) — PEG ratio
+        # Yahoo Finance renamed the field: pegRatio → trailingPegRatio
+        # Fallback chain: Yahoo trailingPegRatio → forwardPE/earningsGrowth → DB quarterly EPS
         peg = None
         peg_method = ""
 
         fwd_pe   = info.get('forwardPE')
         trail_pe = info.get('trailingPE')
-        earn_g   = info.get('earningsGrowth')          # YoY net income growth (decimal)
-        earn_qg  = info.get('earningsQuarterlyGrowth') # most recent quarter YoY (decimal)
+        earn_g   = info.get('earningsGrowth')
+        earn_qg  = info.get('earningsQuarterlyGrowth')
 
-        if fwd_pe and earn_g and earn_g > 0:
+        # Source 1: Yahoo's trailingPegRatio (most trustworthy — direct from Yahoo Finance)
+        # Note: Yahoo renamed pegRatio → trailingPegRatio; we store both, prefer trailing
+        yahoo_peg = info.get('trailingPegRatio') or info.get('pegRatio')
+        if yahoo_peg and float(yahoo_peg) > 0:
+            peg = round(float(yahoo_peg), 2)
+            peg_method = "Yahoo Finance"
+        elif fwd_pe and earn_g and earn_g > 0:
             peg = round(float(fwd_pe) / (float(earn_g) * 100), 2)
             peg_method = f"Fwd PE {fwd_pe:.1f} / Growth {earn_g*100:.0f}%"
         elif trail_pe and earn_qg and earn_qg > 0:
