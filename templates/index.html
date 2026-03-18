@@ -4798,21 +4798,31 @@
                 insSignalLabel.textContent = `${insText} · Click for details`;
                 insSignalLabel.style.color = insColor + '99';
 
-                // EWROS card
-                const rsRating = data.ewros_score || 0;
+                // IBD RS Rating card (percentile 1-99, IBD formula)
+                const ibdRs = data.ibd_rs || null;
                 const rsCard = document.getElementById('rs-score-card');
                 const rsLabel = document.getElementById('rs-card-label');
                 const rsValue = document.getElementById('rs-score-value');
                 const rsSignal = document.getElementById('rs-signal-label');
                 let rsColor;
-                if (rsRating >= 80) { rsColor = '#10b981'; rsCard.style.background = 'linear-gradient(135deg, #1e293b, rgba(16,185,129,0.15))'; rsCard.style.borderColor = '#10b98166'; }
-                else if (rsRating >= 50) { rsColor = '#eab308'; rsCard.style.background = 'linear-gradient(135deg, #1e293b, rgba(234,179,8,0.1))'; rsCard.style.borderColor = '#eab30844'; }
-                else { rsColor = '#94a3b8'; rsCard.style.background = ''; rsCard.style.borderColor = '#333'; }
-                rsLabel.style.color = rsColor;
-                rsValue.textContent = rsRating || '—';
-                rsValue.style.color = rsColor;
-                rsSignal.textContent = rsRating >= 80 ? 'Leader' : rsRating >= 50 ? 'Average' : rsRating > 0 ? 'Laggard' : 'N/A';
-                rsSignal.style.color = rsColor + '99';
+                if (ibdRs !== null) {
+                    if (ibdRs >= 90) { rsColor = '#10b981'; rsCard.style.background = 'linear-gradient(135deg, #1e293b, rgba(16,185,129,0.15))'; rsCard.style.borderColor = '#10b98166'; }
+                    else if (ibdRs >= 70) { rsColor = '#eab308'; rsCard.style.background = 'linear-gradient(135deg, #1e293b, rgba(234,179,8,0.1))'; rsCard.style.borderColor = '#eab30844'; }
+                    else { rsColor = '#94a3b8'; rsCard.style.background = ''; rsCard.style.borderColor = '#333'; }
+                    rsLabel.textContent = 'RS Rating';
+                    rsLabel.style.color = rsColor;
+                    rsValue.textContent = ibdRs;
+                    rsValue.style.color = rsColor;
+                    rsSignal.textContent = ibdRs >= 90 ? `Top ${100-ibdRs}% — Leader` : ibdRs >= 80 ? `Top ${100-ibdRs}% — Strong` : ibdRs >= 70 ? `Top ${100-ibdRs}% — Above avg` : `Bottom ${ibdRs}% — Laggard`;
+                    rsSignal.style.color = rsColor + '99';
+                } else {
+                    rsLabel.textContent = 'RS Rating';
+                    rsLabel.style.color = '#666';
+                    rsValue.textContent = '—';
+                    rsValue.style.color = '#64748b';
+                    rsSignal.textContent = 'IBD-style percentile';
+                    rsSignal.style.color = '#64748b';
+                }
 
                 // IQ Edge card
                 const iqEdge = data.iq_edge || 0;
@@ -6123,7 +6133,8 @@
                 const gradeColors = {A:'#059669',B:'#0284c7',C:'#d97706',D:'#7c3aed',F:'#dc2626'};
                 const gc = gradeColors[s.grade] || '#64748b';
                 const rotColor = (s.ewros_score||0) >= 80 ? '#10b981' : (s.ewros_score||0) >= 60 ? '#eab308' : '#64748b';
-                const rsColor = (s.ewros_score||0) >= 80 ? '#10b981' : (s.ewros_score||0) >= 50 ? '#eab308' : '#64748b';
+                const ibdRsVal = s.ibd_rs || null;
+                const rsColor = ibdRsVal >= 90 ? '#10b981' : ibdRsVal >= 70 ? '#eab308' : '#64748b';
                 let insColor, insEmoji, insText;
                 if ((s.ins_score||0) <= -3) { insColor = '#ef4444'; insEmoji = '🔴'; insText = 'Dumping'; }
                 else if ((s.ins_score||0) >= 3) { insColor = '#10b981'; insEmoji = '🟢'; insText = 'Buying'; }
@@ -6148,8 +6159,8 @@
                             <div style="font-size:1.6rem; font-weight:800; color:${rotColor};">${(s.ewros_score||0).toFixed(1)}</div>
                         </div>
                         <div class="card" style="text-align:center; padding:14px;">
-                            <div style="font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">EWROS</div>
-                            <div style="font-size:1.6rem; font-weight:800; color:${rsColor};">${s.ewros_score || '—'}</div>
+                            <div style="font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">RS Rating</div>
+                            <div style="font-size:1.6rem; font-weight:800; color:${rsColor};">${ibdRsVal || '—'}</div>
                         </div>
                         <div class="card" style="text-align:center; padding:14px;">
                             <div style="font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">Moonshot</div>
