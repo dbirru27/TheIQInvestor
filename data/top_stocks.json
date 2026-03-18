@@ -1,8 +1,8 @@
 {
   "version": "5.0",
   "max_score": 100,
-  "last_scan": "2026-03-18 17:39 PST",
-  "total_stocks": 175,
+  "last_scan": "2026-03-18 17:46 PST",
+  "total_stocks": 176,
   "stocks": [
     {
       "ticker": "WTM",
@@ -1858,7 +1858,7 @@
       "analyst_count": 22,
       "current_price": 299.25,
       "ewros_score": 72,
-      "iq_edge": 55,
+      "iq_edge": 56,
       "iq_edge_raw": 0.42722,
       "ibd_rs": 59,
       "ibd_rs_raw": 3.68
@@ -4003,7 +4003,7 @@
       "analyst_count": 32,
       "current_price": 979.9199829101562,
       "ewros_score": 76,
-      "iq_edge": 46,
+      "iq_edge": 47,
       "iq_edge_raw": 0.350459,
       "ibd_rs": 65,
       "ibd_rs_raw": 5.03
@@ -8658,7 +8658,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Positive, flat \u00b7 EPS $0.68 \u00b7 YoY +2167%",
+          "value": "Positive, flat \u00b7 EPS $0.66 \u00b7 YoY +2100%",
           "threshold": "QoQ growth accelerating",
           "points": 4
         },
@@ -13385,7 +13385,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Positive, flat \u00b7 EPS $8.85 \u00b7 YoY +44%",
+          "value": "Positive, flat \u00b7 EPS $8.68 \u00b7 YoY +41%",
           "threshold": "QoQ growth accelerating",
           "points": 4
         },
