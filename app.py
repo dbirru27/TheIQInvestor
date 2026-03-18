@@ -2423,58 +2423,35 @@ def chart_data(ticker):
 
 
 def _get_fundamentals(ticker):
-    """Get quarterly revenue + EPS from DB and SEC JSON, merged and deduped."""
-    import sqlite3
+    """Get quarterly revenue + EPS from yfinance."""
     revenue = []
     eps = []
 
-    # 1. DB (most recent, high quality)
     try:
-        db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'market_data.db')
-        conn = sqlite3.connect(db_path)
-        for row in conn.execute(
-            'SELECT year, quarter, revenue FROM quarterly_revenue WHERE symbol=? ORDER BY year, quarter', (ticker,)
-        ):
-            # Approximate quarter end date
-            q_end = f'{row[0]}-{row[1]*3:02d}-28'
-            revenue.append({'time': q_end, 'value': row[2], 'label': f'{row[0]}Q{row[1]}'})
-        for row in conn.execute(
-            'SELECT year, quarter, eps FROM quarterly_eps WHERE symbol=? ORDER BY year, quarter', (ticker,)
-        ):
-            q_end = f'{row[0]}-{row[1]*3:02d}-28'
-            eps.append({'time': q_end, 'value': row[2], 'label': f'{row[0]}Q{row[1]}'})
-        conn.close()
-    except Exception:
-        pass
+        import yfinance as yf
+        t = yf.Ticker(ticker)
+        inc = t.quarterly_income_stmt
 
-    # 2. SEC JSON (historical backfill)
-    try:
-        sec_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'sec_fundamentals.json')
-        with open(sec_path) as f:
-            sec_data = json.load(f)
-        stock_sec = sec_data.get(ticker, {})
+        if inc is not None and not inc.empty:
+            # Revenue
+            if 'Total Revenue' in inc.index:
+                rev_row = inc.loc['Total Revenue']
+                for ts, val in rev_row.items():
+                    if val is not None and not (isinstance(val, float) and val != val):
+                        date_str = ts.strftime('%Y-%m-%d')
+                        q = (ts.month - 1) // 3 + 1
+                        label = f'{ts.year}Q{q}'
+                        revenue.append({'time': date_str, 'value': float(val), 'label': label})
 
-        # Revenue from SEC (quarterly only)
-        db_rev_labels = {r['label'] for r in revenue}
-        for r in stock_sec.get('revenue', []):
-            frame = r.get('frame', '')
-            if 'Q' not in frame:
-                continue  # skip annual
-            label = frame.replace('CY', '')  # e.g. "2017Q2"
-            if label in db_rev_labels:
-                continue  # DB has newer data
-            revenue.append({'time': r['end'], 'value': r['val'], 'label': label})
-
-        # EPS from SEC (quarterly only)
-        db_eps_labels = {e['label'] for e in eps}
-        for e in stock_sec.get('eps', []):
-            frame = e.get('frame', '')
-            if 'Q' not in frame:
-                continue
-            label = frame.replace('CY', '')
-            if label in db_eps_labels:
-                continue
-            eps.append({'time': e['end'], 'value': e['val'], 'label': label})
+            # Diluted EPS
+            if 'Diluted EPS' in inc.index:
+                eps_row = inc.loc['Diluted EPS']
+                for ts, val in eps_row.items():
+                    if val is not None and not (isinstance(val, float) and val != val):
+                        date_str = ts.strftime('%Y-%m-%d')
+                        q = (ts.month - 1) // 3 + 1
+                        label = f'{ts.year}Q{q}'
+                        eps.append({'time': date_str, 'value': float(val), 'label': label})
     except Exception:
         pass
 
