@@ -37,6 +37,7 @@ import subprocess
 import json
 import json
 import json
+import json
 import sys
 import time
 from datetime import datetime
@@ -229,6 +230,14 @@ def step_git_push(dry_run=False, skip_git=False):
         return False
 
 
+def step_qa_watchdog():
+    """Run QA watchdog immediately after pipeline — validates all scoring output."""
+    subprocess.run(
+        [sys.executable, os.path.join(WORKSPACE, 'scripts/qa_watchdog.py')],
+        cwd=WORKSPACE, check=True
+    )
+
+
 # ── Step registry ─────────────────────────────────────────────────────────────
 
 # name → (label, fn, skip_if_no_cache)
@@ -246,6 +255,7 @@ ALL_STEPS = [
     ('earnings_rec', 'Earnings recap email',                              step_earnings_recap,     False),
     ('sell',         'Check sell signals → alerts',                       step_sell_signals,       False),
     ('insider',      'Fetch insider transactions (SEC EDGAR)',             step_insider_scan,       False),
+    ('qa',           'QA Watchdog — validate all scoring output',         step_qa_watchdog,        False),
 ]
 
 
