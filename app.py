@@ -1189,10 +1189,125 @@ def market_internals():
             'pct': round(up_count / len(breadth_tickers) * 100, 1)
         }
 
-        # --- IBD Market Stage (proper FTD rules via shared module) ---
+        # --- IBD Market Stage (proper FTD rules) ---
         try:
-            from scripts.market_stage import compute_market_stage
-            results['market_stage'] = compute_market_stage()
+            url = 'https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1d&range=6mo'
+            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+            resp = urllib.request.urlopen(req, timeout=10)
+            spy_chart = json.loads(resp.read())['chart']['result'][0]
+            spy_closes = spy_chart['indicators']['quote'][0]['close']
+            spy_volumes = spy_chart['indicators']['quote'][0]['volume']
+            spy_lows = spy_chart['indicators']['quote'][0]['low']
+
+            # Distribution days (last 25 sessions)
+            DIST_WINDOW = 25
+            dist_count = 0
+            stall_count = 0
+            n = len(spy_closes)
+            for i in range(max(1, n - DIST_WINDOW), n):
+                if i <= 0: continue
+                pc, cc = spy_closes[i-1], spy_closes[i]
+                pv, cv = spy_volumes[i-1], spy_volumes[i]
+                if not all([pc, cc, pv, cv]): continue
+                pct = (cc - pc) / pc * 100
+                if pct <= -0.2 and cv > pv:
+                    dist_count += 1
+                elif 0 <= pct < 0.4 and cv > pv * 1.05:
+                    stall_count += 1
+            total_dist = dist_count + stall_count
+
+            # Find correction low (lowest close in last 60 sessions)
+            LOOKBACK = min(60, n - 1)
+            low_idx = n - 1
+            low_val = spy_closes[n - 1] or 999999
+            for i in range(n - LOOKBACK, n):
+                if spy_closes[i] and spy_closes[i] < low_val:
+                    low_val = spy_closes[i]
+                    low_idx = i
+
+            # Rally attempt: Day 1 = first up-close after the low
+            rally_day1_idx = None
+            rally_day1_low = None
+            for i in range(low_idx + 1, n):
+                if spy_closes[i] and spy_closes[i-1] and spy_closes[i] > spy_closes[i-1]:
+                    rally_day1_idx = i
+                    rally_day1_low = spy_lows[i] if spy_lows[i] else spy_closes[i]
+                    break
+
+            # Check invalidation: did market undercut Day 1 intraday low?
+            rally_invalidated = False
+            if rally_day1_idx and rally_day1_low:
+                for i in range(rally_day1_idx + 1, n):
+                    if spy_lows[i] and spy_lows[i] < rally_day1_low:
+                        rally_invalidated = True
+                        # Try to find new Day 1 after invalidation
+                        new_low_idx = i
+                        for j in range(i, n):
+                            if spy_closes[j] and spy_closes[j] < (spy_closes[new_low_idx] or 999999):
+                                new_low_idx = j
+                        rally_day1_idx = None
+                        rally_day1_low = None
+                        for j in range(new_low_idx + 1, n):
+                            if spy_closes[j] and spy_closes[j-1] and spy_closes[j] > spy_closes[j-1]:
+                                rally_day1_idx = j
+                                rally_day1_low = spy_lows[j] if spy_lows[j] else spy_closes[j]
+                                rally_invalidated = False
+                                break
+                        break
+
+            # Follow-Through Day: Day 4+ of rally, up ≥1.25% on higher volume
+            ftd = False
+            ftd_date = None
+            rally_day = None
+            if rally_day1_idx:
+                rally_day = n - rally_day1_idx
+                for i in range(rally_day1_idx + 3, n):  # Day 4+
+                    pc, cc = spy_closes[i-1], spy_closes[i]
+                    pv, cv = spy_volumes[i-1], spy_volumes[i]
+                    if all([pc, cc, pv, cv]) and pc > 0:
+                        pct = (cc - pc) / pc * 100
+                        if pct >= 1.25 and cv > pv:
+                            ftd = True
+                            break
+
+            # Determine stage
+            if total_dist >= 5:
+                stage = 'MARKET IN CORRECTION'
+                stage_color = 'red'
+                action = 'Avoid new buys. Raise cash. Protect profits.'
+            elif ftd and not rally_invalidated:
+                if total_dist >= 3:
+                    stage = 'RALLY UNDER PRESSURE'
+                    stage_color = 'yellow'
+                    action = 'Follow-through confirmed but distribution elevated. Tighten stops.'
+                else:
+                    stage = 'CONFIRMED RALLY'
+                    stage_color = 'green'
+                    action = 'Follow-through day confirmed. Green light for quality setups.'
+            elif rally_day1_idx and not rally_invalidated:
+                stage = 'RALLY ATTEMPT'
+                stage_color = 'orange'
+                action = f'Rally attempt Day {rally_day}. Wait for follow-through day (Day 4+, up 1.25%+ on higher volume).'
+            elif total_dist >= 3:
+                stage = 'RALLY UNDER PRESSURE'
+                stage_color = 'yellow'
+                action = 'Be cautious. Tighten stops. No aggressive new buys.'
+            else:
+                stage = 'CONFIRMED RALLY'
+                stage_color = 'green'
+                action = 'Market healthy. Low distribution. Follow rotation signals.'
+
+            results['market_stage'] = {
+                'stage': stage,
+                'color': stage_color,
+                'action': action,
+                'distribution_days': dist_count,
+                'stalling_days': stall_count,
+                'total_distribution': total_dist,
+                'follow_through_day': ftd,
+                'rally_day': rally_day,
+                'window': '25 sessions'
+            }
         except Exception:
             results['market_stage'] = None
 
