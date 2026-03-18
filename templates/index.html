@@ -6416,6 +6416,7 @@
         function _renderFundBars(title, items, isRevenue) {
             if (!items || items.length === 0) return '';
             const maxVal = Math.max(...items.map(i => Math.abs(i.value)));
+            const maxBarH = 80; // max bar height in px
             const color = isRevenue ? '#38bdf8' : '#22c55e';
             const fmtVal = v => {
                 if (isRevenue) {
@@ -6425,14 +6426,13 @@
                 }
                 return '$' + v.toFixed(2);
             };
-            // Build YoY growth lookup
             const byLabel = {};
             items.forEach(i => byLabel[i.label] = i);
 
             let html = `<div style="font-size:0.8rem;font-weight:700;color:${color};margin-bottom:10px;letter-spacing:0.5px;">${title}</div>`;
-            html += '<div style="display:flex;align-items:flex-end;gap:6px;height:120px;">';
+            html += '<div style="display:flex;align-items:flex-end;gap:6px;">';
             items.forEach(item => {
-                const pct = maxVal > 0 ? (Math.abs(item.value) / maxVal) * 100 : 0;
+                const barH = maxVal > 0 ? Math.max((Math.abs(item.value) / maxVal) * maxBarH, 4) : 4;
                 const [yr, q] = item.label.split('Q').map(Number);
                 const prevLabel = (yr-1) + 'Q' + q;
                 const prev = byLabel[prevLabel];
@@ -6443,10 +6443,10 @@
                     growthStr = (growth >= 0 ? '+' : '') + growth.toFixed(0) + '%';
                     barColor = growth >= 0 ? color : '#ef4444';
                 }
-                html += `<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;">
+                html += `<div style="flex:1;display:flex;flex-direction:column;align-items:center;">
                     <div style="font-size:0.65rem;color:#94a3b8;margin-bottom:2px;white-space:nowrap;">${fmtVal(item.value)}</div>
-                    ${growthStr ? `<div style="font-size:0.6rem;color:${barColor};margin-bottom:2px;font-weight:600;">${growthStr}</div>` : ''}
-                    <div style="width:100%;max-width:48px;height:${Math.max(pct, 4)}%;background:${barColor};border-radius:4px 4px 0 0;opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'"></div>
+                    ${growthStr ? `<div style="font-size:0.6rem;color:${barColor};margin-bottom:2px;font-weight:600;">${growthStr}</div>` : '<div style="height:14px;"></div>'}
+                    <div style="width:100%;max-width:48px;height:${Math.round(barH)}px;background:${barColor};border-radius:4px 4px 0 0;opacity:0.7;"></div>
                     <div style="font-size:0.65rem;color:#64748b;margin-top:4px;">${item.label}</div>
                 </div>`;
             });
