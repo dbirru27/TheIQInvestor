@@ -1,5 +1,5 @@
 {
-  "scan_date": "2026-03-19 16:42:48",
+  "scan_date": "2026-03-19 17:37:23",
   "lookback_days": 90,
   "tickers_scanned": 28,
   "signals": {
@@ -834,11 +834,11 @@
       "ins_score": -9,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 46,
+      "transactions": 43,
       "buys": 0,
-      "sells": 46,
+      "sells": 43,
       "total_buy_value": 0,
-      "total_sell_value": 146063077.0,
+      "total_sell_value": 108499458.0,
       "reasons": [
         "Cluster sell: 3 insiders",
         "C-suite sell: Kress Colette ($17,180,815)",
@@ -864,24 +864,6 @@
           "value": 36007160.0
         },
         {
-          "date": "2026-01-07",
-          "owner": "Puri Ajay K",
-          "title": "EVP, Worldwide Field Ops",
-          "type": "SELL",
-          "shares": 128793,
-          "price": 188.13,
-          "value": 24229750.0
-        },
-        {
-          "date": "2026-01-07",
-          "owner": "Puri Ajay K",
-          "title": "EVP, Worldwide Field Ops",
-          "type": "SELL",
-          "shares": 71007,
-          "price": 187.25,
-          "value": 13296153.0
-        },
-        {
           "date": "2026-03-10",
           "owner": "Puri Ajay K",
           "title": "EVP, Worldwide Field Ops",
@@ -889,6 +871,24 @@
           "shares": 24940,
           "price": 183.11,
           "value": 4566863.0
+        },
+        {
+          "date": "2026-01-13",
+          "owner": "Kress Colette",
+          "title": "EVP & Chief Financial Officer",
+          "type": "SELL",
+          "shares": 12022,
+          "price": 184.86,
+          "value": 2222424.0
+        },
+        {
+          "date": "2026-01-13",
+          "owner": "Kress Colette",
+          "title": "EVP & Chief Financial Officer",
+          "type": "SELL",
+          "shares": 10237,
+          "price": 184.17,
+          "value": 1885302.0
         }
       ]
     },
