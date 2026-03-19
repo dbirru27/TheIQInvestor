@@ -1,7 +1,7 @@
 {
-  "last_updated": "2026-03-18 19:08 EST",
-  "score_timestamp": "2026-03-18 19:06 PST",
-  "iq_edge_timestamp": "2026-03-18 19:08",
+  "last_updated": "2026-03-18 20:03 EST",
+  "score_timestamp": "2026-03-18 20:02 PST",
+  "iq_edge_timestamp": "2026-03-18 20:03",
   "baskets": {
     "AI Semis": [
       {
@@ -510,7 +510,7 @@
         "context_score": 100,
         "moonshot_score": 30,
         "ewros_score": 88,
-        "iq_edge": 73,
+        "iq_edge": 72,
         "iq_edge_raw": 0.574342,
         "recommendation": "none",
         "target_mean": 724.39,
@@ -841,7 +841,7 @@
         "quality_score": 72,
         "context_score": 80,
         "moonshot_score": 30,
-        "ewros_score": 65,
+        "ewros_score": 66,
         "iq_edge": 29,
         "iq_edge_raw": 0.20663,
         "recommendation": "buy",
@@ -1781,7 +1781,7 @@
       "context_score": 100,
       "moonshot_score": 30,
       "ewros_score": 88,
-      "iq_edge": 73,
+      "iq_edge": 72,
       "iq_edge_raw": 0.574342,
       "recommendation": "none",
       "target_mean": 724.39,
@@ -2110,7 +2110,7 @@
       "quality_score": 72,
       "context_score": 80,
       "moonshot_score": 30,
-      "ewros_score": 65,
+      "ewros_score": 66,
       "iq_edge": 29,
       "iq_edge_raw": 0.20663,
       "recommendation": "buy",

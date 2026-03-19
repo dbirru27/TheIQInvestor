@@ -1,5 +1,5 @@
 {
-  "scan_date": "2026-03-18 19:14:07",
+  "scan_date": "2026-03-18 20:08:39",
   "lookback_days": 90,
   "tickers_scanned": 28,
   "signals": {
@@ -70,11 +70,11 @@
       "ins_score": -10,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 14,
+      "transactions": 18,
       "buys": 0,
-      "sells": 14,
+      "sells": 18,
       "total_buy_value": 0,
-      "total_sell_value": 1323794.0,
+      "total_sell_value": 1511199.0,
       "reasons": [
         "Cluster sell: 3 insiders",
         "Heavy sell: Giancarlo Charles H dumped 54%",
@@ -118,13 +118,13 @@
           "value": 110768.0
         },
         {
-          "date": "2026-02-25",
+          "date": "2026-03-16",
           "owner": "Wassenaar Yvonne",
           "title": "",
           "type": "SELL",
-          "shares": 504,
-          "price": 133.35,
-          "value": 67211.0
+          "shares": 539,
+          "price": 135.54,
+          "value": 73056.0
         }
       ]
     },
