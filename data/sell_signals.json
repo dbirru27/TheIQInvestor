@@ -1,104 +1,128 @@
 {
-  "date": "2026-03-13",
+  "date": "2026-03-18",
   "signals": [
     {
       "ticker": "GTES",
       "tier": "SELL",
       "reasons": [
-        "Price $22.75 below 50d MA $24.69 (held 11d)",
-        "EWROS 39 < 50 after 11d hold"
+        "Price $22.85 below 50d MA $24.75 (held 16d)",
+        "EWROS 45 < 50 after 16d hold"
       ],
-      "current_price": 22.75,
+      "current_price": 22.85,
       "entry_price": 27.6,
-      "pct_from_entry": -17.57,
-      "ewros_score": 39,
+      "pct_from_entry": -17.21,
+      "ewros_score": 45,
       "entry_ewros": 0,
-      "ma50": 24.69,
-      "days_held": 11,
-      "date": "2026-03-13"
+      "ma50": 24.75,
+      "days_held": 16,
+      "date": "2026-03-18"
     },
     {
       "ticker": "NVT",
-      "tier": "SELL",
-      "reasons": [
-        "Price $109.93 below 50d MA $111.99 (held 11d)"
-      ],
-      "current_price": 109.93,
+      "tier": "HOLD",
+      "reasons": [],
+      "current_price": 120.27,
       "entry_price": 120.23,
-      "pct_from_entry": -8.57,
-      "ewros_score": 66,
+      "pct_from_entry": 0.03,
+      "ewros_score": 90,
       "entry_ewros": 0,
-      "ma50": 111.99,
-      "days_held": 11,
-      "date": "2026-03-13"
+      "ma50": 112.67,
+      "days_held": 16,
+      "date": "2026-03-18"
     },
     {
       "ticker": "JHG",
       "tier": "HOLD",
       "reasons": [],
-      "current_price": 50.13,
+      "current_price": 51.36,
       "entry_price": 52.09,
-      "pct_from_entry": -3.76,
-      "ewros_score": 76,
+      "pct_from_entry": -1.4,
+      "ewros_score": 84,
       "entry_ewros": 0,
-      "ma50": 49.06,
-      "days_held": 11,
-      "date": "2026-03-13"
+      "ma50": 49.27,
+      "days_held": 16,
+      "date": "2026-03-18"
     },
     {
       "ticker": "PCG",
       "tier": "HOLD",
       "reasons": [],
-      "current_price": 18.14,
+      "current_price": 18.17,
       "entry_price": 19.09,
-      "pct_from_entry": -4.98,
-      "ewros_score": 89,
+      "pct_from_entry": -4.82,
+      "ewros_score": 88,
       "entry_ewros": 0,
-      "ma50": 16.84,
-      "days_held": 11,
-      "date": "2026-03-13"
+      "ma50": 16.97,
+      "days_held": 16,
+      "date": "2026-03-18"
     },
     {
       "ticker": "THC",
-      "tier": "HOLD",
-      "reasons": [],
-      "current_price": 227.63,
+      "tier": "SELL",
+      "reasons": [
+        "Price $203.21 below 50d MA $213.46 (held 16d)",
+        "EWROS 49 < 50 after 16d hold"
+      ],
+      "current_price": 203.21,
       "entry_price": 235.21,
-      "pct_from_entry": -3.22,
-      "ewros_score": 87,
+      "pct_from_entry": -13.6,
+      "ewros_score": 49,
       "entry_ewros": 0,
-      "ma50": 212.88,
-      "days_held": 11,
-      "date": "2026-03-13"
+      "ma50": 213.46,
+      "days_held": 16,
+      "date": "2026-03-18"
     },
     {
       "ticker": "MPC",
       "tier": "HOLD",
       "reasons": [],
-      "current_price": 226.18,
+      "current_price": 236.24,
       "entry_price": 211.98,
-      "pct_from_entry": 6.7,
-      "ewros_score": 95,
+      "pct_from_entry": 11.44,
+      "ewros_score": 96,
       "entry_ewros": 0,
-      "ma50": 192.11,
-      "days_held": 10,
-      "date": "2026-03-13"
+      "ma50": 196.03,
+      "days_held": 15,
+      "date": "2026-03-18"
     },
     {
       "ticker": "NRG",
-      "tier": "SELL",
-      "reasons": [
-        "Price $152.87 below 50d MA $158.98 (held 10d)",
-        "EWROS 48 < 50 after 10d hold"
-      ],
-      "current_price": 152.87,
+      "tier": "HOLD",
+      "reasons": [],
+      "current_price": 159.11,
       "entry_price": 162.06,
-      "pct_from_entry": -5.67,
-      "ewros_score": 48,
+      "pct_from_entry": -1.82,
+      "ewros_score": 70,
       "entry_ewros": 0,
-      "ma50": 158.98,
-      "days_held": 10,
-      "date": "2026-03-13"
+      "ma50": 158.56,
+      "days_held": 15,
+      "date": "2026-03-18"
+    },
+    {
+      "ticker": "RRC",
+      "tier": "HOLD",
+      "reasons": [],
+      "current_price": 43.48,
+      "entry_price": 43.51,
+      "pct_from_entry": -0.07,
+      "ewros_score": 93,
+      "entry_ewros": 94,
+      "ma50": 37.9,
+      "days_held": 3,
+      "date": "2026-03-18"
+    },
+    {
+      "ticker": "NFG",
+      "tier": "HOLD",
+      "reasons": [],
+      "current_price": 92.4,
+      "entry_price": 96.3,
+      "pct_from_entry": -4.05,
+      "ewros_score": 87,
+      "entry_ewros": 92,
+      "ma50": 86.3,
+      "days_held": 2,
+      "date": "2026-03-18"
     }
   ]
 }
