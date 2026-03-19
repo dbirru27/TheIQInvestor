@@ -1,5 +1,5 @@
 {
-  "scan_date": "2026-03-18 21:03:44",
+  "scan_date": "2026-03-19 16:42:48",
   "lookback_days": 90,
   "tickers_scanned": 28,
   "signals": {
@@ -408,31 +408,20 @@
       ]
     },
     "GOOGL": {
-      "ins_score": -14,
+      "ins_score": -9,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 45,
+      "transactions": 19,
       "buys": 0,
-      "sells": 45,
+      "sells": 19,
       "total_buy_value": 0,
-      "total_sell_value": 80883725.0,
+      "total_sell_value": 20218594.0,
       "reasons": [
-        "Cluster sell: 6 insiders",
-        "C-suite sell: Pichai Sundar ($30,630,215)",
-        "C-suite sell: WALKER JOHN KENT ($14,341,414)",
-        "Heavy sell: WALKER JOHN KENT dumped 43%",
+        "Cluster sell: 3 insiders",
+        "C-suite sell: Pichai Sundar ($19,866,080)",
         "All sells, zero buys in period"
       ],
       "details": [
-        {
-          "date": "2026-01-30",
-          "owner": "GV 2017 GP, L.L.C.",
-          "title": null,
-          "type": "SELL",
-          "shares": 1755632,
-          "price": 19.0,
-          "value": 33357008.0
-        },
         {
           "date": "2026-03-04",
           "owner": "Pichai Sundar",
@@ -443,31 +432,40 @@
           "value": 4784811.0
         },
         {
-          "date": "2026-02-18",
+          "date": "2026-03-18",
           "owner": "Pichai Sundar",
           "title": "Chief Executive Officer",
           "type": "SELL",
-          "shares": 14603,
-          "price": 304.46,
-          "value": 4446029.0
+          "shares": 9969,
+          "price": 309.0,
+          "value": 3080421.0
         },
         {
-          "date": "2026-02-17",
-          "owner": "WALKER JOHN KENT",
-          "title": "President, Global Affairs, CLO",
+          "date": "2026-03-04",
+          "owner": "Pichai Sundar",
+          "title": "Chief Executive Officer",
           "type": "SELL",
-          "shares": 14641,
-          "price": 302.64,
-          "value": 4430952.0
+          "shares": 8660,
+          "price": 302.66,
+          "value": 2621036.0
         },
         {
-          "date": "2026-02-17",
-          "owner": "WALKER JOHN KENT",
-          "title": "President, Global Affairs, CLO",
+          "date": "2026-03-18",
+          "owner": "Pichai Sundar",
+          "title": "Chief Executive Officer",
           "type": "SELL",
-          "shares": 11531,
-          "price": 301.69,
-          "value": 3478787.0
+          "shares": 8102,
+          "price": 307.11,
+          "value": 2488205.0
+        },
+        {
+          "date": "2026-03-18",
+          "owner": "Pichai Sundar",
+          "title": "Chief Executive Officer",
+          "type": "SELL",
+          "shares": 6621,
+          "price": 308.18,
+          "value": 2040460.0
         }
       ]
     },
