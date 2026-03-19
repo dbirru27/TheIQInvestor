@@ -1,8 +1,8 @@
 {
   "version": "5.0",
   "max_score": 100,
-  "last_scan": "2026-03-19 16:36 PST",
-  "total_stocks": 286,
+  "last_scan": "2026-03-19 16:44 PST",
+  "total_stocks": 285,
   "stocks": [
     {
       "ticker": "UI",
@@ -12233,7 +12233,7 @@
           "name": "Earnings Acceleration",
           "category": "Growth",
           "passed": true,
-          "value": "Accelerating \u00b7 EPS $1.69 \u00b7 YoY +117%",
+          "value": "Accelerating \u00b7 EPS $2.46 \u00b7 YoY +215%",
           "threshold": "QoQ growth accelerating",
           "points": 8
         },
