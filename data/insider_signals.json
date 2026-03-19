@@ -1,5 +1,5 @@
 {
-  "scan_date": "2026-03-18 20:08:39",
+  "scan_date": "2026-03-18 21:03:44",
   "lookback_days": 90,
   "tickers_scanned": 28,
   "signals": {
@@ -206,19 +206,20 @@
       "details": []
     },
     "AVGO": {
-      "ins_score": -9,
+      "ins_score": -11,
       "signal": "dumping",
       "signal_emoji": "\ud83d\udd34",
-      "transactions": 105,
+      "transactions": 95,
       "buys": 1,
-      "sells": 104,
+      "sells": 94,
       "total_buy_value": 325129.0,
-      "total_sell_value": 155218116.0,
+      "total_sell_value": 219532631.0,
       "reasons": [
-        "Cluster sell: 4 insiders",
-        "C-suite sell: TAN HOCK E ($101,258,092)",
-        "C-suite sell: Spears Kirsten M. ($12,463,044)",
-        "C-suite sell: Kawwas Charlie B ($1,053,113)"
+        "Cluster sell: 5 insiders",
+        "C-suite sell: Velaga S. Ram ($20,819,102)",
+        "C-suite sell: Spears Kirsten M. ($29,887,319)",
+        "C-suite sell: Kawwas Charlie B ($20,966,675)",
+        "C-suite sell: TAN HOCK E ($101,258,092)"
       ],
       "details": [
         {
