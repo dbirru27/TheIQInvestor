@@ -6550,12 +6550,12 @@
                     priceScaleId: 'volume',
                 });
                 _chartInstance.priceScale('volume').applyOptions({
-                    scaleMargins: { top: 0.85, bottom: 0 },
+                    scaleMargins: { top: 0.7, bottom: 0 },
                 });
                 _chartVolumeSeries.setData(data.candles.map(c => ({
                     time: c.time,
                     value: c.volume,
-                    color: c.close >= c.open ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)',
+                    color: c.close >= c.open ? 'rgba(34,197,94,0.5)' : 'rgba(239,68,68,0.5)',
                 })));
 
                 // SMA 50 (blue)
