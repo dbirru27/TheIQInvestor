@@ -1721,6 +1721,14 @@ def screener():
             pass
         for s in results:
             s['avg_volume'] = vol_lookup.get(s['ticker'], s.get('avg_volume'))
+            # Extract 52W proximity from criteria
+            for c in s.get('criteria', []):
+                if c.get('name') == '52W Proximity':
+                    try:
+                        s['w52_pct'] = float(c['value'].replace('%', ''))
+                    except:
+                        s['w52_pct'] = None
+                    break
 
         # Apply filters
         price_min = request.args.get('price_min', type=float)
@@ -1764,6 +1772,13 @@ def screener():
             results = [s for s in results if (s.get('iq_edge') or 0) >= iq_edge_min]
         if peg_max is not None:
             results = [s for s in results if s.get('peg_ratio') is not None and s['peg_ratio'] <= peg_max]
+
+        w52_min = request.args.get('w52_min', type=float)
+        w52_max = request.args.get('w52_max', type=float)
+        if w52_min is not None:
+            results = [s for s in results if (s.get('w52_pct') or 0) >= w52_min]
+        if w52_max is not None:
+            results = [s for s in results if (s.get('w52_pct') or 0) <= w52_max]
 
         rev_growth_min = request.args.get('rev_growth_min', type=float)
         rev_growth_max = request.args.get('rev_growth_max', type=float)

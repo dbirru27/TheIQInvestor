@@ -1091,7 +1091,7 @@
                         </tr>
                     </thead>
                     <tbody id="watchlist-tbody">
-                        <tr><td colspan="15" style="text-align: center; padding: 40px; color: var(--text-dim);">Loading watchlist...</td></tr>
+                        <tr><td colspan="16" style="text-align: center; padding: 40px; color: var(--text-dim);">Loading watchlist...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1689,7 +1689,19 @@
                         <input type="number" id="scr-epsgrowth-max" placeholder="e.g. 200" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
                     </div>
                 </div>
-                <!-- Row 4: IQ Edge, PEG, Sector, Grades -->
+                <!-- Row 4: 52W High Proximity -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; align-items: end; margin-bottom: 12px;">
+                    <div>
+                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">52W High Min (%)</label>
+                        <input type="number" id="scr-52w-min" placeholder="e.g. 90" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
+                    </div>
+                    <div>
+                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">52W High Max (%)</label>
+                        <input type="number" id="scr-52w-max" placeholder="e.g. 100" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
+                    </div>
+                    <div></div><div></div>
+                </div>
+                <!-- Row 5: IQ Edge, PEG, Sector, Grades -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; align-items: end; margin-bottom: 12px;">
                     <div>
                         <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">IQ Edge Min</label>
@@ -1738,6 +1750,7 @@
                             <th onclick="sortScreener('score')">Score</th>
                             <th onclick="sortScreener('grade')">Grade</th>
                             <th onclick="sortScreener('ins_score')">INS</th>
+                            <th onclick="sortScreener('w52_pct')">52W %</th>
                             <th onclick="sortScreener('revenue_growth')">Rev %</th>
                             <th onclick="sortScreener('earnings_growth')">EPS %</th>
                             <th onclick="sortScreener('peg_ratio')">PEG</th>
@@ -1746,7 +1759,7 @@
                         </tr>
                     </thead>
                     <tbody id="screener-tbody">
-                        <tr><td colspan="15" style="text-align:center; padding:40px; color:var(--text-dim);">Set filters and click Screen</td></tr>
+                        <tr><td colspan="16" style="text-align:center; padding:40px; color:var(--text-dim);">Set filters and click Screen</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -3361,7 +3374,7 @@
             if (currentBasketFilter !== 'all') {
                 const stocks = dataSource.baskets[currentBasketFilter] || [];
                 if (stocks.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="15" style="text-align: center; padding: 40px; color: var(--text-dim);">No holdings in this basket</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="16" style="text-align: center; padding: 40px; color: var(--text-dim);">No holdings in this basket</td></tr>';
                     return;
                 }
                 
@@ -3370,7 +3383,7 @@
                 if (editMode) {
                     html += `
                         <tr>
-                            <td colspan="15" style="padding: 12px; text-align: center;">
+                            <td colspan="16" style="padding: 12px; text-align: center;">
                                 <button class="edit-add-btn" onclick="showAddTickerModal('${currentBasketFilter}')">+ Add Ticker to ${currentBasketFilter}</button>
                             </td>
                         </tr>
@@ -3429,7 +3442,7 @@
                 const collapsed = collapsedBaskets.has(basket);
                 html += `
                     <tr class="basket-header" data-basket="${basket}" onclick="toggleBasketCollapse('${safeBasket}')" style="cursor:pointer;">
-                        <td colspan="15" style="background: #0a0f1d; padding: 10px 16px; border-bottom: 2px solid var(--accent); font-weight: 700; font-size: 0.9rem;">
+                        <td colspan="16" style="background: #0a0f1d; padding: 10px 16px; border-bottom: 2px solid var(--accent); font-weight: 700; font-size: 0.9rem;">
                             <span style="display:inline-block;width:16px;font-size:0.7rem;color:var(--text-dim);">${collapsed ? '▶' : '▼'}</span>
                             ${icon} ${basket} 
                             <span style="font-size: 0.75rem; color: var(--accent); font-weight: 600; margin-left: 8px;">${weight}</span>
@@ -3441,7 +3454,7 @@
                 `;
                 if (!collapsed) {
                     if (stocks.length === 0) {
-                        html += `<tr data-basket-row="${basket}"><td colspan="15" style="text-align: center; padding: 14px; color: var(--text-dim); font-style: italic;">
+                        html += `<tr data-basket-row="${basket}"><td colspan="16" style="text-align: center; padding: 14px; color: var(--text-dim); font-style: italic;">
                             ${editMode ? 'Use "+ Add Ticker" above to add holdings' : 'No holdings — tap ✏️ Edit to add tickers'}
                         </td></tr>`;
                     } else {
@@ -6126,6 +6139,8 @@
             const ewrosMax = document.getElementById('scr-ewros-max').value;
             const iqEdgeMin = document.getElementById('scr-iqedge-min').value;
             const pegMax = document.getElementById('scr-peg-max').value;
+            const w52Min = document.getElementById('scr-52w-min').value;
+            const w52Max = document.getElementById('scr-52w-max').value;
             const revGrowthMin = document.getElementById('scr-revgrowth-min').value;
             const revGrowthMax = document.getElementById('scr-revgrowth-max').value;
             const epsGrowthMin = document.getElementById('scr-epsgrowth-min').value;
@@ -6142,6 +6157,8 @@
             if (ewrosMax) params.set('ewros_max', ewrosMax);
             if (iqEdgeMin) params.set('iq_edge_min', iqEdgeMin);
             if (pegMax) params.set('peg_max', pegMax);
+            if (w52Min) params.set('w52_min', w52Min);
+            if (w52Max) params.set('w52_max', w52Max);
             if (revGrowthMin) params.set('rev_growth_min', revGrowthMin);
             if (revGrowthMax) params.set('rev_growth_max', revGrowthMax);
             if (epsGrowthMin) params.set('eps_growth_min', epsGrowthMin);
@@ -6168,7 +6185,7 @@
         function renderScreenerTable() {
             const tbody = document.getElementById('screener-tbody');
             if (screenerData.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="15" style="text-align:center; padding:40px; color:var(--text-dim);">No results. Adjust filters and try again.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="16" style="text-align:center; padding:40px; color:var(--text-dim);">No results. Adjust filters and try again.</td></tr>';
                 return;
             }
             tbody.innerHTML = screenerData.map(s => {
@@ -6187,6 +6204,7 @@
                     <td>${s.score || 0}</td>
                     <td><span style="color:${gradeColor}; font-weight:700;">${s.grade || '—'}</span></td>
                     <td>${renderInsiderBadge(s.ins_score, s.insider_signal, true, s.ticker)}</td>
+                    <td style="color:${(s.w52_pct||0) >= 95 ? '#10b981' : (s.w52_pct||0) >= 80 ? '#eab308' : '#ef4444'};">${s.w52_pct != null ? s.w52_pct.toFixed(1) + '%' : '—'}</td>
                     <td style="color:${(s.revenue_growth||0) >= 10 ? '#10b981' : (s.revenue_growth||0) > 0 ? '#eab308' : '#ef4444'};">${s.revenue_growth != null ? s.revenue_growth.toFixed(1) + '%' : '—'}</td>
                     <td style="color:${(s.earnings_growth||0) >= 15 ? '#10b981' : (s.earnings_growth||0) > 0 ? '#eab308' : '#ef4444'};">${s.earnings_growth != null ? s.earnings_growth.toFixed(1) + '%' : '—'}</td>
                     <td style="color:${(s.peg_ratio||0) < 1.5 ? '#10b981' : '#eab308'};">${s.peg_ratio ? s.peg_ratio.toFixed(2) : '—'}</td>
