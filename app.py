@@ -1765,6 +1765,19 @@ def screener():
         if peg_max is not None:
             results = [s for s in results if s.get('peg_ratio') is not None and s['peg_ratio'] <= peg_max]
 
+        rev_growth_min = request.args.get('rev_growth_min', type=float)
+        rev_growth_max = request.args.get('rev_growth_max', type=float)
+        eps_growth_min = request.args.get('eps_growth_min', type=float)
+        eps_growth_max = request.args.get('eps_growth_max', type=float)
+        if rev_growth_min is not None:
+            results = [s for s in results if (s.get('revenue_growth') or -9999) >= rev_growth_min]
+        if rev_growth_max is not None:
+            results = [s for s in results if (s.get('revenue_growth') or 9999) <= rev_growth_max]
+        if eps_growth_min is not None:
+            results = [s for s in results if (s.get('earnings_growth') or -9999) >= eps_growth_min]
+        if eps_growth_max is not None:
+            results = [s for s in results if (s.get('earnings_growth') or 9999) <= eps_growth_max]
+
         # Sort
         sort_key = request.args.get('sort', 'ewros_score')
         sort_order = request.args.get('order', 'desc')
