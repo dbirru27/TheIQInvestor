@@ -6519,7 +6519,21 @@
                     borderUpColor: '#22c55e', borderDownColor: '#ef4444',
                     wickUpColor: '#22c55e', wickDownColor: '#ef4444',
                 });
-                _chartCandleSeries.setData(data.candles);
+                // Color by prev close, fill by open vs close
+                const bgColor = '#131722';
+                const coloredCandles = data.candles.map((c, i) => {
+                    const prevClose = i > 0 ? data.candles[i - 1].close : c.open;
+                    const isUp = c.close >= prevClose;  // green if close >= prev close
+                    const isFilled = c.close >= c.open; // filled if close >= open
+                    const barColor = isUp ? '#22c55e' : '#ef4444';
+                    return {
+                        ...c,
+                        color: isFilled ? barColor : bgColor,
+                        borderColor: barColor,
+                        wickColor: barColor,
+                    };
+                });
+                _chartCandleSeries.setData(coloredCandles);
 
                 // Earnings markers on price chart
                 const earningsDates = (data.fundamentals || {}).earnings_dates || [];
