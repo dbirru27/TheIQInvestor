@@ -1636,7 +1636,8 @@
             <h2 class="text-2xl font-bold mb-4">Stock Screener</h2>
 
             <div class="card" style="margin-bottom: 20px;">
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; align-items: end;">
+                <!-- Row 1: Price range + Avg Volume -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; align-items: end; margin-bottom: 12px;">
                     <div>
                         <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">Price Min ($)</label>
                         <input type="number" id="scr-price-min" placeholder="e.g. 20" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
@@ -1649,13 +1650,16 @@
                         <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">Avg Vol Min</label>
                         <input type="number" id="scr-vol-min" placeholder="e.g. 500000" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
                     </div>
+                </div>
+                <!-- Row 2: EWROS + INS ranges -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; align-items: end; margin-bottom: 12px;">
                     <div>
                         <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">EWROS Min</label>
-                        <input type="number" id="scr-rot-min" placeholder="e.g. 60" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
+                        <input type="number" id="scr-ewros-min" placeholder="e.g. 60" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
                     </div>
                     <div>
                         <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">EWROS Max</label>
-                        <input type="number" id="scr-rot-max" placeholder="e.g. 100" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
+                        <input type="number" id="scr-ewros-max" placeholder="e.g. 99" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
                     </div>
                     <div>
                         <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">INS Min</label>
@@ -1665,14 +1669,9 @@
                         <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">INS Max</label>
                         <input type="number" id="scr-ins-max" placeholder="e.g. 10" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
                     </div>
-                    <div>
-                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">EWROS Min</label>
-                        <input type="number" id="scr-ewros-min" placeholder="e.g. 70" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
-                    </div>
-                    <div>
-                        <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">EWROS Max</label>
-                        <input type="number" id="scr-ewros-max" placeholder="e.g. 99" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
-                    </div>
+                </div>
+                <!-- Row 3: IQ Edge, PEG, Sector, Grades -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; align-items: end; margin-bottom: 12px;">
                     <div>
                         <label style="font-size:0.7rem; color:var(--text-dim); display:block; margin-bottom:4px;">IQ Edge Min</label>
                         <input type="number" id="scr-iqedge-min" placeholder="e.g. 80" style="width:100%; padding:6px 8px; background:#1a1a2e; border:1px solid #374151; border-radius:6px; color:white; font-size:0.85rem;">
@@ -1697,9 +1696,10 @@
                             <label style="font-size:0.75rem; cursor:pointer;"><input type="checkbox" class="scr-grade" value="F" style="accent-color:var(--accent);"> F</label>
                         </div>
                     </div>
-                    <div>
-                        <button onclick="runScreener()" style="width:100%; padding:8px 16px; background:var(--accent); color:#000; border:none; border-radius:6px; font-weight:700; cursor:pointer;">Screen</button>
-                    </div>
+                </div>
+                <!-- Screen button -->
+                <div style="text-align: right;">
+                    <button onclick="runScreener()" style="padding:8px 24px; background:var(--accent); color:#000; border:none; border-radius:6px; font-weight:700; cursor:pointer;">Screen</button>
                 </div>
             </div>
 
@@ -6099,8 +6099,6 @@
             const priceMin = document.getElementById('scr-price-min').value;
             const priceMax = document.getElementById('scr-price-max').value;
             const volMin = document.getElementById('scr-vol-min').value;
-            const rotMin = document.getElementById('scr-rot-min').value;
-            const rotMax = document.getElementById('scr-rot-max').value;
             const insMin = document.getElementById('scr-ins-min').value;
             const insMax = document.getElementById('scr-ins-max').value;
             const ewrosMin = document.getElementById('scr-ewros-min').value;
@@ -6113,8 +6111,6 @@
             if (priceMin) params.set('price_min', priceMin);
             if (priceMax) params.set('price_max', priceMax);
             if (volMin) params.set('vol_min', volMin);
-            if (rotMin) params.set('rotation_min', rotMin);
-            if (rotMax) params.set('rotation_max', rotMax);
             if (insMin) params.set('ins_min', insMin);
             if (insMax) params.set('ins_max', insMax);
             if (ewrosMin) params.set('ewros_min', ewrosMin);
